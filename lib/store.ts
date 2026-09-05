@@ -34,6 +34,7 @@ class UpstashStore implements Store {
   async getSignals(topic: string, opts?: { since?: string; to?: string }): Promise<SignalEnvelope[]> {
     const key = `signal:${topic}`;
     const raw = await this.redis.lrange(key, 0, -1);
+    console.log(`[relay:store] getSignals key:${key} rawLen:${Array.isArray(raw) ? raw.length : -1} since:${opts?.since ?? 'none'} to:${opts?.to ?? 'any'}`);
     if (!Array.isArray(raw)) return [];
     const parsed = raw
       .map((item) => {
