@@ -13,6 +13,8 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 
 ## Environment
 
+> **Importante:** em produção/preview na Vercel, o relay **precisa de um Redis persistente** (Upstash Redis ou Vercel KV). As funções serverless da Vercel não compartilham memória entre invocações, então o armazenamento em memória não funciona na nuvem.
+
 Copy `.env.example` to `.env` and fill in Upstash Redis credentials.
 
 ```bash

@@ -140,6 +140,14 @@ export function createStore(): Store {
   if (hasRedis) {
     return new UpstashStore();
   }
+
+  const isVercelCloud = process.env.VERCEL === '1' && process.env.VERCEL_ENV !== 'development';
+  if (isVercelCloud) {
+    throw new Error(
+      'Redis is required for the Vercel relay. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables.'
+    );
+  }
+
   console.warn('[relay:store] Redis not configured; using in-memory store (not shared across Vercel invocations).');
   return new MemoryStore();
 }
