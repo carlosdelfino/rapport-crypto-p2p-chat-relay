@@ -1,4 +1,4 @@
-export type SignalType = 'offer' | 'answer' | 'ice';
+export type SignalType = 'offer' | 'answer' | 'ice' | 'chat_request';
 
 export interface SignalEnvelope {
   id: string;

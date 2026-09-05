@@ -54,7 +54,7 @@ async function postSignal(req: VercelRequest, res: VercelResponse): Promise<void
     return;
   }
 
-  if (!['offer', 'answer', 'ice'].includes(type)) {
+  if (!['offer', 'answer', 'ice', 'chat_request'].includes(type)) {
     res.status(400).json({ code: 400, message: 'Invalid signal type' });
     return;
   }
