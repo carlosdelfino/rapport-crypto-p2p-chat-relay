@@ -71,14 +71,15 @@ class UpstashStore implements Store {
 
   async getPeers(minLastSeen?: number): Promise<PeerRecord[]> {
     const threshold = minLastSeen ?? Date.now() - PEER_TTL_MS;
-    const members = await this.redis.zrangebyscore<string>('peers:online', threshold, Number.POSITIVE_INFINITY);
+    const members = await this.redis.zrange<string[]>('peers:online', threshold, '+inf', { byScore: true });
     if (!members.length) return [];
-    const raw = await this.redis.hmget<string>('peers', ...members);
+    const raw = await this.redis.hmget<Record<string, string | null>>('peers', ...members);
     if (!raw) return [];
     const records = Object.values(raw)
+      .filter((item): item is string => typeof item === 'string' && item.length > 0)
       .map((item) => {
         try {
-          return JSON.parse(item as string) as PeerRecord;
+          return JSON.parse(item) as PeerRecord;
         } catch {
           return null;
         }

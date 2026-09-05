@@ -75,9 +75,9 @@ async function registerPeer(req: VercelRequest, res: VercelResponse): Promise<vo
   const peer: PeerRecord = {
     wallet: normalized,
     peerId: body.peerId,
-    chainId: body.chainId,
+    chainId: Number(body.chainId) || 1,
     multiaddrs: body.multiaddrs?.slice(0, 8) ?? [],
-    timestamp: body.timestamp,
+    timestamp: Number(body.timestamp) || Date.now(),
     lastSeen: Date.now(),
     signature: body.signature,
   };
