@@ -46,7 +46,10 @@ class UpstashStore implements Store {
     const parsed = raw
       .map((item) => {
         try {
-          return JSON.parse(item as string) as SignalEnvelope;
+          if (typeof item === 'string') {
+            return JSON.parse(item) as SignalEnvelope;
+          }
+          return item as unknown as SignalEnvelope;
         } catch {
           return null;
         }
