@@ -77,7 +77,7 @@ async function postSignal(req: VercelRequest, res: VercelResponse): Promise<void
     return;
   }
 
-  const messageToSign = JSON.stringify({ topic, type, payload, from: normalizedFrom, to, timestamp });
+  const messageToSign = JSON.stringify({ topic, type, payload, from, to, timestamp });
 
   if (isSignatureRequired() && !body.signature) {
     res.status(401).json({ code: 401, message: 'Signature required' });
