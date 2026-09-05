@@ -8,6 +8,9 @@ export function setCorsHeaders(res: ServerResponse, req?: IncomingMessage): void
   res.setHeader('Access-Control-Allow-Origin', allowed);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Peer-Wallet, X-Peer-Id');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
 }
 
 export function handleOptions(res: ServerResponse): void {
