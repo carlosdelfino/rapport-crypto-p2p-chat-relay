@@ -1,5 +1,5 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
+import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 import { createStore } from '../lib/store.js';
 import { isSignatureRequired, isRecentTimestamp, verifyRequestSignature } from '../lib/auth.js';
 import { getAddress } from 'viem';

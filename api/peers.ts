@@ -1,9 +1,9 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import { createStore } from '../lib/store.js';
 import { isSignatureRequired, isRecentTimestamp, verifyRequestSignature } from '../lib/auth.js';
 import { getAddress } from 'viem';
 import type { PeerRecord, ApiResponse } from '../lib/types.js';
+import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 const store = createStore();
