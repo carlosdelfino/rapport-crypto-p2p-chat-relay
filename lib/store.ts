@@ -27,8 +27,10 @@ class UpstashStore implements Store {
 
   async addSignal(topic: string, envelope: SignalEnvelope): Promise<void> {
     const key = `signal:${topic}`;
+    console.log(`[relay:store] addSignal key:${key} type:${envelope.type} id:${envelope.id} from:${envelope.from} to:${envelope.to ?? 'any'}`);
     await this.redis.rpush(key, JSON.stringify(envelope));
     await this.redis.expire(key, SIGNAL_TTL_S);
+    console.log(`[relay:store] addSignal OK key:${key}`);
   }
 
   async getSignals(topic: string, opts?: { since?: string; to?: string }): Promise<SignalEnvelope[]> {
