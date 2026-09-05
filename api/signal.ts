@@ -106,6 +106,8 @@ async function postSignal(req: VercelRequest, res: VercelResponse): Promise<void
 
   await store.addSignal(topic, envelope);
 
+  console.log(`[relay:signal] POST stored - topic:${topic} type:${type} from:${normalizedFrom} to:${envelope.to ?? 'any'} id:${id}`);
+
   const response: ApiResponse<SignalEnvelope> = {
     code: 200,
     message: 'Signal stored',
@@ -139,6 +141,8 @@ async function getSignals(req: VercelRequest, res: VercelResponse): Promise<void
   }
 
   const messages = await store.getSignals(topic, { since, to: normalizedTo });
+
+  console.log(`[relay:signal] GET retrieved - topic:${topic} since:${since ?? 'none'} to:${normalizedTo ?? 'any'} found:${messages.length}`);
 
   const response: ApiResponse<SignalEnvelope[]> = {
     code: 200,
