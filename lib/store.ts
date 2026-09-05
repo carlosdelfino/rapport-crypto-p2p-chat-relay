@@ -22,15 +22,20 @@ class UpstashStore implements Store {
     if (!url || !token) {
       throw new Error('Missing Upstash Redis credentials. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN.');
     }
+    const maskedUrl = url.replace(/\/\/[^@]+@/, '//***@');
+    const maskedToken = token.slice(0, 4) + '***';
+    console.log(`[relay:store] UpstashStore connecting to ${maskedUrl} token:${maskedToken}`);
     this.redis = new Redis({ url, token });
   }
 
   async addSignal(topic: string, envelope: SignalEnvelope): Promise<void> {
     const key = `signal:${topic}`;
     console.log(`[relay:store] addSignal key:${key} type:${envelope.type} id:${envelope.id} from:${envelope.from} to:${envelope.to ?? 'any'}`);
-    await this.redis.rpush(key, JSON.stringify(envelope));
+    const rpushResult = await this.redis.rpush(key, JSON.stringify(envelope));
+    console.log(`[relay:store] addSignal rpush result:${rpushResult} key:${key}`);
     await this.redis.expire(key, SIGNAL_TTL_S);
-    console.log(`[relay:store] addSignal OK key:${key}`);
+    const verify = await this.redis.llen(key);
+    console.log(`[relay:store] addSignal verify llen:${verify} key:${key}`);
   }
 
   async getSignals(topic: string, opts?: { since?: string; to?: string }): Promise<SignalEnvelope[]> {
