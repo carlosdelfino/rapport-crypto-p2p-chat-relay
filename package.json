@@ -1,0 +1,20 @@
+{
+  "name": "rapport-crypto-p2p-relay",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.34.0",
+    "viem": "^2.56.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vercel/node": "^5.1.2",
+    "typescript": "~6.0.3"
+  }
+}
