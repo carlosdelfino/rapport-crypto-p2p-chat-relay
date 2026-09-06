@@ -4,42 +4,102 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="robots" content="index, follow"/>
-  <meta http-equiv="refresh" content="0; url=https://apk.rapport.tec.br"/>
   <title>Rapport Crypto P2P Chat — Instalar aplicativo Android (v1.1.20)</title>
   <meta name="description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
-  <link rel="canonical" href="https://apk.rapport.tec.br"/>
   <style>
-    :root { --corn:#f4a10b;--leaf-dark:#19392d;--ink:#1f241f;--muted:#62685f;--paper:#fffdf8;--line:rgba(31,36,31,.14);--white:#fff; }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; color: var(--ink); background: var(--paper); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 1rem; line-height: 1.65; -webkit-font-smoothing: antialiased; }
-    a { color: inherit; text-decoration: none; }
-    .card { text-align: center; padding: clamp(2rem, 5vw, 3.5rem); max-width: 32rem; }
-    .brand-mark { display: grid; width: 3.5rem; height: 3.5rem; margin: 0 auto 1.5rem; place-items: center; border-radius: 50%; color: var(--leaf-dark); background: var(--corn); }
-    .brand-mark svg { width: 2.25rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3.4; }
-    h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 600; letter-spacing: -.04em; margin: 0 0 .5rem; }
-    p { margin: 0 0 1.5rem; color: var(--muted); }
-    .button { display: inline-flex; min-height: 3.35rem; align-items: center; justify-content: center; padding: .8rem 1.6rem; border: 1px solid var(--corn); border-radius: 999px; color: var(--leaf-dark); background: var(--corn); box-shadow: 0 10px 26px rgba(244,161,11,.24); font-size: .95rem; font-weight: 800; line-height: 1; transition: transform 180ms ease, box-shadow 180ms ease; }
-    .button:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(244,161,11,.33); }
-    .version-badge { display: inline-block; margin-top: 1rem; padding: .25rem .6rem; border: 1px solid var(--line); border-radius: .5rem; font-size: .8rem; font-weight: 700; color: var(--muted); }
+    :root {
+      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
+      --border:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
+      --brand:#ea580c; --brand-light:#fb923c; --brand-300:#fdba74; --brand-500:#f97316;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6;
+      min-height:100vh; padding:1rem; -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:48rem; margin:0 auto; padding:1rem 0; }
+    .hero { text-align:center; padding:1.5rem 1rem 1rem; }
+    .hero h1 { font-size:clamp(1.5rem,3.5vw,2rem); font-weight:800; color:var(--brand-light); margin-bottom:.5rem; }
+    .hero p { color:var(--secondary); font-size:.95rem; max-width:32rem; margin:0 auto; }
+    .section-title { font-size:1.1rem; font-weight:700; color:var(--brand-light); margin:2rem 0 .75rem; }
+    .apk-list { display:flex; flex-direction:column; gap:.75rem; }
+    .apk-row {
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+      border:1px solid var(--border); border-radius:1rem;
+      background:var(--card-60); backdrop-filter:blur(8px);
+      padding:1.25rem 1.5rem; text-decoration:none; color:inherit;
+      transition:border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .apk-row:hover {
+      border-color:var(--brand); transform:translateY(-1px);
+      box-shadow:0 6px 20px rgba(234,88,12,.1);
+    }
+    .apk-latest { border-color:var(--brand-500); }
+    .apk-info { display:flex; flex-direction:column; gap:.2rem; min-width:0; }
+    .apk-version { font-size:1.1rem; font-weight:700; color:var(--text); }
+    .latest-tag {
+      display:inline-block; padding:.1rem .5rem; border-radius:999px;
+      background:rgba(234,88,12,.15); color:var(--brand-light);
+      font-size:.7rem; font-weight:700; margin-left:.4rem; vertical-align:middle;
+    }
+    .apk-meta { font-size:.8rem; color:var(--muted); }
+    .apk-filename {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.75rem; color:var(--secondary); word-break:break-all;
+    }
+    .apk-download {
+      flex-shrink:0; padding:.6rem 1.2rem; border-radius:.6rem;
+      background:var(--brand); color:#fff; font-size:.85rem; font-weight:700;
+      white-space:nowrap;
+    }
+    .apk-row:hover .apk-download { background:var(--brand-500); }
+    .empty { color:var(--muted); text-align:center; padding:2rem; }
+    .install-guide {
+      border:1px solid var(--border); border-radius:1rem;
+      background:var(--card-60); backdrop-filter:blur(8px);
+      padding:1.5rem; margin-top:1.5rem;
+    }
+    .install-guide h2 { font-size:.95rem; font-weight:700; color:var(--brand-light); margin-bottom:.75rem; }
+    .install-guide ol { padding-left:1.5rem; color:var(--secondary); font-size:.85rem; }
+    .install-guide li { margin-bottom:.4rem; }
+    .footer { text-align:center; color:var(--muted); font-size:.8rem; margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+    .footer a { color:var(--brand-light); text-decoration:none; }
+    .footer a:hover { color:var(--brand); }
   </style>
-  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-  <main class="card">
-    <div class="brand-mark" aria-hidden="true">
-      <svg viewBox="0 0 64 64" role="img">
-        <path d="M13 35c0-15 8-25 19-25s19 10 19 25" />
-        <path d="M10 35h44l-5 17H15z" />
-        <path d="M23 16c1 6 5 10 9 13 4-3 8-7 9-13" />
-      </svg>
+  <div class="container">
+    <header class="hero">
+      <h1>Instalar Rapport Crypto P2P Chat</h1>
+      <p>Baixe o aplicativo Android diretamente do servidor de distribuição. Versão mais recente: <strong>v1.1.20</strong>.</p>
+    </header>
+
+    <h2 class="section-title">Vers&otilde;es dispon&iacute;veis</h2>
+    <div class="apk-list">
+      <a class="apk-row apk-latest" href="https://apk.rapport.tec.br/cuscuz-1.1.20-20260906-154613.apk" download>
+        <div class="apk-info">
+          <span class="apk-version">v1.1.20 <span class="latest-tag">mais recente</span></span>
+          <span class="apk-meta">06/09/2026 17:28 &middot; 152.4 MB</span>
+          <span class="apk-filename">cuscuz-1.1.20-20260906-154613.apk</span>
+        </div>
+        <span class="apk-download">Baixar</span>
+      </a>
     </div>
-    <h1>Redirecionando para download…</h1>
-    <p>Você será levado ao servidor de distribuição do Rapport Crypto P2P Chat em <strong>apk.rapport.tec.br</strong>.</p>
-    <a class="button" href="https://apk.rapport.tec.br">Ir para o download</a>
-    <span class="version-badge">v1.1.20</span>
-  </main>
-  <script>
-    window.location.replace("https://apk.rapport.tec.br");
-  </script>
+    <div class="install-guide">
+      <h2>Como instalar</h2>
+      <ol>
+        <li>Toque no link "Baixar" acima para baixar o arquivo .apk.</li>
+        <li>Se solicitado, permita instala&ccedil;&otilde;es de fontes desconhecidas nas configura&ccedil;&otilde;es do Android.</li>
+        <li>Abra o arquivo baixado e confirme a instala&ccedil;&atilde;o.</li>
+        <li>Abra o Rapport Crypto P2P Chat e configure sua carteira.</li>
+      </ol>
+    </div>
+
+    <div class="footer">
+      <p><a href="/">&larr; Voltar ao in&iacute;cio</a> &middot; <a href="/stats">Estat&iacute;sticas</a></p>
+      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>.</p>
+    </div>
+  </div>
 </body>
 </html>

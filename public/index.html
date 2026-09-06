@@ -4,8 +4,8 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="robots" content="index, follow"/>
-  <title>Rapport Crypto P2P Chat — Relay</title>
-  <meta name="description" content="Servidor de sinalização WebRTC e distribuição de APK do Rapport Crypto P2P Chat."/>
+  <title>Rapport Crypto P2P Chat</title>
+  <meta name="description" content="Aplicativo de chat criptografado ponta a ponta, descentralizado, com identidade baseada em carteira blockchain. Baixe, instale e converse com privacidade."/>
   <style>
     :root {
       --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
@@ -22,14 +22,22 @@
       -webkit-font-smoothing:antialiased;
     }
     .container { max-width:52rem; margin:0 auto; padding:1rem 0; }
-    .hero { text-align:center; padding:2.5rem 1rem 2rem; }
+
+    /* Hero */
+    .hero { text-align:center; padding:3rem 1rem 2.5rem; }
     .hero h1 {
-      font-size:clamp(1.75rem,4vw,2.5rem); font-weight:800;
-      color:var(--brand-light); margin-bottom:.5rem; letter-spacing:-.02em;
+      font-size:clamp(2rem,5vw,3rem); font-weight:800;
+      color:var(--brand-light); margin-bottom:.75rem; letter-spacing:-.02em;
     }
-    .hero p { color:var(--secondary); font-size:1.05rem; max-width:36rem; margin:0 auto; }
+    .hero .tagline {
+      color:var(--secondary); font-size:1.15rem; max-width:38rem;
+      margin:0 auto 1rem; line-height:1.5;
+    }
+    .hero .subtagline {
+      color:var(--muted); font-size:.9rem; max-width:34rem; margin:0 auto;
+    }
     .badge {
-      display:inline-block; margin-top:.75rem; padding:.3rem .8rem;
+      display:inline-block; margin-top:1rem; padding:.3rem .8rem;
       border:1px solid var(--border); border-radius:999px;
       font-size:.75rem; font-weight:600; color:var(--muted);
       background:var(--card-60); backdrop-filter:blur(8px);
@@ -40,10 +48,53 @@
       animation:pulse 2s ease-in-out infinite;
     }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* CTA buttons */
+    .cta-row {
+      display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center;
+      margin-top:1.5rem;
+    }
+    .cta {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.8rem 1.6rem; border-radius:.7rem;
+      font-size:.95rem; font-weight:700; text-decoration:none;
+      transition:transform .2s, box-shadow .2s;
+    }
+    .cta-primary {
+      background:var(--brand); color:#fff;
+      box-shadow:0 8px 24px rgba(234,88,12,.2);
+    }
+    .cta-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(234,88,12,.3); }
+    .cta-secondary {
+      border:1px solid var(--border); color:var(--text);
+      background:var(--card-60); backdrop-filter:blur(8px);
+    }
+    .cta-secondary:hover { border-color:var(--brand); transform:translateY(-2px); }
+
+    /* Features */
     .section-title {
       font-size:1.25rem; font-weight:700; color:var(--brand-light);
-      margin:2.5rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
+      margin:3rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
     }
+    .features-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));
+      gap:1rem; margin:1.5rem 0;
+    }
+    .feature-card {
+      border:1px solid var(--border); border-radius:1rem;
+      background:var(--card-60); backdrop-filter:blur(8px);
+      padding:1.5rem;
+    }
+    .feature-card .icon {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:2.5rem; height:2.5rem; border-radius:.75rem;
+      background:rgba(234,88,12,.12); color:var(--brand-light);
+      font-size:1.25rem; margin-bottom:.75rem;
+    }
+    .feature-card h3 { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:.4rem; }
+    .feature-card p { font-size:.85rem; color:var(--muted); }
+
+    /* Pages grid */
     .links-grid {
       display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));
       gap:1rem; margin:1.5rem 0;
@@ -71,9 +122,9 @@
       font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
       font-size:.8rem; color:var(--brand-300); margin-top:.25rem;
     }
-    .api-list {
-      display:flex; flex-direction:column; gap:.5rem; margin:1rem 0;
-    }
+
+    /* API list */
+    .api-list { display:flex; flex-direction:column; gap:.5rem; margin:1rem 0; }
     .api-row {
       display:flex; align-items:center; gap:.75rem;
       border:1px solid var(--border); border-radius:.75rem;
@@ -94,6 +145,7 @@
       font-size:.85rem; color:var(--text); flex:1;
     }
     .api-desc { font-size:.8rem; color:var(--muted); }
+
     .footer {
       text-align:center; color:var(--muted); font-size:.8rem;
       margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
@@ -106,34 +158,63 @@
   <div class="container">
     <header class="hero">
       <h1>Rapport Crypto P2P Chat</h1>
-      <p>Relay de sinalização WebRTC e distribuição do aplicativo Android. Comunicação criptografada ponta a ponta, sem servidores centrais de mensagens.</p>
+      <p class="tagline">Chat criptografado ponta a ponta, descentralizado, com identidade baseada em carteira blockchain.</p>
+      <p class="subtagline">Sem servidores centrais de mensagens. Sem cadastro. Sem rastreamento. Apenas voc&ecirc;, sua carteira e a criptografia.</p>
       <span class="badge"><span class="dot"></span>Relay online</span>
+      <div class="cta-row">
+        <a class="cta cta-primary" href="/install">Baixar APK</a>
+        <a class="cta cta-secondary" href="/stats">Ver estat&iacute;sticas</a>
+      </div>
     </header>
 
-    <h2 class="section-title">Páginas</h2>
+    <h2 class="section-title">Recursos</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="icon">&#128274;</span>
+        <h3>Criptografia E2E</h3>
+        <p>Mensagens cifradas com X25519 + ChaCha20-Poly1305 antes de sair do seu dispositivo.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">&#129689;</span>
+        <h3>WebRTC P2P</h3>
+        <p>Conex&atilde;o direta entre peers via WebRTC. O relay apenas sinaliza &mdash; nunca carrega conte&uacute;do.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">&#128179;</span>
+        <h3>Identidade blockchain</h3>
+        <p>Sua carteira Ethereum &eacute; sua identidade. Sem e-mail, sem telefone, sem KYC.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">&#128241;</span>
+        <h3>Android nativo</h3>
+        <p>App Android via Expo + React Native. Instala&ccedil;&atilde;o direta por APK, sem loja.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">P&aacute;ginas</h2>
     <div class="links-grid">
-      <a class="link-card" href="/stats">
-        <span class="icon">&#128202;</span>
-        <span class="title">Estatísticas</span>
-        <span class="desc">Métricas em tempo real do relay e endereços para doações.</span>
-        <span class="path">/stats</span>
-      </a>
       <a class="link-card" href="/install">
         <span class="icon">&#128242;</span>
         <span class="title">Instalar APK</span>
-        <span class="desc">Baixe a versão mais recente do app Android.</span>
+        <span class="desc">Lista de vers&otilde;es dispon&iacute;veis para download direto.</span>
         <span class="path">/install</span>
+      </a>
+      <a class="link-card" href="/stats">
+        <span class="icon">&#128202;</span>
+        <span class="title">Estat&iacute;sticas</span>
+        <span class="desc">M&eacute;tricas em tempo real do relay e endere&ccedil;os para doa&ccedil;&otilde;es.</span>
+        <span class="path">/stats</span>
       </a>
       <a class="link-card" href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat" rel="noopener" target="_blank">
         <span class="icon">&#128187;</span>
-        <span class="title">Código-fonte</span>
-        <span class="desc">Repositório do dApp e do relay no GitHub.</span>
+        <span class="title">C&oacute;digo-fonte</span>
+        <span class="desc">Reposit&oacute;rio do dApp e do relay no GitHub.</span>
         <span class="path">github.com/carlosdelfino/rapport-crypto-p2p-chat</span>
       </a>
       <a class="link-card" href="https://rapport.tec.br" rel="noopener" target="_blank">
         <span class="icon">&#127891;</span>
         <span class="title">Rapport Tecnologia</span>
-        <span class="desc">Site institucional da Rapport Tecnologia e Inovação.</span>
+        <span class="desc">Site institucional da Rapport Tecnologia e Inova&ccedil;&atilde;o.</span>
         <span class="path">rapport.tec.br</span>
       </a>
     </div>
@@ -158,22 +239,22 @@
       <a class="api-row" href="/api/signal">
         <span class="api-method">GET</span>
         <span class="api-path">/api/signal</span>
-        <span class="api-desc">Poll de mensagens de sinalização</span>
+        <span class="api-desc">Poll de mensagens de sinaliza&ccedil;&atilde;o</span>
       </a>
       <a class="api-row" href="/api/signal">
         <span class="api-method post">POST</span>
         <span class="api-path">/api/signal</span>
-        <span class="api-desc">Armazena envelope de sinalização</span>
+        <span class="api-desc">Armazena envelope de sinaliza&ccedil;&atilde;o</span>
       </a>
       <a class="api-row" href="/api/stats">
         <span class="api-method">GET</span>
         <span class="api-path">/api/stats</span>
-        <span class="api-desc">Estatísticas agregadas do relay</span>
+        <span class="api-desc">Estat&iacute;sticas agregadas do relay</span>
       </a>
       <a class="api-row" href="/api/version">
         <span class="api-method">GET</span>
         <span class="api-path">/api/version</span>
-        <span class="api-desc">Metadados da última versão de APK</span>
+        <span class="api-desc">Metadados da &uacute;ltima vers&atilde;o de APK</span>
       </a>
     </div>
 

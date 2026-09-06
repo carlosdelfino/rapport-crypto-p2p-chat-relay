@@ -13,7 +13,7 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 - `GET /api/signal?topic=...&since=...&to=...` — poll signaling messages.
 - `GET /api/version` — metadados da última versão de APK publicada (sem auth).
 - `GET /api/stats` — estatísticas do relay: carteiras, mensagens, tópicos (sem auth).
-- `GET /install` — página de redirect para `https://apk.rapport.tec.br`.
+- `GET /install` — página HTML que lista os APKs disponíveis para download (links diretos para `apk.rapport.tec.br`).
 - `GET /install/manifest.json` — manifest JSON da versão atual (cache 5 min).
 - `GET /stats` — página HTML com estatísticas dinâmicas e endereços de doação.
 
@@ -64,7 +64,7 @@ npm run apk:regenerate  # regenera apenas a página /install e manifest.json
 ### Fluxo de distribuição
 
 1. `apk:publish` compila o APK e envia para o servidor `apk_rapport` via SFTP.
-2. A página `/install` é regenerada como redirect para `https://apk.rapport.tec.br`.
+2. A página `/install` é regenerada como índice de APKs com links de download diretos para `https://apk.rapport.tec.br/{filename}`.
 3. O `manifest.json` é gerado em `public/install/manifest.json` com a versão atual.
 4. O `manifest.json` também é enviado ao servidor de APKs como fallback.
 5. O dApp consulta `https://rapport-crypto-p2p-chat-relay.vercel.app/install/manifest.json` (ou `https://apk.rapport.tec.br/manifest.json` como fallback) para verificar se há atualizações.
