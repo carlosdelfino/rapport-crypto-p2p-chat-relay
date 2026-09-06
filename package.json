@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vercel dev",
     "deploy": "vercel --prod",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "apk:build": "tsx scripts/build-android-apk.ts build",
+    "apk:upload": "tsx scripts/build-android-apk.ts upload",
+    "apk:publish": "tsx scripts/build-android-apk.ts publish",
+    "apk:regenerate": "tsx scripts/build-android-apk.ts regenerate"
   },
   "dependencies": {
     "@upstash/redis": "^1.34.0",

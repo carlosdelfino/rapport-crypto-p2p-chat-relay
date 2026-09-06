@@ -12,6 +12,7 @@ interface Store {
   getPeer(wallet: string): Promise<PeerRecord | null>;
   getPeers(minLastSeen?: number): Promise<PeerRecord[]>;
   removePeer(wallet: string): Promise<void>;
+  getStats(): Promise<RelayStats>;
 }
 
 class UpstashStore implements Store {
@@ -140,6 +141,34 @@ class UpstashStore implements Store {
     await this.redis.hdel('peers', wallet);
     await this.redis.zrem('peers:online', wallet);
   }
+
+  async getStats(): Promise<RelayStats> {
+    const totalWallets = await this.redis.hlen('peers');
+    const now = Date.now();
+    const onlineThreshold = now - PEER_TTL_MS;
+    const onlineWallets = await this.redis.zcount('peers:online', onlineThreshold, '+inf');
+
+    let totalMessages = 0;
+    let totalTopics = 0;
+    try {
+      const keys = await this.redis.keys('signal:*');
+      totalTopics = keys.length;
+      for (const key of keys) {
+        const len = await this.redis.llen(key);
+        totalMessages += len;
+      }
+    } catch {
+      // keys command might be disabled in some Redis configs
+    }
+
+    return {
+      totalWallets,
+      onlineWallets,
+      totalMessages,
+      totalTopics,
+      updatedAt: new Date().toISOString(),
+    };
+  }
 }
 
 class MemoryStore implements Store {
@@ -187,6 +216,25 @@ class MemoryStore implements Store {
   async removePeer(wallet: string): Promise<void> {
     this.peers.delete(wallet);
   }
+
+  async getStats(): Promise<RelayStats> {
+    const now = Date.now();
+    const onlineThreshold = now - PEER_TTL_MS;
+    const onlineWallets = Array.from(this.peers.values()).filter(
+      (r) => r.lastSeen >= onlineThreshold
+    ).length;
+    let totalMessages = 0;
+    for (const list of this.signals.values()) {
+      totalMessages += list.length;
+    }
+    return {
+      totalWallets: this.peers.size,
+      onlineWallets,
+      totalMessages,
+      totalTopics: this.signals.size,
+      updatedAt: new Date().toISOString(),
+    };
+  }
 }
 
 export function getStoreType(): 'redis' | 'memory' {
@@ -212,6 +260,14 @@ export function createStore(): Store {
 
   console.warn('[relay:store] Redis not configured; using in-memory store (not shared across Vercel invocations).');
   return new MemoryStore();
+}
+
+export interface RelayStats {
+  totalWallets: number;
+  onlineWallets: number;
+  totalMessages: number;
+  totalTopics: number;
+  updatedAt: string;
 }
 
 export type { Store };

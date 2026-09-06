@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="index, follow"/>
+  <title>CusCuZ — Estatísticas e Doações</title>
+  <meta name="description" content="Estatísticas do relay CusCuZ e endereços para doações ao projeto."/>
+  <style>
+    :root {
+      --bg:#020617; --card:#0f172a; --border:#1e293b; --text:#f1f5f9;
+      --muted:#94a3b8; --secondary:#cbd5e1; --brand:#ea580c;
+      --brand-light:#fb923c; --brand-dark:#c2410c; --code-bg:#1e293b;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6;
+      min-height:100vh; padding:1rem;
+    }
+    .container { max-width:48rem; margin:0 auto; padding:1rem 0; }
+    h1 { font-size:1.75rem; font-weight:700; color:var(--brand-light); margin-bottom:.5rem; }
+    h2 { font-size:1.25rem; font-weight:600; color:var(--brand-light); margin:2rem 0 .75rem; }
+    p { color:var(--secondary); font-size:.95rem; margin-bottom:.75rem; }
+    .stats-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));
+      gap:.75rem; margin:1.5rem 0;
+    }
+    .stat-card {
+      border:1px solid var(--border); border-radius:1rem; background:var(--card);
+      padding:1.25rem; text-align:center;
+    }
+    .stat-value { font-size:2rem; font-weight:800; color:var(--brand); }
+    .stat-label { font-size:.8rem; color:var(--muted); margin-top:.25rem; text-transform:uppercase; letter-spacing:.05em; }
+    .card {
+      border:1px solid var(--border); border-radius:1rem; background:var(--card);
+      padding:1.5rem; margin-bottom:1rem;
+    }
+    .donation-item {
+      display:flex; flex-direction:column; gap:.4rem; padding:1rem;
+      border:1px solid var(--border); border-radius:.75rem; background:var(--code-bg);
+      margin-bottom:.75rem;
+    }
+    .donation-label { font-size:.75rem; font-weight:700; color:var(--brand-light); text-transform:uppercase; letter-spacing:.08em; }
+    .donation-addr {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.85rem; color:var(--text); word-break:break-all; cursor:pointer;
+      padding:.4rem .6rem; border-radius:.4rem; border:1px solid var(--border);
+      background:var(--bg); transition:border-color .2s;
+    }
+    .donation-addr:hover { border-color:var(--brand); }
+    .donation-addr:active { border-color:var(--brand-light); }
+    .donation-hint { font-size:.75rem; color:var(--muted); }
+    .copy-btn {
+      display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .7rem;
+      border:1px solid var(--border); border-radius:.4rem; background:var(--card);
+      color:var(--secondary); font-size:.75rem; cursor:pointer; transition:all .2s;
+      align-self:flex-start;
+    }
+    .copy-btn:hover { border-color:var(--brand); color:var(--brand-light); }
+    .toast {
+      position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
+      padding:.6rem 1.2rem; border-radius:.5rem; background:var(--brand);
+      color:#fff; font-size:.85rem; font-weight:600; opacity:0;
+      transition:opacity .3s; pointer-events:none; z-index:100;
+    }
+    .toast.show { opacity:1; }
+    .updated { font-size:.75rem; color:var(--muted); margin-top:.5rem; }
+    .footer { text-align:center; color:var(--muted); font-size:.75rem; margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); }
+    a { color:var(--brand-light); text-decoration:none; }
+    a:hover { color:var(--brand); }
+    .loading { color:var(--muted); font-size:.9rem; }
+    .error { color:#ef4444; font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CusCuZ — Relay Stats</h1>
+    <p>Estatísticas em tempo real do relay de sinalização P2P do CusCuZ.</p>
+
+    <div id="stats-content">
+      <p class="loading">Carregando estatísticas…</p>
+    </div>
+
+    <h2>Doações</h2>
+    <p>Apoie o desenvolvimento do CusCuZ enviando criptomoedas para os endereços abaixo.</p>
+
+    <div class="card">
+      <div class="donation-item">
+        <span class="donation-label">Ethereum / Polygon (POL) / Amoy / Sepolia</span>
+        <span class="donation-addr" data-addr="0x66682BBeD9e540017967692cCdd069fE5F833888" id="addr-evm">0x66682BBeD9e540017967692cCdd069fE5F833888</span>
+        <button class="copy-btn" data-copy="addr-evm">📋 Copiar</button>
+        <span class="donation-hint">Mesmo endereço para mainnet Ethereum, Polygon, testnets Amoy e Sepolia</span>
+      </div>
+
+      <div class="donation-item">
+        <span class="donation-label">Bitcoin</span>
+        <span class="donation-addr" data-addr="bc1qs89ud4zdafk3u2f7qzcghhlzhrh27d849kcz9h" id="addr-btc">bc1qs89ud4zdafk3u2f7qzcghhlzhrh27d849kcz9h</span>
+        <button class="copy-btn" data-copy="addr-btc">📋 Copiar</button>
+      </div>
+
+      <div class="donation-item">
+        <span class="donation-label">Solana</span>
+        <span class="donation-addr" data-addr="ovBzDFqPqJUuQrRUvy7FXsJX5FaJH4ta4DaGkyaCXZY" id="addr-sol">ovBzDFqPqJUuQrRUvy7FXsJX5FaJH4ta4DaGkyaCXZY</span>
+        <button class="copy-btn" data-copy="addr-sol">📋 Copiar</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copiado!</div>
+
+  <script>
+    async function loadStats() {
+      try {
+        const resp = await fetch('/api/stats');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const json = await resp.json();
+        const s = json.data;
+        if (!s) throw new Error('Dados indisponíveis');
+
+        document.getElementById('stats-content').innerHTML =
+          '<div class="stats-grid">' +
+            '<div class="stat-card"><div class="stat-value">' + s.totalWallets + '</div><div class="stat-label">Carteiras registradas</div></div>' +
+            '<div class="stat-card"><div class="stat-value">' + s.onlineWallets + '</div><div class="stat-label">Online agora</div></div>' +
+            '<div class="stat-card"><div class="stat-value">' + s.totalMessages + '</div><div class="stat-label">Mensagens transmitidas</div></div>' +
+            '<div class="stat-card"><div class="stat-value">' + s.totalTopics + '</div><div class="stat-label">Tópicos ativos</div></div>' +
+          '</div>' +
+          '<p class="updated">Atualizado em: ' + new Date(s.updatedAt).toLocaleString('pt-BR') + '</p>';
+      } catch (err) {
+        document.getElementById('stats-content').innerHTML =
+          '<p class="error">Não foi possível carregar as estatísticas no momento.</p>';
+      }
+    }
+
+    function copyAddress(addrId) {
+      var el = document.getElementById(addrId);
+      if (!el) return;
+      var addr = el.getAttribute('data-addr');
+      navigator.clipboard.writeText(addr).then(function() {
+        var toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 2000);
+      });
+    }
+
+    document.querySelectorAll('.copy-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        copyAddress(btn.getAttribute('data-copy'));
+      });
+    });
+
+    document.querySelectorAll('.donation-addr').forEach(function(el) {
+      el.addEventListener('click', function() {
+        var addr = el.getAttribute('data-addr');
+        navigator.clipboard.writeText(addr).then(function() {
+          var toast = document.getElementById('toast');
+          toast.classList.add('show');
+          setTimeout(function() { toast.classList.remove('show'); }, 2000);
+        });
+      });
+    });
+
+    loadStats();
+    setInterval(loadStats, 60000);
+  </script>
+</body>
+</html>
