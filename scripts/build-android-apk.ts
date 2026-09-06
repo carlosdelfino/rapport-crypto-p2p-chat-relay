@@ -2,6 +2,7 @@ import { execFileSync, type SpawnSyncReturns } from 'child_process';
 import { existsSync, readFileSync, promises as fs, type Stats } from 'fs';
 import path from 'path';
 import os from 'os';
+import { fileURLToPath } from 'url';
 import {
   ANDROID_INSTALL_CREDIT_GUIDANCE,
   composeBuildEnvironment,
@@ -15,7 +16,7 @@ import {
  * build-android-apk.ts
  *
  * Orquestra a compilação do dApp (Expo + EAS local) em APK e o envio do
- * artefato para o servidor de distribuição (host SSH `apk_cuscuz`).
+ * artefato para o servidor de distribuição (host SSH `apk_rapport`).
  *
  * O processo é dividido em três subcomandos para permitir recuperação
  * parcial quando o build demora (~2h) mas o upload falha (SSH, chave,
@@ -37,8 +38,8 @@ import {
  *
  * Variáveis de ambiente opcionais (lidas do shell):
  *   DAPP_DIR         — caminho absoluto do dApp (default: ../dApp)
- *   APK_SSH_HOST     — alias SSH do servidor de APKs (default: apk_cuscuz)
- *   APK_REMOTE_DIR   — pasta remota destino (default: ~/public_html/cuscuz/apk)
+ *   APK_SSH_HOST     — alias SSH do servidor de APKs (default: apk_rapport)
+ *   APK_REMOTE_DIR   — pasta remota destino (default: ~/public_html/rapport/apk)
  *   APK_PUBLIC_URL   — URL pública base para download (default:
  *                      https://apk.rapport.tec.br)
  *   EAS_PROFILE      — perfil do eas.json (default: preview)
@@ -47,6 +48,7 @@ import {
  * Variáveis Expo são lidas exclusivamente de dApp/.env.
  */
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BACKEND_DIR = path.resolve(__dirname, '..');
 const DEFAULT_DAPP_DIR = path.resolve(BACKEND_DIR, '../rapport-crypto-p2p-chat');
 const MANIFEST_PATH = path.resolve(BACKEND_DIR, 'assets/apk-manifest.json');
@@ -54,13 +56,13 @@ const PUBLIC_INSTALL_DIR = path.resolve(BACKEND_DIR, 'public/install');
 const STAGING_DIR = path.resolve(BACKEND_DIR, 'assets/apk-staging');
 const SSH_CONTROL_PATH = path.join(
   os.tmpdir(),
-  `cuscuz-ssh-control-${process.pid}`,
+  `rapport-ssh-control-${process.pid}`,
 );
 
 const DAPP_DIR = process.env.DAPP_DIR
   ? path.resolve(process.env.DAPP_DIR)
   : DEFAULT_DAPP_DIR;
-const APK_SSH_HOST = process.env.APK_SSH_HOST ?? 'apk_cuscuz';
+const APK_SSH_HOST = process.env.APK_SSH_HOST ?? 'apk_rapport';
 /**
  * Diretório remoto onde os APKs são publicados. Pode começar com `~`, que é
  * expandido para o home directory real via `pwd` do SFTP em
@@ -140,11 +142,24 @@ function fail(
  * shells one-shot (cada exec do Devin abre um shell novo sem `nvm use`).
  */
 function resolveNvmNode(): string {
-  const nvmDir = process.env.NVM_DIR ?? path.join(os.homedir(), '.nvm');
-  const nvmSh = path.join(nvmDir, 'nvm.sh');
-  if (!existsSync(nvmSh)) {
-    fail('resolveNvmNode', 'NVM nao encontrado', { nvmSh });
+  const homeNvmDir = path.join(os.homedir(), '.nvm');
+  const envNvmDir = process.env.NVM_DIR;
+  // Prefere NVM_DIR do ambiente, mas faz fallback para ~/.nvm se o
+  // nvm.sh nao existir no caminho indicado (NVM_DIR pode apontar para
+  // /root/.nvm em shells herdados de outro usuario).
+  const nvmDirCandidates = [
+    ...(envNvmDir ? [envNvmDir] : []),
+    homeNvmDir,
+  ];
+  const nvmDir = nvmDirCandidates.find((dir) =>
+    existsSync(path.join(dir, 'nvm.sh')),
+  );
+  if (!nvmDir) {
+    fail('resolveNvmNode', 'NVM nao encontrado', {
+      tried: nvmDirCandidates,
+    });
   }
+  const nvmSh = path.join(nvmDir, 'nvm.sh');
   // Carrega o NVM e resolve o binário da versão do .nvmrc do dApp.
   // Importante: passar NVM_DIR e HOME explicitamente no env do subprocesso,
   // pois execFileSync pode não herdar todas as variáveis do shell pai.
@@ -337,7 +352,7 @@ async function listApks(): Promise<ApkEntry[]> {
 // ---------------------------------------------------------------------------
 // SSH ControlMaster + SFTP batch
 // ---------------------------------------------------------------------------
-// O servidor apk_cuscuz não permite shell access ("Shell access is not
+// O servidor apk_rapport não permite shell access ("Shell access is not
 // enabled"), o que impede comandos SSH arbitrários. SFTP (subsystem)
 // funciona. Usamos ControlMaster para autenticar uma única vez (passphrase
 // da chave) e reusar a conexão em todas as operações SFTP subsequentes.
@@ -588,8 +603,8 @@ function renderInstallPage(apks: ApkEntry[]): string {
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="robots" content="index, follow"/>
   <meta http-equiv="refresh" content="0; url=${APK_PUBLIC_URL}"/>
-  <title>CusCuZ — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}</title>
-  <meta name="description" content="Baixe a versão mais recente do aplicativo CusCuZ para Android."/>
+  <title>Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}</title>
+  <meta name="description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
   <link rel="canonical" href="${APK_PUBLIC_URL}"/>
   <style>
     :root { --corn:#f4a10b;--leaf-dark:#19392d;--ink:#1f241f;--muted:#62685f;--paper:#fffdf8;--line:rgba(31,36,31,.14);--white:#fff; }
@@ -617,7 +632,7 @@ function renderInstallPage(apks: ApkEntry[]): string {
       </svg>
     </div>
     <h1>Redirecionando para download…</h1>
-    <p>Você será levado ao servidor de distribuição do CusCuZ em <strong>apk.rapport.tec.br</strong>.</p>
+    <p>Você será levado ao servidor de distribuição do Rapport Crypto P2P Chat em <strong>apk.rapport.tec.br</strong>.</p>
     <a class="button" href="${APK_PUBLIC_URL}">Ir para o download</a>
     ${versionLabel ? `<span class="version-badge">${versionLabel}</span>` : ''}
   </main>
@@ -792,7 +807,7 @@ async function runBuild(): Promise<void> {
   });
   const version = readDappVersion();
 
-  const tmpApk = path.join(os.tmpdir(), `cuscuz-build-${process.pid}.apk`);
+  const tmpApk = path.join(os.tmpdir(), `rapport-build-${process.pid}.apk`);
 
   try {
     runEasBuild(easBin, tmpApk, buildEnvironment);
@@ -805,7 +820,7 @@ async function runBuild(): Promise<void> {
     }
 
     const stamp = timestampStamp(new Date());
-    const destName = `cuscuz-${version}-${stamp}.apk`;
+    const destName = `rapport-crypto-p2p-chat-${version}-${stamp}.apk`;
     await ensureDir(STAGING_DIR);
     const destPath = path.join(STAGING_DIR, destName);
     await fs.copyFile(tmpApk, destPath);
@@ -853,7 +868,7 @@ async function runUpload(fileFlag?: string, force = false): Promise<void> {
   } catch {
     // Fallback: deriva metadados do próprio arquivo.
     const stat = await fs.stat(apkPath);
-    const versionMatch = apkName.match(/^cuscuz-([^-]+)-/);
+    const versionMatch = apkName.match(/^rapport-crypto-p2p-chat-([^-]+)-/);
     meta = {
       filename: apkName,
       version: versionMatch?.[1] ?? 'unknown',

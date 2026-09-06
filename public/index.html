@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="index, follow"/>
+  <title>Rapport Crypto P2P Chat — Relay</title>
+  <meta name="description" content="Servidor de sinalização WebRTC e distribuição de APK do Rapport Crypto P2P Chat."/>
+  <style>
+    :root {
+      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
+      --border:#1e293b; --border-hover:#334155;
+      --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
+      --brand:#ea580c; --brand-light:#fb923c; --brand-dark:#c2410c;
+      --brand-300:#fdba74; --brand-500:#f97316;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6;
+      min-height:100vh; padding:1rem;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:52rem; margin:0 auto; padding:1rem 0; }
+    .hero { text-align:center; padding:2.5rem 1rem 2rem; }
+    .hero h1 {
+      font-size:clamp(1.75rem,4vw,2.5rem); font-weight:800;
+      color:var(--brand-light); margin-bottom:.5rem; letter-spacing:-.02em;
+    }
+    .hero p { color:var(--secondary); font-size:1.05rem; max-width:36rem; margin:0 auto; }
+    .badge {
+      display:inline-block; margin-top:.75rem; padding:.3rem .8rem;
+      border:1px solid var(--border); border-radius:999px;
+      font-size:.75rem; font-weight:600; color:var(--muted);
+      background:var(--card-60); backdrop-filter:blur(8px);
+    }
+    .badge .dot {
+      display:inline-block; width:.5rem; height:.5rem; border-radius:50%;
+      background:var(--brand-500); margin-right:.4rem; vertical-align:middle;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .section-title {
+      font-size:1.25rem; font-weight:700; color:var(--brand-light);
+      margin:2.5rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
+    }
+    .links-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));
+      gap:1rem; margin:1.5rem 0;
+    }
+    .link-card {
+      display:flex; flex-direction:column; gap:.5rem;
+      border:1px solid var(--border); border-radius:1rem;
+      background:var(--card-60); backdrop-filter:blur(8px);
+      padding:1.5rem; text-decoration:none; color:inherit;
+      transition:border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .link-card:hover {
+      border-color:var(--brand); transform:translateY(-2px);
+      box-shadow:0 8px 24px rgba(234,88,12,.12);
+    }
+    .link-card .icon {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:2.5rem; height:2.5rem; border-radius:.75rem;
+      background:rgba(234,88,12,.12); color:var(--brand-light);
+      font-size:1.25rem; margin-bottom:.25rem;
+    }
+    .link-card .title { font-size:1.05rem; font-weight:700; color:var(--text); }
+    .link-card .desc { font-size:.85rem; color:var(--muted); }
+    .link-card .path {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.8rem; color:var(--brand-300); margin-top:.25rem;
+    }
+    .api-list {
+      display:flex; flex-direction:column; gap:.5rem; margin:1rem 0;
+    }
+    .api-row {
+      display:flex; align-items:center; gap:.75rem;
+      border:1px solid var(--border); border-radius:.75rem;
+      background:var(--card-60); backdrop-filter:blur(8px);
+      padding:.85rem 1.1rem; text-decoration:none; color:inherit;
+      transition:border-color .2s;
+    }
+    .api-row:hover { border-color:var(--brand); }
+    .api-method {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:3rem; padding:.2rem .5rem; border-radius:.35rem;
+      font-size:.7rem; font-weight:800; letter-spacing:.05em;
+      background:rgba(34,197,94,.12); color:#4ade80;
+    }
+    .api-method.post { background:rgba(234,88,12,.12); color:var(--brand-light); }
+    .api-path {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.85rem; color:var(--text); flex:1;
+    }
+    .api-desc { font-size:.8rem; color:var(--muted); }
+    .footer {
+      text-align:center; color:var(--muted); font-size:.8rem;
+      margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
+    }
+    .footer a { color:var(--brand-light); text-decoration:none; }
+    .footer a:hover { color:var(--brand); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Rapport Crypto P2P Chat</h1>
+      <p>Relay de sinalização WebRTC e distribuição do aplicativo Android. Comunicação criptografada ponta a ponta, sem servidores centrais de mensagens.</p>
+      <span class="badge"><span class="dot"></span>Relay online</span>
+    </header>
+
+    <h2 class="section-title">Páginas</h2>
+    <div class="links-grid">
+      <a class="link-card" href="/stats">
+        <span class="icon">&#128202;</span>
+        <span class="title">Estatísticas</span>
+        <span class="desc">Métricas em tempo real do relay e endereços para doações.</span>
+        <span class="path">/stats</span>
+      </a>
+      <a class="link-card" href="/install">
+        <span class="icon">&#128242;</span>
+        <span class="title">Instalar APK</span>
+        <span class="desc">Baixe a versão mais recente do app Android.</span>
+        <span class="path">/install</span>
+      </a>
+      <a class="link-card" href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat" rel="noopener" target="_blank">
+        <span class="icon">&#128187;</span>
+        <span class="title">Código-fonte</span>
+        <span class="desc">Repositório do dApp e do relay no GitHub.</span>
+        <span class="path">github.com/carlosdelfino/rapport-crypto-p2p-chat</span>
+      </a>
+      <a class="link-card" href="https://rapport.tec.br" rel="noopener" target="_blank">
+        <span class="icon">&#127891;</span>
+        <span class="title">Rapport Tecnologia</span>
+        <span class="desc">Site institucional da Rapport Tecnologia e Inovação.</span>
+        <span class="path">rapport.tec.br</span>
+      </a>
+    </div>
+
+    <h2 class="section-title">API</h2>
+    <div class="api-list">
+      <a class="api-row" href="/api/health">
+        <span class="api-method">GET</span>
+        <span class="api-path">/api/health</span>
+        <span class="api-desc">Health check do relay</span>
+      </a>
+      <a class="api-row" href="/api/peers">
+        <span class="api-method">GET</span>
+        <span class="api-path">/api/peers</span>
+        <span class="api-desc">Lista peers online</span>
+      </a>
+      <a class="api-row" href="/api/peers">
+        <span class="api-method post">POST</span>
+        <span class="api-path">/api/peers</span>
+        <span class="api-desc">Registra ou atualiza peer</span>
+      </a>
+      <a class="api-row" href="/api/signal">
+        <span class="api-method">GET</span>
+        <span class="api-path">/api/signal</span>
+        <span class="api-desc">Poll de mensagens de sinalização</span>
+      </a>
+      <a class="api-row" href="/api/signal">
+        <span class="api-method post">POST</span>
+        <span class="api-path">/api/signal</span>
+        <span class="api-desc">Armazena envelope de sinalização</span>
+      </a>
+      <a class="api-row" href="/api/stats">
+        <span class="api-method">GET</span>
+        <span class="api-path">/api/stats</span>
+        <span class="api-desc">Estatísticas agregadas do relay</span>
+      </a>
+      <a class="api-row" href="/api/version">
+        <span class="api-method">GET</span>
+        <span class="api-path">/api/version</span>
+        <span class="api-desc">Metadados da última versão de APK</span>
+      </a>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
+    </div>
+  </div>
+</body>
+</html>

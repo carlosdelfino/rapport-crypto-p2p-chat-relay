@@ -4,6 +4,7 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 
 ## Endpoints
 
+- `GET /` — landing page com links para as páginas e endpoints da API.
 - `GET /api/health` — health check.
 - `POST /api/peers` — register or refresh peer online status.
 - `GET /api/peers?wallet=...` — get peer info.
@@ -62,7 +63,7 @@ npm run apk:regenerate  # regenera apenas a página /install e manifest.json
 
 ### Fluxo de distribuição
 
-1. `apk:publish` compila o APK e envia para o servidor `apk_cuscuz` via SFTP.
+1. `apk:publish` compila o APK e envia para o servidor `apk_rapport` via SFTP.
 2. A página `/install` é regenerada como redirect para `https://apk.rapport.tec.br`.
 3. O `manifest.json` é gerado em `public/install/manifest.json` com a versão atual.
 4. O `manifest.json` também é enviado ao servidor de APKs como fallback.
@@ -73,7 +74,7 @@ npm run apk:regenerate  # regenera apenas a página /install e manifest.json
 | Variável | Default | Descrição |
 | :--- | :--- | :--- |
 | `DAPP_DIR` | `../rapport-crypto-p2p-chat` | Caminho do dApp |
-| `APK_SSH_HOST` | `apk_cuscuz` | Alias SSH do servidor |
+| `APK_SSH_HOST` | `apk_rapport` | Alias SSH do servidor |
 | `APK_REMOTE_DIR` | `~/public_html/rapport/apk` | Diretório remoto |
 | `APK_PUBLIC_URL` | `https://apk.rapport.tec.br` | URL pública base |
 | `RELAY_INSTALL_URL` | `https://rapport-crypto-p2p-chat-relay.vercel.app/install` | URL da página /install no relay |
