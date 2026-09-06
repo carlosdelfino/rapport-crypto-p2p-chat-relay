@@ -27,6 +27,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
+  if (req.method === 'DELETE') {
+    await deleteSignals(req, res);
+    return;
+  }
+
   res.status(405).json({ code: 405, message: 'Method not allowed' });
 }
 
@@ -149,6 +154,32 @@ async function getSignals(req: VercelRequest, res: VercelResponse): Promise<void
     message: 'Signals retrieved',
     data: messages,
     next_step: messages.length ? 'Process signals and re-poll for more' : 'Keep polling periodically',
+  };
+  res.status(200).json(response);
+}
+
+async function deleteSignals(req: VercelRequest, res: VercelResponse): Promise<void> {
+  const { topic, beforeId } = req.query as { topic?: string; beforeId?: string };
+
+  if (!topic) {
+    res.status(400).json({ code: 400, message: 'Missing topic' });
+    return;
+  }
+
+  if (!beforeId) {
+    res.status(400).json({ code: 400, message: 'Missing beforeId' });
+    return;
+  }
+
+  const trimmed = await store.deleteSignalsBefore(topic, beforeId);
+
+  console.log(`[relay:signal] DELETE trimmed - topic:${topic} beforeId:${beforeId} trimmed:${trimmed}`);
+
+  const response: ApiResponse<{ trimmed: number }> = {
+    code: 200,
+    message: 'Signals trimmed',
+    data: { trimmed },
+    next_step: 'Continue polling with the same since parameter',
   };
   res.status(200).json(response);
 }

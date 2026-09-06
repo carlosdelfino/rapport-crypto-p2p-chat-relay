@@ -2,11 +2,12 @@ import { Redis } from '@upstash/redis';
 import type { SignalEnvelope, PeerRecord } from './types.js';
 
 const PEER_TTL_MS = 5 * 60 * 1000;
-const SIGNAL_TTL_S = 24 * 60 * 60;
+const SIGNAL_TTL_S = 60 * 60;
 
 interface Store {
   addSignal(topic: string, envelope: SignalEnvelope): Promise<void>;
   getSignals(topic: string, opts?: { since?: string; to?: string }): Promise<SignalEnvelope[]>;
+  deleteSignalsBefore(topic: string, beforeId: string): Promise<number>;
   addPeer(peer: PeerRecord): Promise<void>;
   getPeer(wallet: string): Promise<PeerRecord | null>;
   getPeers(minLastSeen?: number): Promise<PeerRecord[]>;
@@ -61,6 +62,42 @@ class UpstashStore implements Store {
       if (opts?.to && signal.to && signal.to.toLowerCase() !== opts.to.toLowerCase()) return false;
       return true;
     });
+  }
+
+  async deleteSignalsBefore(topic: string, beforeId: string): Promise<number> {
+    const key = `signal:${topic}`;
+    const raw = await this.redis.lrange(key, 0, -1);
+    if (!Array.isArray(raw) || raw.length === 0) return 0;
+
+    let trimCount = 0;
+    const remaining: string[] = [];
+    for (const item of raw) {
+      let envelope: SignalEnvelope | null = null;
+      try {
+        envelope = typeof item === 'string' ? JSON.parse(item) as SignalEnvelope : item as unknown as SignalEnvelope;
+      } catch {
+        // keep unparseable items
+        remaining.push(typeof item === 'string' ? item : JSON.stringify(item));
+        continue;
+      }
+      if (envelope && envelope.id <= beforeId) {
+        trimCount++;
+      } else if (envelope) {
+        remaining.push(typeof item === 'string' ? item : JSON.stringify(envelope));
+      }
+    }
+
+    if (trimCount > 0) {
+      const pipeline = this.redis.multi();
+      pipeline.del(key);
+      if (remaining.length > 0) {
+        pipeline.rpush(key, ...remaining);
+        pipeline.expire(key, SIGNAL_TTL_S);
+      }
+      await pipeline.exec();
+      console.log(`[relay:store] deleteSignalsBefore key:${key} trimmed:${trimCount} remaining:${remaining.length}`);
+    }
+    return trimCount;
   }
 
   async addPeer(peer: PeerRecord): Promise<void> {
@@ -122,6 +159,14 @@ class MemoryStore implements Store {
       if (opts?.to && signal.to && signal.to.toLowerCase() !== opts.to.toLowerCase()) return false;
       return true;
     });
+  }
+
+  async deleteSignalsBefore(topic: string, beforeId: string): Promise<number> {
+    const list = this.signals.get(topic);
+    if (!list || list.length === 0) return 0;
+    const before = list.filter((s) => s.id <= beforeId).length;
+    this.signals.set(topic, list.filter((s) => s.id > beforeId));
+    return before;
   }
 
   async addPeer(peer: PeerRecord): Promise<void> {
