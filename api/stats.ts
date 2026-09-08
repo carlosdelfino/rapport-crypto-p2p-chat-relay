@@ -7,7 +7,12 @@ import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
  * GET /api/stats
  *
  * Retorna estatísticas agregadas do relay: total de carteiras registradas,
- * carteiras online, mensagens transmitidas e tópicos ativos.
+ * carteiras online, mensagens de chat transmitidas (acumulativo), chats ativos
+ * e sinais de sistema atualmente armazenados.
+ *
+ * Mensagens de chat são envelopes do tipo 'data' em tópicos iniciados por
+ * 'chat.v1.direct.' (par de endereços) ou '/chat/v1/group/' (grupo). Cada
+ * tópico de chat distinto representa um chat.
  *
  * Não requer autenticação. Utilizável por humano e por agente.
  *

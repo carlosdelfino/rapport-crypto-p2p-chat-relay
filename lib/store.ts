@@ -3,6 +3,16 @@ import type { SignalEnvelope, PeerRecord } from './types.js';
 
 const PEER_TTL_MS = 5 * 60 * 1000;
 const SIGNAL_TTL_S = 60 * 60;
+const CHAT_MESSAGE_COUNTER_KEY = 'stats:chat_messages:total';
+const CHAT_TOPIC_SET_KEY = 'stats:chat_topics';
+
+function isChatTopic(topic: string): boolean {
+  return topic.startsWith('chat.v1.direct.') || topic.startsWith('/chat/v1/group/');
+}
+
+function isChatMessage(envelope: SignalEnvelope): boolean {
+  return envelope.type === 'data' && isChatTopic(envelope.topic);
+}
 
 interface Store {
   addSignal(topic: string, envelope: SignalEnvelope): Promise<void>;
@@ -38,6 +48,12 @@ class UpstashStore implements Store {
     await this.redis.expire(key, SIGNAL_TTL_S);
     const verify = await this.redis.llen(key);
     console.log(`[relay:store] addSignal verify llen:${verify} key:${key}`);
+
+    if (isChatMessage(envelope)) {
+      await this.redis.hincrby(CHAT_MESSAGE_COUNTER_KEY, 'total', 1);
+      await this.redis.sadd(CHAT_TOPIC_SET_KEY, topic);
+      console.log(`[relay:store] addSignal chat message counted - topic:${topic}`);
+    }
   }
 
   async getSignals(topic: string, opts?: { since?: string; to?: string }): Promise<SignalEnvelope[]> {
@@ -149,13 +165,26 @@ class UpstashStore implements Store {
     const onlineWallets = await this.redis.zcount('peers:online', onlineThreshold, '+inf');
 
     let totalMessages = 0;
-    let totalTopics = 0;
+    try {
+      const counter = await this.redis.hget<number>(CHAT_MESSAGE_COUNTER_KEY, 'total');
+      totalMessages = typeof counter === 'number' ? counter : 0;
+    } catch {
+      totalMessages = 0;
+    }
+
+    let totalChats = 0;
+    try {
+      totalChats = await this.redis.scard(CHAT_TOPIC_SET_KEY);
+    } catch {
+      totalChats = 0;
+    }
+
+    let totalSystemSignals = 0;
     try {
       const keys = await this.redis.keys('signal:*');
-      totalTopics = keys.length;
       for (const key of keys) {
         const len = await this.redis.llen(key);
-        totalMessages += len;
+        totalSystemSignals += len;
       }
     } catch {
       // keys command might be disabled in some Redis configs
@@ -165,7 +194,8 @@ class UpstashStore implements Store {
       totalWallets,
       onlineWallets,
       totalMessages,
-      totalTopics,
+      totalChats,
+      totalSystemSignals,
       updatedAt: new Date().toISOString(),
     };
   }
@@ -174,11 +204,18 @@ class UpstashStore implements Store {
 class MemoryStore implements Store {
   private signals = new Map<string, SignalEnvelope[]>();
   private peers = new Map<string, PeerRecord>();
+  private chatMessagesTotal = 0;
+  private chatTopics = new Set<string>();
 
   async addSignal(topic: string, envelope: SignalEnvelope): Promise<void> {
     const list = this.signals.get(topic) ?? [];
     list.push(envelope);
     this.signals.set(topic, list);
+
+    if (isChatMessage(envelope)) {
+      this.chatMessagesTotal++;
+      this.chatTopics.add(topic);
+    }
   }
 
   async getSignals(topic: string, opts?: { since?: string; to?: string }): Promise<SignalEnvelope[]> {
@@ -223,15 +260,16 @@ class MemoryStore implements Store {
     const onlineWallets = Array.from(this.peers.values()).filter(
       (r) => r.lastSeen >= onlineThreshold
     ).length;
-    let totalMessages = 0;
+    let totalSystemSignals = 0;
     for (const list of this.signals.values()) {
-      totalMessages += list.length;
+      totalSystemSignals += list.filter((s) => !isChatMessage(s)).length;
     }
     return {
       totalWallets: this.peers.size,
       onlineWallets,
-      totalMessages,
-      totalTopics: this.signals.size,
+      totalMessages: this.chatMessagesTotal,
+      totalChats: this.chatTopics.size,
+      totalSystemSignals,
       updatedAt: new Date().toISOString(),
     };
   }
@@ -266,7 +304,8 @@ export interface RelayStats {
   totalWallets: number;
   onlineWallets: number;
   totalMessages: number;
-  totalTopics: number;
+  totalChats: number;
+  totalSystemSignals: number;
   updatedAt: string;
 }
 

@@ -12,7 +12,7 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 - `POST /api/signal` — store a signaling envelope (offer/answer/ice).
 - `GET /api/signal?topic=...&since=...&to=...` — poll signaling messages.
 - `GET /api/version` — metadados da última versão de APK publicada (sem auth).
-- `GET /api/stats` — estatísticas do relay: carteiras, mensagens, tópicos (sem auth).
+- `GET /api/stats` — estatísticas do relay: carteiras, mensagens de chat, chats e sinais de sistema (sem auth).
 - `GET /install` — página HTML que lista os APKs disponíveis para download (links diretos para `apk.rapport.tec.br`).
 - `GET /install/manifest.json` — manifest JSON da versão atual (cache 5 min).
 - `GET /stats` — página HTML com estatísticas dinâmicas e endereços de doação.
