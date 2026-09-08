@@ -1,9 +1,9 @@
 {
-  "latestVersion": "1.2.2",
-  "uploadedAt": "2026-09-08T01:08:56.246Z",
-  "filename": "rapport-crypto-p2p-chat-1.2.2-20260907-214535.apk",
-  "downloadUrl": "https://apk.rapport.tec.br/rapport-crypto-p2p-chat-1.2.2-20260907-214535.apk",
+  "latestVersion": "1.2.4",
+  "uploadedAt": "2026-09-08T17:50:11.958Z",
+  "filename": "rapport-crypto-p2p-chat-1.2.4-20260908-144640.apk",
+  "downloadUrl": "https://apk.rapport.tec.br/rapport-crypto-p2p-chat-1.2.4-20260908-144640.apk",
   "installUrl": "https://rapport-crypto-p2p-chat-relay.vercel.app/install",
   "apkServerUrl": "https://apk.rapport.tec.br",
-  "size": 164107772
+  "size": 164140536
 }
