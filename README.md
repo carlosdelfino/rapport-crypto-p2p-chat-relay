@@ -59,6 +59,7 @@ npm run apk:build       # compila o APK (EAS local)
 npm run apk:upload      # envia o APK do staging ao servidor SSH
 npm run apk:publish     # build + upload
 npm run apk:regenerate  # regenera apenas a página /install e manifest.json
+npm run apk:clean       # remove APKs disponíveis, preservando apenas o mais recente
 ```
 
 ### Fluxo de distribuição

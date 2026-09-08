@@ -35,6 +35,7 @@ import {
  *   npm run apk:upload          # enviar o APK mais recente do staging
  *   npm run apk:upload -- --file rapport-crypto-chat-0.3.1-20260829-120000.apk
  *   npm run apk:publish         # build + upload
+ *   npm run apk:clean           # remove APKs remotos, exceto o mais recente
  *
  * Variáveis de ambiente opcionais (lidas do shell):
  *   DAPP_DIR         — caminho absoluto do dApp (default: ../dApp)
@@ -1035,6 +1036,60 @@ async function runRegenerate(): Promise<void> {
   log('runRegenerate', 'INFO', 'Pagina /install regenerada com sucesso');
 }
 
+async function runClean(): Promise<void> {
+  log('runClean', 'INFO', 'Iniciando limpeza dos APKs remotos', {
+    sshHost: APK_SSH_HOST,
+    remoteDir: APK_REMOTE_DIR,
+    manifestPath: MANIFEST_PATH,
+  });
+
+  openSshControlMaster();
+  try {
+    resolveRemoteDir();
+    const remoteFiles = listRemoteApksViaSftp();
+    const availableApks = await listApks();
+    const latest = availableApks.find((apk) => remoteFiles.has(apk.filename));
+    if (!latest) {
+      fail('runClean', 'Nenhum APK do manifest foi encontrado no servidor', {
+        manifestCount: availableApks.length,
+        remoteCount: remoteFiles.size,
+      });
+    }
+
+    const obsoleteFiles = [...remoteFiles.keys()].filter((filename) => filename !== latest.filename);
+    const unsafeFilename = obsoleteFiles.find(
+      (filename) => path.basename(filename) !== filename || !/^[A-Za-z0-9._-]+\.apk$/.test(filename),
+    );
+    if (unsafeFilename) {
+      fail('runClean', 'Nome de APK remoto invalido; limpeza interrompida', {
+        filename: unsafeFilename,
+      });
+    }
+
+    if (obsoleteFiles.length > 0) {
+      log('runClean', 'INFO', 'Removendo APKs remotos obsoletos', {
+        keep: latest.filename,
+        removeCount: obsoleteFiles.length,
+      });
+      sftpBatch(obsoleteFiles.map((filename) => `rm "${APK_REMOTE_DIR}/${filename}"`));
+    } else {
+      log('runClean', 'INFO', 'Nenhum APK remoto obsoleto encontrado', {
+        keep: latest.filename,
+      });
+    }
+
+    await syncManifestWithRemote();
+    await regenerateInstallPage();
+    uploadManifestToServer();
+    log('runClean', 'INFO', 'Limpeza dos APKs concluida', {
+      kept: latest.filename,
+      removed: obsoleteFiles.length,
+    });
+  } finally {
+    closeSshControlMaster();
+  }
+}
+
 // ---------------------------------------------------------------------------
 // CLI dispatcher
 // ---------------------------------------------------------------------------
@@ -1054,15 +1109,16 @@ function parseUploadFlags(argv: string[]): UploadFlags {
 
 async function main(): Promise<void> {
   const command = process.argv[2];
-  const validCommands = ['build', 'upload', 'publish', 'regenerate'];
+  const validCommands = ['build', 'upload', 'publish', 'regenerate', 'clean'];
 
   if (!command || !validCommands.includes(command)) {
     console.error(
-      `Uso: tsx scripts/build-android-apk.ts <build|upload|publish|regenerate> [--file <name>] [--force]\n` +
+      `Uso: tsx scripts/build-android-apk.ts <build|upload|publish|regenerate|clean> [--file <name>] [--force]\n` +
         '  build      — compila o APK e deposita em assets/apk-staging/\n' +
         '  upload     — envia o APK do staging ao servidor\n' +
         '  publish    — build + upload\n' +
         '  regenerate — regenera apenas a página /install (sem upload)\n' +
+        '  clean      — remove APKs remotos, preservando apenas o mais recente\n' +
         '  --file <name>  — envia um APK específico do staging\n' +
         '  --force        — reenvia mesmo que o APK já exista no servidor',
     );
@@ -1083,6 +1139,9 @@ async function main(): Promise<void> {
         break;
       case 'regenerate':
         await runRegenerate();
+        break;
+      case 'clean':
+        await runClean();
         break;
     }
   } catch (err) {
