@@ -619,6 +619,7 @@ function renderInstallPage(apks: ApkEntry[]): string {
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
   <title>Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}</title>
   <meta name="description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
