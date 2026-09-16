@@ -34,6 +34,7 @@ import {
  *   npm run apk:build           # apenas compilar
  *   npm run apk:upload          # enviar o APK mais recente do staging
  *   npm run apk:upload -- --file rapport-crypto-chat-0.3.1-20260829-120000.apk
+ *   npm run apk:upload -- --comment "Corrige handshake WebRTC"
  *   npm run apk:publish         # build + upload
  *   npm run apk:clean           # remove APKs remotos, exceto o mais recente
  *
@@ -46,7 +47,11 @@ import {
  *   EAS_PROFILE      — perfil do eas.json (default: preview)
  *   JAVA_HOME        — JDK 21 completo; detectado automaticamente se ausente
  *
- * Variáveis Expo são lidas exclusivamente de dApp/.env.
+ * Variáveis Expo: o eas.json usa `"environment"` (ex.: preview), então o EAS
+ * resolve as variáveis do ambiente correspondente no servidor EAS
+ * (`eas env:list preview`). Como fallback para builds locais, dApp/.env
+ * também é injetado no process.env do `eas build`; em caso de conflito,
+ * as variáveis do ambiente EAS prevalecem.
  */
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -79,6 +84,12 @@ const RELAY_INSTALL_URL = (
   process.env.RELAY_INSTALL_URL ?? 'https://rapport-crypto-p2p-chat-relay.vercel.app/install'
 ).replace(/\/+$/, '');
 const EAS_PROFILE = process.env.EAS_PROFILE ?? 'preview';
+/**
+ * Limite máximo (em caracteres) para o comentário informado via
+ * `--comment` no upload. Garante que o texto permaneça curto e
+ * previsível tanto no manifest público quanto no card da página /install.
+ */
+const MAX_COMMENT_LENGTH = 280;
 
 const ANDROID_HOME = process.env.ANDROID_HOME ?? path.join(os.homedir(), 'Android/Sdk');
 const DAPP_ENV_PATH = path.join(DAPP_DIR, '.env');
@@ -93,6 +104,7 @@ interface ApkEntry {
   version: string;
   uploadedAt: Date;
   size: number;
+  comment?: string;
 }
 
 interface ManifestEntry {
@@ -100,6 +112,7 @@ interface ManifestEntry {
   version: string;
   uploadedAt: string;
   size: number;
+  comment?: string;
 }
 
 interface Manifest {
@@ -111,6 +124,7 @@ interface StagingMeta {
   version: string;
   builtAt: string;
   size: number;
+  comment?: string;
 }
 
 function ts(): string {
@@ -333,6 +347,7 @@ async function addApkToManifest(entry: ApkEntry): Promise<void> {
     version: entry.version,
     uploadedAt: entry.uploadedAt.toISOString(),
     size: entry.size,
+    ...(entry.comment ? { comment: entry.comment } : {}),
   });
   await writeManifest(manifest);
 }
@@ -344,6 +359,7 @@ async function listApks(): Promise<ApkEntry[]> {
     version: e.version,
     uploadedAt: new Date(e.uploadedAt),
     size: e.size,
+    ...(e.comment ? { comment: e.comment } : {}),
   }));
   // Mais novos primeiro.
   apks.sort((a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime());
@@ -600,11 +616,14 @@ function renderInstallPage(apks: ApkEntry[]): string {
   const apkRows = apks.map((apk, idx) => {
     const downloadUrl = `${APK_PUBLIC_URL}/${encodeURIComponent(apk.filename)}`;
     const isLatest = idx === 0;
+    const commentHtml = apk.comment
+      ? `\n          <span class="apk-comment">${escapeHtml(apk.comment)}</span>`
+      : '';
     return `      <a class="apk-row${isLatest ? ' apk-latest' : ''}" href="${downloadUrl}" download>
         <div class="apk-info">
           <span class="apk-version">v${escapeHtml(apk.version)}${isLatest ? ' <span class="latest-tag">mais recente</span>' : ''}</span>
           <span class="apk-meta">${escapeHtml(formatDate(apk.uploadedAt))} &middot; ${escapeHtml(humanSize(apk.size))}</span>
-          <span class="apk-filename">${escapeHtml(apk.filename)}</span>
+          <span class="apk-filename">${escapeHtml(apk.filename)}</span>${commentHtml}
         </div>
         <span class="apk-download">Baixar</span>
       </a>`;
@@ -665,6 +684,10 @@ function renderInstallPage(apks: ApkEntry[]): string {
       font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
       font-size:.75rem; color:var(--secondary); word-break:break-all;
     }
+    .apk-comment {
+      font-size:.8rem; color:var(--secondary); margin-top:.25rem;
+      white-space:pre-wrap; word-break:break-word;
+    }
     .apk-download {
       flex-shrink:0; padding:.6rem 1.2rem; border-radius:.6rem;
       background:var(--brand); color:#fff; font-size:.85rem; font-weight:700;
@@ -722,6 +745,7 @@ interface PublicManifest {
   installUrl: string;
   apkServerUrl: string;
   size: number | null;
+  comment: string | null;
 }
 
 async function regenerateInstallPage(): Promise<void> {
@@ -741,6 +765,7 @@ async function regenerateInstallPage(): Promise<void> {
         installUrl: RELAY_INSTALL_URL,
         apkServerUrl: APK_PUBLIC_URL,
         size: latest.size,
+        comment: latest.comment ?? null,
       }
     : {
         latestVersion: null,
@@ -750,6 +775,7 @@ async function regenerateInstallPage(): Promise<void> {
         installUrl: RELAY_INSTALL_URL,
         apkServerUrl: APK_PUBLIC_URL,
         size: null,
+        comment: null,
       };
   await fs.writeFile(
     path.join(PUBLIC_INSTALL_DIR, 'manifest.json'),
@@ -919,7 +945,17 @@ async function runBuild(): Promise<void> {
  * atualiza o manifest local, sincroniza com o remoto e regenera a página
  * /install.
  */
-async function runUpload(fileFlag?: string, force = false): Promise<void> {
+async function runUpload(
+  fileFlag?: string,
+  force = false,
+  comment?: string,
+): Promise<void> {
+  if (comment && comment.length > MAX_COMMENT_LENGTH) {
+    fail('runUpload', 'Comentario excede o limite de caracteres', {
+      length: comment.length,
+      max: MAX_COMMENT_LENGTH,
+    });
+  }
   log('runUpload', 'INFO', 'Iniciando upload do APK (do staging)', {
     sshHost: APK_SSH_HOST,
     remoteDir: APK_REMOTE_DIR,
@@ -927,6 +963,7 @@ async function runUpload(fileFlag?: string, force = false): Promise<void> {
     manifestPath: MANIFEST_PATH,
     stagingDir: STAGING_DIR,
     force,
+    commentLength: comment?.length ?? 0,
   });
 
   const apkPath = await resolveStagingApk(fileFlag);
@@ -971,11 +1008,13 @@ async function runUpload(fileFlag?: string, force = false): Promise<void> {
       version: meta.version,
       uploadedAt: new Date(),
       size: meta.size,
+      ...(comment ? { comment } : {}),
     });
     log('runUpload', 'INFO', 'APK registrado no manifest', {
       dest: apkName,
       version: meta.version,
       size: meta.size,
+      comment,
     });
 
     // 5. Sincroniza manifest com remoto e regenera página.
@@ -1003,7 +1042,7 @@ async function runUpload(fileFlag?: string, force = false): Promise<void> {
 /**
  * Subcomando `publish`: executa build seguido de upload.
  */
-async function runPublish(force?: boolean): Promise<void> {
+async function runPublish(force?: boolean, comment?: string): Promise<void> {
   log('runPublish', 'INFO', 'Iniciando publish (build + upload)', {
     dappDir: DAPP_DIR,
     sshHost: APK_SSH_HOST,
@@ -1014,12 +1053,13 @@ async function runPublish(force?: boolean): Promise<void> {
     androidHome: ANDROID_HOME,
     dappEnvPath: DAPP_ENV_PATH,
     force,
+    commentLength: comment?.length ?? 0,
   });
 
   await runBuild();
 
   // Pega o APK mais recente do staging (acabou de ser gerado).
-  await runUpload(undefined, force);
+  await runUpload(undefined, force, comment);
 }
 
 /**
@@ -1098,6 +1138,7 @@ async function runClean(): Promise<void> {
 interface UploadFlags {
   file?: string;
   force?: boolean;
+  comment?: string;
 }
 
 function parseUploadFlags(argv: string[]): UploadFlags {
@@ -1105,7 +1146,14 @@ function parseUploadFlags(argv: string[]): UploadFlags {
   const file =
     idx !== -1 && idx + 1 < argv.length ? argv[idx + 1] : undefined;
   const force = argv.includes('--force');
-  return { file, force };
+  const commentIdx = argv.indexOf('--comment');
+  const commentEq = argv.find((a) => a.startsWith('--comment='));
+  const comment = commentEq
+    ? commentEq.slice('--comment='.length)
+    : commentIdx !== -1 && commentIdx + 1 < argv.length
+      ? argv[commentIdx + 1]
+      : undefined;
+  return { file, force, comment };
 }
 
 async function main(): Promise<void> {
@@ -1114,14 +1162,15 @@ async function main(): Promise<void> {
 
   if (!command || !validCommands.includes(command)) {
     console.error(
-      `Uso: tsx scripts/build-android-apk.ts <build|upload|publish|regenerate|clean> [--file <name>] [--force]\n` +
+      `Uso: tsx scripts/build-android-apk.ts <build|upload|publish|regenerate|clean> [--file <name>] [--force] [--comment <texto>]\n` +
         '  build      — compila o APK e deposita em assets/apk-staging/\n' +
         '  upload     — envia o APK do staging ao servidor\n' +
         '  publish    — build + upload\n' +
         '  regenerate — regenera apenas a página /install (sem upload)\n' +
         '  clean      — remove APKs remotos, preservando apenas o mais recente\n' +
-        '  --file <name>  — envia um APK específico do staging\n' +
-        '  --force        — reenvia mesmo que o APK já exista no servidor',
+        '  --file <name>     — envia um APK específico do staging\n' +
+        '  --force           — reenvia mesmo que o APK já exista no servidor\n' +
+        `  --comment <texto> — comentário sobre a versão (máx ${MAX_COMMENT_LENGTH} chars), exibido no card da página /install e no manifest.json`,
     );
     process.exit(1);
   }
@@ -1133,10 +1182,10 @@ async function main(): Promise<void> {
         await runBuild();
         break;
       case 'upload':
-        await runUpload(uploadFlags.file, uploadFlags.force);
+        await runUpload(uploadFlags.file, uploadFlags.force, uploadFlags.comment);
         break;
       case 'publish':
-        await runPublish(uploadFlags.force);
+        await runPublish(uploadFlags.force, uploadFlags.comment);
         break;
       case 'regenerate':
         await runRegenerate();

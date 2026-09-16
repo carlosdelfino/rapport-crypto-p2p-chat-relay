@@ -62,6 +62,19 @@ npm run apk:regenerate  # regenera apenas a página /install e manifest.json
 npm run apk:clean       # remove APKs disponíveis, preservando apenas o mais recente
 ```
 
+Flags opcionais de `apk:upload` / `apk:publish`:
+
+```bash
+npm run apk:upload -- --file <nome.apk>        # envia um APK específico do staging
+npm run apk:upload -- --force                  # reenvia mesmo que o APK já exista no servidor
+npm run apk:upload -- --comment "texto"        # comentário sobre a versão (máx 280 chars)
+```
+
+O comentário informado via `--comment` descreve o que a versão disponibiliza e é
+exibido no card correspondente da página `/install`, além de ficar registrado no
+manifest local (`assets/apk-manifest.json`) e no `manifest.json` público
+(`public/install/manifest.json`, também servido por `https://apk.rapport.tec.br`).
+
 ### Fluxo de distribuição
 
 1. `apk:publish` compila o APK e envia para o servidor `apk_rapport` via SFTP.
