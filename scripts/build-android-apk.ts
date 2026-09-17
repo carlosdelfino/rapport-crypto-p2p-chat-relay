@@ -83,6 +83,7 @@ const LANDING_URL = 'https://rapport.tec.br/';
 const RELAY_INSTALL_URL = (
   process.env.RELAY_INSTALL_URL ?? 'https://rapport-crypto-p2p-chat-relay.vercel.app/install'
 ).replace(/\/+$/, '');
+const RELAY_BASE_URL = RELAY_INSTALL_URL.replace(/\/install$/, '');
 const EAS_PROFILE = process.env.EAS_PROFILE ?? 'preview';
 /**
  * Limite máximo (em caracteres) para o comentário informado via
@@ -633,6 +634,27 @@ function renderInstallPage(apks: ApkEntry[]): string {
     ? '    <p class="empty">Nenhum APK disponível ainda. Volte em breve.</p>\n'
     : `    <div class="apk-list">\n${apkRows}\n    </div>`;
 
+  const installJsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Rapport Crypto P2P Chat',
+    operatingSystem: 'Android',
+    applicationCategory: 'CommunicationApplication',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'BRL' },
+    url: RELAY_INSTALL_URL,
+    downloadUrl: latest
+      ? `${APK_PUBLIC_URL}/${encodeURIComponent(latest.filename)}`
+      : RELAY_INSTALL_URL,
+    ...(latest ? { softwareVersion: latest.version } : {}),
+    description:
+      'Aplicativo de chat criptografado ponta a ponta, descentralizado, com identidade baseada em carteira blockchain.',
+    author: {
+      '@type': 'Organization',
+      name: 'Rapport Tecnologia e Inovação',
+      url: 'https://rapport.tec.br',
+    },
+  });
+
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -651,6 +673,26 @@ function renderInstallPage(apks: ApkEntry[]): string {
   <meta name="robots" content="index, follow"/>
   <title>Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}</title>
   <meta name="description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
+  <meta name="theme-color" content="#020617"/>
+  <meta name="author" content="Rapport Tecnologia e Inovação"/>
+  <link rel="canonical" href="${RELAY_INSTALL_URL}"/>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Rapport Crypto P2P Chat"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta property="og:title" content="Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}"/>
+  <meta property="og:description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
+  <meta property="og:url" content="${RELAY_INSTALL_URL}"/>
+  <meta property="og:image" content="${RELAY_BASE_URL}/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Rapport Crypto P2P Chat — logo"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}"/>
+  <meta name="twitter:description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
+  <meta name="twitter:image" content="${RELAY_BASE_URL}/og-image.png"/>
+  <script type="application/ld+json">${installJsonLd}</script>
   <style>
     :root {
       --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
@@ -757,11 +799,42 @@ interface PublicManifest {
   comment: string | null;
 }
 
+/**
+ * Gera o sitemap.xml público com as páginas indexáveis do relay.
+ * O `lastmod` de /install acompanha a data do APK mais recente; as páginas
+ * estáticas (/ e /stats) não declaram lastmod porque sua data de mudança
+ * não é conhecida pelo script.
+ */
+function renderSitemap(apks: ApkEntry[]): string {
+  const latest = apks[0];
+  const installLastmod = latest
+    ? `\n    <lastmod>${latest.uploadedAt.toISOString().slice(0, 10)}</lastmod>`
+    : '';
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${RELAY_BASE_URL}/</loc>
+  </url>
+  <url>
+    <loc>${RELAY_BASE_URL}/install</loc>${installLastmod}
+  </url>
+  <url>
+    <loc>${RELAY_BASE_URL}/stats</loc>
+  </url>
+</urlset>
+`;
+}
+
 async function regenerateInstallPage(): Promise<void> {
   const apks = await listApks();
   const html = renderInstallPage(apks);
   await ensureDir(PUBLIC_INSTALL_DIR);
   await fs.writeFile(path.join(PUBLIC_INSTALL_DIR, 'index.html'), html, 'utf8');
+  await fs.writeFile(
+    path.resolve(BACKEND_DIR, 'public/sitemap.xml'),
+    renderSitemap(apks),
+    'utf8',
+  );
 
   // Manifest JSON para o dApp consultar a versão mais recente sem parsear HTML.
   const latest = apks[0];
