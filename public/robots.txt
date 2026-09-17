@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://rapport-crypto-p2p-chat-relay.vercel.app/sitemap.xml
+Sitemap: https://crypto-chat.rapport.tec.br/sitemap.xml

@@ -81,7 +81,7 @@ const APK_PUBLIC_URL = (
 ).replace(/\/+$/, '');
 const LANDING_URL = 'https://rapport.tec.br/';
 const RELAY_INSTALL_URL = (
-  process.env.RELAY_INSTALL_URL ?? 'https://rapport-crypto-p2p-chat-relay.vercel.app/install'
+  process.env.RELAY_INSTALL_URL ?? 'https://crypto-chat.rapport.tec.br/install'
 ).replace(/\/+$/, '');
 const RELAY_BASE_URL = RELAY_INSTALL_URL.replace(/\/install$/, '');
 const EAS_PROFILE = process.env.EAS_PROFILE ?? 'preview';
