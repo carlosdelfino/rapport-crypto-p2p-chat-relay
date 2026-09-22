@@ -1,10 +1,13 @@
 import { Redis } from '@upstash/redis';
-import type { SignalEnvelope, PeerRecord } from './types.js';
+import type { SignalEnvelope, PeerRecord, EscrowRequestRecord } from './types.js';
 
 const PEER_TTL_MS = 5 * 60 * 1000;
 const SIGNAL_TTL_S = 60 * 60;
 const CHAT_MESSAGE_COUNTER_KEY = 'stats:chat_messages:total';
 const CHAT_TOPIC_SET_KEY = 'stats:chat_topics';
+const ESCROW_REQUESTS_KEY = 'escrow:requests';
+const ESCROW_REQUESTS_TTL_S = 30 * 24 * 60 * 60;
+const ESCROW_REQUESTS_MAX = 500;
 
 function isChatTopic(topic: string): boolean {
   return topic.startsWith('chat.v1.direct.') || topic.startsWith('/chat/v1/group/');
@@ -23,6 +26,8 @@ interface Store {
   getPeers(minLastSeen?: number): Promise<PeerRecord[]>;
   removePeer(wallet: string): Promise<void>;
   getStats(): Promise<RelayStats>;
+  addEscrowRequest(request: EscrowRequestRecord): Promise<void>;
+  getEscrowRequests(chainId?: number): Promise<EscrowRequestRecord[]>;
 }
 
 class UpstashStore implements Store {
@@ -199,6 +204,34 @@ class UpstashStore implements Store {
       updatedAt: new Date().toISOString(),
     };
   }
+
+  async addEscrowRequest(request: EscrowRequestRecord): Promise<void> {
+    // Dedup por escrowId: um retry do app não cria registros duplicados.
+    const existing = await this.getEscrowRequests();
+    if (existing.some((r) => r.escrowId === request.escrowId)) {
+      console.log(`[relay:store] addEscrowRequest dedup escrowId:${request.escrowId}`);
+      return;
+    }
+    await this.redis.lpush(ESCROW_REQUESTS_KEY, JSON.stringify(request));
+    await this.redis.ltrim(ESCROW_REQUESTS_KEY, 0, ESCROW_REQUESTS_MAX - 1);
+    await this.redis.expire(ESCROW_REQUESTS_KEY, ESCROW_REQUESTS_TTL_S);
+    console.log(`[relay:store] addEscrowRequest chainId:${request.chainId} escrowId:${request.escrowId}`);
+  }
+
+  async getEscrowRequests(chainId?: number): Promise<EscrowRequestRecord[]> {
+    const raw = await this.redis.lrange(ESCROW_REQUESTS_KEY, 0, -1);
+    if (!Array.isArray(raw)) return [];
+    const parsed = raw
+      .map((item) => {
+        try {
+          return typeof item === 'string' ? (JSON.parse(item) as EscrowRequestRecord) : (item as EscrowRequestRecord);
+        } catch {
+          return null;
+        }
+      })
+      .filter((item): item is EscrowRequestRecord => item !== null);
+    return chainId !== undefined ? parsed.filter((r) => r.chainId === chainId) : parsed;
+  }
 }
 
 class MemoryStore implements Store {
@@ -206,6 +239,7 @@ class MemoryStore implements Store {
   private peers = new Map<string, PeerRecord>();
   private chatMessagesTotal = 0;
   private chatTopics = new Set<string>();
+  private escrowRequests: EscrowRequestRecord[] = [];
 
   async addSignal(topic: string, envelope: SignalEnvelope): Promise<void> {
     const list = this.signals.get(topic) ?? [];
@@ -272,6 +306,20 @@ class MemoryStore implements Store {
       totalSystemSignals,
       updatedAt: new Date().toISOString(),
     };
+  }
+
+  async addEscrowRequest(request: EscrowRequestRecord): Promise<void> {
+    if (this.escrowRequests.some((r) => r.escrowId === request.escrowId)) return;
+    this.escrowRequests.unshift(request);
+    if (this.escrowRequests.length > ESCROW_REQUESTS_MAX) {
+      this.escrowRequests.length = ESCROW_REQUESTS_MAX;
+    }
+  }
+
+  async getEscrowRequests(chainId?: number): Promise<EscrowRequestRecord[]> {
+    return chainId !== undefined
+      ? this.escrowRequests.filter((r) => r.chainId === chainId)
+      : [...this.escrowRequests];
   }
 }
 

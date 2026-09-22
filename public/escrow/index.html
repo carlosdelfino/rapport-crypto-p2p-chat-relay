@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WY96WV41T8');
+  </script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
+  <meta name="robots" content="index, follow"/>
+  <title>Escrow — Pagamento garantido | Rapport Crypto Chat</title>
+  <meta name="description" content="Envie cripto com segurança usando escrow arbitrado: o pagador escolhe um árbitro de confiança, o recebedor pode adicionar um segundo, e os fundos só são liberados após aprovação. Transparente, rastreável e on-chain."/>
+  <meta name="keywords" content="escrow, pagamento garantido, arbitragem blockchain, escrow cripto, contrato inteligente, rapport, pagamento seguro p2p"/>
+  <meta name="theme-color" content="#020617"/>
+  <meta name="author" content="Rapport Tecnologia e Inovação"/>
+  <link rel="canonical" href="https://crypto-chat.rapport.tec.br/escrow"/>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="Rapport Crypto Chat"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta property="og:title" content="Escrow — Pagamento garantido | Rapport Crypto Chat"/>
+  <meta property="og:description" content="Pagamentos cripto protegidos por arbitragem: árbitros escolhidos pelas partes, aprovação obrigatória após prontidão do recebedor, prazo com reembolso automático e trilha de auditoria no chat."/>
+  <meta property="og:url" content="https://crypto-chat.rapport.tec.br/escrow"/>
+  <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Rapport Crypto Chat — Escrow"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Escrow — Pagamento garantido | Rapport Crypto Chat"/>
+  <meta name="twitter:description" content="Pagamentos cripto protegidos por arbitragem on-chain com trilha de auditoria no chat."/>
+  <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Escrow — Pagamento garantido",
+        "url": "https://crypto-chat.rapport.tec.br/escrow",
+        "inLanguage": "pt-BR",
+        "description": "Sistema de escrow arbitrado do Rapport Crypto Chat: pagamentos cripto protegidos por árbitros escolhidos pelas partes.",
+        "isPartOf": { "@type": "WebSite", "name": "Rapport Crypto Chat", "url": "https://crypto-chat.rapport.tec.br/" },
+        "publisher": { "@type": "Organization", "name": "Rapport Tecnologia e Inovação", "url": "https://rapport.tec.br" }
+      },
+      {
+        "@type": "HowTo",
+        "name": "Como enviar um pagamento com escrow",
+        "description": "Fluxo completo de um pagamento com escrow arbitrado no Rapport Crypto Chat.",
+        "step": [
+          { "@type": "HowToStep", "position": 1, "name": "Iniciar", "text": "No chat com o recebedor, digite /escrow <valor> <moeda>, <rede>, <dias>." },
+          { "@type": "HowToStep", "position": 2, "name": "Escolher árbitro", "text": "Selecione um contato como árbitro. A lista é ordenada pelos mais usados." },
+          { "@type": "HowToStep", "position": 3, "name": "Aceite do árbitro", "text": "O árbitro recebe um convite no chat e aceita ou recusa a arbitragem." },
+          { "@type": "HowToStep", "position": 4, "name": "Segundo árbitro", "text": "O recebedor pode aceitar 1 árbitro ou convidar um segundo árbitro dos próprios contatos." },
+          { "@type": "HowToStep", "position": 5, "name": "Depósito", "text": "O pagador deposita os fundos no contrato de escrow on-chain." },
+          { "@type": "HowToStep", "position": 6, "name": "Prontidão", "text": "O recebedor marca que está pronto (/escrow done ou toque na mensagem). Só então os árbitros podem decidir." },
+          { "@type": "HowToStep", "position": 7, "name": "Decisão", "text": "Cada árbitro aprova ou rejeita. Com 2 árbitros, ambos precisam aprovar." },
+          { "@type": "HowToStep", "position": 8, "name": "Liquidação", "text": "Aprovado: recebedor recebe o valor líquido, gestor recebe 0,50% e cada árbitro 0,25%. Rejeitado ou expirado: o pagador é reembolsado." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "O que acontece se o árbitro não responder?", "acceptedAnswer": { "@type": "Answer", "text": "Se o prazo do escrow expirar sem decisão, qualquer participante pode executar o reembolso automático e o pagador recebe os fundos de volta." } },
+          { "@type": "Question", "name": "Um árbitro pode aprovar antes de eu estar pronto?", "acceptedAnswer": { "@type": "Answer", "text": "Não. O contrato só aceita aprovações depois que o recebedor marca prontidão — uma proteção anti-fraude embutida no EscrowVault." } },
+          { "@type": "Question", "name": "Quais são as taxas?", "acceptedAnswer": { "@type": "Answer", "text": "0,50% para o gestor do app e 0,25% para cada árbitro. As taxas são descontadas do valor custodiado no momento da liquidação." } },
+          { "@type": "Question", "name": "E se a rede não tiver contrato de escrow?", "acceptedAnswer": { "@type": "Answer", "text": "O app avisa o pagador e notifica o gestor do aplicativo, que é informado pelo chat e pela API do relay para priorizar o deploy naquela rede." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
+      --border:#1e293b; --border-hover:#334155;
+      --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
+      --brand:#ea580c; --brand-light:#fb923c; --brand-dark:#c2410c;
+      --brand-300:#fdba74; --brand-500:#f97316;
+      --ok:#4ade80; --danger:#f87171;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6;
+      min-height:100vh; padding:1rem;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:52rem; margin:0 auto; padding:1rem 0; }
+
+    .hero { text-align:center; padding:3rem 1rem 2rem; }
+    .hero h1 {
+      font-size:clamp(1.9rem,5vw,2.8rem); font-weight:800;
+      color:var(--brand-light); margin-bottom:.75rem; letter-spacing:-.02em;
+    }
+    .hero .tagline { color:var(--secondary); font-size:1.1rem; max-width:40rem; margin:0 auto 1rem; }
+    .hero .subtagline { color:var(--muted); font-size:.9rem; max-width:36rem; margin:0 auto; }
+    .badge {
+      display:inline-block; margin-top:1rem; padding:.3rem .8rem;
+      border:1px solid var(--border); border-radius:999px;
+      font-size:.75rem; font-weight:600; color:var(--muted);
+      background:var(--card-60); backdrop-filter:blur(8px);
+    }
+    .badge .dot {
+      display:inline-block; width:.5rem; height:.5rem; border-radius:50%;
+      background:var(--brand-500); margin-right:.4rem; vertical-align:middle;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .cta-row { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; margin-top:1.5rem; }
+    .cta {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.8rem 1.6rem; border-radius:.7rem;
+      font-size:.95rem; font-weight:700; text-decoration:none;
+      transition:transform .2s, box-shadow .2s;
+    }
+    .cta-primary { background:var(--brand); color:#fff; box-shadow:0 8px 24px rgba(234,88,12,.2); }
+    .cta-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(234,88,12,.3); }
+    .cta-secondary { border:1px solid var(--border); color:var(--text); background:var(--card-60); backdrop-filter:blur(8px); }
+    .cta-secondary:hover { border-color:var(--brand); transform:translateY(-2px); }
+
+    .section-title {
+      font-size:1.25rem; font-weight:700; color:var(--brand-light);
+      margin:3rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
+    }
+    .lead { color:var(--secondary); font-size:1rem; margin-bottom:1rem; }
+    .muted { color:var(--muted); font-size:.9rem; }
+
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem; margin:1.5rem 0; }
+    .card {
+      border:1px solid var(--border); border-radius:1rem;
+      background:var(--card-60); backdrop-filter:blur(8px); padding:1.4rem;
+    }
+    .card .icon {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:2.4rem; height:2.4rem; border-radius:.7rem;
+      background:rgba(234,88,12,.12); color:var(--brand-light);
+      font-size:1.2rem; margin-bottom:.6rem;
+    }
+    .card h3 { font-size:.98rem; font-weight:700; margin-bottom:.35rem; }
+    .card p { font-size:.85rem; color:var(--muted); }
+
+    /* Timeline do fluxo */
+    .steps { display:flex; flex-direction:column; gap:0; margin:1.5rem 0; }
+    .step {
+      display:flex; gap:1rem; padding:1rem 0; position:relative;
+    }
+    .step::before {
+      content:""; position:absolute; left:1.19rem; top:2.9rem; bottom:-.4rem;
+      width:2px; background:var(--border);
+    }
+    .step:last-child::before { display:none; }
+    .step .num {
+      flex:0 0 2.4rem; height:2.4rem; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(234,88,12,.12); border:1px solid var(--brand);
+      color:var(--brand-light); font-weight:800; font-size:.9rem;
+      position:relative; z-index:1;
+    }
+    .step .body { flex:1; border:1px solid var(--border); border-radius:.9rem; background:var(--card-60); padding:1rem 1.2rem; }
+    .step .body h3 { font-size:.95rem; font-weight:700; margin-bottom:.3rem; }
+    .step .body h3 .who { color:var(--brand-light); font-weight:700; }
+    .step .body p { font-size:.85rem; color:var(--muted); }
+    .step .body code, .cmd {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.82rem; color:var(--brand-300);
+      background:rgba(234,88,12,.08); padding:.1rem .4rem; border-radius:.35rem;
+    }
+
+    .callout {
+      border:1px solid var(--brand); border-left-width:4px; border-radius:.9rem;
+      background:rgba(234,88,12,.08); padding:1rem 1.2rem; margin:1.5rem 0;
+      font-size:.9rem; color:var(--secondary);
+    }
+    .callout strong { color:var(--brand-light); }
+    .callout.ok { border-color:var(--ok); background:rgba(74,222,128,.07); }
+    .callout.ok strong { color:var(--ok); }
+
+    /* Tabela de taxas */
+    .fee-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.9rem; }
+    .fee-table th, .fee-table td {
+      text-align:left; padding:.7rem .9rem; border:1px solid var(--border);
+    }
+    .fee-table th { background:var(--card); color:var(--brand-light); font-weight:700; }
+    .fee-table td { color:var(--secondary); }
+    .fee-table td.pct { color:var(--brand-light); font-weight:700; white-space:nowrap; }
+
+    /* Redes */
+    .networks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(11rem,1fr)); gap:.75rem; margin:1rem 0; }
+    .net-card {
+      border:1px solid var(--border); border-radius:.8rem;
+      background:var(--card-60); padding:.9rem 1rem; font-size:.85rem;
+    }
+    .net-card .net-name { font-weight:700; color:var(--text); }
+    .net-card .net-kind { color:var(--muted); font-size:.75rem; }
+    .net-card .net-addr {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.7rem; color:var(--brand-300); word-break:break-all; margin-top:.3rem;
+    }
+    .net-card .net-link { color:var(--brand-light); font-size:.75rem; text-decoration:none; }
+    .net-card .net-link:hover { color:var(--brand); }
+    .net-empty { color:var(--muted); font-size:.9rem; padding:1rem; border:1px dashed var(--border); border-radius:.8rem; }
+
+    .footer {
+      text-align:center; color:var(--muted); font-size:.8rem;
+      margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
+    }
+    .footer a { color:var(--brand-light); text-decoration:none; }
+    .footer a:hover { color:var(--brand); }
+    .backlink { display:inline-block; margin-top:1rem; color:var(--brand-light); text-decoration:none; font-size:.9rem; }
+    .backlink:hover { color:var(--brand); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Pagamento garantido com Escrow</h1>
+      <p class="tagline">Envie cripto com a proteção de um árbitro escolhido por voc&ecirc; &mdash; os fundos ficam custodiados em um contrato inteligente e s&oacute; s&atilde;o liberados com aprova&ccedil;&atilde;o.</p>
+      <p class="subtagline">Transparente: cada etapa aparece no chat de todos os envolvidos. Rastre&aacute;vel: cada decis&atilde;o &eacute; uma transa&ccedil;&atilde;o on-chain.</p>
+      <span class="badge"><span class="dot"></span>Escrow arbitrado on-chain</span>
+      <div class="cta-row">
+        <a class="cta cta-primary" href="/install">Instalar o app</a>
+        <a class="cta cta-secondary" href="/">Voltar ao in&iacute;cio</a>
+      </div>
+    </header>
+
+    <h2 class="section-title">O que &eacute; escrow</h2>
+    <p class="lead">
+      Escrow &eacute; um pagamento <strong>com cust&oacute;dia neutra</strong>: em vez de enviar direto ao
+      recebedor, o valor fica travado em um contrato inteligente (<code>EscrowVault</code>) at&eacute; que
+      um <strong>&aacute;rbitro</strong> &mdash; uma terceira pessoa escolhida pelas partes &mdash; confirme
+      que o pagamento deve ser liberado. Se nada der certo, o valor volta ao pagador.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="icon">&#128184;</span>
+        <h3>Pagador</h3>
+        <p>Quem envia. Emite <code>/escrow</code>, escolhe o primeiro &aacute;rbitro e deposita os fundos no contrato.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#129309;</span>
+        <h3>Recebedor</h3>
+        <p>Quem recebe. Pode aceitar 1 &aacute;rbitro ou convidar um segundo dos pr&oacute;prios contatos. Marca <em>pronto para receber</em> antes de qualquer aprova&ccedil;&atilde;o.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#9878;&#65039;</span>
+        <h3>&Aacute;rbitro(s)</h3>
+        <p>Contatos de confian&ccedil;a que julgam o pagamento. Com 2 &aacute;rbitros, <strong>ambos</strong> precisam aprovar. Um recebe convite no chat e precisa aceitar o papel.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#128737;&#65039;</span>
+        <h3>Gestor do app</h3>
+        <p>Mant&eacute;m a infraestrutura de contratos. Recebe uma taxa de 0,50% por escrow liquidado e &eacute; avisado quando uma rede ainda n&atilde;o tem suporte.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">Como funciona &mdash; passo a passo</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="body">
+          <h3><span class="who">Pagador</span> inicia o escrow</h3>
+          <p>No chat com o recebedor, digita <code>/escrow &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;, &lt;dias&gt;</code> &mdash; ex.: <code>/escrow 100 POL, Polygon PoS, 7</code>. O prazo em dias &eacute; obrigat&oacute;rio (m&aacute;x. 365).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="body">
+          <h3><span class="who">Pagador</span> escolhe o &aacute;rbitro</h3>
+          <p>Uma lista dos contatos &eacute; aberta, <strong>ordenada pelos mais usados como &aacute;rbitro</strong>. O escolhido recebe um convite no pr&oacute;prio chat.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="body">
+          <h3><span class="who">&Aacute;rbitro</span> aceita ou recusa</h3>
+          <p>Segurando a mensagem de convite, o contato aceita ou recusa ser &aacute;rbitro. Se recusar, o fluxo para e o pagador escolhe outra pessoa.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div class="body">
+          <h3><span class="who">Recebedor</span> decide: 1 ou 2 &aacute;rbitros</h3>
+          <p>Pode aceitar o &aacute;rbitro &uacute;nico <strong>ou</strong> convidar um segundo &aacute;rbitro dos pr&oacute;prios contatos &mdash; que tamb&eacute;m precisa aceitar o convite.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <div class="body">
+          <h3><span class="who">Pagador</span> deposita os fundos</h3>
+          <p>Com os &aacute;rbitros aceitos, o app executa <code>createEscrow</code> on-chain: o valor sai da carteira do pagador e fica custodiado no contrato.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">6</div>
+        <div class="body">
+          <h3><span class="who">Recebedor</span> sinaliza prontid&atilde;o</h3>
+          <p>Quando estiver pronto para receber, toca na mensagem do escrow (ou usa <code>/escrow done</code>) e confirma. <strong>Pagador e &aacute;rbitros recebem o alerta</strong> de que a decis&atilde;o est&aacute; liberada.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">7</div>
+        <div class="body">
+          <h3><span class="who">&Aacute;rbitros</span> aprovam ou rejeitam</h3>
+          <p>Cada &aacute;rbitro segura a mensagem e escolhe <strong>Aprovar</strong> ou <strong>Rejeitar</strong>. Com 2 &aacute;rbitros, as duas aprova&ccedil;&otilde;es s&atilde;o exigidas.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">8</div>
+        <div class="body">
+          <h3>Liquida&ccedil;&atilde;o autom&aacute;tica</h3>
+          <p><strong>Aprovado:</strong> o recebedor recebe o valor l&iacute;quido; gestor e &aacute;rbitros recebem suas taxas. <strong>Rejeitado ou prazo expirado:</strong> o pagador &eacute; reembolsado com desconto das taxas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Anti-fraude:</strong> o contrato <strong>n&atilde;o aceita aprova&ccedil;&otilde;es antes do recebedor marcar prontid&atilde;o</strong>.
+      Nenhum &aacute;rbitro pode antecipar uma decis&atilde;o &mdash; a aprova&ccedil;&atilde;o s&oacute; existe depois do sinal de quem vai receber.
+    </div>
+
+    <div class="callout ok">
+      <strong>Deadline com reembolso:</strong> se o prazo em dias expirar sem decis&atilde;o, qualquer participante executa
+      <code>refundExpired</code> e o pagador recupera os fundos &mdash; nada fica preso para sempre.
+    </div>
+
+    <h2 class="section-title">Taxas</h2>
+    <p class="lead">Cobradas sobre o valor custodiado, no momento da liquida&ccedil;&atilde;o:</p>
+    <table class="fee-table">
+      <thead>
+        <tr><th>Destinat&aacute;rio</th><th>Taxa</th><th>Quando</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Gestor do app</td><td class="pct">0,50%</td><td>Em toda liquida&ccedil;&atilde;o (aprova&ccedil;&atilde;o, rejei&ccedil;&atilde;o ou reembolso)</td></tr>
+        <tr><td>Cada &aacute;rbitro</td><td class="pct">0,25%</td><td>Por arbitragem realizada (1 ou 2 &aacute;rbitros)</td></tr>
+        <tr><td>Recebedor (aprova&ccedil;&atilde;o)</td><td class="pct">valor l&iacute;quido</td><td>Valor menos as taxas acima</td></tr>
+        <tr><td>Pagador (rejei&ccedil;&atilde;o/reembolso)</td><td class="pct">valor l&iacute;quido</td><td>Valor menos as taxas acima</td></tr>
+      </tbody>
+    </table>
+    <p class="muted">Exemplo: um escrow de 100 POL com 2 &aacute;rbitros liquida 99,00 POL ao recebedor, 0,50 POL ao gestor e 0,25 POL a cada &aacute;rbitro.</p>
+
+    <h2 class="section-title">Transpar&ecirc;ncia e rastreabilidade</h2>
+    <p class="lead">
+      Cada evento do escrow &mdash; convite, aceite, recusa, dep&oacute;sito, prontid&atilde;o, aprova&ccedil;&atilde;o,
+      rejei&ccedil;&atilde;o e reembolso &mdash; &eacute; publicado como mensagem cifrada <strong>nos chats de todos os
+      envolvidos</strong>. Ningu&eacute;m age sem que os demais vejam. A camada on-chain guarda as decis&otilde;es
+      financeiras; a camada de chat guarda a linha do tempo leg&iacute;vel.
+    </p>
+
+    <h2 class="section-title">Tutorial r&aacute;pido</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>1. Abra o chat com o recebedor</h3>
+        <p>O escrow s&oacute; funciona em conversas diretas (n&atilde;o em grupos).</p>
+      </div>
+      <div class="card">
+        <h3>2. Digite o comando</h3>
+        <p><code>/escrow 100 POL, Polygon PoS, 7</code> &mdash; valor, moeda, rede e prazo de 7 dias.</p>
+      </div>
+      <div class="card">
+        <h3>3. Escolha o &aacute;rbitro</h3>
+        <p>Toque num contato da lista (ordenada por quem mais arbitragem fez).</p>
+      </div>
+      <div class="card">
+        <h3>4. Acompanhe no chat</h3>
+        <p>As mensagens do escrow mostram o estado. Segure a mensagem para agir quando for sua vez.</p>
+      </div>
+      <div class="card">
+        <h3>5. Recebedor: pronto</h3>
+        <p><code>/escrow done</code> ou toque na mensagem e confirme <em>Estou pronto para receber</em>.</p>
+      </div>
+      <div class="card">
+        <h3>6. &Aacute;rbitro: decida</h3>
+        <p>Segure a mensagem do escrow e escolha <strong>Aprovar pagamento</strong> ou <strong>Rejeitar</strong>.</p>
+      </div>
+    </div>
+    <p class="muted">Comandos auxiliares: <code>/escrow status</code> mostra o estado atual; <code>/escrow cancel</code> cancela antes do dep&oacute;sito.</p>
+
+    <h2 class="section-title">Redes com escrow dispon&iacute;vel</h2>
+    <p class="muted" id="networks-note">O contrato precisa estar deployado na rede escolhida. Se a rede ainda n&atilde;o tiver suporte, o app avisa voc&ecirc; e notifica o gestor para priorizar o deploy.</p>
+    <div class="networks-grid" id="networks">
+      <div class="net-empty">Carregando redes&hellip;</div>
+    </div>
+
+    <h2 class="section-title">Perguntas frequentes</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>E se o &aacute;rbitro sumir?</h3>
+        <p>O prazo resolve: expirado o deadline, <code>refundExpired</code> devolve os fundos ao pagador. Nada fica bloqueado.</p>
+      </div>
+      <div class="card">
+        <h3>O &aacute;rbitro pode roubar?</h3>
+        <p>N&atilde;o. O &aacute;rbitro s&oacute; decide a dire&ccedil;&atilde;o (recebedor ou pagador) &mdash; o contrato nunca libera fundos para o pr&oacute;prio &aacute;rbitro, apenas a taxa de arbitragem.</p>
+      </div>
+      <div class="card">
+        <h3>Posso ter 2 &aacute;rbitros depois?</h3>
+        <p>Sim &mdash; antes de confirmar prontid&atilde;o, o recebedor pode solicitar um segundo &aacute;rbitro a qualquer momento.</p>
+      </div>
+      <div class="card">
+        <h3>Quais moedas?</h3>
+        <p>Todas as que o app suporta na rede: moeda nativa (ETH, POL&hellip;) e tokens ERC-20 (USDC, BRLA&hellip;).</p>
+      </div>
+      <div class="card">
+        <h3>Quem controla o contrato?</h3>
+        <p>A administra&ccedil;&atilde;o &eacute; feita por uma multisig 2-de-3 da Rapport; upgrades passam por qu&oacute;rum, nunca por uma chave &uacute;nica.</p>
+      </div>
+      <div class="card">
+        <h3>O escrow &eacute; privado?</h3>
+        <p>As mensagens s&atilde;o cifradas ponta-a-ponta entre os participantes. On-chain constam apenas endere&ccedil;os, valores e decis&otilde;es &mdash; sem dados pessoais.</p>
+      </div>
+    </div>
+
+    <a class="backlink" href="/">&larr; Voltar para a p&aacute;gina inicial</a>
+
+    <div class="footer">
+      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
+    </div>
+  </div>
+
+  <script>
+    (async function () {
+      const grid = document.getElementById('networks');
+      const note = document.getElementById('networks-note');
+      try {
+        const res = await fetch('/escrow/contracts.json', { headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const manifest = await res.json();
+        const nets = (manifest && manifest.networks) || [];
+        grid.innerHTML = '';
+        if (nets.length === 0) {
+          grid.innerHTML = '<div class="net-empty">Nenhuma rede com escrow publicada ainda — o deploy inicial está em andamento. Volte em breve.</div>';
+          return;
+        }
+        note.textContent = 'Contratos EscrowVault deployados (proxy transparente, administrado por multisig 2-de-3):';
+        for (const n of nets) {
+          const card = document.createElement('div');
+          card.className = 'net-card';
+          const short = n.escrow ? n.escrow.slice(0, 10) + '…' + n.escrow.slice(-6) : '';
+          const link = n.explorer && n.escrow
+            ? '<a class="net-link" href="' + n.explorer + '/address/' + n.escrow + '" target="_blank" rel="noopener">ver no explorer ↗</a>'
+            : '';
+          card.innerHTML =
+            '<div class="net-name">' + n.name + '</div>' +
+            '<div class="net-kind">chainId ' + n.chainId + (n.isTestnet ? ' · testnet' : ' · mainnet') + '</div>' +
+            '<div class="net-addr">' + short + '</div>' + link;
+          grid.appendChild(card);
+        }
+      } catch (e) {
+        grid.innerHTML = '<div class="net-empty">Não foi possível carregar a lista de redes agora.</div>';
+      }
+    })();
+  </script>
+</body>
+</html>

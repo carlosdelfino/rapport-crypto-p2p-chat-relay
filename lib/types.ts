@@ -21,6 +21,24 @@ export interface PeerRecord {
   signature?: string;
 }
 
+/**
+ * Pedido de suporte de escrow para uma rede sem contrato deployado.
+ * Criado pelo dApp quando um usuário tenta /escrow numa rede ainda sem
+ * EscrowVault — o gestor usa GET /api/escrow-request para acompanhar.
+ */
+export interface EscrowRequestRecord {
+  /** UUID do escrow off-chain no app do pagador. */
+  escrowId: string;
+  requesterWallet: string;
+  chainId: number;
+  networkName: string;
+  amount: string;
+  symbol: string;
+  timestamp: number;
+  receivedAt: number;
+  signature?: string;
+}
+
 export interface ApiResponse<T = unknown> {
   code: number;
   message: string;
