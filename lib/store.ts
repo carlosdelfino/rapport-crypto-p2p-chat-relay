@@ -9,6 +9,90 @@ const ESCROW_REQUESTS_KEY = 'escrow:requests';
 const ESCROW_REQUESTS_TTL_S = 30 * 24 * 60 * 60;
 const ESCROW_REQUESTS_MAX = 500;
 
+function parseAmount(amount: string): number {
+  const normalized = String(amount).replace(/,/g, '').trim();
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+}
+
+interface FinancialStats {
+  totalTransactions: number;
+  volumeBySymbol: Array<{ symbol: string; count: number; amount: number }>;
+  totalAmount: number;
+}
+
+interface NetworkGraphNode {
+  id: string;
+  label: string;
+  group: 'wallet' | 'chat' | 'financial' | 'aggregate';
+  value: number;
+}
+
+interface NetworkGraphLink {
+  source: string;
+  target: string;
+  value: number;
+}
+
+interface NetworkGraph {
+  nodes: NetworkGraphNode[];
+  links: NetworkGraphLink[];
+}
+
+function buildFinancialStats(requests: EscrowRequestRecord[]): FinancialStats {
+  const bySymbol = new Map<string, { count: number; amount: number }>();
+  let totalAmount = 0;
+  for (const request of requests) {
+    const symbol = request.symbol || 'UNKNOWN';
+    const amount = parseAmount(request.amount);
+    const current = bySymbol.get(symbol) ?? { count: 0, amount: 0 };
+    current.count += 1;
+    current.amount += amount;
+    bySymbol.set(symbol, current);
+    totalAmount += amount;
+  }
+  const volumeBySymbol = Array.from(bySymbol.entries())
+    .map(([symbol, data]) => ({ symbol, count: data.count, amount: data.amount }))
+    .sort((a, b) => b.amount - a.amount);
+  return {
+    totalTransactions: requests.length,
+    volumeBySymbol,
+    totalAmount,
+  };
+}
+
+function buildNetworkGraph(
+  totalWallets: number,
+  onlineWallets: number,
+  totalMessages: number,
+  totalChats: number,
+  financial: FinancialStats,
+): NetworkGraph {
+  const nodes: NetworkGraphNode[] = [
+    { id: 'wallets', label: 'Carteiras', group: 'wallet', value: totalWallets },
+    { id: 'online', label: 'Online', group: 'wallet', value: onlineWallets },
+    { id: 'chats', label: 'Chats', group: 'chat', value: totalChats },
+    { id: 'messages', label: 'Mensagens', group: 'chat', value: totalMessages },
+    { id: 'financial', label: 'Mov. financeira', group: 'financial', value: financial.totalTransactions },
+    { id: 'amount', label: 'Montante movimentado', group: 'financial', value: financial.totalAmount },
+  ];
+  const links: NetworkGraphLink[] = [
+    { source: 'wallets', target: 'online', value: onlineWallets },
+    { source: 'wallets', target: 'chats', value: totalChats },
+    { source: 'wallets', target: 'messages', value: totalMessages },
+    { source: 'wallets', target: 'financial', value: financial.totalTransactions },
+    { source: 'financial', target: 'amount', value: financial.totalAmount },
+  ];
+  for (const entry of financial.volumeBySymbol) {
+    const id = `symbol-${entry.symbol}`;
+    nodes.push({ id, label: entry.symbol, group: 'financial', value: entry.count });
+    links.push({ source: 'financial', target: id, value: entry.count });
+    nodes.push({ id: `${id}-amount`, label: `${entry.symbol} volume`, group: 'financial', value: entry.amount });
+    links.push({ source: id, target: `${id}-amount`, value: entry.amount });
+  }
+  return { nodes, links };
+}
+
 function isChatTopic(topic: string): boolean {
   return topic.startsWith('chat.v1.direct.') || topic.startsWith('/chat/v1/group/');
 }
@@ -195,12 +279,29 @@ class UpstashStore implements Store {
       // keys command might be disabled in some Redis configs
     }
 
+    let escrowRequests: EscrowRequestRecord[] = [];
+    try {
+      escrowRequests = await this.getEscrowRequests();
+    } catch {
+      // ignore errors when collecting financial stats
+    }
+    const financial = buildFinancialStats(escrowRequests);
+    const networkGraph = buildNetworkGraph(
+      totalWallets,
+      onlineWallets,
+      totalMessages,
+      totalChats,
+      financial,
+    );
+
     return {
       totalWallets,
       onlineWallets,
       totalMessages,
       totalChats,
       totalSystemSignals,
+      financial,
+      networkGraph,
       updatedAt: new Date().toISOString(),
     };
   }
@@ -298,12 +399,22 @@ class MemoryStore implements Store {
     for (const list of this.signals.values()) {
       totalSystemSignals += list.filter((s) => !isChatMessage(s)).length;
     }
+    const financial = buildFinancialStats(this.escrowRequests);
+    const networkGraph = buildNetworkGraph(
+      this.peers.size,
+      onlineWallets,
+      this.chatMessagesTotal,
+      this.chatTopics.size,
+      financial,
+    );
     return {
       totalWallets: this.peers.size,
       onlineWallets,
       totalMessages: this.chatMessagesTotal,
       totalChats: this.chatTopics.size,
       totalSystemSignals,
+      financial,
+      networkGraph,
       updatedAt: new Date().toISOString(),
     };
   }
@@ -354,7 +465,11 @@ export interface RelayStats {
   totalMessages: number;
   totalChats: number;
   totalSystemSignals: number;
+  financial: FinancialStats;
+  networkGraph: NetworkGraph;
   updatedAt: string;
 }
+
+export type { FinancialStats, NetworkGraph, NetworkGraphNode, NetworkGraphLink };
 
 export type { Store };

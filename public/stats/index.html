@@ -115,6 +115,28 @@
     a:hover { color:var(--brand); }
     .loading { color:var(--muted); font-size:.9rem; }
     .error { color:#ef4444; font-size:.9rem; }
+    .graph-wrap { position:relative; width:100%; height:28rem; border:1px solid var(--border); border-radius:1rem; background:var(--card); overflow:hidden; }
+    .graph-wrap svg { display:block; width:100%; height:100%; }
+    .graph-tooltip {
+      position:absolute; padding:.35rem .55rem; border-radius:.35rem; background:rgba(2,6,23,.9);
+      border:1px solid var(--border); color:var(--text); font-size:.75rem; pointer-events:none;
+      opacity:0; transition:opacity .15s; z-index:10; white-space:nowrap;
+    }
+    .graph-legend {
+      display:flex; flex-wrap:wrap; gap:.5rem .9rem; justify-content:center; margin-top:.75rem; font-size:.75rem; color:var(--muted);
+    }
+    .graph-legend span { display:inline-flex; align-items:center; gap:.35rem; }
+    .legend-dot { width:.65rem; height:.65rem; border-radius:50%; display:inline-block; }
+    .financial-table { width:100%; border-collapse:collapse; font-size:.85rem; }
+    .financial-table th, .financial-table td { padding:.5rem .6rem; text-align:left; border-bottom:1px solid var(--border); }
+    .financial-table th { color:var(--brand-light); font-weight:600; }
+    .financial-table td { color:var(--secondary); }
+    .financial-table tr:last-child td { border-bottom:none; }
+    .mono { font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; }
+    @media (max-width:640px) {
+      .graph-wrap { height:22rem; }
+      h1 { font-size:1.4rem; }
+    }
   </style>
 </head>
 <body>
@@ -124,6 +146,21 @@
 
     <div id="stats-content">
       <p class="loading">Carregando estatísticas…</p>
+    </div>
+
+    <h2>Grafo de interações</h2>
+    <p>Visualização dinâmica dos volumes de chat e movimentação financeira entre carteiras. Os endereços não são exibidos — apenas os agregados.</p>
+    <div class="card">
+      <div class="graph-wrap" id="graph-wrap">
+        <div class="graph-tooltip" id="graph-tooltip"></div>
+      </div>
+      <div class="graph-legend" id="graph-legend"></div>
+    </div>
+
+    <h2>Movimentação financeira</h2>
+    <p>Resumo das transações financeiras agrupadas por ativo.</p>
+    <div class="card" id="financial-content">
+      <p class="loading">Carregando dados financeiros…</p>
     </div>
 
     <h2>Doações</h2>
@@ -158,7 +195,174 @@
 
   <div class="toast" id="toast">Copiado!</div>
 
+  <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
+    function formatNumber(n) {
+      return Number(n).toLocaleString('pt-BR');
+    }
+
+    function formatCompact(n) {
+      return Number(n).toLocaleString('pt-BR', { notation: 'compact', maximumFractionDigits: 1 });
+    }
+
+    function renderStats(s) {
+      document.getElementById('stats-content').innerHTML =
+        '<div class="stats-grid">' +
+          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalWallets) + '</div><div class="stat-label">Carteiras registradas</div></div>' +
+          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.onlineWallets) + '</div><div class="stat-label">Online agora</div></div>' +
+          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalMessages) + '</div><div class="stat-label">Mensagens transmitidas</div></div>' +
+          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalChats) + '</div><div class="stat-label">Chats ativos</div></div>' +
+        '</div>' +
+        '<p class="updated">Atualizado em: ' + new Date(s.updatedAt).toLocaleString('pt-BR') + '</p>';
+    }
+
+    function renderFinancial(financial) {
+      const container = document.getElementById('financial-content');
+      if (!financial || !financial.volumeBySymbol || financial.volumeBySymbol.length === 0) {
+        container.innerHTML = '<p class="loading">Nenhuma movimentação financeira registrada ainda.</p>';
+        return;
+      }
+      let rows = '';
+      for (const item of financial.volumeBySymbol) {
+        rows += '<tr><td class="mono">' + item.symbol + '</td><td>' + formatNumber(item.count) + '</td><td class="mono">' + formatNumber(item.amount) + '</td></tr>';
+      }
+      container.innerHTML =
+        '<table class="financial-table"><thead><tr><th>Ativo</th><th>Transações</th><th>Montante total</th></tr></thead>' +
+        '<tbody>' + rows + '</tbody></table>' +
+        '<p class="updated" style="margin-top:.75rem;">Total de transações financeiras: <strong>' + formatNumber(financial.totalTransactions) + '</strong> · Montante movimentado: <strong>' + formatNumber(financial.totalAmount) + '</strong></p>';
+    }
+
+    let graphSimulation = null;
+
+    function renderGraph(graph) {
+      const wrap = document.getElementById('graph-wrap');
+      let tooltip = document.getElementById('graph-tooltip');
+      if (!wrap || typeof d3 === 'undefined') {
+        if (wrap) wrap.innerHTML = '<p class="loading" style="padding:1rem;">Biblioteca de gráficos indisponível.</p>';
+        return;
+      }
+      if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'graph-tooltip';
+        tooltip.className = 'graph-tooltip';
+      }
+      if (graphSimulation) {
+        graphSimulation.stop();
+        graphSimulation = null;
+      }
+      wrap.innerHTML = '';
+      wrap.appendChild(tooltip);
+
+      const width = wrap.clientWidth;
+      const height = wrap.clientHeight;
+      const svg = d3.select('#graph-wrap').append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .attr('viewBox', [0, 0, width, height]);
+
+      const colorScale = {
+        wallet: '#38bdf8',
+        chat: '#4ade80',
+        financial: '#fbbf24',
+        aggregate: '#a78bfa'
+      };
+
+      const radiusScale = d3.scaleSqrt()
+        .domain([0, d3.max(graph.nodes, function(d) { return d.value; }) || 1])
+        .range([6, 32]);
+
+      const linkWidth = d3.scaleLinear()
+        .domain([0, d3.max(graph.links, function(d) { return d.value; }) || 1])
+        .range([1, 6]);
+
+      graphSimulation = d3.forceSimulation(graph.nodes)
+        .force('link', d3.forceLink(graph.links).id(function(d) { return d.id; }).distance(90))
+        .force('charge', d3.forceManyBody().strength(-260))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('collide', d3.forceCollide().radius(function(d) { return radiusScale(d.value || 0) + 6; }));
+
+      const link = svg.append('g')
+        .attr('stroke', '#334155')
+        .attr('stroke-opacity', 0.6)
+        .selectAll('line')
+        .data(graph.links)
+        .join('line')
+        .attr('stroke-width', function(d) { return linkWidth(d.value || 1); });
+
+      const node = svg.append('g')
+        .selectAll('g')
+        .data(graph.nodes)
+        .join('g')
+        .call(d3.drag()
+          .on('start', function(event, d) {
+            if (!event.active) graphSimulation.alphaTarget(0.3).restart();
+            d.fx = d.x; d.fy = d.y;
+          })
+          .on('drag', function(event, d) {
+            d.fx = event.x; d.fy = event.y;
+          })
+          .on('end', function(event, d) {
+            if (!event.active) graphSimulation.alphaTarget(0);
+            d.fx = null; d.fy = null;
+          }));
+
+      node.append('circle')
+        .attr('r', function(d) { return radiusScale(d.value || 1); })
+        .attr('fill', function(d) { return colorScale[d.group] || colorScale.aggregate; })
+        .attr('stroke', '#0f172a')
+        .attr('stroke-width', 2)
+        .on('mouseover', function(event, d) {
+          const pos = d3.pointer(event, wrap);
+          tooltip.innerHTML = '<strong>' + d.label + '</strong><br/>' + formatCompact(d.value || 0);
+          tooltip.style.opacity = '1';
+          tooltip.style.left = (pos[0] + 12) + 'px';
+          tooltip.style.top = (pos[1] - 24) + 'px';
+        })
+        .on('mousemove', function(event) {
+          const pos = d3.pointer(event, wrap);
+          tooltip.style.left = (pos[0] + 12) + 'px';
+          tooltip.style.top = (pos[1] - 24) + 'px';
+        })
+        .on('mouseout', function() {
+          tooltip.style.opacity = '0';
+        });
+
+      node.append('text')
+        .text(function(d) { return d.label; })
+        .attr('x', function(d) { return radiusScale(d.value || 1) + 5; })
+        .attr('y', 4)
+        .attr('fill', '#cbd5e1')
+        .attr('font-size', '11px')
+        .attr('font-weight', '600')
+        .attr('pointer-events', 'none')
+        .style('text-shadow', '0 1px 2px #020617');
+
+      graphSimulation.on('tick', function() {
+        for (const d of graph.nodes) {
+          const r = radiusScale(d.value || 1);
+          d.x = Math.max(r, Math.min(width - r, d.x));
+          d.y = Math.max(r, Math.min(height - r, d.y));
+        }
+        link
+          .attr('x1', function(d) { return d.source.x; })
+          .attr('y1', function(d) { return d.source.y; })
+          .attr('x2', function(d) { return d.target.x; })
+          .attr('y2', function(d) { return d.target.y; });
+
+        node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+      });
+
+      // Legend
+      const legend = document.getElementById('graph-legend');
+      const groups = ['wallet', 'chat', 'financial'];
+      const labels = { wallet: 'Carteiras', chat: 'Chat', financial: 'Mov. financeira' };
+      let legendHtml = '';
+      for (const g of groups) {
+        legendHtml += '<span><span class="legend-dot" style="background:' + colorScale[g] + '"></span>' + labels[g] + '</span>';
+      }
+      legend.innerHTML = legendHtml;
+    }
+
     async function loadStats() {
       try {
         const resp = await fetch('/api/stats');
@@ -167,14 +371,9 @@
         const s = json.data;
         if (!s) throw new Error('Dados indisponíveis');
 
-        document.getElementById('stats-content').innerHTML =
-          '<div class="stats-grid">' +
-            '<div class="stat-card"><div class="stat-value">' + s.totalWallets + '</div><div class="stat-label">Carteiras registradas</div></div>' +
-            '<div class="stat-card"><div class="stat-value">' + s.onlineWallets + '</div><div class="stat-label">Online agora</div></div>' +
-            '<div class="stat-card"><div class="stat-value">' + s.totalMessages + '</div><div class="stat-label">Mensagens transmitidas</div></div>' +
-            '<div class="stat-card"><div class="stat-value">' + s.totalChats + '</div><div class="stat-label">Chats ativos</div></div>' +
-          '</div>' +
-          '<p class="updated">Atualizado em: ' + new Date(s.updatedAt).toLocaleString('pt-BR') + '</p>';
+        renderStats(s);
+        if (s.financial) renderFinancial(s.financial);
+        if (s.networkGraph) renderGraph(s.networkGraph);
       } catch (err) {
         document.getElementById('stats-content').innerHTML =
           '<p class="error">Não foi possível carregar as estatísticas no momento.</p>';

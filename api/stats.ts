@@ -10,6 +10,11 @@ import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
  * carteiras online, mensagens de chat transmitidas (acumulativo), chats ativos
  * e sinais de sistema atualmente armazenados.
  *
+ * Também agrega a movimentação financeira registrada (pedidos de escrow por
+ * ativo, com contagem e montante somado) e um grafo de interações
+ * (data.networkGraph: nodes/links com volumes agregados, sem endereços de
+ * carteira) para renderização dinâmica na página /stats.
+ *
  * Mensagens de chat são envelopes do tipo 'data' em tópicos iniciados por
  * 'chat.v1.direct.' (par de endereços) ou '/chat/v1/group/' (grupo). Cada
  * tópico de chat distinto representa um chat.
