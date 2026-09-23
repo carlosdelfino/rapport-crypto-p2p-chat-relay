@@ -1,10 +1,20 @@
+import { createHash } from 'node:crypto';
 import { Redis } from '@upstash/redis';
+import { scanWallet } from './chain-scan.js';
+import type { ScannedTx } from './chain-scan.js';
 import type { SignalEnvelope, PeerRecord, EscrowRequestRecord } from './types.js';
 
 const PEER_TTL_MS = 5 * 60 * 1000;
 const SIGNAL_TTL_S = 60 * 60;
 const CHAT_MESSAGE_COUNTER_KEY = 'stats:chat_messages:total';
 const CHAT_TOPIC_SET_KEY = 'stats:chat_topics';
+const CHAT_PAIR_COUNTER_KEY = 'stats:chat_pairs';
+const CHAT_GROUP_MSGS_KEY = 'stats:chat_group_msgs';
+const SEEN_WALLETS_KEY = 'stats:wallets';
+const CHAIN_EDGES_KEY = 'stats:chain_edges';
+const CHAIN_EDGES_TTL_S = 30 * 60;
+const WALLET_SCAN_CACHE_TTL_S = 30 * 60;
+const SCAN_WALLET_LIMIT = 20;
 const ESCROW_REQUESTS_KEY = 'escrow:requests';
 const ESCROW_REQUESTS_TTL_S = 30 * 24 * 60 * 60;
 const ESCROW_REQUESTS_MAX = 500;
@@ -21,22 +31,66 @@ interface FinancialStats {
   totalAmount: number;
 }
 
-interface NetworkGraphNode {
+interface WalletGraphNode {
   id: string;
   label: string;
-  group: 'wallet' | 'chat' | 'financial' | 'aggregate';
+  group: 'wallet' | 'group' | 'aggregate';
   value: number;
+  online: boolean;
 }
 
-interface NetworkGraphLink {
+interface WalletGraphLink {
   source: string;
   target: string;
-  value: number;
+  chat: number;
+  transactions: number;
+  kinds: Record<string, number>;
+  assets: Record<string, number>;
+  escrowRequests: number;
 }
 
-interface NetworkGraph {
-  nodes: NetworkGraphNode[];
-  links: NetworkGraphLink[];
+interface WalletGraph {
+  nodes: WalletGraphNode[];
+  links: WalletGraphLink[];
+}
+
+interface ChainEdge {
+  a: string;
+  b: string;
+  transactions: number;
+  kinds: Record<string, number>;
+  assets: Record<string, number>;
+}
+
+function normWallet(address: string): string {
+  return /^0x/i.test(address) ? address.toLowerCase() : address;
+}
+
+function walletNodeId(address: string): string {
+  return `w_${createHash('sha256').update(normWallet(address)).digest('hex').slice(0, 8)}`;
+}
+
+function groupNodeId(topic: string): string {
+  return `g_${createHash('sha256').update(topic).digest('hex').slice(0, 12)}`;
+}
+
+function pairKey(a: string, b: string): string {
+  return [normWallet(a), normWallet(b)].sort().join(':');
+}
+
+function extractChatParticipants(envelope: SignalEnvelope): string[] {
+  const members = new Set<string>();
+  if (envelope.from) members.add(normWallet(envelope.from));
+  if (envelope.to) members.add(normWallet(envelope.to));
+  if (envelope.topic.startsWith('chat.v1.direct.')) {
+    const addrs = envelope.topic.match(/0x[0-9a-fA-F]{40}/g) ?? [];
+    for (const addr of addrs) members.add(normWallet(addr));
+  }
+  return [...members].filter((m) => m.length > 0);
+}
+
+function isGroupChatTopic(topic: string): boolean {
+  return topic.startsWith('/chat/v1/group/');
 }
 
 function buildFinancialStats(requests: EscrowRequestRecord[]): FinancialStats {
@@ -61,36 +115,100 @@ function buildFinancialStats(requests: EscrowRequestRecord[]): FinancialStats {
   };
 }
 
-function buildNetworkGraph(
-  totalWallets: number,
-  onlineWallets: number,
-  totalMessages: number,
-  totalChats: number,
-  financial: FinancialStats,
-): NetworkGraph {
-  const nodes: NetworkGraphNode[] = [
-    { id: 'wallets', label: 'Carteiras', group: 'wallet', value: totalWallets },
-    { id: 'online', label: 'Online', group: 'wallet', value: onlineWallets },
-    { id: 'chats', label: 'Chats', group: 'chat', value: totalChats },
-    { id: 'messages', label: 'Mensagens', group: 'chat', value: totalMessages },
-    { id: 'financial', label: 'Mov. financeira', group: 'financial', value: financial.totalTransactions },
-    { id: 'amount', label: 'Montante movimentado', group: 'financial', value: financial.totalAmount },
-  ];
-  const links: NetworkGraphLink[] = [
-    { source: 'wallets', target: 'online', value: onlineWallets },
-    { source: 'wallets', target: 'chats', value: totalChats },
-    { source: 'wallets', target: 'messages', value: totalMessages },
-    { source: 'wallets', target: 'financial', value: financial.totalTransactions },
-    { source: 'financial', target: 'amount', value: financial.totalAmount },
-  ];
-  for (const entry of financial.volumeBySymbol) {
-    const id = `symbol-${entry.symbol}`;
-    nodes.push({ id, label: entry.symbol, group: 'financial', value: entry.count });
-    links.push({ source: 'financial', target: id, value: entry.count });
-    nodes.push({ id: `${id}-amount`, label: `${entry.symbol} volume`, group: 'financial', value: entry.amount });
-    links.push({ source: id, target: `${id}-amount`, value: entry.amount });
+function accumulateAssets(target: Record<string, number>, symbol: string, amount: number): void {
+  if (amount <= 0) return;
+  target[symbol] = (target[symbol] ?? 0) + amount;
+}
+
+function getOrCreateLink(map: Map<string, WalletGraphLink>, source: string, target: string): WalletGraphLink {
+  const key = `${source}|${target}`;
+  let link = map.get(key);
+  if (!link) {
+    link = { source, target, chat: 0, transactions: 0, kinds: {}, assets: {}, escrowRequests: 0 };
+    map.set(key, link);
   }
-  return { nodes, links };
+  return link;
+}
+
+function buildWalletGraph(
+  wallets: string[],
+  onlineWallets: Set<string>,
+  chatPairs: Map<string, number>,
+  chatGroupMsgs: Map<string, number>,
+  chainEdges: ChainEdge[],
+  escrowRequests: EscrowRequestRecord[],
+): WalletGraph {
+  const walletIds = new Map<string, string>();
+  for (const w of wallets) walletIds.set(normWallet(w), walletNodeId(w));
+  const links = new Map<string, WalletGraphLink>();
+
+  for (const [key, count] of chatPairs) {
+    const [a, b] = key.split(':');
+    const source = walletIds.get(a);
+    const target = walletIds.get(b);
+    if (!source || !target) continue;
+    const [s, t] = [source, target].sort();
+    getOrCreateLink(links, s, t).chat += count;
+  }
+
+  const groupIds = new Set<string>();
+  for (const [field, count] of chatGroupMsgs) {
+    const idx = field.indexOf(':');
+    if (idx <= 0) continue;
+    const gid = `g_${field.slice(0, idx)}`;
+    const source = walletIds.get(field.slice(idx + 1));
+    if (!source) continue;
+    groupIds.add(gid);
+    getOrCreateLink(links, source, gid).chat += count;
+  }
+
+  for (const edge of chainEdges) {
+    const source = walletIds.get(normWallet(edge.a));
+    const target = walletIds.get(normWallet(edge.b));
+    if (!source || !target) continue;
+    const [s, t] = [source, target].sort();
+    const link = getOrCreateLink(links, s, t);
+    link.transactions += edge.transactions;
+    for (const [k, v] of Object.entries(edge.kinds)) link.kinds[k] = (link.kinds[k] ?? 0) + v;
+    for (const [k, v] of Object.entries(edge.assets)) accumulateAssets(link.assets, k, v);
+  }
+
+  let hasEscrow = false;
+  for (const req of escrowRequests) {
+    const source = walletIds.get(normWallet(req.requesterWallet));
+    if (!source) continue;
+    hasEscrow = true;
+    const link = getOrCreateLink(links, source, 'escrow');
+    link.escrowRequests += 1;
+    accumulateAssets(link.assets, req.symbol || 'UNKNOWN', parseAmount(req.amount));
+  }
+
+  const activity = new Map<string, number>();
+  const bump = (id: string, v: number) => activity.set(id, (activity.get(id) ?? 0) + v);
+  for (const link of links.values()) {
+    const v = link.chat + link.transactions + link.escrowRequests;
+    bump(link.source, v);
+    bump(link.target, v);
+  }
+
+  const nodes: WalletGraphNode[] = wallets.map((w) => {
+    const id = walletNodeId(w);
+    return {
+      id,
+      label: `Carteira ${id.slice(2)}`,
+      group: 'wallet' as const,
+      value: activity.get(id) ?? 0,
+      online: onlineWallets.has(normWallet(w)),
+    };
+  });
+  for (const gid of groupIds) {
+    nodes.push({ id: gid, label: `Grupo ${gid.slice(2, 8)}`, group: 'group', value: activity.get(gid) ?? 0, online: false });
+  }
+  if (hasEscrow) {
+    nodes.push({ id: 'escrow', label: 'Escrow', group: 'aggregate', value: activity.get('escrow') ?? 0, online: false });
+  }
+
+  return { nodes, links: [...links.values()] };
 }
 
 function isChatTopic(topic: string): boolean {
@@ -142,6 +260,29 @@ class UpstashStore implements Store {
       await this.redis.hincrby(CHAT_MESSAGE_COUNTER_KEY, 'total', 1);
       await this.redis.sadd(CHAT_TOPIC_SET_KEY, topic);
       console.log(`[relay:store] addSignal chat message counted - topic:${topic}`);
+
+      const participants = extractChatParticipants(envelope);
+      if (isGroupChatTopic(topic)) {
+        const sender = normWallet(envelope.from);
+        if (sender) {
+          const groupSha = createHash('sha256').update(topic).digest('hex').slice(0, 16);
+          await this.redis.hincrby(CHAT_GROUP_MSGS_KEY, `${groupSha}:${sender}`, 1);
+        }
+      } else {
+        for (let i = 0; i < participants.length; i++) {
+          for (let j = i + 1; j < participants.length; j++) {
+            await this.redis.hincrby(CHAT_PAIR_COUNTER_KEY, pairKey(participants[i], participants[j]), 1);
+          }
+        }
+      }
+      if (participants.length) {
+        await this.redis.sadd(SEEN_WALLETS_KEY, participants[0], ...participants.slice(1));
+      }
+    } else if (envelope.type === 'chat_request' && envelope.from && envelope.to) {
+      const a = normWallet(envelope.from);
+      const b = normWallet(envelope.to);
+      await this.redis.hincrby(CHAT_PAIR_COUNTER_KEY, pairKey(a, b), 1);
+      await this.redis.sadd(SEEN_WALLETS_KEY, a, b);
     }
   }
 
@@ -286,13 +427,13 @@ class UpstashStore implements Store {
       // ignore errors when collecting financial stats
     }
     const financial = buildFinancialStats(escrowRequests);
-    const networkGraph = buildNetworkGraph(
-      totalWallets,
-      onlineWallets,
-      totalMessages,
-      totalChats,
-      financial,
-    );
+
+    let walletGraph: WalletGraph = { nodes: [], links: [] };
+    try {
+      walletGraph = await this.buildGraph(escrowRequests);
+    } catch (err) {
+      console.log(`[relay:store] getStats graph build failed: ${(err as Error).message}`);
+    }
 
     return {
       totalWallets,
@@ -301,9 +442,141 @@ class UpstashStore implements Store {
       totalChats,
       totalSystemSignals,
       financial,
-      networkGraph,
+      walletGraph,
       updatedAt: new Date().toISOString(),
     };
+  }
+
+  private async getWalletUniverse(escrowRequests: EscrowRequestRecord[]): Promise<{ wallets: string[]; online: Set<string>; chainHints: Map<string, number> }> {
+    const now = Date.now();
+    const [peerWallets, onlineMembers, seenWallets, peerRecords] = await Promise.all([
+      this.redis.hkeys('peers').catch(() => [] as string[]),
+      this.redis.zrange<string[]>('peers:online', now - PEER_TTL_MS, '+inf', { byScore: true }).catch(() => [] as string[]),
+      this.redis.smembers<string[]>(SEEN_WALLETS_KEY).catch(() => [] as string[]),
+      this.redis.hgetall<Record<string, string>>('peers').catch(() => null),
+    ]);
+
+    const online = new Set((onlineMembers ?? []).map(normWallet));
+    const chainHints = new Map<string, number>();
+    if (peerRecords) {
+      for (const [wallet, raw] of Object.entries(peerRecords)) {
+        try {
+          const record = JSON.parse(raw) as PeerRecord;
+          if (record.chainId) chainHints.set(normWallet(wallet), record.chainId);
+        } catch {
+          // ignore malformed peer records
+        }
+      }
+    }
+
+    const seen = new Set<string>();
+    const wallets: string[] = [];
+    const push = (addr?: string) => {
+      const n = normWallet(addr ?? '');
+      if (n && !seen.has(n)) {
+        seen.add(n);
+        wallets.push(n);
+      }
+    };
+    for (const w of onlineMembers ?? []) push(w);
+    for (const w of peerWallets ?? []) push(w);
+    for (const w of seenWallets ?? []) push(w);
+    for (const r of escrowRequests) push(r.requesterWallet);
+    return { wallets, online, chainHints };
+  }
+
+  private async scanWalletCached(wallet: string, chainId?: number): Promise<ScannedTx[]> {
+    const key = `scan:tx:${normWallet(wallet)}`;
+    try {
+      const cached = await this.redis.get<{ fetchedAt: number; txs: ScannedTx[] }>(key);
+      if (cached && Array.isArray(cached.txs) && Date.now() - cached.fetchedAt < WALLET_SCAN_CACHE_TTL_S * 1000) {
+        return cached.txs;
+      }
+    } catch {
+      // fall through to remote scan
+    }
+    const txs = await scanWallet(wallet, chainId);
+    try {
+      await this.redis.set(key, { fetchedAt: Date.now(), txs }, { ex: WALLET_SCAN_CACHE_TTL_S });
+    } catch {
+      // caching is best-effort
+    }
+    return txs;
+  }
+
+  private async getChainEdges(wallets: string[], chainHints: Map<string, number>): Promise<ChainEdge[]> {
+    try {
+      const cached = await this.redis.get<{ updatedAt: number; edges: ChainEdge[] }>(CHAIN_EDGES_KEY);
+      if (cached && Array.isArray(cached.edges) && Date.now() - cached.updatedAt < CHAIN_EDGES_TTL_S * 1000) {
+        return cached.edges;
+      }
+    } catch {
+      // recompute below
+    }
+
+    const walletSet = new Set(wallets.map(normWallet));
+    const toScan = wallets.slice(0, SCAN_WALLET_LIMIT);
+    const results = await Promise.allSettled(
+      toScan.map(async (w) => ({ wallet: w, txs: await this.scanWalletCached(w, chainHints.get(normWallet(w))) })),
+    );
+
+    const acc = new Map<string, { a: string; b: string; hashes: Set<string>; unhashed: number; kinds: Record<string, number>; assets: Record<string, number> }>();
+    for (const res of results) {
+      if (res.status !== 'fulfilled') continue;
+      const owner = normWallet(res.value.wallet);
+      for (const tx of res.value.txs) {
+        const cp = normWallet(tx.counterparty);
+        if (!cp || cp === owner || !walletSet.has(cp)) continue;
+        const [a, b] = [owner, cp].sort();
+        const key = `${a}:${b}`;
+        let edge = acc.get(key);
+        if (!edge) {
+          edge = { a, b, hashes: new Set(), unhashed: 0, kinds: {}, assets: {} };
+          acc.set(key, edge);
+        }
+        if (tx.hash) edge.hashes.add(tx.hash);
+        else edge.unhashed += 1;
+        edge.kinds[tx.kind] = (edge.kinds[tx.kind] ?? 0) + 1;
+        accumulateAssets(edge.assets, tx.symbol, tx.amount);
+      }
+    }
+
+    const edges: ChainEdge[] = [...acc.values()].map((e) => ({
+      a: e.a,
+      b: e.b,
+      transactions: e.hashes.size + e.unhashed,
+      kinds: e.kinds,
+      assets: e.assets,
+    }));
+
+    try {
+      await this.redis.set(CHAIN_EDGES_KEY, { updatedAt: Date.now(), edges }, { ex: CHAIN_EDGES_TTL_S });
+    } catch {
+      // caching is best-effort
+    }
+    return edges;
+  }
+
+  private hashCounterToMap(raw: Record<string, string | number> | null): Map<string, number> {
+    const map = new Map<string, number>();
+    if (!raw) return map;
+    for (const [field, value] of Object.entries(raw)) {
+      const n = Number(value);
+      if (Number.isFinite(n) && n > 0) map.set(field, n);
+    }
+    return map;
+  }
+
+  private async buildGraph(escrowRequests: EscrowRequestRecord[]): Promise<WalletGraph> {
+    const { wallets, online, chainHints } = await this.getWalletUniverse(escrowRequests);
+    const [pairRaw, groupRaw] = await Promise.all([
+      this.redis.hgetall<Record<string, string | number>>(CHAT_PAIR_COUNTER_KEY).catch(() => null),
+      this.redis.hgetall<Record<string, string | number>>(CHAT_GROUP_MSGS_KEY).catch(() => null),
+    ]);
+    const chatPairs = this.hashCounterToMap(pairRaw);
+    const chatGroupMsgs = this.hashCounterToMap(groupRaw);
+    const chainEdges = await this.getChainEdges(wallets, chainHints);
+    return buildWalletGraph(wallets, online, chatPairs, chatGroupMsgs, chainEdges, escrowRequests);
   }
 
   async addEscrowRequest(request: EscrowRequestRecord): Promise<void> {
@@ -340,6 +613,11 @@ class MemoryStore implements Store {
   private peers = new Map<string, PeerRecord>();
   private chatMessagesTotal = 0;
   private chatTopics = new Set<string>();
+  private chatPairs = new Map<string, number>();
+  private chatGroupMsgs = new Map<string, number>();
+  private seenWallets = new Set<string>();
+  private chainEdgesCache: { updatedAt: number; edges: ChainEdge[] } | null = null;
+  private walletScanCache = new Map<string, { fetchedAt: number; txs: ScannedTx[] }>();
   private escrowRequests: EscrowRequestRecord[] = [];
 
   async addSignal(topic: string, envelope: SignalEnvelope): Promise<void> {
@@ -350,6 +628,31 @@ class MemoryStore implements Store {
     if (isChatMessage(envelope)) {
       this.chatMessagesTotal++;
       this.chatTopics.add(topic);
+
+      const participants = extractChatParticipants(envelope);
+      if (isGroupChatTopic(topic)) {
+        const sender = normWallet(envelope.from);
+        if (sender) {
+          const groupSha = createHash('sha256').update(topic).digest('hex').slice(0, 16);
+          const field = `${groupSha}:${sender}`;
+          this.chatGroupMsgs.set(field, (this.chatGroupMsgs.get(field) ?? 0) + 1);
+        }
+      } else {
+        for (let i = 0; i < participants.length; i++) {
+          for (let j = i + 1; j < participants.length; j++) {
+            const key = pairKey(participants[i], participants[j]);
+            this.chatPairs.set(key, (this.chatPairs.get(key) ?? 0) + 1);
+          }
+        }
+      }
+      for (const p of participants) this.seenWallets.add(p);
+    } else if (envelope.type === 'chat_request' && envelope.from && envelope.to) {
+      const a = normWallet(envelope.from);
+      const b = normWallet(envelope.to);
+      const key = pairKey(a, b);
+      this.chatPairs.set(key, (this.chatPairs.get(key) ?? 0) + 1);
+      this.seenWallets.add(a);
+      this.seenWallets.add(b);
     }
   }
 
@@ -400,13 +703,7 @@ class MemoryStore implements Store {
       totalSystemSignals += list.filter((s) => !isChatMessage(s)).length;
     }
     const financial = buildFinancialStats(this.escrowRequests);
-    const networkGraph = buildNetworkGraph(
-      this.peers.size,
-      onlineWallets,
-      this.chatMessagesTotal,
-      this.chatTopics.size,
-      financial,
-    );
+    const walletGraph = await this.buildGraph();
     return {
       totalWallets: this.peers.size,
       onlineWallets,
@@ -414,9 +711,94 @@ class MemoryStore implements Store {
       totalChats: this.chatTopics.size,
       totalSystemSignals,
       financial,
-      networkGraph,
+      walletGraph,
       updatedAt: new Date().toISOString(),
     };
+  }
+
+  private async scanWalletCached(wallet: string, chainId?: number): Promise<ScannedTx[]> {
+    const key = normWallet(wallet);
+    const cached = this.walletScanCache.get(key);
+    if (cached && Date.now() - cached.fetchedAt < WALLET_SCAN_CACHE_TTL_S * 1000) {
+      return cached.txs;
+    }
+    const txs = await scanWallet(wallet, chainId);
+    this.walletScanCache.set(key, { fetchedAt: Date.now(), txs });
+    return txs;
+  }
+
+  private async getChainEdges(wallets: string[], chainHints: Map<string, number>): Promise<ChainEdge[]> {
+    if (this.chainEdgesCache && Date.now() - this.chainEdgesCache.updatedAt < CHAIN_EDGES_TTL_S * 1000) {
+      return this.chainEdgesCache.edges;
+    }
+
+    const walletSet = new Set(wallets.map(normWallet));
+    const toScan = wallets.slice(0, SCAN_WALLET_LIMIT);
+    const results = await Promise.allSettled(
+      toScan.map(async (w) => ({ wallet: w, txs: await this.scanWalletCached(w, chainHints.get(normWallet(w))) })),
+    );
+
+    const acc = new Map<string, { a: string; b: string; hashes: Set<string>; unhashed: number; kinds: Record<string, number>; assets: Record<string, number> }>();
+    for (const res of results) {
+      if (res.status !== 'fulfilled') continue;
+      const owner = normWallet(res.value.wallet);
+      for (const tx of res.value.txs) {
+        const cp = normWallet(tx.counterparty);
+        if (!cp || cp === owner || !walletSet.has(cp)) continue;
+        const [a, b] = [owner, cp].sort();
+        const key = `${a}:${b}`;
+        let edge = acc.get(key);
+        if (!edge) {
+          edge = { a, b, hashes: new Set(), unhashed: 0, kinds: {}, assets: {} };
+          acc.set(key, edge);
+        }
+        if (tx.hash) edge.hashes.add(tx.hash);
+        else edge.unhashed += 1;
+        edge.kinds[tx.kind] = (edge.kinds[tx.kind] ?? 0) + 1;
+        accumulateAssets(edge.assets, tx.symbol, tx.amount);
+      }
+    }
+
+    const edges: ChainEdge[] = [...acc.values()].map((e) => ({
+      a: e.a,
+      b: e.b,
+      transactions: e.hashes.size + e.unhashed,
+      kinds: e.kinds,
+      assets: e.assets,
+    }));
+    this.chainEdgesCache = { updatedAt: Date.now(), edges };
+    return edges;
+  }
+
+  private async buildGraph(): Promise<WalletGraph> {
+    const now = Date.now();
+    const online = new Set<string>();
+    const chainHints = new Map<string, number>();
+    const seen = new Set<string>();
+    const wallets: string[] = [];
+    const push = (addr?: string) => {
+      const n = normWallet(addr ?? '');
+      if (n && !seen.has(n)) {
+        seen.add(n);
+        wallets.push(n);
+      }
+    };
+    for (const record of this.peers.values()) {
+      const n = normWallet(record.wallet);
+      if (record.lastSeen >= now - PEER_TTL_MS) {
+        online.add(n);
+        push(n);
+      }
+    }
+    for (const record of this.peers.values()) {
+      push(record.wallet);
+      if (record.chainId) chainHints.set(normWallet(record.wallet), record.chainId);
+    }
+    for (const w of this.seenWallets) push(w);
+    for (const r of this.escrowRequests) push(r.requesterWallet);
+
+    const chainEdges = await this.getChainEdges(wallets, chainHints);
+    return buildWalletGraph(wallets, online, this.chatPairs, this.chatGroupMsgs, chainEdges, this.escrowRequests);
   }
 
   async addEscrowRequest(request: EscrowRequestRecord): Promise<void> {
@@ -466,10 +848,10 @@ export interface RelayStats {
   totalChats: number;
   totalSystemSignals: number;
   financial: FinancialStats;
-  networkGraph: NetworkGraph;
+  walletGraph: WalletGraph;
   updatedAt: string;
 }
 
-export type { FinancialStats, NetworkGraph, NetworkGraphNode, NetworkGraphLink };
+export type { FinancialStats, WalletGraph, WalletGraphNode, WalletGraphLink, ChainEdge };
 
 export type { Store };

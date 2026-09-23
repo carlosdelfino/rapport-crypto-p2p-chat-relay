@@ -149,7 +149,7 @@
     </div>
 
     <h2>Grafo de interações</h2>
-    <p>Visualização dinâmica dos volumes de chat e movimentação financeira entre carteiras. Os endereços não são exibidos — apenas os agregados.</p>
+    <p>Cada nó representa uma carteira (anonimizada — os endereços não são exibidos) e cada aresta representa uma relação entre duas carteiras: mensagens de chat e/ou transações on-chain descobertas via explorers públicos (Etherscan/Blockscout, mempool.space, Horizon e RPC Solana). Passe o mouse sobre uma aresta ou nó para ver os detalhes.</p>
     <div class="card">
       <div class="graph-wrap" id="graph-wrap">
         <div class="graph-tooltip" id="graph-tooltip"></div>
@@ -260,34 +260,99 @@
         .attr('height', height)
         .attr('viewBox', [0, 0, width, height]);
 
-      const colorScale = {
+      const nodeColors = {
         wallet: '#38bdf8',
-        chat: '#4ade80',
-        financial: '#fbbf24',
-        aggregate: '#a78bfa'
+        group: '#a78bfa',
+        aggregate: '#f472b6'
       };
+
+      const edgeColors = {
+        both: '#c084fc',
+        chat: '#4ade80',
+        onchain: '#fbbf24',
+        escrow: '#f472b6'
+      };
+
+      function edgeKind(d) {
+        const hasChain = (d.transactions || 0) > 0;
+        const hasChat = (d.chat || 0) > 0;
+        if (d.escrowRequests > 0 && !hasChain && !hasChat) return 'escrow';
+        if (hasChain && hasChat) return 'both';
+        if (hasChain) return 'onchain';
+        return 'chat';
+      }
+
+      function linkActivity(d) {
+        return (d.chat || 0) + (d.transactions || 0) + (d.escrowRequests || 0);
+      }
+
+      function linkTooltip(d) {
+        const lines = [];
+        if (d.chat > 0) lines.push('Chat: ' + formatNumber(d.chat) + ' mensagens');
+        if (d.transactions > 0) {
+          const kinds = Object.entries(d.kinds || {}).map(function(e) { return e[0] + ' ' + e[1]; }).join(', ');
+          lines.push('On-chain: ' + formatNumber(d.transactions) + ' transações' + (kinds ? ' (' + kinds + ')' : ''));
+        }
+        if (d.escrowRequests > 0) lines.push('Escrow: ' + formatNumber(d.escrowRequests) + ' pedidos');
+        const assets = Object.entries(d.assets || {})
+          .filter(function(e) { return e[1] > 0; })
+          .map(function(e) { return formatNumber(e[1]) + ' ' + e[0]; })
+          .join(' · ');
+        if (assets) lines.push('Montante: ' + assets);
+        return lines.join('<br/>');
+      }
+
+      function nodeTooltip(d) {
+        const status = d.group === 'wallet' ? (d.online ? 'online' : 'offline') + ' · ' : '';
+        return '<strong>' + d.label + '</strong><br/>' + status + formatNumber(d.value || 0) + ' interações';
+      }
 
       const radiusScale = d3.scaleSqrt()
         .domain([0, d3.max(graph.nodes, function(d) { return d.value; }) || 1])
-        .range([6, 32]);
+        .range([8, 30]);
 
-      const linkWidth = d3.scaleLinear()
-        .domain([0, d3.max(graph.links, function(d) { return d.value; }) || 1])
-        .range([1, 6]);
+      const linkWidth = d3.scaleSqrt()
+        .domain([0, d3.max(graph.links, linkActivity) || 1])
+        .range([1.5, 7]);
 
       graphSimulation = d3.forceSimulation(graph.nodes)
-        .force('link', d3.forceLink(graph.links).id(function(d) { return d.id; }).distance(90))
-        .force('charge', d3.forceManyBody().strength(-260))
+        .force('link', d3.forceLink(graph.links).id(function(d) { return d.id; }).distance(110))
+        .force('charge', d3.forceManyBody().strength(-320))
         .force('center', d3.forceCenter(width / 2, height / 2))
-        .force('collide', d3.forceCollide().radius(function(d) { return radiusScale(d.value || 0) + 6; }));
+        .force('collide', d3.forceCollide().radius(function(d) { return radiusScale(d.value || 0) + 8; }));
 
-      const link = svg.append('g')
-        .attr('stroke', '#334155')
-        .attr('stroke-opacity', 0.6)
+      // Camada invisível mais larga para facilitar o hover sobre as arestas
+      const linkHit = svg.append('g')
         .selectAll('line')
         .data(graph.links)
         .join('line')
-        .attr('stroke-width', function(d) { return linkWidth(d.value || 1); });
+        .attr('stroke', 'transparent')
+        .attr('stroke-width', 14)
+        .attr('pointer-events', 'stroke')
+        .on('mouseover', function(event, d) {
+          const pos = d3.pointer(event, wrap);
+          tooltip.innerHTML = linkTooltip(d);
+          tooltip.style.opacity = '1';
+          tooltip.style.left = (pos[0] + 12) + 'px';
+          tooltip.style.top = (pos[1] - 24) + 'px';
+        })
+        .on('mousemove', function(event) {
+          const pos = d3.pointer(event, wrap);
+          tooltip.style.left = (pos[0] + 12) + 'px';
+          tooltip.style.top = (pos[1] - 24) + 'px';
+        })
+        .on('mouseout', function() {
+          tooltip.style.opacity = '0';
+        });
+
+      const link = svg.append('g')
+        .attr('stroke-opacity', 0.65)
+        .selectAll('line')
+        .data(graph.links)
+        .join('line')
+        .attr('stroke', function(d) { return edgeColors[edgeKind(d)]; })
+        .attr('stroke-width', function(d) { return linkWidth(linkActivity(d)); })
+        .attr('stroke-dasharray', function(d) { return edgeKind(d) === 'escrow' ? '5 4' : null; });
 
       const node = svg.append('g')
         .selectAll('g')
@@ -307,13 +372,13 @@
           }));
 
       node.append('circle')
-        .attr('r', function(d) { return radiusScale(d.value || 1); })
-        .attr('fill', function(d) { return colorScale[d.group] || colorScale.aggregate; })
-        .attr('stroke', '#0f172a')
-        .attr('stroke-width', 2)
+        .attr('r', function(d) { return radiusScale(d.value || 0); })
+        .attr('fill', function(d) { return nodeColors[d.group] || nodeColors.wallet; })
+        .attr('stroke', function(d) { return d.online ? '#4ade80' : '#0f172a'; })
+        .attr('stroke-width', function(d) { return d.online ? 3 : 2; })
         .on('mouseover', function(event, d) {
           const pos = d3.pointer(event, wrap);
-          tooltip.innerHTML = '<strong>' + d.label + '</strong><br/>' + formatCompact(d.value || 0);
+          tooltip.innerHTML = nodeTooltip(d);
           tooltip.style.opacity = '1';
           tooltip.style.left = (pos[0] + 12) + 'px';
           tooltip.style.top = (pos[1] - 24) + 'px';
@@ -329,7 +394,7 @@
 
       node.append('text')
         .text(function(d) { return d.label; })
-        .attr('x', function(d) { return radiusScale(d.value || 1) + 5; })
+        .attr('x', function(d) { return radiusScale(d.value || 0) + 5; })
         .attr('y', 4)
         .attr('fill', '#cbd5e1')
         .attr('font-size', '11px')
@@ -339,26 +404,41 @@
 
       graphSimulation.on('tick', function() {
         for (const d of graph.nodes) {
-          const r = radiusScale(d.value || 1);
+          const r = radiusScale(d.value || 0);
           d.x = Math.max(r, Math.min(width - r, d.x));
           d.y = Math.max(r, Math.min(height - r, d.y));
         }
-        link
-          .attr('x1', function(d) { return d.source.x; })
-          .attr('y1', function(d) { return d.source.y; })
-          .attr('x2', function(d) { return d.target.x; })
-          .attr('y2', function(d) { return d.target.y; });
+        const pos = function(l) {
+          l.attr('x1', function(d) { return d.source.x; })
+            .attr('y1', function(d) { return d.source.y; })
+            .attr('x2', function(d) { return d.target.x; })
+            .attr('y2', function(d) { return d.target.y; });
+        };
+        pos(link);
+        pos(linkHit);
 
         node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
       });
 
       // Legend
       const legend = document.getElementById('graph-legend');
-      const groups = ['wallet', 'chat', 'financial'];
-      const labels = { wallet: 'Carteiras', chat: 'Chat', financial: 'Mov. financeira' };
+      const nodeLegend = [
+        { color: nodeColors.wallet, label: 'Carteira' },
+        { color: nodeColors.group, label: 'Grupo de chat' },
+        { color: nodeColors.aggregate, label: 'Escrow' }
+      ];
+      const edgeLegend = [
+        { color: edgeColors.chat, label: 'Chat' },
+        { color: edgeColors.onchain, label: 'On-chain' },
+        { color: edgeColors.both, label: 'Chat + on-chain' },
+        { color: edgeColors.escrow, label: 'Escrow' }
+      ];
       let legendHtml = '';
-      for (const g of groups) {
-        legendHtml += '<span><span class="legend-dot" style="background:' + colorScale[g] + '"></span>' + labels[g] + '</span>';
+      for (const item of nodeLegend) {
+        legendHtml += '<span><span class="legend-dot" style="background:' + item.color + '"></span>' + item.label + '</span>';
+      }
+      for (const item of edgeLegend) {
+        legendHtml += '<span><span style="display:inline-block;width:1.1rem;height:.2rem;background:' + item.color + '"></span>' + item.label + '</span>';
       }
       legend.innerHTML = legendHtml;
     }
@@ -373,7 +453,7 @@
 
         renderStats(s);
         if (s.financial) renderFinancial(s.financial);
-        if (s.networkGraph) renderGraph(s.networkGraph);
+        if (s.walletGraph) renderGraph(s.walletGraph);
       } catch (err) {
         document.getElementById('stats-content').innerHTML =
           '<p class="error">Não foi possível carregar as estatísticas no momento.</p>';

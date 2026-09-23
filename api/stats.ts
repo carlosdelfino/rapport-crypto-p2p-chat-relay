@@ -11,9 +11,13 @@ import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
  * e sinais de sistema atualmente armazenados.
  *
  * Também agrega a movimentação financeira registrada (pedidos de escrow por
- * ativo, com contagem e montante somado) e um grafo de interações
- * (data.networkGraph: nodes/links com volumes agregados, sem endereços de
- * carteira) para renderização dinâmica na página /stats.
+ * ativo, com contagem e montante somado) e um grafo de interações entre
+ * carteiras (data.walletGraph: nós anonimizados por hash e arestas com
+ * contagem de mensagens de chat, transações on-chain por tipo e montantes
+ * por ativo). As arestas on-chain são descobertas via explorers públicos:
+ * Etherscan v2 (com ETHERSCAN_API_KEY) ou Blockscout para EVM, mempool.space
+ * para Bitcoin, Horizon para Stellar e RPC público para Solana. Endereços de
+ * carteira nunca são expostos na resposta.
  *
  * Mensagens de chat são envelopes do tipo 'data' em tópicos iniciados por
  * 'chat.v1.direct.' (par de endereços) ou '/chat/v1/group/' (grupo). Cada
