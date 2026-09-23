@@ -258,6 +258,11 @@
         <p>USDC, USDT, DAI, BRLA, PYUSD, EURC, USYC, CCZ, CAS e moedas nativas como BTC, ETH, POL, MON e XDC.</p>
       </div>
       <div class="feature-card">
+        <span class="icon">&#128737;&#65039;</span>
+        <h3>Pagamento garantido</h3>
+        <p>Escrow arbitrado on-chain: um contato de confian&ccedil;a valida o pagamento antes da libera&ccedil;&atilde;o dos fundos.</p>
+      </div>
+      <div class="feature-card">
         <span class="icon">&#128241;</span>
         <h3>Android nativo</h3>
         <p>App Android via Expo + React Native. Instala&ccedil;&atilde;o direta por APK, sem loja.</p>
@@ -277,6 +282,12 @@
         <span class="title">Estat&iacute;sticas</span>
         <span class="desc">M&eacute;tricas em tempo real do relay e endere&ccedil;os para doa&ccedil;&otilde;es.</span>
         <span class="path">/stats</span>
+      </a>
+      <a class="link-card" href="/escrow">
+        <span class="icon">&#128737;&#65039;</span>
+        <span class="title">Escrow</span>
+        <span class="desc">Pagamento garantido com arbitragem: como funciona, taxas e tutorial.</span>
+        <span class="path">/escrow</span>
       </a>
       <a class="link-card" href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat" rel="noopener" target="_blank">
         <span class="icon">&#128187;</span>
@@ -328,6 +339,21 @@
         <span class="api-method">GET</span>
         <span class="api-path">/api/version</span>
         <span class="api-desc">Metadados da &uacute;ltima vers&atilde;o de APK</span>
+      </a>
+      <a class="api-row" href="/api/escrow-request">
+        <span class="api-method">GET</span>
+        <span class="api-path">/api/escrow-request</span>
+        <span class="api-desc">Lista pedidos de suporte de escrow por rede</span>
+      </a>
+      <a class="api-row" href="/api/escrow-request">
+        <span class="api-method post">POST</span>
+        <span class="api-path">/api/escrow-request</span>
+        <span class="api-desc">Registra pedido de escrow em rede sem contrato</span>
+      </a>
+      <a class="api-row" href="/escrow/contracts.json">
+        <span class="api-method">GET</span>
+        <span class="api-path">/escrow/contracts.json</span>
+        <span class="api-desc">Manifest de contratos EscrowVault por rede</span>
       </a>
     </div>
 

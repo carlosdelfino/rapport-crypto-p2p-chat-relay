@@ -1,5 +1,34 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-22T19:24:48.200Z",
-  "networks": []
+  "updatedAt": "2026-09-23T02:48:26.777Z",
+  "networks": [
+    {
+      "chainId": 137,
+      "network": "polygon",
+      "name": "polygon",
+      "isTestnet": false,
+      "escrow": "0xB84473D028DE4fA031b6A1D641B9768B31e4F496",
+      "implementation": "0xeCdafAaF524C4eDc815334d97EDB5d6Be1F6ed2B",
+      "multisig": "0xF9DB05c8447D0c799f599d16a588Eb5382aD2a7C",
+      "manager": "0x7010A4C4c189AB421028a622e2A2e623f432d18e",
+      "explorer": "https://polygonscan.com",
+      "verified": true,
+      "deployedAt": "2026-09-23T02:46:11.995Z",
+      "contractVersion": "1.0.0"
+    },
+    {
+      "chainId": 80002,
+      "network": "polygonAmoy",
+      "name": "polygonAmoy",
+      "isTestnet": true,
+      "escrow": "0xafAeE030BA53E579e14c18aff05484D620417a35",
+      "implementation": "0x10f61b3A4639C7f7A426f3FcEe6141d5A1277888",
+      "multisig": "0x34f02b29E53a0a0E833fd8ad1a845D024a6D9987",
+      "manager": "0x7010A4C4c189AB421028a622e2A2e623f432d18e",
+      "explorer": "https://amoy.polygonscan.com",
+      "verified": true,
+      "deployedAt": "2026-09-23T01:21:48.863Z",
+      "contractVersion": "1.0.0"
+    }
+  ]
 }
