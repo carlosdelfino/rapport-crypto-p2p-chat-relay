@@ -115,18 +115,7 @@
     a:hover { color:var(--brand); }
     .loading { color:var(--muted); font-size:.9rem; }
     .error { color:#ef4444; font-size:.9rem; }
-    .graph-wrap { position:relative; width:100%; height:28rem; border:1px solid var(--border); border-radius:1rem; background:var(--card); overflow:hidden; }
-    .graph-wrap svg { display:block; width:100%; height:100%; }
-    .graph-tooltip {
-      position:absolute; padding:.35rem .55rem; border-radius:.35rem; background:rgba(2,6,23,.9);
-      border:1px solid var(--border); color:var(--text); font-size:.75rem; pointer-events:none;
-      opacity:0; transition:opacity .15s; z-index:10; white-space:nowrap;
-    }
-    .graph-legend {
-      display:flex; flex-wrap:wrap; gap:.5rem .9rem; justify-content:center; margin-top:.75rem; font-size:.75rem; color:var(--muted);
-    }
-    .graph-legend span { display:inline-flex; align-items:center; gap:.35rem; }
-    .legend-dot { width:.65rem; height:.65rem; border-radius:50%; display:inline-block; }
+    .table-title { font-size:.85rem; font-weight:600; color:var(--brand-light); margin:.9rem 0 .4rem; }
     .financial-table { width:100%; border-collapse:collapse; font-size:.85rem; }
     .financial-table th, .financial-table td { padding:.5rem .6rem; text-align:left; border-bottom:1px solid var(--border); }
     .financial-table th { color:var(--brand-light); font-weight:600; }
@@ -134,7 +123,6 @@
     .financial-table tr:last-child td { border-bottom:none; }
     .mono { font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; }
     @media (max-width:640px) {
-      .graph-wrap { height:22rem; }
       h1 { font-size:1.4rem; }
     }
   </style>
@@ -148,19 +136,16 @@
       <p class="loading">Carregando estatísticas…</p>
     </div>
 
-    <h2>Grafo de interações</h2>
-    <p>Cada nó representa uma carteira (anonimizada — os endereços não são exibidos) e cada aresta representa uma relação entre duas carteiras: mensagens de chat e/ou transações on-chain descobertas via explorers públicos (Etherscan/Blockscout, mempool.space, Horizon e RPC Solana). Passe o mouse sobre uma aresta ou nó para ver os detalhes.</p>
-    <div class="card">
-      <div class="graph-wrap" id="graph-wrap">
-        <div class="graph-tooltip" id="graph-tooltip"></div>
-      </div>
-      <div class="graph-legend" id="graph-legend"></div>
-    </div>
-
-    <h2>Movimentação financeira</h2>
-    <p>Resumo das transações financeiras agrupadas por ativo.</p>
+    <h2>Volume transacionado</h2>
+    <p>Total de cripto movimentado pelo app em cada moeda e rede, reportado de forma anônima a cada transação confirmada — nenhum endereço de carteira é coletado ou exibido. O volume demonstra o crescimento do app e seu impacto na economia cripto.</p>
     <div class="card" id="financial-content">
       <p class="loading">Carregando dados financeiros…</p>
+    </div>
+
+    <h2>Demanda por escrow</h2>
+    <p>Pedidos de usuários por suporte a escrow em redes ainda sem contrato deployado.</p>
+    <div class="card" id="escrow-demand-content">
+      <p class="loading">Carregando pedidos de escrow…</p>
     </div>
 
     <h2>Doações</h2>
@@ -195,8 +180,13 @@
 
   <div class="toast" id="toast">Copiado!</div>
 
-  <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, function(c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
     function formatNumber(n) {
       return Number(n).toLocaleString('pt-BR');
     }
@@ -218,229 +208,53 @@
 
     function renderFinancial(financial) {
       const container = document.getElementById('financial-content');
-      if (!financial || !financial.volumeBySymbol || financial.volumeBySymbol.length === 0) {
-        container.innerHTML = '<p class="loading">Nenhuma movimentação financeira registrada ainda.</p>';
+      const bySymbol = (financial && financial.volumeBySymbol) || [];
+      const byNetwork = (financial && financial.volumeByNetwork) || [];
+      if (!bySymbol.length && !byNetwork.length) {
+        container.innerHTML = '<p class="loading">Nenhuma transação reportada ainda.</p>';
+        return;
+      }
+      let html = '';
+      if (bySymbol.length) {
+        let rows = '';
+        for (const item of bySymbol) {
+          rows += '<tr><td class="mono">' + esc(item.symbol) + '</td><td>' + formatNumber(item.count) + '</td><td class="mono">' + formatNumber(item.amount) + '</td></tr>';
+        }
+        html += '<div class="table-title">Por ativo</div>' +
+          '<table class="financial-table"><thead><tr><th>Ativo</th><th>Transações</th><th>Montante total</th></tr></thead><tbody>' + rows + '</tbody></table>';
+      }
+      if (byNetwork.length) {
+        let rows = '';
+        for (const net of byNetwork) {
+          const assets = (net.symbols || [])
+            .map(function(s) { return formatNumber(s.amount) + ' ' + esc(s.symbol); })
+            .join(' · ');
+          rows += '<tr><td>' + esc(net.network) + '</td><td class="mono">' + net.chainId + '</td><td>' + formatNumber(net.count) + '</td><td class="mono">' + assets + '</td></tr>';
+        }
+        html += '<div class="table-title">Por rede</div>' +
+          '<table class="financial-table"><thead><tr><th>Rede</th><th>Chain ID</th><th>Transações</th><th>Ativos</th></tr></thead><tbody>' + rows + '</tbody></table>';
+      }
+      const kinds = ((financial && financial.countByKind) || [])
+        .map(function(k) { return esc(k.kind) + ': ' + formatNumber(k.count); })
+        .join(' · ');
+      html += '<p class="updated" style="margin-top:.75rem;">Total de transações reportadas: <strong>' + formatNumber(financial.totalTransactions) + '</strong>' + (kinds ? ' · ' + kinds : '') + '</p>';
+      container.innerHTML = html;
+    }
+
+    function renderEscrowDemand(demand) {
+      const container = document.getElementById('escrow-demand-content');
+      const byNetwork = (demand && demand.byNetwork) || [];
+      if (!byNetwork.length) {
+        container.innerHTML = '<p class="loading">Nenhum pedido de escrow registrado.</p>';
         return;
       }
       let rows = '';
-      for (const item of financial.volumeBySymbol) {
-        rows += '<tr><td class="mono">' + item.symbol + '</td><td>' + formatNumber(item.count) + '</td><td class="mono">' + formatNumber(item.amount) + '</td></tr>';
+      for (const net of byNetwork) {
+        rows += '<tr><td>' + esc(net.network) + '</td><td class="mono">' + net.chainId + '</td><td>' + formatNumber(net.count) + '</td></tr>';
       }
       container.innerHTML =
-        '<table class="financial-table"><thead><tr><th>Ativo</th><th>Transações</th><th>Montante total</th></tr></thead>' +
-        '<tbody>' + rows + '</tbody></table>' +
-        '<p class="updated" style="margin-top:.75rem;">Total de transações financeiras: <strong>' + formatNumber(financial.totalTransactions) + '</strong> · Montante movimentado: <strong>' + formatNumber(financial.totalAmount) + '</strong></p>';
-    }
-
-    let graphSimulation = null;
-
-    function renderGraph(graph) {
-      const wrap = document.getElementById('graph-wrap');
-      let tooltip = document.getElementById('graph-tooltip');
-      if (!wrap || typeof d3 === 'undefined') {
-        if (wrap) wrap.innerHTML = '<p class="loading" style="padding:1rem;">Biblioteca de gráficos indisponível.</p>';
-        return;
-      }
-      if (!tooltip) {
-        tooltip = document.createElement('div');
-        tooltip.id = 'graph-tooltip';
-        tooltip.className = 'graph-tooltip';
-      }
-      if (graphSimulation) {
-        graphSimulation.stop();
-        graphSimulation = null;
-      }
-      wrap.innerHTML = '';
-      wrap.appendChild(tooltip);
-
-      const width = wrap.clientWidth;
-      const height = wrap.clientHeight;
-      const svg = d3.select('#graph-wrap').append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .attr('viewBox', [0, 0, width, height]);
-
-      const nodeColors = {
-        wallet: '#38bdf8',
-        group: '#a78bfa',
-        aggregate: '#f472b6'
-      };
-
-      const edgeColors = {
-        both: '#c084fc',
-        chat: '#4ade80',
-        onchain: '#fbbf24',
-        escrow: '#f472b6'
-      };
-
-      function edgeKind(d) {
-        const hasChain = (d.transactions || 0) > 0;
-        const hasChat = (d.chat || 0) > 0;
-        if (d.escrowRequests > 0 && !hasChain && !hasChat) return 'escrow';
-        if (hasChain && hasChat) return 'both';
-        if (hasChain) return 'onchain';
-        return 'chat';
-      }
-
-      function linkActivity(d) {
-        return (d.chat || 0) + (d.transactions || 0) + (d.escrowRequests || 0);
-      }
-
-      function linkTooltip(d) {
-        const lines = [];
-        if (d.chat > 0) lines.push('Chat: ' + formatNumber(d.chat) + ' mensagens');
-        if (d.transactions > 0) {
-          const kinds = Object.entries(d.kinds || {}).map(function(e) { return e[0] + ' ' + e[1]; }).join(', ');
-          lines.push('On-chain: ' + formatNumber(d.transactions) + ' transações' + (kinds ? ' (' + kinds + ')' : ''));
-        }
-        if (d.escrowRequests > 0) lines.push('Escrow: ' + formatNumber(d.escrowRequests) + ' pedidos');
-        const assets = Object.entries(d.assets || {})
-          .filter(function(e) { return e[1] > 0; })
-          .map(function(e) { return formatNumber(e[1]) + ' ' + e[0]; })
-          .join(' · ');
-        if (assets) lines.push('Montante: ' + assets);
-        return lines.join('<br/>');
-      }
-
-      function nodeTooltip(d) {
-        const status = d.group === 'wallet' ? (d.online ? 'online' : 'offline') + ' · ' : '';
-        return '<strong>' + d.label + '</strong><br/>' + status + formatNumber(d.value || 0) + ' interações';
-      }
-
-      const radiusScale = d3.scaleSqrt()
-        .domain([0, d3.max(graph.nodes, function(d) { return d.value; }) || 1])
-        .range([8, 30]);
-
-      const linkWidth = d3.scaleSqrt()
-        .domain([0, d3.max(graph.links, linkActivity) || 1])
-        .range([1.5, 7]);
-
-      graphSimulation = d3.forceSimulation(graph.nodes)
-        .force('link', d3.forceLink(graph.links).id(function(d) { return d.id; }).distance(110))
-        .force('charge', d3.forceManyBody().strength(-320))
-        .force('center', d3.forceCenter(width / 2, height / 2))
-        .force('collide', d3.forceCollide().radius(function(d) { return radiusScale(d.value || 0) + 8; }));
-
-      // Camada invisível mais larga para facilitar o hover sobre as arestas
-      const linkHit = svg.append('g')
-        .selectAll('line')
-        .data(graph.links)
-        .join('line')
-        .attr('stroke', 'transparent')
-        .attr('stroke-width', 14)
-        .attr('pointer-events', 'stroke')
-        .on('mouseover', function(event, d) {
-          const pos = d3.pointer(event, wrap);
-          tooltip.innerHTML = linkTooltip(d);
-          tooltip.style.opacity = '1';
-          tooltip.style.left = (pos[0] + 12) + 'px';
-          tooltip.style.top = (pos[1] - 24) + 'px';
-        })
-        .on('mousemove', function(event) {
-          const pos = d3.pointer(event, wrap);
-          tooltip.style.left = (pos[0] + 12) + 'px';
-          tooltip.style.top = (pos[1] - 24) + 'px';
-        })
-        .on('mouseout', function() {
-          tooltip.style.opacity = '0';
-        });
-
-      const link = svg.append('g')
-        .attr('stroke-opacity', 0.65)
-        .selectAll('line')
-        .data(graph.links)
-        .join('line')
-        .attr('stroke', function(d) { return edgeColors[edgeKind(d)]; })
-        .attr('stroke-width', function(d) { return linkWidth(linkActivity(d)); })
-        .attr('stroke-dasharray', function(d) { return edgeKind(d) === 'escrow' ? '5 4' : null; });
-
-      const node = svg.append('g')
-        .selectAll('g')
-        .data(graph.nodes)
-        .join('g')
-        .call(d3.drag()
-          .on('start', function(event, d) {
-            if (!event.active) graphSimulation.alphaTarget(0.3).restart();
-            d.fx = d.x; d.fy = d.y;
-          })
-          .on('drag', function(event, d) {
-            d.fx = event.x; d.fy = event.y;
-          })
-          .on('end', function(event, d) {
-            if (!event.active) graphSimulation.alphaTarget(0);
-            d.fx = null; d.fy = null;
-          }));
-
-      node.append('circle')
-        .attr('r', function(d) { return radiusScale(d.value || 0); })
-        .attr('fill', function(d) { return nodeColors[d.group] || nodeColors.wallet; })
-        .attr('stroke', function(d) { return d.online ? '#4ade80' : '#0f172a'; })
-        .attr('stroke-width', function(d) { return d.online ? 3 : 2; })
-        .on('mouseover', function(event, d) {
-          const pos = d3.pointer(event, wrap);
-          tooltip.innerHTML = nodeTooltip(d);
-          tooltip.style.opacity = '1';
-          tooltip.style.left = (pos[0] + 12) + 'px';
-          tooltip.style.top = (pos[1] - 24) + 'px';
-        })
-        .on('mousemove', function(event) {
-          const pos = d3.pointer(event, wrap);
-          tooltip.style.left = (pos[0] + 12) + 'px';
-          tooltip.style.top = (pos[1] - 24) + 'px';
-        })
-        .on('mouseout', function() {
-          tooltip.style.opacity = '0';
-        });
-
-      node.append('text')
-        .text(function(d) { return d.label; })
-        .attr('x', function(d) { return radiusScale(d.value || 0) + 5; })
-        .attr('y', 4)
-        .attr('fill', '#cbd5e1')
-        .attr('font-size', '11px')
-        .attr('font-weight', '600')
-        .attr('pointer-events', 'none')
-        .style('text-shadow', '0 1px 2px #020617');
-
-      graphSimulation.on('tick', function() {
-        for (const d of graph.nodes) {
-          const r = radiusScale(d.value || 0);
-          d.x = Math.max(r, Math.min(width - r, d.x));
-          d.y = Math.max(r, Math.min(height - r, d.y));
-        }
-        const pos = function(l) {
-          l.attr('x1', function(d) { return d.source.x; })
-            .attr('y1', function(d) { return d.source.y; })
-            .attr('x2', function(d) { return d.target.x; })
-            .attr('y2', function(d) { return d.target.y; });
-        };
-        pos(link);
-        pos(linkHit);
-
-        node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
-      });
-
-      // Legend
-      const legend = document.getElementById('graph-legend');
-      const nodeLegend = [
-        { color: nodeColors.wallet, label: 'Carteira' },
-        { color: nodeColors.group, label: 'Grupo de chat' },
-        { color: nodeColors.aggregate, label: 'Escrow' }
-      ];
-      const edgeLegend = [
-        { color: edgeColors.chat, label: 'Chat' },
-        { color: edgeColors.onchain, label: 'On-chain' },
-        { color: edgeColors.both, label: 'Chat + on-chain' },
-        { color: edgeColors.escrow, label: 'Escrow' }
-      ];
-      let legendHtml = '';
-      for (const item of nodeLegend) {
-        legendHtml += '<span><span class="legend-dot" style="background:' + item.color + '"></span>' + item.label + '</span>';
-      }
-      for (const item of edgeLegend) {
-        legendHtml += '<span><span style="display:inline-block;width:1.1rem;height:.2rem;background:' + item.color + '"></span>' + item.label + '</span>';
-      }
-      legend.innerHTML = legendHtml;
+        '<table class="financial-table"><thead><tr><th>Rede</th><th>Chain ID</th><th>Pedidos</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<p class="updated" style="margin-top:.75rem;">Total de pedidos: <strong>' + formatNumber(demand.totalRequests) + '</strong></p>';
     }
 
     async function loadStats() {
@@ -453,7 +267,7 @@
 
         renderStats(s);
         if (s.financial) renderFinancial(s.financial);
-        if (s.walletGraph) renderGraph(s.walletGraph);
+        if (s.escrowDemand) renderEscrowDemand(s.escrowDemand);
       } catch (err) {
         document.getElementById('stats-content').innerHTML =
           '<p class="error">Não foi possível carregar as estatísticas no momento.</p>';

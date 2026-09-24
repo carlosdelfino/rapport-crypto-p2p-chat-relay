@@ -12,7 +12,8 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 - `POST /api/signal` — store a signaling envelope (offer/answer/ice).
 - `GET /api/signal?topic=...&since=...&to=...` — poll signaling messages.
 - `GET /api/version` — metadados da última versão de APK publicada (sem auth).
-- `GET /api/stats` — estatísticas do relay: carteiras, mensagens de chat, chats, sinais de sistema, movimentação financeira por ativo e `walletGraph` — grafo de interações entre carteiras (nós anonimizados, arestas com mensagens de chat e transações on-chain por tipo/montante, descobertas via Etherscan v2/Blockscout, mempool.space, Horizon e RPC Solana). Sem auth.
+- `GET /api/stats` — estatísticas do relay: carteiras, mensagens de chat, chats, sinais de sistema, volume transacionado por ativo e por rede (`financial`, reportado anonimamente pelo dApp) e demanda por escrow em redes sem contrato (`escrowDemand`). Sem auth, sem endereços de carteira.
+- `POST /api/tx-report` — o dApp reporta volume transacionado de forma anônima (rede, ativo, montante, tipo) após cada transação on-chain confirmada; dedup por `reportId`. Sem auth, sem carteiras.
 - `GET /install` — página HTML que lista os APKs disponíveis para download (links diretos para `apk.rapport.tec.br`).
 - `GET /install/manifest.json` — manifest JSON da versão atual (cache 5 min).
 - `GET /stats` — página HTML com estatísticas dinâmicas e endereços de doação.

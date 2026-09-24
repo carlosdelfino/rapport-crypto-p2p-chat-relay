@@ -39,6 +39,24 @@ export interface EscrowRequestRecord {
   signature?: string;
 }
 
+/**
+ * Relato anônimo de volume transacionado, enviado pelo dApp após uma
+ * transação on-chain bem-sucedida (pagamento direto ou depósito de escrow).
+ * Não contém carteiras, txHash nem assinatura — dedup por reportId (uuid
+ * gerado no cliente) para tolerar retries sem dupla contagem.
+ */
+export interface TxReportRecord {
+  /** UUID gerado pelo dApp para deduplicação. */
+  reportId: string;
+  chainId: number;
+  network: string;
+  symbol: string;
+  amount: string;
+  kind: string;
+  timestamp: number;
+  receivedAt: number;
+}
+
 export interface ApiResponse<T = unknown> {
   code: number;
   message: string;
