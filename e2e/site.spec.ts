@@ -69,20 +69,25 @@ test.describe('navegação e metadados do site', () => {
 
     // Permanecem apenas os destinos não cobertos pelos cards de Recursos.
     await expect(linksGrid.locator('a[href="/stats"]')).toHaveCount(1);
+    await expect(linksGrid.locator('a[href="/ajudar"]')).toHaveCount(1);
     expect(
       await linksGrid.locator('a.link-card').count(),
-    ).toBe(3);
+    ).toBe(4);
 
     expectCleanRuntime(hygiene);
   });
 
-  test('sitemap declara /tokens, /chat e /wallet', async ({ page, hygiene }) => {
+  test('sitemap declara /tokens, /chat, /wallet e /ajudar', async ({
+    page,
+    hygiene,
+  }) => {
     const response = await page.goto('/sitemap.xml');
     expect(response?.status()).toBe(200);
     const body = await response!.text();
     expect(body).toContain('<loc>https://crypto-chat.rapport.tec.br/tokens</loc>');
     expect(body).toContain('<loc>https://crypto-chat.rapport.tec.br/chat</loc>');
     expect(body).toContain('<loc>https://crypto-chat.rapport.tec.br/wallet</loc>');
+    expect(body).toContain('<loc>https://crypto-chat.rapport.tec.br/ajudar</loc>');
 
     expectCleanRuntime(hygiene);
   });
