@@ -19,6 +19,8 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 - `GET /stats` — página HTML com estatísticas dinâmicas e endereços de doação.
 - `GET /escrow` — página HTML com tutorial do escrow arbitrado on-chain e manifest de contratos (`/escrow/contracts.json`).
 - `GET /tokens` — página HTML com o catálogo de redes, moedas nativas e tokens suportados pelo dApp, com o contexto de uso de cada ativo.
+- `GET /chat` — página HTML explicando como o dApp funciona: identidade por wallet, sinalização via relay, canal direto WebRTC e criptografia ponta a ponta.
+- `GET /wallet` — página HTML explicando o dApp como wallet self-custody multichain: recebimentos (`/collect`), pagamentos (`/pay`), saldos e Pagamento Garantido (`/escrow`).
 - `GET /sitemap.xml` — sitemap das páginas públicas (regenerado junto com `/install` via `apk:regenerate`/`apk:upload`).
 - `GET /robots.txt` — regras de crawling apontando para o sitemap.
 

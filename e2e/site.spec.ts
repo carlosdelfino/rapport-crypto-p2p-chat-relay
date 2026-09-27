@@ -7,7 +7,7 @@ test.describe('navegação e metadados do site', () => {
   }) => {
     await page.goto('/');
 
-    // Card de feature + card de página apontando para /tokens.
+    // Cards de feature apontando para /tokens (Redes suportadas + Moedas e tokens).
     const links = page.locator('a[href="/tokens"]');
     expect(await links.count()).toBeGreaterThanOrEqual(2);
 
@@ -22,11 +22,67 @@ test.describe('navegação e metadados do site', () => {
     expectCleanRuntime(hygiene);
   });
 
-  test('sitemap declara /tokens', async ({ page, hygiene }) => {
+  test('cards de Recursos levam às páginas de detalhe', async ({
+    page,
+    hygiene,
+  }) => {
+    await page.goto('/');
+
+    // Os três cards de arquitetura apontam para /chat.
+    const chatLinks = page.locator('.feature-card a[href="/chat"]');
+    expect(await chatLinks.count()).toBe(3);
+
+    // Redes suportadas e Moedas e tokens apontam para /tokens.
+    expect(
+      await page.locator('.feature-card a[href="/tokens"]').count(),
+    ).toBeGreaterThanOrEqual(2);
+
+    // Pagamento garantido -> /escrow; Wallet -> /wallet; Android nativo -> /install.
+    await expect(
+      page.locator('.feature-card a[href="/escrow"]'),
+    ).toHaveCount(1);
+    await expect(
+      page.locator('.feature-card a[href="/wallet"]'),
+    ).toHaveCount(1);
+    await expect(
+      page.locator('.feature-card a[href="/install"]'),
+    ).toHaveCount(1);
+
+    expectCleanRuntime(hygiene);
+  });
+
+  test('seção Páginas não repete destinos da seção Recursos', async ({
+    page,
+    hygiene,
+  }) => {
+    await page.goto('/');
+
+    // Cards redundantes foram removidos: a grade de páginas só mantém
+    // destinos sem card correspondente em Recursos.
+    const linksGrid = page.locator('.links-grid');
+    for (const href of ['/install', '/escrow', '/tokens', '/chat', '/wallet']) {
+      await expect(
+        linksGrid.locator(`a[href="${href}"]`),
+        `links-grid não deve linkar ${href}`,
+      ).toHaveCount(0);
+    }
+
+    // Permanecem apenas os destinos não cobertos pelos cards de Recursos.
+    await expect(linksGrid.locator('a[href="/stats"]')).toHaveCount(1);
+    expect(
+      await linksGrid.locator('a.link-card').count(),
+    ).toBe(3);
+
+    expectCleanRuntime(hygiene);
+  });
+
+  test('sitemap declara /tokens, /chat e /wallet', async ({ page, hygiene }) => {
     const response = await page.goto('/sitemap.xml');
     expect(response?.status()).toBe(200);
     const body = await response!.text();
     expect(body).toContain('<loc>https://crypto-chat.rapport.tec.br/tokens</loc>');
+    expect(body).toContain('<loc>https://crypto-chat.rapport.tec.br/chat</loc>');
+    expect(body).toContain('<loc>https://crypto-chat.rapport.tec.br/wallet</loc>');
 
     expectCleanRuntime(hygiene);
   });

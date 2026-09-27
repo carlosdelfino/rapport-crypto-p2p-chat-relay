@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WY96WV41T8');
+  </script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
+  <meta name="robots" content="index, follow"/>
+  <title>Como o dApp funciona — chat P2P cifrado | Rapport Crypto Chat</title>
+  <meta name="description" content="Entenda como o Rapport Crypto Chat funciona: identidade pela sua carteira blockchain, conexão direta WebRTC entre dispositivos, criptografia ponta a ponta X25519 + ChaCha20-Poly1305 e nenhum servidor central de mensagens."/>
+  <meta name="keywords" content="chat p2p, criptografia ponta a ponta, webrtc, x25519, chacha20-poly1305, wallet, identidade blockchain, rapport, mensagens privadas"/>
+  <meta name="theme-color" content="#020617"/>
+  <meta name="author" content="Rapport Tecnologia e Inovação"/>
+  <link rel="canonical" href="https://crypto-chat.rapport.tec.br/chat"/>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="Rapport Crypto Chat"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta property="og:title" content="Como o dApp funciona — chat P2P cifrado | Rapport Crypto Chat"/>
+  <meta property="og:description" content="Identidade pela sua carteira, conexão direta WebRTC entre dispositivos e criptografia ponta a ponta. O relay só sinaliza — nunca lê suas mensagens."/>
+  <meta property="og:url" content="https://crypto-chat.rapport.tec.br/chat"/>
+  <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Rapport Crypto Chat — como funciona"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Como o dApp funciona — chat P2P cifrado | Rapport Crypto Chat"/>
+  <meta name="twitter:description" content="Identidade pela sua carteira, conexão direta WebRTC e criptografia ponta a ponta. O relay só sinaliza — nunca lê suas mensagens."/>
+  <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Como o dApp funciona — chat P2P cifrado",
+        "url": "https://crypto-chat.rapport.tec.br/chat",
+        "inLanguage": "pt-BR",
+        "description": "Arquitetura do Rapport Crypto Chat: identidade por wallet blockchain, sinalização via relay, conexão direta WebRTC e criptografia ponta a ponta.",
+        "isPartOf": { "@type": "WebSite", "name": "Rapport Crypto Chat", "url": "https://crypto-chat.rapport.tec.br/" },
+        "publisher": { "@type": "Organization", "name": "Rapport Tecnologia e Inovação", "url": "https://rapport.tec.br" }
+      },
+      {
+        "@type": "HowTo",
+        "name": "Como começar a conversar no Rapport Crypto Chat",
+        "description": "Fluxo de ponta a ponta: da criação da identidade até a primeira mensagem cifrada.",
+        "step": [
+          { "@type": "HowToStep", "position": 1, "name": "Criar identidade", "text": "Instale o APK e crie uma nova carteira (seed BIP39) ou importe uma existente. Sua wallet EVM é sua identidade de chat." },
+          { "@type": "HowToStep", "position": 2, "name": "Registrar presença", "text": "O app registra seu peer no relay — apenas metadados de sinalização, nunca conteúdo de mensagens." },
+          { "@type": "HowToStep", "position": 3, "name": "Convidar", "text": "Inicie uma conversa conhecendo apenas a wallet do destinatário; ele recebe um convite na inbox e aceita ou recusa." },
+          { "@type": "HowToStep", "position": 4, "name": "Conectar direto", "text": "Com o aceite assinado, os dispositivos trocam chaves X25519 e abrem um canal WebRTC ponto a ponto." },
+          { "@type": "HowToStep", "position": 5, "name": "Conversar", "text": "Cada mensagem é cifrada no seu dispositivo com ChaCha20-Poly1305 e só pode ser lida pelo destinatário." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "O relay consegue ler minhas mensagens?", "acceptedAnswer": { "@type": "Answer", "text": "Não. O relay só transporta envelopes de sinalização WebRTC e metadados de presença. As mensagens trafegam cifradas ponta a ponta, direto entre os dispositivos." } },
+          { "@type": "Question", "name": "Preciso de e-mail ou telefone para usar?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Sua carteira blockchain é sua identidade — sem cadastro, sem e-mail, sem telefone, sem KYC." } },
+          { "@type": "Question", "name": "Onde minhas conversas ficam guardadas?", "acceptedAnswer": { "@type": "Answer", "text": "Exclusivamente no seu dispositivo. Não existe servidor central de mensagens nem histórico remoto." } },
+          { "@type": "Question", "name": "Posso pagar alguém dentro do chat?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. A mesma wallet que identifica você no chat é sua carteira: use /pay, /collect, /balance e /escrow em qualquer conversa direta." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
+      --border:#1e293b; --border-hover:#334155;
+      --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
+      --brand:#ea580c; --brand-light:#fb923c; --brand-dark:#c2410c;
+      --brand-300:#fdba74; --brand-500:#f97316;
+      --ok:#4ade80; --danger:#f87171;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6;
+      min-height:100vh; padding:1rem;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:52rem; margin:0 auto; padding:1rem 0; }
+
+    .hero { text-align:center; padding:3rem 1rem 2rem; }
+    .hero h1 {
+      font-size:clamp(1.9rem,5vw,2.8rem); font-weight:800;
+      color:var(--brand-light); margin-bottom:.75rem; letter-spacing:-.02em;
+    }
+    .hero .tagline { color:var(--secondary); font-size:1.1rem; max-width:40rem; margin:0 auto 1rem; }
+    .hero .subtagline { color:var(--muted); font-size:.9rem; max-width:36rem; margin:0 auto; }
+    .badge {
+      display:inline-block; margin-top:1rem; padding:.3rem .8rem;
+      border:1px solid var(--border); border-radius:999px;
+      font-size:.75rem; font-weight:600; color:var(--muted);
+      background:var(--card-60); backdrop-filter:blur(8px);
+    }
+    .badge .dot {
+      display:inline-block; width:.5rem; height:.5rem; border-radius:50%;
+      background:var(--brand-500); margin-right:.4rem; vertical-align:middle;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .cta-row { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; margin-top:1.5rem; }
+    .cta {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.8rem 1.6rem; border-radius:.7rem;
+      font-size:.95rem; font-weight:700; text-decoration:none;
+      transition:transform .2s, box-shadow .2s;
+    }
+    .cta-primary { background:var(--brand); color:#fff; box-shadow:0 8px 24px rgba(234,88,12,.2); }
+    .cta-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(234,88,12,.3); }
+    .cta-secondary { border:1px solid var(--border); color:var(--text); background:var(--card-60); backdrop-filter:blur(8px); }
+    .cta-secondary:hover { border-color:var(--brand); transform:translateY(-2px); }
+
+    .section-title {
+      font-size:1.25rem; font-weight:700; color:var(--brand-light);
+      margin:3rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
+    }
+    .lead { color:var(--secondary); font-size:1rem; margin-bottom:1rem; }
+    .muted { color:var(--muted); font-size:.9rem; }
+    .lead a, .muted a { color:var(--brand-light); text-decoration:none; }
+    .lead a:hover, .muted a:hover { color:var(--brand); }
+
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem; margin:1.5rem 0; }
+    .card {
+      border:1px solid var(--border); border-radius:1rem;
+      background:var(--card-60); backdrop-filter:blur(8px); padding:1.4rem;
+    }
+    .card .icon {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:2.4rem; height:2.4rem; border-radius:.7rem;
+      background:rgba(234,88,12,.12); color:var(--brand-light);
+      font-size:1.2rem; margin-bottom:.6rem;
+    }
+    .card h3 { font-size:.98rem; font-weight:700; margin-bottom:.35rem; }
+    .card p { font-size:.85rem; color:var(--muted); }
+    .card a.card-link {
+      display:inline-block; margin-top:.6rem;
+      font-size:.82rem; font-weight:700; color:var(--brand-light); text-decoration:none;
+    }
+    .card a.card-link:hover { color:var(--brand); }
+
+    /* Timeline do fluxo */
+    .steps { display:flex; flex-direction:column; gap:0; margin:1.5rem 0; }
+    .step { display:flex; gap:1rem; padding:1rem 0; position:relative; }
+    .step::before {
+      content:""; position:absolute; left:1.19rem; top:2.9rem; bottom:-.4rem;
+      width:2px; background:var(--border);
+    }
+    .step:last-child::before { display:none; }
+    .step .num {
+      flex:0 0 2.4rem; height:2.4rem; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(234,88,12,.12); border:1px solid var(--brand);
+      color:var(--brand-light); font-weight:800; font-size:.9rem;
+      position:relative; z-index:1;
+    }
+    .step .body { flex:1; border:1px solid var(--border); border-radius:.9rem; background:var(--card-60); padding:1rem 1.2rem; }
+    .step .body h3 { font-size:.95rem; font-weight:700; margin-bottom:.3rem; }
+    .step .body h3 .who { color:var(--brand-light); font-weight:700; }
+    .step .body p { font-size:.85rem; color:var(--muted); }
+    .step .body code, .cmd {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.82rem; color:var(--brand-300);
+      background:rgba(234,88,12,.08); padding:.1rem .4rem; border-radius:.35rem;
+    }
+
+    .callout {
+      border:1px solid var(--brand); border-left-width:4px; border-radius:.9rem;
+      background:rgba(234,88,12,.08); padding:1rem 1.2rem; margin:1.5rem 0;
+      font-size:.9rem; color:var(--secondary);
+    }
+    .callout strong { color:var(--brand-light); }
+    .callout.ok { border-color:var(--ok); background:rgba(74,222,128,.07); }
+    .callout.ok strong { color:var(--ok); }
+
+    /* Tabela relay faz / não faz */
+    .relay-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.9rem; }
+    .relay-table th, .relay-table td {
+      text-align:left; padding:.7rem .9rem; border:1px solid var(--border);
+      vertical-align:top;
+    }
+    .relay-table th { background:var(--card); color:var(--brand-light); font-weight:700; }
+    .relay-table td { color:var(--secondary); }
+    .relay-table td.do { color:var(--ok); font-weight:700; white-space:nowrap; }
+    .relay-table td.dont { color:var(--danger); font-weight:700; white-space:nowrap; }
+
+    .footer {
+      text-align:center; color:var(--muted); font-size:.8rem;
+      margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
+    }
+    .footer a { color:var(--brand-light); text-decoration:none; }
+    .footer a:hover { color:var(--brand); }
+    .backlink { display:inline-block; margin-top:1rem; color:var(--brand-light); text-decoration:none; font-size:.9rem; }
+    .backlink:hover { color:var(--brand); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Como o dApp funciona</h1>
+      <p class="tagline">Chat direto entre pessoas, identidade pela sua carteira blockchain e criptografia ponta a ponta &mdash; sem servidor central de mensagens.</p>
+      <p class="subtagline">O relay s&oacute; aproxima os dispositivos. Depois disso, a conversa &eacute; s&oacute; entre voc&ecirc;s.</p>
+      <span class="badge"><span class="dot"></span>WebRTC P2P &middot; E2E cifrado &middot; self-custody</span>
+      <div class="cta-row">
+        <a class="cta cta-primary" href="/install">Instalar o app</a>
+        <a class="cta cta-secondary" href="/">Voltar ao in&iacute;cio</a>
+      </div>
+    </header>
+
+    <h2 class="section-title">O fluxo, de ponta a ponta</h2>
+    <p class="lead">
+      O Rapport Crypto Chat combina três camadas: <strong>identidade blockchain</strong> (sua wallet),
+      <strong>sinalização via relay</strong> (descoberta e convites) e <strong>canal direto WebRTC</strong>
+      (onde as mensagens realmente trafegam, sempre cifradas).
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="body">
+          <h3><span class="who">Voc&ecirc;</span> cria sua identidade</h3>
+          <p>No primeiro uso, o app gera uma seed BIP39 e deriva uma wallet EVM &mdash; que passa a ser seu identificador &uacute;nico no chat &mdash; al&eacute;m dos endere&ccedil;os de pagamento (Bitcoin Taproot/SegWit e demais fam&iacute;lias). Tamb&eacute;m &eacute; poss&iacute;vel importar uma chave privada EVM ou uma frase de recupera&ccedil;&atilde;o existente.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="body">
+          <h3><span class="who">O app</span> registra presen&ccedil;a no relay</h3>
+          <p>Seu dispositivo anuncia no relay que est&aacute; online: wallet, peerId e multiaddr de sinaliza&ccedil;&atilde;o. O relay n&atilde;o recebe contatos, perfil ou qualquer conte&uacute;do de conversa.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="body">
+          <h3><span class="who">Voc&ecirc;</span> convida pela wallet</h3>
+          <p>Conhecendo apenas a wallet do destinat&aacute;rio, voc&ecirc; inicia a conversa: um <code>chat_request</code> chega &agrave; inbox dele e a mensagem fica pendente at&eacute; o aceite. Nada &eacute; decifrado ou transmitido sem consentimento.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div class="body">
+          <h3><span class="who">O destinat&aacute;rio</span> aceita e a sess&atilde;o nasce</h3>
+          <p>O aceite &eacute; um <code>CHAT_ACCEPT</code> assinado (EIP-191) com a chave p&uacute;blica X25519 do destinat&aacute;rio. Os dois lados derivam o segredo compartilhado e o WebRTC abre o canal direto entre os dispositivos.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <div class="body">
+          <h3>Mensagens cifradas de verdade</h3>
+          <p>Cada mensagem &eacute; cifrada localmente com <strong>X25519 + ChaCha20-Poly1305</strong> antes de sair do aparelho &mdash; com nonce, sequ&ecirc;ncia e timestamp anti-replay &mdash; e s&oacute; &eacute; decifrada no dispositivo autorizado.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">6</div>
+        <div class="body">
+          <h3>Hist&oacute;rico s&oacute; no seu bolso</h3>
+          <p>Conversas, contatos, tokens e configura&ccedil;&otilde;es de rede ficam em banco local no dispositivo (SQLite cifrado). N&atilde;o h&aacute; backup em servidor nem perfil na nuvem.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">O que o relay faz &mdash; e o que nunca faz</h2>
+    <p class="lead">O relay &eacute; um servi&ccedil;o de sinaliza&ccedil;&atilde;o deliberadamente cego ao conte&uacute;do:</p>
+    <table class="relay-table">
+      <thead>
+        <tr><th></th><th>Responsabilidade</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="do">Faz</td><td>Registra presen&ccedil;a de peers (wallet + multiaddr) com TTL curto.</td></tr>
+        <tr><td class="do">Faz</td><td>Armazena envelopes de sinaliza&ccedil;&atilde;o WebRTC (offer/answer/ICE) at&eacute; o destinat&aacute;rio coletar.</td></tr>
+        <tr><td class="do">Faz</td><td>Entrega convites cifrados na inbox da wallet e agrega estat&iacute;sticas an&ocirc;nimas de uso.</td></tr>
+        <tr><td class="dont">N&atilde;o faz</td><td>N&atilde;o transporta nem armazena mensagens de chat leg&iacute;veis.</td></tr>
+        <tr><td class="dont">N&atilde;o faz</td><td>N&atilde;o conhece seus contatos, suas conversas ou seu perfil.</td></tr>
+        <tr><td class="dont">N&atilde;o faz</td><td>N&atilde;o segura chaves: as privadas nunca saem do seu dispositivo.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="section-title">Seguran&ccedil;a em camadas</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="icon">&#128274;</span>
+        <h3>E2E real</h3>
+        <p>X25519 para o segredo compartilhado e ChaCha20-Poly1305 para o conte&uacute;do &mdash; a cifra acontece no dispositivo, antes de qualquer rede.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#9998;</span>
+        <h3>Eventos assinados</h3>
+        <p>Convites, aceites e recusas s&atilde;o assinados com EIP-191 pela wallet de cada participante &mdash; autenticidade sem senha.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#128257;</span>
+        <h3>Anti-replay</h3>
+        <p>Toda mensagem carrega identificador &uacute;nico, sequ&ecirc;ncia, timestamp e nonce criptogr&aacute;fico; repeti&ccedil;&otilde;es s&atilde;o descartadas.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#129309;</span>
+        <h3>Consentimento primeiro</h3>
+        <p>Nenhuma sess&atilde;o &eacute; criada sem aceite expl&iacute;cito do convite. Recusa bloqueia o tr&aacute;fego at&eacute; novo convite.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#128373;&#65039;</span>
+        <h3>Minimiza&ccedil;&atilde;o de dados</h3>
+        <p>Sem e-mail, telefone ou KYC. A wallet &eacute; pseud&ocirc;nima por natureza e o relay s&oacute; v&ecirc; metadados de presen&ccedil;a.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#128187;</span>
+        <h3>C&oacute;digo aberto</h3>
+        <p>O dApp e o relay s&atilde;o p&uacute;blicos no GitHub &mdash; a seguran&ccedil;a &eacute; audit&aacute;vel por qualquer pessoa.</p>
+        <a class="card-link" href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat" rel="noopener" target="_blank">Ver reposit&oacute;rio &rarr;</a>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Por que isso importa:</strong> em messengers centralizados, o servidor &eacute; ponto &uacute;nico de
+      vazamento e censura. Aqui, derrubar ou comprometer o relay n&atilde;o exp&otilde;e nenhuma conversa &mdash;
+      ele nunca teve acesso ao conte&uacute;do.
+    </div>
+
+    <h2 class="section-title">Liberdade de uso</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="icon">&#128275;</span>
+        <h3>Sem cadastro</h3>
+        <p>Nenhuma conta em servidor: criar uma wallet j&aacute; &eacute; criar sua identidade. Voc&ecirc; usa em segundos.</p>
+      </div>
+      <div class="card">
+        <span class="icon">&#128241;</span>
+        <h3>Sem loja de apps</h3>
+        <p>Instala&ccedil;&atilde;o direta por APK &mdash; sem depender de aprova&ccedil;&atilde;o ou remo&ccedil;&atilde;o por uma store.</p>
+        <a class="card-link" href="/install">Baixar o APK &rarr;</a>
+      </div>
+      <div class="card">
+        <span class="icon">&#128091;</span>
+        <h3>Chat que &eacute; wallet</h3>
+        <p>A mesma identidade que conversa tamb&eacute;m recebe e paga cripto: <code class="cmd">/pay</code>, <code class="cmd">/collect</code>, <code class="cmd">/balance</code> dentro da conversa.</p>
+        <a class="card-link" href="/wallet">Ver a wallet &rarr;</a>
+      </div>
+      <div class="card">
+        <span class="icon">&#128737;&#65039;</span>
+        <h3>Pagamento garantido</h3>
+        <p>Para valores que pedem prote&ccedil;&atilde;o, o escrow arbitrado custodia os fundos on-chain at&eacute; a aprova&ccedil;&atilde;o.</p>
+        <a class="card-link" href="/escrow">Como funciona o escrow &rarr;</a>
+      </div>
+      <div class="card">
+        <span class="icon">&#127760;</span>
+        <h3>Multichain</h3>
+        <p>Mais de 20 redes entre mainnets e testnets &mdash; EVM, Bitcoin e Klever &mdash; com cat&aacute;logo completo de ativos.</p>
+        <a class="card-link" href="/tokens">Ver redes e tokens &rarr;</a>
+      </div>
+      <div class="card">
+        <span class="icon">&#128101;</span>
+        <h3>Grupos multicast</h3>
+        <p>Al&eacute;m das conversas diretas, grupos usam comunica&ccedil;&atilde;o pub-sub com consentimento de identidade por membro.</p>
+      </div>
+    </div>
+
+    <div class="callout ok">
+      <strong>Resumo:</strong> sua wallet &eacute; sua identidade, seus dispositivos conversam direto e suas
+      mensagens nunca passam em claro por servidor nenhum. Seguran&ccedil;a por arquitetura, n&atilde;o por promessa.
+    </div>
+
+    <a class="backlink" href="/">&larr; Voltar para a p&aacute;gina inicial</a>
+
+    <div class="footer">
+      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
+    </div>
+  </div>
+</body>
+</html>

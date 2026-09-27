@@ -15,7 +15,7 @@
   <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
   <title>Rapport Crypto Chat</title>
-  <meta name="description" content="Aplicativo de chat protegido e direto entre pessoas, sem servidor central, com identidade baseada em carteira blockchain. Baixe, instale e converse com privacidade."/>
+  <meta name="description" content="Aplicativo de chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain. Baixe, instale e converse com privacidade."/>
   <meta name="keywords" content="chat criptografado, blockchain, ethereum, web3, mensagens privadas, e2e, webrtc, rapport, android apk"/>
   <meta name="theme-color" content="#020617"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
@@ -26,7 +26,7 @@
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
   <meta property="og:locale" content="pt_BR"/>
   <meta property="og:title" content="Rapport Crypto Chat — Chat protegido e direto"/>
-  <meta property="og:description" content="Chat protegido e direto entre pessoas, sem servidor central, com identidade baseada em carteira blockchain. Sem cadastro, sem rastreamento."/>
+  <meta property="og:description" content="Chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain. Sem cadastro, sem rastreamento."/>
   <meta property="og:url" content="https://crypto-chat.rapport.tec.br/"/>
   <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
@@ -34,7 +34,7 @@
   <meta property="og:image:alt" content="Rapport Crypto Chat — logo"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Rapport Crypto Chat — Chat protegido e direto"/>
-  <meta name="twitter:description" content="Chat protegido e direto entre pessoas, sem servidor central, com identidade baseada em carteira blockchain."/>
+  <meta name="twitter:description" content="Chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain."/>
   <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <script type="application/ld+json">
   {
@@ -59,7 +59,7 @@
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
         "url": "https://crypto-chat.rapport.tec.br/",
         "downloadUrl": "https://crypto-chat.rapport.tec.br/install",
-        "description": "Aplicativo de chat protegido e direto entre pessoas, sem servidor central, com identidade baseada em carteira blockchain.",
+        "description": "Aplicativo de chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain.",
         "author": {
           "@type": "Organization",
           "name": "Rapport Tecnologia e Inovação",
@@ -226,9 +226,9 @@
   <div class="container">
     <header class="hero">
       <h1>Rapport Crypto Chat</h1>
-      <p class="tagline">Chat protegido e direto entre pessoas, sem servidor central, com identidade baseada em carteira blockchain.</p>
+      <p class="tagline">Chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain.</p>
       <p class="subtagline">Sem cadastro. Sem rastreamento. Apenas voc&ecirc;, sua carteira e a criptografia.</p>
-      <span class="badge"><span class="dot"></span>Relay online</span>
+      <span class="badge"><span class="dot"></span>Signaling relay online</span>
       <div class="cta-row">
         <a class="cta cta-primary" href="/install">Baixar APK</a>
         <a class="cta cta-secondary" href="/stats">Ver estat&iacute;sticas</a>
@@ -241,21 +241,25 @@
         <span class="icon">&#128274;</span>
         <h3>Criptografia E2E</h3>
         <p>Mensagens cifradas com X25519 + ChaCha20-Poly1305 antes de sair do seu dispositivo.</p>
+        <a class="card-link" href="/chat">Como funciona &rarr;</a>
       </div>
       <div class="feature-card">
         <span class="icon">&#129689;</span>
         <h3>Conex&atilde;o direta</h3>
         <p>Chat direto entre dispositivos via WebRTC. O relay apenas sinaliza &mdash; nunca carrega conte&uacute;do.</p>
+        <a class="card-link" href="/chat">Como funciona &rarr;</a>
       </div>
       <div class="feature-card">
         <span class="icon">&#128179;</span>
         <h3>Identidade blockchain</h3>
         <p>Sua carteira &eacute; sua identidade. Sem e-mail, sem telefone, sem KYC.</p>
+        <a class="card-link" href="/chat">Como funciona &rarr;</a>
       </div>
       <div class="feature-card">
         <span class="icon">&#127760;</span>
         <h3>Redes suportadas</h3>
         <p>Ethereum, Polygon, Base, Optimism, Arbitrum, Linea, Monad, XDC, Arc, HAQQ, Bitcoin e Klever &mdash; com testnets para pr&aacute;tica.</p>
+        <a class="card-link" href="/tokens">Ver cat&aacute;logo de redes &rarr;</a>
       </div>
       <div class="feature-card">
         <span class="icon">&#128176;</span>
@@ -264,42 +268,32 @@
         <a class="card-link" href="/tokens">Ver cat&aacute;logo completo &rarr;</a>
       </div>
       <div class="feature-card">
+        <span class="icon">&#128091;</span>
+        <h3>Wallet</h3>
+        <p>A mesma conta do chat &eacute; sua carteira: receba, pague e custodie em escrow sem sair da conversa.</p>
+        <a class="card-link" href="/wallet">Como funciona a wallet &rarr;</a>
+      </div>
+      <div class="feature-card">
         <span class="icon">&#128737;&#65039;</span>
         <h3>Pagamento garantido</h3>
         <p>Escrow arbitrado on-chain: um contato de confian&ccedil;a valida o pagamento antes da libera&ccedil;&atilde;o dos fundos.</p>
+        <a class="card-link" href="/escrow">Como funciona o escrow &rarr;</a>
       </div>
       <div class="feature-card">
         <span class="icon">&#128241;</span>
         <h3>Android nativo</h3>
         <p>App Android via Expo + React Native. Instala&ccedil;&atilde;o direta por APK, sem loja.</p>
+        <a class="card-link" href="/install">Baixar o APK &rarr;</a>
       </div>
     </div>
 
     <h2 class="section-title">P&aacute;ginas</h2>
     <div class="links-grid">
-      <a class="link-card" href="/install">
-        <span class="icon">&#128242;</span>
-        <span class="title">Instalar APK</span>
-        <span class="desc">Lista de vers&otilde;es dispon&iacute;veis para download direto.</span>
-        <span class="path">/install</span>
-      </a>
       <a class="link-card" href="/stats">
         <span class="icon">&#128202;</span>
         <span class="title">Estat&iacute;sticas</span>
         <span class="desc">M&eacute;tricas em tempo real do relay e endere&ccedil;os para doa&ccedil;&otilde;es.</span>
         <span class="path">/stats</span>
-      </a>
-      <a class="link-card" href="/escrow">
-        <span class="icon">&#128737;&#65039;</span>
-        <span class="title">Escrow</span>
-        <span class="desc">Pagamento garantido com arbitragem: como funciona, taxas e tutorial.</span>
-        <span class="path">/escrow</span>
-      </a>
-      <a class="link-card" href="/tokens">
-        <span class="icon">&#128176;</span>
-        <span class="title">Moedas e tokens</span>
-        <span class="desc">Cat&aacute;logo de redes e ativos suportados: stablecoins, moedas nativas e tokens.</span>
-        <span class="path">/tokens</span>
       </a>
       <a class="link-card" href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat" rel="noopener" target="_blank">
         <span class="icon">&#128187;</span>
