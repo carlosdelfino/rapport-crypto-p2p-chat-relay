@@ -802,7 +802,7 @@ interface PublicManifest {
 /**
  * Gera o sitemap.xml público com as páginas indexáveis do relay.
  * O `lastmod` de /install acompanha a data do APK mais recente; as páginas
- * estáticas (/, /stats, /escrow, /tokens) não declaram lastmod porque sua
+ * estáticas (/, /stats, /escrow, /tokens, /chat, /wallet) não declaram lastmod porque sua
  * data de mudança não é conhecida pelo script.
  */
 function renderSitemap(apks: ApkEntry[]): string {
@@ -826,6 +826,12 @@ function renderSitemap(apks: ApkEntry[]): string {
   </url>
   <url>
     <loc>${RELAY_BASE_URL}/tokens</loc>
+  </url>
+  <url>
+    <loc>${RELAY_BASE_URL}/chat</loc>
+  </url>
+  <url>
+    <loc>${RELAY_BASE_URL}/wallet</loc>
   </url>
 </urlset>
 `;
