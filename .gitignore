@@ -41,3 +41,6 @@ yarn-error.*
 /android
 
 *.apk
+# Playwright
+playwright-report/
+test-results/

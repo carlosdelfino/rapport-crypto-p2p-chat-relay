@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WY96WV41T8');
+  </script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
+  <meta name="robots" content="index, follow"/>
+  <title>Moedas e tokens — catálogo por rede | Rapport Crypto Chat</title>
+  <meta name="description" content="Catálogo completo das redes, moedas nativas e tokens suportados pelo Rapport Crypto Chat: stablecoins (USDC, USDT, DAI, PYUSD, BRLA, EURC), moedas de rede (ETH, POL, BTC, ISLM, MON, XDC, BNB, KLV) e tokens wrapped, staking, utilitários e de projeto."/>
+  <meta name="keywords" content="usdc, usdt, dai, pyusd, brla, eurc, islm, eth, pol, btc, stablecoin, erc-20, tokens blockchain, rapport"/>
+  <meta name="theme-color" content="#020617"/>
+  <meta name="author" content="Rapport Tecnologia e Inovação"/>
+  <link rel="canonical" href="https://crypto-chat.rapport.tec.br/tokens"/>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="Rapport Crypto Chat"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta property="og:title" content="Moedas e tokens — catálogo por rede | Rapport Crypto Chat"/>
+  <meta property="og:description" content="Todas as redes, moedas nativas e tokens que o app suporta — stablecoins, moedas de gas, wrapped, staking e tokens de projeto."/>
+  <meta property="og:url" content="https://crypto-chat.rapport.tec.br/tokens"/>
+  <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Rapport Crypto Chat — moedas e tokens"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Moedas e tokens — catálogo por rede | Rapport Crypto Chat"/>
+  <meta name="twitter:description" content="Todas as redes, moedas nativas e tokens suportados pelo app — stablecoins, gas, wrapped, staking e projetos."/>
+  <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Moedas e tokens — catálogo por rede",
+        "url": "https://crypto-chat.rapport.tec.br/tokens",
+        "inLanguage": "pt-BR",
+        "description": "Catálogo das redes, moedas nativas e tokens suportados pelo Rapport Crypto Chat, com o contexto de uso de cada ativo.",
+        "isPartOf": { "@type": "WebSite", "name": "Rapport Crypto Chat", "url": "https://crypto-chat.rapport.tec.br/" },
+        "publisher": { "@type": "Organization", "name": "Rapport Tecnologia e Inovação", "url": "https://rapport.tec.br" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Quais stablecoins o app aceita?", "acceptedAnswer": { "@type": "Answer", "text": "USDC, USDT, USDT0, DAI, PYUSD, EURC, BRLA, BUSD e as versões bridged axlUSDC/axlUSDT/axlDAI na HAQQ, além de USYC (fundo tokenizado)." } },
+          { "@type": "Question", "name": "Posso pagar com a moeda nativa de cada rede?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. ETH, POL, BNB, XDC, MON, ISLM, BTC, KLV e USDC (na Arc, onde é a moeda de gas) podem ser enviados diretamente com /pay." } },
+          { "@type": "Question", "name": "Moedas de testnet têm valor?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Ativos em Sepolia, Amoy, Base Sepolia, OP Sepolia, Arbitrum Sepolia, Linea Sepolia, Monad Testnet, Arc Testnet, HAQQ Testedge 2 e Bitcoin Testnet servem apenas para testes." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
+      --border:#1e293b; --border-hover:#334155;
+      --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
+      --brand:#ea580c; --brand-light:#fb923c; --brand-dark:#c2410c;
+      --brand-300:#fdba74; --brand-500:#f97316;
+      --ok:#4ade80;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6;
+      min-height:100vh; padding:1rem;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:56rem; margin:0 auto; padding:1rem 0; }
+
+    .hero { text-align:center; padding:3rem 1rem 2rem; }
+    .hero h1 {
+      font-size:clamp(1.9rem,5vw,2.8rem); font-weight:800;
+      color:var(--brand-light); margin-bottom:.75rem; letter-spacing:-.02em;
+    }
+    .hero .tagline { color:var(--secondary); font-size:1.1rem; max-width:42rem; margin:0 auto 1rem; }
+    .hero .subtagline { color:var(--muted); font-size:.9rem; max-width:38rem; margin:0 auto; }
+    .badge {
+      display:inline-block; margin-top:1rem; padding:.3rem .8rem;
+      border:1px solid var(--border); border-radius:999px;
+      font-size:.75rem; font-weight:600; color:var(--muted);
+      background:var(--card-60); backdrop-filter:blur(8px);
+    }
+    .badge .dot {
+      display:inline-block; width:.5rem; height:.5rem; border-radius:50%;
+      background:var(--brand-500); margin-right:.4rem; vertical-align:middle;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .cta-row { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; margin-top:1.5rem; }
+    .cta {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.8rem 1.6rem; border-radius:.7rem;
+      font-size:.95rem; font-weight:700; text-decoration:none;
+      transition:transform .2s, box-shadow .2s;
+    }
+    .cta-primary { background:var(--brand); color:#fff; box-shadow:0 8px 24px rgba(234,88,12,.2); }
+    .cta-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(234,88,12,.3); }
+    .cta-secondary { border:1px solid var(--border); color:var(--text); background:var(--card-60); backdrop-filter:blur(8px); }
+    .cta-secondary:hover { border-color:var(--brand); transform:translateY(-2px); }
+
+    .section-title {
+      font-size:1.25rem; font-weight:700; color:var(--brand-light);
+      margin:3rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
+    }
+    .lead { color:var(--secondary); font-size:1rem; margin-bottom:1rem; }
+    .muted { color:var(--muted); font-size:.9rem; }
+
+    /* Legenda de categorias */
+    .legend { display:flex; flex-wrap:wrap; gap:.5rem; margin:1rem 0 1.5rem; }
+    .chip {
+      display:inline-flex; align-items:center; gap:.35rem;
+      padding:.25rem .7rem; border-radius:999px; font-size:.72rem; font-weight:700;
+      border:1px solid var(--border); white-space:nowrap;
+    }
+    .chip.stable   { background:rgba(74,222,128,.10); color:#4ade80; border-color:rgba(74,222,128,.35); }
+    .chip.native   { background:rgba(234,88,12,.12); color:var(--brand-light); border-color:rgba(234,88,12,.4); }
+    .chip.wrapped  { background:rgba(96,165,250,.10); color:#93c5fd; border-color:rgba(96,165,250,.35); }
+    .chip.staking  { background:rgba(192,132,252,.10); color:#d8b4fe; border-color:rgba(192,132,252,.35); }
+    .chip.utility  { background:rgba(251,191,36,.10); color:#fcd34d; border-color:rgba(251,191,36,.35); }
+    .chip.project  { background:rgba(244,114,182,.10); color:#f9a8d4; border-color:rgba(244,114,182,.35); }
+    .chip.rwa      { background:rgba(45,212,191,.10); color:#5eead4; border-color:rgba(45,212,191,.35); }
+
+    /* Bloco por rede */
+    .net-block {
+      border:1px solid var(--border); border-radius:1rem;
+      background:var(--card-60); backdrop-filter:blur(8px);
+      margin:1rem 0; overflow:hidden;
+    }
+    .net-head {
+      display:flex; flex-wrap:wrap; align-items:baseline; gap:.6rem;
+      padding:.9rem 1.2rem; border-bottom:1px solid var(--border);
+      background:rgba(2,6,23,.35);
+    }
+    .net-head .net-name { font-size:1rem; font-weight:700; color:var(--text); }
+    .net-head .net-meta { font-size:.78rem; color:var(--muted); }
+    .net-head .net-kind {
+      margin-left:auto; font-size:.7rem; font-weight:800; letter-spacing:.04em;
+      padding:.15rem .6rem; border-radius:999px; text-transform:uppercase;
+    }
+    .net-kind.mainnet { background:rgba(74,222,128,.10); color:var(--ok); border:1px solid rgba(74,222,128,.3); }
+    .net-kind.testnet { background:rgba(251,191,36,.08); color:#fcd34d; border:1px solid rgba(251,191,36,.3); }
+
+    .asset-table { width:100%; border-collapse:collapse; font-size:.85rem; }
+    .asset-table td {
+      padding:.6rem 1.2rem; border-bottom:1px solid var(--border);
+      vertical-align:top;
+    }
+    .asset-table tr:last-child td { border-bottom:none; }
+    .asset-table .sym {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-weight:700; color:var(--brand-300); white-space:nowrap; width:7.5rem;
+    }
+    .asset-table .cat { width:9.5rem; }
+    .asset-table .use { color:var(--muted); font-size:.82rem; }
+
+    .callout {
+      border:1px solid var(--brand); border-left-width:4px; border-radius:.9rem;
+      background:rgba(234,88,12,.08); padding:1rem 1.2rem; margin:1.5rem 0;
+      font-size:.9rem; color:var(--secondary);
+    }
+    .callout strong { color:var(--brand-light); }
+    .callout code, .cmd {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.82rem; color:var(--brand-300);
+      background:rgba(234,88,12,.08); padding:.1rem .4rem; border-radius:.35rem;
+    }
+
+    .footer {
+      text-align:center; color:var(--muted); font-size:.8rem;
+      margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
+    }
+    .footer a { color:var(--brand-light); text-decoration:none; }
+    .footer a:hover { color:var(--brand); }
+    .backlink { display:inline-block; margin-top:1rem; color:var(--brand-light); text-decoration:none; font-size:.9rem; }
+    .backlink:hover { color:var(--brand); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Moedas e tokens</h1>
+      <p class="tagline">Todas as redes, moedas nativas e tokens que o Rapport Crypto Chat suporta em pagamentos, cobran&ccedil;as e escrow.</p>
+      <p class="subtagline">Use <code class="cmd">/pay</code>, <code class="cmd">/collect</code>, <code class="cmd">/balance</code> e <code class="cmd">/escrow</code> com qualquer ativo listado &mdash; basta indicar o s&iacute;mbolo e a rede.</p>
+      <span class="badge"><span class="dot"></span>23 redes &middot; 30+ ativos</span>
+      <div class="cta-row">
+        <a class="cta cta-primary" href="/install">Instalar o app</a>
+        <a class="cta cta-secondary" href="/">Voltar ao in&iacute;cio</a>
+      </div>
+    </header>
+
+    <h2 class="section-title">Contexto de uso</h2>
+    <p class="lead">
+      Cada ativo tem um papel diferente dentro do app. As categorias abaixo aparecem ao lado de cada
+      moeda ou token nas tabelas de rede:
+    </p>
+    <div class="legend">
+      <span class="chip stable">Stablecoin</span>
+      <span class="chip native">Moeda nativa</span>
+      <span class="chip wrapped">Wrapped / bridged</span>
+      <span class="chip staking">Staking</span>
+      <span class="chip utility">Utilit&aacute;rio / governan&ccedil;a</span>
+      <span class="chip project">Projeto / comunidade</span>
+      <span class="chip rwa">RWA (ativo real)</span>
+    </div>
+    <div class="cards-legend muted" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.6rem;margin-bottom:1rem;">
+      <div><strong class="chip stable">Stablecoin</strong> &mdash; atrelada a moeda fiat (USD, EUR, BRL); ideal para pagamentos e escrow por n&atilde;o oscilar.</div>
+      <div><strong class="chip native">Moeda nativa</strong> &mdash; paga o gas da rede e tamb&eacute;m pode ser enviada como pagamento.</div>
+      <div><strong class="chip wrapped">Wrapped / bridged</strong> &mdash; representa&ccedil;&atilde;o de um ativo de outra rede (ex.: BTC na HAQQ via Axelar).</div>
+      <div><strong class="chip staking">Staking</strong> &mdash; derivativo de staking l&iacute;quido; rende rendimento, mas tem liquidez menor.</div>
+      <div><strong class="chip utility">Utilit&aacute;rio / governan&ccedil;a</strong> &mdash; token de protocolo (DEX, bridge); uso especulativo ou de voto.</div>
+      <div><strong class="chip project">Projeto / comunidade</strong> &mdash; token de um projeto espec&iacute;fico; risco e liquidez variam.</div>
+      <div><strong class="chip rwa">RWA</strong> &mdash; ativo do mundo real tokenizado (ex.: fundo de renda fixa on-chain).</div>
+    </div>
+
+    <h2 class="section-title">Redes EVM &mdash; mainnets</h2>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">Ethereum Mainnet</span>
+        <span class="net-meta">chainId 1</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; reserva de valor do ecossistema.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (Circle); principal stable para pagamentos.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (Tether); maior liquidez global.</td></tr>
+        <tr><td class="sym">DAI</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital descentralizado (Sky/MakerDAO).</td></tr>
+        <tr><td class="sym">PYUSD</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital do PayPal; foco em pagamentos.</td></tr>
+        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Real digital; pagamentos em reais on-chain.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">Polygon PoS</span>
+        <span class="net-meta">chainId 137</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">POL</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; staking da rede Polygon.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo; taxas baixas para pagamentos.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (PoS).</td></tr>
+        <tr><td class="sym">DAI</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital descentralizado (PoS).</td></tr>
+        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Real digital; popular para pagamentos BR.</td></tr>
+        <tr><td class="sym">CCZ</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Token CusCuZ; projeto da comunidade.</td></tr>
+        <tr><td class="sym">CAS</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Criptocoin Agentic Space; token de projeto.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">Base Mainnet</span>
+        <span class="net-meta">chainId 8453</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos na L2 da Coinbase.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (bridged).</td></tr>
+        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Real digital.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">OP Mainnet</span>
+        <span class="net-meta">chainId 10</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos na L2 Optimism.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (bridged).</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">Arbitrum One</span>
+        <span class="net-meta">chainId 42161</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos na L2 Arbitrum.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (bridged).</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">Linea Mainnet</span>
+        <span class="net-meta">chainId 59144</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos na L2 Linea (Consensys).</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (bridged).</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">Monad Mainnet</span>
+        <span class="net-meta">chainId 143</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">MON</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; L1 de alta performance.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT0</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital omnichain (Tether/LayerZero).</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">BNB Smart Chain</span>
+        <span class="net-meta">chainId 56</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">BNB</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; utility do ecossistema Binance.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (Binance-Peg, 18 decimais).</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (Binance-Peg).</td></tr>
+        <tr><td class="sym">BUSD</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital da Binance (em descontinua&ccedil;&atilde;o pelo emissor).</td></tr>
+        <tr><td class="sym">WBNB</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">BNB embrulhado para uso em DeFi/DEX.</td></tr>
+        <tr><td class="sym">CAKE</td><td class="cat"><span class="chip utility">Utilit&aacute;rio</span></td><td class="use">Token do PancakeSwap; DeFi e governan&ccedil;a.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">XDC Network</span>
+        <span class="net-meta">chainId 50</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">XDC</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; foco enterprise/trade finance.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">Arc</span>
+        <span class="net-meta">chainId 5042</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip native">Moeda nativa</span> <span class="chip stable">Stablecoin</span></td><td class="use">Moeda de gas <strong>e</strong> meio de pagamento &mdash; a rede usa d&oacute;lar como unidade nativa.</td></tr>
+        <tr><td class="sym">EURC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Euro digital (Circle); pagamentos em EUR.</td></tr>
+        <tr><td class="sym">USYC</td><td class="cat"><span class="chip rwa">RWA</span></td><td class="use">Fundo de renda fixa tokenizado (Hashnote); rendimento de T-bills on-chain.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">HAQQ Mainnet</span>
+        <span class="net-meta">chainId 11235</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">ISLM</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Islamic Coin; gas e pagamentos em rede Shariah-compliant.</td></tr>
+        <tr><td class="sym">WISLM</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">ISLM embrulhado para uso em DeFi/ERC-20.</td></tr>
+        <tr><td class="sym">stISLM</td><td class="cat"><span class="chip staking">Staking</span></td><td class="use">ISLM em staking l&iacute;quido (Stride); acumula rendimento.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital via IBC (Noble).</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital via IBC (Kava).</td></tr>
+        <tr><td class="sym">axlUSDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital bridged via Axelar.</td></tr>
+        <tr><td class="sym">axlUSDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Tether bridged via Axelar.</td></tr>
+        <tr><td class="sym">axlDAI</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">DAI bridged via Axelar.</td></tr>
+        <tr><td class="sym">axlWBTC</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">Bitcoin bridged via Axelar; reserva de valor.</td></tr>
+        <tr><td class="sym">axlWETH</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">Ether bridged via Axelar.</td></tr>
+        <tr><td class="sym">AXL</td><td class="cat"><span class="chip utility">Utilit&aacute;rio</span></td><td class="use">Token da rede de interoperabilidade Axelar.</td></tr>
+        <tr><td class="sym">OSMO</td><td class="cat"><span class="chip utility">Utilit&aacute;rio</span></td><td class="use">Token da DEX Osmosis (ecossistema Cosmos).</td></tr>
+        <tr><td class="sym">ATOM</td><td class="cat"><span class="chip utility">Utilit&aacute;rio</span></td><td class="use">Token do Cosmos Hub; interoperabilidade IBC.</td></tr>
+        <tr><td class="sym">DEEN</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Deenar; token do ecossistema HAQQ.</td></tr>
+      </tbody></table>
+    </div>
+
+    <h2 class="section-title">Redes n&atilde;o-EVM</h2>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">Bitcoin Mainnet</span>
+        <span class="net-meta">chainId interno 8000</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">BTC</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Reserva de valor e pagamentos on-chain (SegWit/Taproot).</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="net-block">
+      <div class="net-head">
+        <span class="net-name">KleverChain</span>
+        <span class="net-meta">chainId interno 8020</span>
+        <span class="net-kind mainnet">mainnet</span>
+      </div>
+      <table class="asset-table"><tbody>
+        <tr><td class="sym">KLV</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; utility da KleverChain.</td></tr>
+        <tr><td class="sym">KFI</td><td class="cat"><span class="chip utility">Governan&ccedil;a</span></td><td class="use">Klever Finance; governan&ccedil;a e taxas do ecossistema.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital wrapped (KDA <code class="cmd">USDT-23V8</code>).</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital wrapped (KDA <code class="cmd">USDC-1LN4</code>).</td></tr>
+        <tr><td class="sym">WBTC</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">Bitcoin wrapped (KDA <code class="cmd">WBTC-3FB5</code>).</td></tr>
+        <tr><td class="sym">WETH</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">Ether wrapped (KDA <code class="cmd">WETH-EFBC</code>).</td></tr>
+        <tr><td class="sym">DVK</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Devicoin; token de projeto.</td></tr>
+        <tr><td class="sym">DXB</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Dexbet; token de projeto.</td></tr>
+      </tbody></table>
+    </div>
+
+    <h2 class="section-title">Testnets &mdash; apenas para pr&aacute;tica</h2>
+    <p class="muted">
+      As mesmas moedas existem em vers&atilde;o de teste, <strong>sem valor real</strong>: Sepolia e
+      Bitcoin Testnet (ETH/BTC de faucet), Polygon Amoy, Base Sepolia, OP Sepolia, Arbitrum Sepolia,
+      Linea Sepolia, Monad Testnet, Arc Testnet e HAQQ Testedge 2. Tokens de teste dispon&iacute;veis:
+      USDC na maioria delas, PYUSD em Sepolia/Amoy/Arbitrum Sepolia, BRLA em Sepolia e Amoy, e
+      EURC/USYC no Arc Testnet.
+    </p>
+
+    <div class="callout">
+      <strong>Dica de uso:</strong> para pagamentos, prefira <strong>stablecoins</strong> (valor
+      previs&iacute;vel) ou a <strong>moeda nativa</strong> quando o recebedor quiser acumular o ativo da rede.
+      Tokens wrapped, staking e de projeto podem ter liquidez menor &mdash; confirme com o recebedor antes de enviar.
+    </div>
+
+    <a class="backlink" href="/">&larr; Voltar para a p&aacute;gina inicial</a>
+
+    <div class="footer">
+      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
+    </div>
+  </div>
+</body>
+</html>

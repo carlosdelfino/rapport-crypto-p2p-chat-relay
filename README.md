@@ -17,10 +17,12 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 - `GET /install` — página HTML que lista os APKs disponíveis para download (links diretos para `apk.rapport.tec.br`).
 - `GET /install/manifest.json` — manifest JSON da versão atual (cache 5 min).
 - `GET /stats` — página HTML com estatísticas dinâmicas e endereços de doação.
+- `GET /escrow` — página HTML com tutorial do escrow arbitrado on-chain e manifest de contratos (`/escrow/contracts.json`).
+- `GET /tokens` — página HTML com o catálogo de redes, moedas nativas e tokens suportados pelo dApp, com o contexto de uso de cada ativo.
 - `GET /sitemap.xml` — sitemap das páginas públicas (regenerado junto com `/install` via `apk:regenerate`/`apk:upload`).
 - `GET /robots.txt` — regras de crawling apontando para o sitemap.
 
-As páginas HTML (`/`, `/install`, `/stats`) incluem SEO completo: canonical, Open Graph, Twitter Cards, JSON-LD (Schema.org) e Google Analytics (`gtag.js`). Os assets `/favicon.png`, `/apple-touch-icon.png` e `/og-image.png` são derivados do ícone do dApp.
+As páginas HTML (`/`, `/install`, `/stats`, `/escrow`, `/tokens`) incluem SEO completo: canonical, Open Graph, Twitter Cards, JSON-LD (Schema.org) e Google Analytics (`gtag.js`). Os assets `/favicon.png`, `/apple-touch-icon.png` e `/og-image.png` são derivados do ícone do dApp.
 
 ## Environment
 
@@ -54,6 +56,21 @@ Then set the environment variables in the Vercel dashboard.
 - Messages are end-to-end encrypted by the mobile app using X25519 + ChaCha20-Poly1305 before being sent over WebRTC.
 - The relay only stores encrypted signaling metadata and peer multiaddrs.
 - Set `RELAY_REQUIRE_SIGNATURE=true` to require EIP-191 signatures on `POST` requests.
+
+## Testes
+
+```bash
+npm run typecheck        # tsc --noEmit
+npm run test:e2e         # Playwright E2E (chromium + mobile-chromium)
+npm run test:e2e:ui      # Playwright em modo UI
+npm run test:e2e:headed  # Playwright com browser visível
+```
+
+Os testes E2E (`e2e/*.spec.ts`) validam as páginas estáticas servidas por
+`scripts/static-server.mjs`, que reproduz a semântica de `cleanUrls` da Vercel
+sobre `public/`. Requer Node.js >= 20. Os browsers do Playwright usam o Chrome
+do sistema (`channel: 'chrome'`) quando o download via `npx playwright install`
+não está disponível.
 
 ## APK Build & Distribution
 

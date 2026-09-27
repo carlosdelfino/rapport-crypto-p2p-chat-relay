@@ -156,6 +156,11 @@
     }
     .feature-card h3 { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:.4rem; }
     .feature-card p { font-size:.85rem; color:var(--muted); }
+    .feature-card a.card-link {
+      display:inline-block; margin-top:.6rem;
+      font-size:.82rem; font-weight:700; color:var(--brand-light); text-decoration:none;
+    }
+    .feature-card a.card-link:hover { color:var(--brand); }
 
     /* Pages grid */
     .links-grid {
@@ -250,12 +255,13 @@
       <div class="feature-card">
         <span class="icon">&#127760;</span>
         <h3>Redes suportadas</h3>
-        <p>Ethereum, Polygon, Base, Optimism, Arbitrum, Linea, Monad, XDC, Arc e Bitcoin &mdash; com testnets para pr&aacute;tica.</p>
+        <p>Ethereum, Polygon, Base, Optimism, Arbitrum, Linea, Monad, XDC, Arc, HAQQ, Bitcoin e Klever &mdash; com testnets para pr&aacute;tica.</p>
       </div>
       <div class="feature-card">
         <span class="icon">&#128176;</span>
         <h3>Moedas e tokens</h3>
-        <p>USDC, USDT, DAI, BRLA, PYUSD, EURC, USYC, CCZ, CAS e moedas nativas como BTC, ETH, POL, MON e XDC.</p>
+        <p>Stablecoins (USDC, USDT, DAI, BRLA, PYUSD, EURC), moedas nativas (BTC, ETH, POL, MON, ISLM, XDC, BNB, KLV) e tokens wrapped, staking e de projeto.</p>
+        <a class="card-link" href="/tokens">Ver cat&aacute;logo completo &rarr;</a>
       </div>
       <div class="feature-card">
         <span class="icon">&#128737;&#65039;</span>
@@ -288,6 +294,12 @@
         <span class="title">Escrow</span>
         <span class="desc">Pagamento garantido com arbitragem: como funciona, taxas e tutorial.</span>
         <span class="path">/escrow</span>
+      </a>
+      <a class="link-card" href="/tokens">
+        <span class="icon">&#128176;</span>
+        <span class="title">Moedas e tokens</span>
+        <span class="desc">Cat&aacute;logo de redes e ativos suportados: stablecoins, moedas nativas e tokens.</span>
+        <span class="path">/tokens</span>
       </a>
       <a class="link-card" href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat" rel="noopener" target="_blank">
         <span class="icon">&#128187;</span>

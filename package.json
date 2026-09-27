@@ -7,6 +7,9 @@
     "dev": "vercel dev",
     "deploy": "vercel --prod",
     "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
     "apk:build": "tsx scripts/build-android-apk.ts build",
     "apk:upload": "tsx scripts/build-android-apk.ts upload",
     "apk:publish": "tsx scripts/build-android-apk.ts publish",
@@ -19,6 +22,7 @@
     "viem": "^2.56.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/node": "^20.0.0",
     "tsx": "^4.23.13",
     "typescript": "~6.0.3"
