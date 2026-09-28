@@ -10,31 +10,43 @@
 
     gtag('config', 'G-WY96WV41T8');
   </script>
+  <script>
+    // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
+    window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
+  </script>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
-  <title>Wallet — receber, pagar e garantir no chat | Rapport Crypto Chat</title>
-  <meta name="description" content="O Rapport Crypto Chat é também sua carteira self-custody: a mesma wallet que identifica você no chat recebe, paga e custodia em escrow — em mais de 20 redes, com comandos simples dentro da conversa."/>
+  <title data-i18n="wallet.meta.title">Wallet — receber, pagar e garantir no chat | Rapport Crypto Chat</title>
+  <meta name="description" content="O Rapport Crypto Chat é também sua carteira self-custody: a mesma wallet que identifica você no chat recebe, paga e custodia em escrow — em mais de 20 redes, com comandos simples dentro da conversa." data-i18n-attr="content:wallet.meta.desc"/>
   <meta name="keywords" content="wallet cripto, self-custody, pagar no chat, receber cripto, escrow, multichain, bitcoin, evm, rapport crypto chat"/>
   <meta name="theme-color" content="#020617"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/wallet"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/wallet"/>
+  <link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/wallet?lang=en"/>
+  <link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/wallet?lang=es"/>
+  <link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/wallet?lang=fr"/>
+  <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/wallet?lang=ar"/>
+  <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/wallet"/>
+  <link rel="stylesheet" href="/css/i18n.css"/>
+  <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="article"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
   <meta property="og:locale" content="pt_BR"/>
-  <meta property="og:title" content="Wallet — receber, pagar e garantir no chat | Rapport Crypto Chat"/>
-  <meta property="og:description" content="A mesma wallet que identifica você no chat é sua carteira: receba com /collect, pague com /pay, acompanhe com /balance e proteja valores com escrow — tudo dentro da conversa."/>
+  <meta property="og:title" content="Wallet — receber, pagar e garantir no chat | Rapport Crypto Chat" data-i18n-attr="content:wallet.meta.title"/>
+  <meta property="og:description" content="A mesma wallet que identifica você no chat é sua carteira: receba com /collect, pague com /pay, acompanhe com /balance e proteja valores com escrow — tudo dentro da conversa." data-i18n-attr="content:wallet.meta.ogDesc"/>
   <meta property="og:url" content="https://crypto-chat.rapport.tec.br/wallet"/>
   <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:image:alt" content="Rapport Crypto Chat — wallet"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Wallet — receber, pagar e garantir no chat | Rapport Crypto Chat"/>
-  <meta name="twitter:description" content="Receba, pague e garanta pagamentos dentro da conversa — self-custody multichain com comandos simples."/>
+  <meta name="twitter:title" content="Wallet — receber, pagar e garantir no chat | Rapport Crypto Chat" data-i18n-attr="content:wallet.meta.title"/>
+  <meta name="twitter:description" content="Receba, pague e garanta pagamentos dentro da conversa — self-custody multichain com comandos simples." data-i18n-attr="content:wallet.meta.ogDesc"/>
   <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <script type="application/ld+json">
   {
@@ -200,98 +212,98 @@
 <body>
   <div class="container">
     <header class="hero">
-      <h1>O chat que &eacute; sua Wallet</h1>
-      <p class="tagline">A mesma carteira que identifica voc&ecirc; nas conversas recebe, paga e custodia em escrow &mdash; sem app separado, sem intermedi&aacute;rio, sem cadastro.</p>
-      <p class="subtagline">Uma seed BIP39 deriva sua identidade EVM e seus endere&ccedil;os de pagamento (Bitcoin Taproot, SegWit e demais fam&iacute;lias).</p>
-      <span class="badge"><span class="dot"></span>Self-custody &middot; 23 redes &middot; multichain</span>
+      <h1 data-i18n="wallet.hero.title">O chat que &eacute; sua Wallet</h1>
+      <p class="tagline" data-i18n="wallet.hero.tagline">A mesma carteira que identifica voc&ecirc; nas conversas recebe, paga e custodia em escrow &mdash; sem app separado, sem intermedi&aacute;rio, sem cadastro.</p>
+      <p class="subtagline" data-i18n="wallet.hero.subtagline">Uma seed BIP39 deriva sua identidade EVM e seus endere&ccedil;os de pagamento (Bitcoin Taproot, SegWit e demais fam&iacute;lias).</p>
+      <span class="badge"><span class="dot"></span><span data-i18n="wallet.hero.badge">Self-custody &middot; 23 redes &middot; multichain</span></span>
       <div class="cta-row">
-        <a class="cta cta-primary" href="/install">Instalar o app</a>
-        <a class="cta cta-secondary" href="/">Voltar ao in&iacute;cio</a>
+        <a class="cta cta-primary" href="/install" data-i18n="common.cta.install">Instalar o app</a>
+        <a class="cta cta-secondary" href="/" data-i18n="common.cta.back">Voltar ao in&iacute;cio</a>
       </div>
     </header>
 
-    <h2 class="section-title">Simples de verdade</h2>
-    <p class="lead">
+    <h2 class="section-title" data-i18n="wallet.simple.title">Simples de verdade</h2>
+    <p class="lead" data-i18n-html="wallet.simple.lead">
       Nada de alternar entre carteira, exchange e messenger. No Rapport Crypto Chat, a opera&ccedil;&atilde;o
       financeira acontece <strong>dentro da conversa</strong> — com comandos curtos ou toques nas mensagens.
     </p>
     <div class="cards">
       <div class="card">
         <span class="icon">&#128179;</span>
-        <h3>Uma conta, duas fun&ccedil;&otilde;es</h3>
-        <p>Sua wallet EVM &eacute; ao mesmo tempo sua identidade de chat e sua conta de pagamento &mdash; conhecer sua wallet &eacute; saber como falar e como pagar voc&ecirc;.</p>
+        <h3 data-i18n="wallet.simple.one.title">Uma conta, duas fun&ccedil;&otilde;es</h3>
+        <p data-i18n="wallet.simple.one.desc">Sua wallet EVM &eacute; ao mesmo tempo sua identidade de chat e sua conta de pagamento &mdash; conhecer sua wallet &eacute; saber como falar e como pagar voc&ecirc;.</p>
       </div>
       <div class="card">
         <span class="icon">&#9000;&#65039;</span>
-        <h3>Comandos no chat</h3>
-        <p><code class="cmd">/pay</code>, <code class="cmd">/collect</code>, <code class="cmd">/balance</code>, <code class="cmd">/tokens</code> e <code class="cmd">/chain</code> resolvem tudo sem sair da conversa.</p>
+        <h3 data-i18n="wallet.simple.cmds.title">Comandos no chat</h3>
+        <p data-i18n-html="wallet.simple.cmds.desc"><code class="cmd">/pay</code>, <code class="cmd">/collect</code>, <code class="cmd">/balance</code>, <code class="cmd">/tokens</code> e <code class="cmd">/chain</code> resolvem tudo sem sair da conversa.</p>
       </div>
       <div class="card">
         <span class="icon">&#128247;</span>
-        <h3>QR por endere&ccedil;o</h3>
-        <p>A tela "Meu QR Code" separa a identidade de chat dos endere&ccedil;os de pagamento de cada fam&iacute;lia &mdash; cada um rotulado, nenhum expondo chaves.</p>
+        <h3 data-i18n="wallet.simple.qr.title">QR por endere&ccedil;o</h3>
+        <p data-i18n="wallet.simple.qr.desc">A tela "Meu QR Code" separa a identidade de chat dos endere&ccedil;os de pagamento de cada fam&iacute;lia &mdash; cada um rotulado, nenhum expondo chaves.</p>
       </div>
       <div class="card">
         <span class="icon">&#128202;</span>
-        <h3>Saldos multi-rede</h3>
-        <p>A tela "Meu saldo" consolida moedas nativas e tokens em todas as redes configuradas &mdash; e <code class="cmd">/balance</code> mostra o resumo s&oacute; para voc&ecirc;.</p>
+        <h3 data-i18n="wallet.simple.bal.title">Saldos multi-rede</h3>
+        <p data-i18n-html="wallet.simple.bal.desc">A tela "Meu saldo" consolida moedas nativas e tokens em todas as redes configuradas &mdash; e <code class="cmd">/balance</code> mostra o resumo s&oacute; para voc&ecirc;.</p>
       </div>
     </div>
 
-    <h2 class="section-title">Receber</h2>
-    <p class="lead">Duas formas de cobrar &mdash; e o app vigia a chegada para voc&ecirc;:</p>
+    <h2 class="section-title" data-i18n="wallet.recv.title">Receber</h2>
+    <p class="lead" data-i18n="wallet.recv.lead">Duas formas de cobrar &mdash; e o app vigia a chegada para voc&ecirc;:</p>
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
         <div class="body">
-          <h3><span class="who">Voc&ecirc;</span> solicita na conversa</h3>
-          <p>Digite <code>/collect 50 USDC, Polygon PoS</code> na conversa direta. O pedido chega ao contato como mensagem estruturada, j&aacute; com valor, ativo e rede.</p>
+          <h3 data-i18n-html="wallet.recv.s1.title"><span class="who">Voc&ecirc;</span> solicita na conversa</h3>
+          <p data-i18n-html="wallet.recv.s1.desc">Digite <code>/collect 50 USDC, Polygon PoS</code> na conversa direta. O pedido chega ao contato como mensagem estruturada, j&aacute; com valor, ativo e rede.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">2</div>
         <div class="body">
-          <h3><span class="who">O contato</span> paga com um toque</h3>
-          <p>O pedido j&aacute; carrega seu endere&ccedil;o correto para aquela fam&iacute;lia de rede &mdash; EVM, Bitcoin, Klever &mdash; ent&atilde;o o pagador s&oacute; confirma. Sem copiar endere&ccedil;o, sem erro de rede.</p>
+          <h3 data-i18n-html="wallet.recv.s2.title"><span class="who">O contato</span> paga com um toque</h3>
+          <p data-i18n="wallet.recv.s2.desc">O pedido j&aacute; carrega seu endere&ccedil;o correto para aquela fam&iacute;lia de rede &mdash; EVM, Bitcoin, Klever &mdash; ent&atilde;o o pagador s&oacute; confirma. Sem copiar endere&ccedil;o, sem erro de rede.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">3</div>
         <div class="body">
-          <h3><span class="who">O app</span> confirma a chegada</h3>
-          <p>Um scanner monitora seus endere&ccedil;os em todas as redes configuradas. Ao detectar a transfer&ecirc;ncia, registra no chat o valor, a moeda, a rede e o hash com link para o explorer.</p>
+          <h3 data-i18n-html="wallet.recv.s3.title"><span class="who">O app</span> confirma a chegada</h3>
+          <p data-i18n="wallet.recv.s3.desc">Um scanner monitora seus endere&ccedil;os em todas as redes configuradas. Ao detectar a transfer&ecirc;ncia, registra no chat o valor, a moeda, a rede e o hash com link para o explorer.</p>
         </div>
       </div>
     </div>
-    <p class="muted">Tamb&eacute;m funciona fora de conversa: quem envia para um endere&ccedil;o seu &eacute; detectado, entra nos seus contatos e a notifica&ccedil;&atilde;o aparece numa conversa dedicada.</p>
+    <p class="muted" data-i18n="wallet.recv.note">Tamb&eacute;m funciona fora de conversa: quem envia para um endere&ccedil;o seu &eacute; detectado, entra nos seus contatos e a notifica&ccedil;&atilde;o aparece numa conversa dedicada.</p>
 
-    <h2 class="section-title">Pagar</h2>
+    <h2 class="section-title" data-i18n="wallet.pay.title">Pagar</h2>
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
         <div class="body">
-          <h3><span class="who">Voc&ecirc;</span> envia o comando</h3>
-          <p><code>/pay 100 POL, Polygon PoS</code> na conversa direta. Se existir um <code>/collect</code> correspondente, o app reutiliza rede e endere&ccedil;o dele; sen&atilde;o, resolve o endere&ccedil;o de pagamento do contato para a fam&iacute;lia da rede.</p>
+          <h3 data-i18n-html="wallet.pay.s1.title"><span class="who">Voc&ecirc;</span> envia o comando</h3>
+          <p data-i18n-html="wallet.pay.s1.desc"><code>/pay 100 POL, Polygon PoS</code> na conversa direta. Se existir um <code>/collect</code> correspondente, o app reutiliza rede e endere&ccedil;o dele; sen&atilde;o, resolve o endere&ccedil;o de pagamento do contato para a fam&iacute;lia da rede.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">2</div>
         <div class="body">
-          <h3><span class="who">O app</span> assina e transmite</h3>
-          <p>A transa&ccedil;&atilde;o &eacute; montada, assinada localmente com sua chave e enviada &agrave; blockchain &mdash; inclusive Bitcoin, com sele&ccedil;&atilde;o de UTXOs, change e fee calculados.</p>
+          <h3 data-i18n-html="wallet.pay.s2.title"><span class="who">O app</span> assina e transmite</h3>
+          <p data-i18n="wallet.pay.s2.desc">A transa&ccedil;&atilde;o &eacute; montada, assinada localmente com sua chave e enviada &agrave; blockchain &mdash; inclusive Bitcoin, com sele&ccedil;&atilde;o de UTXOs, change e fee calculados.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">3</div>
         <div class="body">
-          <h3>Confirma&ccedil;&atilde;o vis&iacute;vel aos dois</h3>
-          <p>O pagamento confirmado aparece na conversa com hash e link do explorer &mdash; a pr&oacute;pria conversa &eacute; o comprovante.</p>
+          <h3 data-i18n="wallet.pay.s3.title">Confirma&ccedil;&atilde;o vis&iacute;vel aos dois</h3>
+          <p data-i18n="wallet.pay.s3.desc">O pagamento confirmado aparece na conversa com hash e link do explorer &mdash; a pr&oacute;pria conversa &eacute; o comprovante.</p>
         </div>
       </div>
     </div>
 
-    <h2 class="section-title">Pagamento Garantido</h2>
-    <p class="lead">
+    <h2 class="section-title" data-i18n="wallet.escrow.title">Pagamento Garantido</h2>
+    <p class="lead" data-i18n-html="wallet.escrow.lead">
       Para valores que pedem prote&ccedil;&atilde;o &mdash; um servi&ccedil;o, uma venda, um trabalho &mdash; o
       <a href="/escrow">escrow arbitrado</a> custodia os fundos num contrato inteligente at&eacute; que
       &aacute;rbitro(s) de confian&ccedil;a aprovem a libera&ccedil;&atilde;o. Nem voc&ecirc;, nem o contato,
@@ -300,82 +312,82 @@
     <div class="cards">
       <div class="card">
         <span class="icon">&#128737;&#65039;</span>
-        <h3>Cust&oacute;dia neutra on-chain</h3>
-        <p><code class="cmd">/escrow 100 POL, Polygon PoS, 7</code> trava o valor no EscrowVault por at&eacute; o prazo escolhido &mdash; com reembolso autom&aacute;tico se expirar.</p>
-        <a class="card-link" href="/escrow">Como funciona o escrow &rarr;</a>
+        <h3 data-i18n="wallet.escrow.custody.title">Cust&oacute;dia neutra on-chain</h3>
+        <p data-i18n-html="wallet.escrow.custody.desc"><code class="cmd">/escrow 100 POL, Polygon PoS, 7</code> trava o valor no EscrowVault por at&eacute; o prazo escolhido &mdash; com reembolso autom&aacute;tico se expirar.</p>
+        <a class="card-link" href="/escrow" data-i18n="common.link.howEscrow">Como funciona o escrow &rarr;</a>
       </div>
       <div class="card">
         <span class="icon">&#9878;&#65039;</span>
-        <h3>&Aacute;rbitros escolhidos por voc&ecirc;s</h3>
-        <p>O pagador indica um contato como &aacute;rbitro e o recebedor pode adicionar um segundo &mdash; com 2, ambos precisam aprovar.</p>
+        <h3 data-i18n="wallet.escrow.arb.title">&Aacute;rbitros escolhidos por voc&ecirc;s</h3>
+        <p data-i18n="wallet.escrow.arb.desc">O pagador indica um contato como &aacute;rbitro e o recebedor pode adicionar um segundo &mdash; com 2, ambos precisam aprovar.</p>
       </div>
       <div class="card">
         <span class="icon">&#128065;&#65039;</span>
-        <h3>Transpar&ecirc;ncia total</h3>
-        <p>Cada etapa vira mensagem cifrada no chat de todos os envolvidos; cada decis&atilde;o &eacute; uma transa&ccedil;&atilde;o on-chain audit&aacute;vel.</p>
+        <h3 data-i18n="wallet.escrow.transp.title">Transpar&ecirc;ncia total</h3>
+        <p data-i18n="wallet.escrow.transp.desc">Cada etapa vira mensagem cifrada no chat de todos os envolvidos; cada decis&atilde;o &eacute; uma transa&ccedil;&atilde;o on-chain audit&aacute;vel.</p>
       </div>
     </div>
 
-    <h2 class="section-title">Comandos da wallet</h2>
+    <h2 class="section-title" data-i18n="wallet.cmd.title">Comandos da wallet</h2>
     <table class="cmd-table">
       <thead>
-        <tr><th>Comando</th><th>O que faz</th></tr>
+        <tr><th data-i18n="wallet.cmd.th1">Comando</th><th data-i18n="wallet.cmd.th2">O que faz</th></tr>
       </thead>
       <tbody>
-        <tr><td class="cmd-name">/pay &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;</td><td>Assina e transmite um pagamento ao contato da conversa.</td></tr>
-        <tr><td class="cmd-name">/collect &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;</td><td>Envia uma solicita&ccedil;&atilde;o de pagamento estruturada ao contato.</td></tr>
-        <tr><td class="cmd-name">/balance</td><td>Mostra seus saldos &mdash; s&oacute; na sua tela, nunca vai para o contato.</td></tr>
-        <tr><td class="cmd-name">/escrow &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;, &lt;dias&gt;</td><td>Inicia um Pagamento Garantido com cust&oacute;dia on-chain e prazo.</td></tr>
-        <tr><td class="cmd-name">/tokens [&lt;rede&gt;]</td><td>Lista localmente os ativos dispon&iacute;veis por rede.</td></tr>
-        <tr><td class="cmd-name">/chain [&lt;rede&gt;]</td><td>Lista as redes configuradas ou detalha uma espec&iacute;fica.</td></tr>
+        <tr><td class="cmd-name">/pay &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;</td><td data-i18n="wallet.cmd.pay">Assina e transmite um pagamento ao contato da conversa.</td></tr>
+        <tr><td class="cmd-name">/collect &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;</td><td data-i18n="wallet.cmd.collect">Envia uma solicita&ccedil;&atilde;o de pagamento estruturada ao contato.</td></tr>
+        <tr><td class="cmd-name">/balance</td><td data-i18n="wallet.cmd.balance">Mostra seus saldos &mdash; s&oacute; na sua tela, nunca vai para o contato.</td></tr>
+        <tr><td class="cmd-name">/escrow &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;, &lt;dias&gt;</td><td data-i18n="wallet.cmd.escrow">Inicia um Pagamento Garantido com cust&oacute;dia on-chain e prazo.</td></tr>
+        <tr><td class="cmd-name">/tokens [&lt;rede&gt;]</td><td data-i18n="wallet.cmd.tokens">Lista localmente os ativos dispon&iacute;veis por rede.</td></tr>
+        <tr><td class="cmd-name">/chain [&lt;rede&gt;]</td><td data-i18n="wallet.cmd.chain">Lista as redes configuradas ou detalha uma espec&iacute;fica.</td></tr>
       </tbody>
     </table>
-    <p class="muted">Comandos financeiros funcionam apenas em conversas diretas &mdash; em grupos, <code class="cmd">/pay</code>, <code class="cmd">/collect</code> e <code class="cmd">/balance</code> s&atilde;o rejeitados por seguran&ccedil;a.</p>
+    <p class="muted" data-i18n-html="wallet.cmd.note">Comandos financeiros funcionam apenas em conversas diretas &mdash; em grupos, <code class="cmd">/pay</code>, <code class="cmd">/collect</code> e <code class="cmd">/balance</code> s&atilde;o rejeitados por seguran&ccedil;a.</p>
 
-    <h2 class="section-title">Redes e ativos</h2>
-    <p class="lead">
+    <h2 class="section-title" data-i18n="wallet.nets.title">Redes e ativos</h2>
+    <p class="lead" data-i18n-html="wallet.nets.lead">
       Ethereum, Polygon, Base, Optimism, Arbitrum, Linea, Monad, XDC, Arc, HAQQ, Bitcoin e Klever &mdash;
       mais testnets para praticar sem risco. Stablecoins, moedas nativas, wrapped, staking e tokens de
       projeto. E se faltar algo, voc&ecirc; mesmo cadastra: <strong>novas redes e tokens</strong> podem ser
       adicionados pelo menu, com busca autom&aacute;tica de metadados via RPC.
     </p>
-    <p class="lead"><a href="/tokens">Ver o cat&aacute;logo completo de redes e tokens &rarr;</a></p>
+    <p class="lead"><a href="/tokens" data-i18n="wallet.nets.link">Ver o cat&aacute;logo completo de redes e tokens &rarr;</a></p>
 
-    <h2 class="section-title">Cust&oacute;dia e seguran&ccedil;a</h2>
+    <h2 class="section-title" data-i18n="wallet.sec.title">Cust&oacute;dia e seguran&ccedil;a</h2>
     <div class="cards">
       <div class="card">
         <span class="icon">&#128273;</span>
-        <h3>Chaves s&oacute; no dispositivo</h3>
-        <p>A seed BIP39 e as chaves privadas s&atilde;o geradas e guardadas localmente, protegidas pelo armazenamento seguro do sistema &mdash; nunca transmitidas, nunca em servidor.</p>
+        <h3 data-i18n="wallet.sec.keys.title">Chaves s&oacute; no dispositivo</h3>
+        <p data-i18n="wallet.sec.keys.desc">A seed BIP39 e as chaves privadas s&atilde;o geradas e guardadas localmente, protegidas pelo armazenamento seguro do sistema &mdash; nunca transmitidas, nunca em servidor.</p>
       </div>
       <div class="card">
         <span class="icon">&#129296;</span>
-        <h3>Self-custody real</h3>
-        <p>N&atilde;o h&aacute; custodiante: se a Rapport sumir amanh&atilde;, seus fundos e sua identidade continuam seus &mdash; a seed recupera tudo em outra carteira compat&iacute;vel.</p>
+        <h3 data-i18n="wallet.sec.self.title">Self-custody real</h3>
+        <p data-i18n="wallet.sec.self.desc">N&atilde;o h&aacute; custodiante: se a Rapport sumir amanh&atilde;, seus fundos e sua identidade continuam seus &mdash; a seed recupera tudo em outra carteira compat&iacute;vel.</p>
       </div>
       <div class="card">
         <span class="icon">&#128202;</span>
-        <h3>Monitoramento passivo</h3>
-        <p>O scanner de recebimentos consulta explorers e RPCs p&uacute;blicos com seus endere&ccedil;os &mdash; nunca com suas chaves.</p>
+        <h3 data-i18n="wallet.sec.passive.title">Monitoramento passivo</h3>
+        <p data-i18n="wallet.sec.passive.desc">O scanner de recebimentos consulta explorers e RPCs p&uacute;blicos com seus endere&ccedil;os &mdash; nunca com suas chaves.</p>
       </div>
       <div class="card">
         <span class="icon">&#128274;</span>
-        <h3>Contexto cifrado</h3>
-        <p>Pedidos e confirma&ccedil;&otilde;es de pagamento viajam como mensagens E2E cifradas, no mesmo canal seguro das conversas.</p>
-        <a class="card-link" href="/chat">Como o dApp funciona &rarr;</a>
+        <h3 data-i18n="wallet.sec.ctx.title">Contexto cifrado</h3>
+        <p data-i18n="wallet.sec.ctx.desc">Pedidos e confirma&ccedil;&otilde;es de pagamento viajam como mensagens E2E cifradas, no mesmo canal seguro das conversas.</p>
+        <a class="card-link" href="/chat" data-i18n="common.link.howApp">Como o dApp funciona &rarr;</a>
       </div>
     </div>
 
-    <div class="callout ok">
+    <div class="callout ok" data-i18n-html="wallet.callout.summary">
       <strong>Resumo:</strong> instale o app, crie a wallet e voc&ecirc; j&aacute; tem identidade, chat cifrado e
       carteira multichain &mdash; receber &eacute; um <code class="cmd">/collect</code>, pagar &eacute; um
       <code class="cmd">/pay</code>, garantir &eacute; um <code class="cmd">/escrow</code>.
     </div>
 
-    <a class="backlink" href="/">&larr; Voltar para a p&aacute;gina inicial</a>
+    <a class="backlink" href="/" data-i18n="common.back.home">&larr; Voltar para a p&aacute;gina inicial</a>
 
     <div class="footer">
-      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
+      <p data-i18n-html="common.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
     </div>
   </div>
 </body>

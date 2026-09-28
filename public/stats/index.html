@@ -10,30 +10,42 @@
 
     gtag('config', 'G-WY96WV41T8');
   </script>
+  <script>
+    // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
+    window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
+  </script>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
-  <title>Rapport Crypto Chat — Estatísticas</title>
-  <meta name="description" content="Estatísticas em tempo real do relay Rapport Crypto Chat: carteiras, mensagens, volume transacionado e demanda por escrow."/>
+  <title data-i18n="stats.meta.title">Rapport Crypto Chat — Estatísticas</title>
+  <meta name="description" content="Estatísticas em tempo real do relay Rapport Crypto Chat: carteiras, mensagens, volume transacionado e demanda por escrow." data-i18n-attr="content:stats.meta.desc"/>
   <meta name="theme-color" content="#020617"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/stats"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/stats"/>
+  <link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/stats?lang=en"/>
+  <link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/stats?lang=es"/>
+  <link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/stats?lang=fr"/>
+  <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/stats?lang=ar"/>
+  <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/stats"/>
+  <link rel="stylesheet" href="/css/i18n.css"/>
+  <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
   <meta property="og:locale" content="pt_BR"/>
-  <meta property="og:title" content="Rapport Crypto Chat — Estatísticas"/>
-  <meta property="og:description" content="Estatísticas em tempo real do relay de sinalização do Rapport Crypto Chat."/>
+  <meta property="og:title" content="Rapport Crypto Chat — Estatísticas" data-i18n-attr="content:stats.meta.title"/>
+  <meta property="og:description" content="Estatísticas em tempo real do relay de sinalização do Rapport Crypto Chat." data-i18n-attr="content:stats.meta.ogDesc"/>
   <meta property="og:url" content="https://crypto-chat.rapport.tec.br/stats"/>
   <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:image:alt" content="Rapport Crypto Chat — logo"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Rapport Crypto Chat — Estatísticas"/>
-  <meta name="twitter:description" content="Estatísticas em tempo real do relay de sinalização do Rapport Crypto Chat."/>
+  <meta name="twitter:title" content="Rapport Crypto Chat — Estatísticas" data-i18n-attr="content:stats.meta.title"/>
+  <meta name="twitter:description" content="Estatísticas em tempo real do relay de sinalização do Rapport Crypto Chat." data-i18n-attr="content:stats.meta.ogDesc"/>
   <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <script type="application/ld+json">
   {
@@ -100,28 +112,28 @@
 </head>
 <body>
   <div class="container">
-    <h1>Rapport Crypto Chat — Relay Stats</h1>
-    <p>Estatísticas em tempo real do relay de sinalização do Rapport Crypto Chat.</p>
+    <h1 data-i18n="stats.hero.title">Rapport Crypto Chat — Relay Stats</h1>
+    <p data-i18n="stats.hero.sub">Estatísticas em tempo real do relay de sinalização do Rapport Crypto Chat.</p>
 
     <div id="stats-content">
-      <p class="loading">Carregando estatísticas…</p>
+      <p class="loading" data-i18n="stats.loading">Carregando estatísticas…</p>
     </div>
 
-    <h2>Volume transacionado</h2>
-    <p>Total de cripto movimentado pelo app em cada moeda e rede, reportado de forma anônima a cada transação confirmada — nenhum endereço de carteira é coletado ou exibido. O volume demonstra o crescimento do app e seu impacto na economia cripto.</p>
+    <h2 data-i18n="stats.vol.title">Volume transacionado</h2>
+    <p data-i18n="stats.vol.desc">Total de cripto movimentado pelo app em cada moeda e rede, reportado de forma anônima a cada transação confirmada — nenhum endereço de carteira é coletado ou exibido. O volume demonstra o crescimento do app e seu impacto na economia cripto.</p>
     <div class="card" id="financial-content">
-      <p class="loading">Carregando dados financeiros…</p>
+      <p class="loading" data-i18n="stats.loadingFinancial">Carregando dados financeiros…</p>
     </div>
 
-    <h2>Demanda por escrow</h2>
-    <p>Pedidos de usuários por suporte a escrow em redes ainda sem contrato deployado.</p>
+    <h2 data-i18n="stats.esc.title">Demanda por escrow</h2>
+    <p data-i18n="stats.esc.desc">Pedidos de usuários por suporte a escrow em redes ainda sem contrato deployado.</p>
     <div class="card" id="escrow-demand-content">
-      <p class="loading">Carregando pedidos de escrow…</p>
+      <p class="loading" data-i18n="stats.loadingEscrow">Carregando pedidos de escrow…</p>
     </div>
 
     <div class="footer">
-      <p><a href="/">&larr; Voltar ao início</a> &middot; <a href="/ajudar">Como ajudar o projeto</a></p>
-      <p>© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
+      <p><a href="/" data-i18n="common.back">&larr; Voltar ao início</a> &middot; <a href="/ajudar" data-i18n="stats.helpLink">Como ajudar o projeto</a></p>
+      <p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
     </div>
   </div>
 
@@ -132,23 +144,41 @@
       });
     }
 
+    function tt(k) { return (window.I18N && I18N.t(k)) || k; }
+    function curLocale() { return (window.I18N && I18N.locale) || 'pt-BR'; }
+
     function formatNumber(n) {
-      return Number(n).toLocaleString('pt-BR');
+      return Number(n).toLocaleString(curLocale());
     }
 
     function formatCompact(n) {
-      return Number(n).toLocaleString('pt-BR', { notation: 'compact', maximumFractionDigits: 1 });
+      return Number(n).toLocaleString(curLocale(), { notation: 'compact', maximumFractionDigits: 1 });
+    }
+
+    let lastStats = null;
+    let statsFailed = false;
+
+    function renderAll() {
+      if (statsFailed) {
+        document.getElementById('stats-content').innerHTML =
+          '<p class="error">' + esc(tt('stats.error')) + '</p>';
+        return;
+      }
+      if (!lastStats) return;
+      renderStats(lastStats);
+      if (lastStats.financial) renderFinancial(lastStats.financial);
+      if (lastStats.escrowDemand) renderEscrowDemand(lastStats.escrowDemand);
     }
 
     function renderStats(s) {
       document.getElementById('stats-content').innerHTML =
         '<div class="stats-grid">' +
-          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalWallets) + '</div><div class="stat-label">Carteiras registradas</div></div>' +
-          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.onlineWallets) + '</div><div class="stat-label">Online agora</div></div>' +
-          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalMessages) + '</div><div class="stat-label">Mensagens transmitidas</div></div>' +
-          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalChats) + '</div><div class="stat-label">Chats ativos</div></div>' +
+          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalWallets) + '</div><div class="stat-label">' + esc(tt('stats.card.wallets')) + '</div></div>' +
+          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.onlineWallets) + '</div><div class="stat-label">' + esc(tt('stats.card.online')) + '</div></div>' +
+          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalMessages) + '</div><div class="stat-label">' + esc(tt('stats.card.messages')) + '</div></div>' +
+          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalChats) + '</div><div class="stat-label">' + esc(tt('stats.card.chats')) + '</div></div>' +
         '</div>' +
-        '<p class="updated">Atualizado em: ' + new Date(s.updatedAt).toLocaleString('pt-BR') + '</p>';
+        '<p class="updated">' + esc(tt('stats.updatedAt')) + ' ' + new Date(s.updatedAt).toLocaleString(curLocale()) + '</p>';
     }
 
     function renderFinancial(financial) {
@@ -156,7 +186,7 @@
       const bySymbol = (financial && financial.volumeBySymbol) || [];
       const byNetwork = (financial && financial.volumeByNetwork) || [];
       if (!bySymbol.length && !byNetwork.length) {
-        container.innerHTML = '<p class="loading">Nenhuma transação reportada ainda.</p>';
+        container.innerHTML = '<p class="loading">' + esc(tt('stats.fin.none')) + '</p>';
         return;
       }
       let html = '';
@@ -165,8 +195,8 @@
         for (const item of bySymbol) {
           rows += '<tr><td class="mono">' + esc(item.symbol) + '</td><td>' + formatNumber(item.count) + '</td><td class="mono">' + formatNumber(item.amount) + '</td></tr>';
         }
-        html += '<div class="table-title">Por ativo</div>' +
-          '<table class="financial-table"><thead><tr><th>Ativo</th><th>Transações</th><th>Montante total</th></tr></thead><tbody>' + rows + '</tbody></table>';
+        html += '<div class="table-title">' + esc(tt('stats.fin.bySymbol')) + '</div>' +
+          '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.asset')) + '</th><th>' + esc(tt('stats.fin.col.txs')) + '</th><th>' + esc(tt('stats.fin.col.amount')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>';
       }
       if (byNetwork.length) {
         let rows = '';
@@ -176,13 +206,13 @@
             .join(' · ');
           rows += '<tr><td>' + esc(net.network) + '</td><td class="mono">' + net.chainId + '</td><td>' + formatNumber(net.count) + '</td><td class="mono">' + assets + '</td></tr>';
         }
-        html += '<div class="table-title">Por rede</div>' +
-          '<table class="financial-table"><thead><tr><th>Rede</th><th>Chain ID</th><th>Transações</th><th>Ativos</th></tr></thead><tbody>' + rows + '</tbody></table>';
+        html += '<div class="table-title">' + esc(tt('stats.fin.byNetwork')) + '</div>' +
+          '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.network')) + '</th><th>Chain ID</th><th>' + esc(tt('stats.fin.col.txs')) + '</th><th>' + esc(tt('stats.fin.col.assets')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>';
       }
       const kinds = ((financial && financial.countByKind) || [])
         .map(function(k) { return esc(k.kind) + ': ' + formatNumber(k.count); })
         .join(' · ');
-      html += '<p class="updated" style="margin-top:.75rem;">Total de transações reportadas: <strong>' + formatNumber(financial.totalTransactions) + '</strong>' + (kinds ? ' · ' + kinds : '') + '</p>';
+      html += '<p class="updated" style="margin-top:.75rem;">' + esc(tt('stats.fin.total')) + ' <strong>' + formatNumber(financial.totalTransactions) + '</strong>' + (kinds ? ' · ' + kinds : '') + '</p>';
       container.innerHTML = html;
     }
 
@@ -190,7 +220,7 @@
       const container = document.getElementById('escrow-demand-content');
       const byNetwork = (demand && demand.byNetwork) || [];
       if (!byNetwork.length) {
-        container.innerHTML = '<p class="loading">Nenhum pedido de escrow registrado.</p>';
+        container.innerHTML = '<p class="loading">' + esc(tt('stats.escrow.none')) + '</p>';
         return;
       }
       let rows = '';
@@ -198,8 +228,8 @@
         rows += '<tr><td>' + esc(net.network) + '</td><td class="mono">' + net.chainId + '</td><td>' + formatNumber(net.count) + '</td></tr>';
       }
       container.innerHTML =
-        '<table class="financial-table"><thead><tr><th>Rede</th><th>Chain ID</th><th>Pedidos</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-        '<p class="updated" style="margin-top:.75rem;">Total de pedidos: <strong>' + formatNumber(demand.totalRequests) + '</strong></p>';
+        '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.network')) + '</th><th>Chain ID</th><th>' + esc(tt('stats.escrow.col.requests')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<p class="updated" style="margin-top:.75rem;">' + esc(tt('stats.escrow.total')) + ' <strong>' + formatNumber(demand.totalRequests) + '</strong></p>';
     }
 
     async function loadStats() {
@@ -209,16 +239,15 @@
         const json = await resp.json();
         const s = json.data;
         if (!s) throw new Error('Dados indisponíveis');
-
-        renderStats(s);
-        if (s.financial) renderFinancial(s.financial);
-        if (s.escrowDemand) renderEscrowDemand(s.escrowDemand);
+        lastStats = s;
+        statsFailed = false;
       } catch (err) {
-        document.getElementById('stats-content').innerHTML =
-          '<p class="error">Não foi possível carregar as estatísticas no momento.</p>';
+        statsFailed = true;
       }
+      renderAll();
     }
 
+    window.addEventListener('i18n:change', renderAll);
     loadStats();
     setInterval(loadStats, 60000);
   </script>

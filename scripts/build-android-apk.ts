@@ -622,16 +622,16 @@ function renderInstallPage(apks: ApkEntry[]): string {
       : '';
     return `      <a class="apk-row${isLatest ? ' apk-latest' : ''}" href="${downloadUrl}" download>
         <div class="apk-info">
-          <span class="apk-version">v${escapeHtml(apk.version)}${isLatest ? ' <span class="latest-tag">mais recente</span>' : ''}</span>
+          <span class="apk-version">v${escapeHtml(apk.version)}${isLatest ? ' <span class="latest-tag" data-i18n="install.row.latest">mais recente</span>' : ''}</span>
           <span class="apk-meta">${escapeHtml(formatDate(apk.uploadedAt))} &middot; ${escapeHtml(humanSize(apk.size))}</span>
           <span class="apk-filename">${escapeHtml(apk.filename)}</span>${commentHtml}
         </div>
-        <span class="apk-download">Baixar</span>
+        <span class="apk-download" data-i18n="install.row.download">Baixar</span>
       </a>`;
   }).join('\n');
 
   const emptyState = apks.length === 0
-    ? '    <p class="empty">Nenhum APK disponível ainda. Volte em breve.</p>\n'
+    ? '    <p class="empty" data-i18n="install.empty">Nenhum APK disponível ainda. Volte em breve.</p>\n'
     : `    <div class="apk-list">\n${apkRows}\n    </div>`;
 
   const installJsonLd = JSON.stringify({
@@ -667,30 +667,42 @@ function renderInstallPage(apks: ApkEntry[]): string {
 
     gtag('config', 'G-WY96WV41T8');
   </script>
+  <script>
+    // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
+    window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
+  </script>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
-  <title>Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}</title>
-  <meta name="description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
+  <title data-i18n="install.meta.title" data-i18n-param-vsuffix="${versionLabel ? ' (' + versionLabel + ')' : ''}">Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}</title>
+  <meta name="description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android." data-i18n-attr="content:install.meta.desc"/>
   <meta name="theme-color" content="#020617"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="${RELAY_INSTALL_URL}"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="alternate" hreflang="pt-BR" href="${RELAY_INSTALL_URL}"/>
+  <link rel="alternate" hreflang="en" href="${RELAY_INSTALL_URL}?lang=en"/>
+  <link rel="alternate" hreflang="es" href="${RELAY_INSTALL_URL}?lang=es"/>
+  <link rel="alternate" hreflang="fr" href="${RELAY_INSTALL_URL}?lang=fr"/>
+  <link rel="alternate" hreflang="ar" href="${RELAY_INSTALL_URL}?lang=ar"/>
+  <link rel="alternate" hreflang="x-default" href="${RELAY_INSTALL_URL}"/>
+  <link rel="stylesheet" href="/css/i18n.css"/>
+  <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Rapport Crypto P2P Chat"/>
   <meta property="og:locale" content="pt_BR"/>
-  <meta property="og:title" content="Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}"/>
-  <meta property="og:description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
+  <meta property="og:title" content="Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}" data-i18n-attr="content:install.meta.title" data-i18n-param-vsuffix="${versionLabel ? ' (' + versionLabel + ')' : ''}"/>
+  <meta property="og:description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android." data-i18n-attr="content:install.meta.desc"/>
   <meta property="og:url" content="${RELAY_INSTALL_URL}"/>
   <meta property="og:image" content="${RELAY_BASE_URL}/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:image:alt" content="Rapport Crypto P2P Chat — logo"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}"/>
-  <meta name="twitter:description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android."/>
+  <meta name="twitter:title" content="Rapport Crypto P2P Chat — Instalar aplicativo Android${versionLabel ? ' (' + versionLabel + ')' : ''}" data-i18n-attr="content:install.meta.title" data-i18n-param-vsuffix="${versionLabel ? ' (' + versionLabel + ')' : ''}"/>
+  <meta name="twitter:description" content="Baixe a versão mais recente do aplicativo Rapport Crypto P2P Chat para Android." data-i18n-attr="content:install.meta.desc"/>
   <meta name="twitter:image" content="${RELAY_BASE_URL}/og-image.png"/>
   <script type="application/ld+json">${installJsonLd}</script>
   <style>
@@ -762,25 +774,25 @@ function renderInstallPage(apks: ApkEntry[]): string {
 <body>
   <div class="container">
     <header class="hero">
-      <h1>Instalar Rapport Crypto P2P Chat</h1>
-      <p>Baixe o aplicativo Android diretamente do servidor de distribuição. ${versionLabel ? `Versão mais recente: <strong>${versionLabel}</strong>.` : ''}</p>
+      <h1 data-i18n="install.hero.title">Instalar Rapport Crypto P2P Chat</h1>
+      <p><span data-i18n="install.hero.sub">Baixe o aplicativo Android diretamente do servidor de distribuição.</span>${latest ? ` <span data-i18n-html="install.hero.latest" data-i18n-param-version="${versionLabel}">Versão mais recente: <strong>${versionLabel}</strong>.</span>` : ''}</p>
     </header>
 
-    <h2 class="section-title">Vers&otilde;es dispon&iacute;veis</h2>
+    <h2 class="section-title" data-i18n="install.list.title">Vers&otilde;es dispon&iacute;veis</h2>
 ${emptyState}
     <div class="install-guide">
-      <h2>Como instalar</h2>
+      <h2 data-i18n="install.guide.title">Como instalar</h2>
       <ol>
-        <li>Toque no link "Baixar" acima para baixar o arquivo .apk.</li>
-        <li>Se solicitado, permita instala&ccedil;&otilde;es de fontes desconhecidas nas configura&ccedil;&otilde;es do Android.</li>
-        <li>Abra o arquivo baixado e confirme a instala&ccedil;&atilde;o.</li>
-        <li>Abra o Rapport Crypto P2P Chat e configure sua carteira.</li>
+        <li data-i18n="install.guide.s1">Toque no link "Baixar" acima para baixar o arquivo .apk.</li>
+        <li data-i18n="install.guide.s2">Se solicitado, permita instala&ccedil;&otilde;es de fontes desconhecidas nas configura&ccedil;&otilde;es do Android.</li>
+        <li data-i18n="install.guide.s3">Abra o arquivo baixado e confirme a instala&ccedil;&atilde;o.</li>
+        <li data-i18n="install.guide.s4">Abra o Rapport Crypto P2P Chat e configure sua carteira.</li>
       </ol>
     </div>
 
     <div class="footer">
-      <p><a href="/">&larr; Voltar ao in&iacute;cio</a> &middot; <a href="/stats">Estat&iacute;sticas</a></p>
-      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>.</p>
+      <p><a href="/" data-i18n="common.back">&larr; Voltar ao in&iacute;cio</a> &middot; <a href="/stats" data-i18n="home.p.stats.title">Estat&iacute;sticas</a></p>
+      <p data-i18n-html="install.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>.</p>
     </div>
   </div>
 </body>

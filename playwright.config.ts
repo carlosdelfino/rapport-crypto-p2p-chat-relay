@@ -17,6 +17,9 @@ export default defineConfig({
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
   use: {
     baseURL: 'http://127.0.0.1:4173',
+    // Os specs existentes validam conteúdo pt-BR; sem isso o locale padrão
+    // (en-US) faria a detecção automática de idioma renderizar em inglês.
+    locale: 'pt-BR',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },

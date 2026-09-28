@@ -10,31 +10,43 @@
 
     gtag('config', 'G-WY96WV41T8');
   </script>
+  <script>
+    // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
+    window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
+  </script>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
-  <title>Moedas e tokens — catálogo por rede | Rapport Crypto Chat</title>
-  <meta name="description" content="Catálogo completo das redes, moedas nativas e tokens suportados pelo Rapport Crypto Chat: stablecoins (USDC, USDT, DAI, PYUSD, BRLA, EURC), moedas de rede (ETH, POL, BTC, ISLM, MON, XDC, BNB, KLV) e tokens wrapped, staking, utilitários e de projeto."/>
+  <title data-i18n="tokens.meta.title">Moedas e tokens — catálogo por rede | Rapport Crypto Chat</title>
+  <meta name="description" content="Catálogo completo das redes, moedas nativas e tokens suportados pelo Rapport Crypto Chat: stablecoins (USDC, USDT, DAI, PYUSD, BRLA, EURC), moedas de rede (ETH, POL, BTC, ISLM, MON, XDC, BNB, KLV) e tokens wrapped, staking, utilitários e de projeto." data-i18n-attr="content:tokens.meta.desc"/>
   <meta name="keywords" content="usdc, usdt, dai, pyusd, brla, eurc, islm, eth, pol, btc, stablecoin, erc-20, tokens blockchain, rapport"/>
   <meta name="theme-color" content="#020617"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/tokens"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/tokens"/>
+  <link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/tokens?lang=en"/>
+  <link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/tokens?lang=es"/>
+  <link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/tokens?lang=fr"/>
+  <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/tokens?lang=ar"/>
+  <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/tokens"/>
+  <link rel="stylesheet" href="/css/i18n.css"/>
+  <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="article"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
   <meta property="og:locale" content="pt_BR"/>
-  <meta property="og:title" content="Moedas e tokens — catálogo por rede | Rapport Crypto Chat"/>
-  <meta property="og:description" content="Todas as redes, moedas nativas e tokens que o app suporta — stablecoins, moedas de gas, wrapped, staking e tokens de projeto."/>
+  <meta property="og:title" content="Moedas e tokens — catálogo por rede | Rapport Crypto Chat" data-i18n-attr="content:tokens.meta.title"/>
+  <meta property="og:description" content="Todas as redes, moedas nativas e tokens que o app suporta — stablecoins, moedas de gas, wrapped, staking e tokens de projeto." data-i18n-attr="content:tokens.meta.ogDesc"/>
   <meta property="og:url" content="https://crypto-chat.rapport.tec.br/tokens"/>
   <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:image:alt" content="Rapport Crypto Chat — moedas e tokens"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Moedas e tokens — catálogo por rede | Rapport Crypto Chat"/>
-  <meta name="twitter:description" content="Todas as redes, moedas nativas e tokens suportados pelo app — stablecoins, gas, wrapped, staking e projetos."/>
+  <meta name="twitter:title" content="Moedas e tokens — catálogo por rede | Rapport Crypto Chat" data-i18n-attr="content:tokens.meta.title"/>
+  <meta name="twitter:description" content="Todas as redes, moedas nativas e tokens suportados pelo app — stablecoins, gas, wrapped, staking e projetos." data-i18n-attr="content:tokens.meta.ogDesc"/>
   <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <script type="application/ld+json">
   {
@@ -190,55 +202,55 @@
 <body>
   <div class="container">
     <header class="hero">
-      <h1>Moedas e tokens</h1>
-      <p class="tagline">Todas as redes, moedas nativas e tokens que o Rapport Crypto Chat suporta em pagamentos, cobran&ccedil;as e escrow.</p>
-      <p class="subtagline">Use <code class="cmd">/pay</code>, <code class="cmd">/collect</code>, <code class="cmd">/balance</code> e <code class="cmd">/escrow</code> com qualquer ativo listado &mdash; basta indicar o s&iacute;mbolo e a rede.</p>
-      <span class="badge"><span class="dot"></span>23 redes &middot; 30+ ativos</span>
+      <h1 data-i18n="tokens.hero.title">Moedas e tokens</h1>
+      <p class="tagline" data-i18n="tokens.hero.tagline">Todas as redes, moedas nativas e tokens que o Rapport Crypto Chat suporta em pagamentos, cobran&ccedil;as e escrow.</p>
+      <p class="subtagline" data-i18n-html="tokens.hero.subtagline">Use <code class="cmd">/pay</code>, <code class="cmd">/collect</code>, <code class="cmd">/balance</code> e <code class="cmd">/escrow</code> com qualquer ativo listado &mdash; basta indicar o s&iacute;mbolo e a rede.</p>
+      <span class="badge"><span class="dot"></span><span data-i18n="tokens.hero.badge">23 redes &middot; 30+ ativos</span></span>
       <div class="cta-row">
-        <a class="cta cta-primary" href="/install">Instalar o app</a>
-        <a class="cta cta-secondary" href="/">Voltar ao in&iacute;cio</a>
+        <a class="cta cta-primary" href="/install" data-i18n="common.cta.install">Instalar o app</a>
+        <a class="cta cta-secondary" href="/" data-i18n="common.cta.back">Voltar ao in&iacute;cio</a>
       </div>
     </header>
 
-    <h2 class="section-title">Contexto de uso</h2>
-    <p class="lead">
+    <h2 class="section-title" data-i18n="tokens.ctx.title">Contexto de uso</h2>
+    <p class="lead" data-i18n="tokens.ctx.lead">
       Cada ativo tem um papel diferente dentro do app. As categorias abaixo aparecem ao lado de cada
       moeda ou token nas tabelas de rede:
     </p>
     <div class="legend">
-      <span class="chip stable">Stablecoin</span>
-      <span class="chip native">Moeda nativa</span>
-      <span class="chip wrapped">Wrapped / bridged</span>
-      <span class="chip staking">Staking</span>
-      <span class="chip utility">Utilit&aacute;rio / governan&ccedil;a</span>
-      <span class="chip project">Projeto / comunidade</span>
-      <span class="chip rwa">RWA (ativo real)</span>
+      <span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span>
+      <span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span>
+      <span class="chip wrapped" data-i18n="tokens.cat.wrappedLong">Wrapped / bridged</span>
+      <span class="chip staking" data-i18n="tokens.cat.staking">Staking</span>
+      <span class="chip utility" data-i18n="tokens.cat.utilityLong">Utilit&aacute;rio / governan&ccedil;a</span>
+      <span class="chip project" data-i18n="tokens.cat.project">Projeto / comunidade</span>
+      <span class="chip rwa" data-i18n="tokens.cat.rwaLong">RWA (ativo real)</span>
     </div>
     <div class="cards-legend muted" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.6rem;margin-bottom:1rem;">
-      <div><strong class="chip stable">Stablecoin</strong> &mdash; atrelada a moeda fiat (USD, EUR, BRL); ideal para pagamentos e escrow por n&atilde;o oscilar.</div>
-      <div><strong class="chip native">Moeda nativa</strong> &mdash; paga o gas da rede e tamb&eacute;m pode ser enviada como pagamento.</div>
-      <div><strong class="chip wrapped">Wrapped / bridged</strong> &mdash; representa&ccedil;&atilde;o de um ativo de outra rede (ex.: BTC na HAQQ via Axelar).</div>
-      <div><strong class="chip staking">Staking</strong> &mdash; derivativo de staking l&iacute;quido; rende rendimento, mas tem liquidez menor.</div>
-      <div><strong class="chip utility">Utilit&aacute;rio / governan&ccedil;a</strong> &mdash; token de protocolo (DEX, bridge); uso especulativo ou de voto.</div>
-      <div><strong class="chip project">Projeto / comunidade</strong> &mdash; token de um projeto espec&iacute;fico; risco e liquidez variam.</div>
-      <div><strong class="chip rwa">RWA</strong> &mdash; ativo do mundo real tokenizado (ex.: fundo de renda fixa on-chain).</div>
+      <div data-i18n-html="tokens.legend.stable"><strong class="chip stable">Stablecoin</strong> &mdash; atrelada a moeda fiat (USD, EUR, BRL); ideal para pagamentos e escrow por n&atilde;o oscilar.</div>
+      <div data-i18n-html="tokens.legend.native"><strong class="chip native">Moeda nativa</strong> &mdash; paga o gas da rede e tamb&eacute;m pode ser enviada como pagamento.</div>
+      <div data-i18n-html="tokens.legend.wrapped"><strong class="chip wrapped">Wrapped / bridged</strong> &mdash; representa&ccedil;&atilde;o de um ativo de outra rede (ex.: BTC na HAQQ via Axelar).</div>
+      <div data-i18n-html="tokens.legend.staking"><strong class="chip staking">Staking</strong> &mdash; derivativo de staking l&iacute;quido; rende rendimento, mas tem liquidez menor.</div>
+      <div data-i18n-html="tokens.legend.utility"><strong class="chip utility">Utilit&aacute;rio / governan&ccedil;a</strong> &mdash; token de protocolo (DEX, bridge); uso especulativo ou de voto.</div>
+      <div data-i18n-html="tokens.legend.project"><strong class="chip project">Projeto / comunidade</strong> &mdash; token de um projeto espec&iacute;fico; risco e liquidez variam.</div>
+      <div data-i18n-html="tokens.legend.rwa"><strong class="chip rwa">RWA</strong> &mdash; ativo do mundo real tokenizado (ex.: fundo de renda fixa on-chain).</div>
     </div>
 
-    <h2 class="section-title">Redes EVM &mdash; mainnets</h2>
+    <h2 class="section-title" data-i18n="tokens.sec.evm">Redes EVM &mdash; mainnets</h2>
 
     <div class="net-block">
       <div class="net-head">
         <span class="net-name">Ethereum Mainnet</span>
         <span class="net-meta">chainId 1</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; reserva de valor do ecossistema.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (Circle); principal stable para pagamentos.</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (Tether); maior liquidez global.</td></tr>
-        <tr><td class="sym">DAI</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital descentralizado (Sky/MakerDAO).</td></tr>
-        <tr><td class="sym">PYUSD</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital do PayPal; foco em pagamentos.</td></tr>
-        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Real digital; pagamentos em reais on-chain.</td></tr>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.eth.eth">Gas e pagamentos; reserva de valor do ecossistema.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.usdc">D&oacute;lar digital (Circle); principal stable para pagamentos.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.usdt">D&oacute;lar digital (Tether); maior liquidez global.</td></tr>
+        <tr><td class="sym">DAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.dai">D&oacute;lar digital descentralizado (Sky/MakerDAO).</td></tr>
+        <tr><td class="sym">PYUSD</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.pyusd">D&oacute;lar digital do PayPal; foco em pagamentos.</td></tr>
+        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.brla">Real digital; pagamentos em reais on-chain.</td></tr>
       </tbody></table>
     </div>
 
@@ -246,16 +258,16 @@
       <div class="net-head">
         <span class="net-name">Polygon PoS</span>
         <span class="net-meta">chainId 137</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">POL</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; staking da rede Polygon.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo; taxas baixas para pagamentos.</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (PoS).</td></tr>
-        <tr><td class="sym">DAI</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital descentralizado (PoS).</td></tr>
-        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Real digital; popular para pagamentos BR.</td></tr>
-        <tr><td class="sym">CCZ</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Token CusCuZ; projeto da comunidade.</td></tr>
-        <tr><td class="sym">CAS</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Criptocoin Agentic Space; token de projeto.</td></tr>
+        <tr><td class="sym">POL</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.polygon.pol">Gas e pagamentos; staking da rede Polygon.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.usdc">D&oacute;lar digital nativo; taxas baixas para pagamentos.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.usdt">D&oacute;lar digital (PoS).</td></tr>
+        <tr><td class="sym">DAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.dai">D&oacute;lar digital descentralizado (PoS).</td></tr>
+        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.brla">Real digital; popular para pagamentos BR.</td></tr>
+        <tr><td class="sym">CCZ</td><td class="cat"><span class="chip project" data-i18n="tokens.cat.project">Projeto / comunidade</span></td><td class="use" data-i18n="tokens.use.polygon.ccz">Token CusCuZ; projeto da comunidade.</td></tr>
+        <tr><td class="sym">CAS</td><td class="cat"><span class="chip project" data-i18n="tokens.cat.project">Projeto / comunidade</span></td><td class="use" data-i18n="tokens.use.polygon.cas">Criptocoin Agentic Space; token de projeto.</td></tr>
       </tbody></table>
     </div>
 
@@ -263,13 +275,13 @@
       <div class="net-head">
         <span class="net-name">Base Mainnet</span>
         <span class="net-meta">chainId 8453</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos na L2 da Coinbase.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (bridged).</td></tr>
-        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Real digital.</td></tr>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.base.eth">Gas e pagamentos na L2 da Coinbase.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.base.usdc">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.base.usdt">D&oacute;lar digital (bridged).</td></tr>
+        <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.base.brla">Real digital.</td></tr>
       </tbody></table>
     </div>
 
@@ -277,12 +289,12 @@
       <div class="net-head">
         <span class="net-name">OP Mainnet</span>
         <span class="net-meta">chainId 10</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos na L2 Optimism.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (bridged).</td></tr>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.op.eth">Gas e pagamentos na L2 Optimism.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.op.usdc">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.op.usdt">D&oacute;lar digital (bridged).</td></tr>
       </tbody></table>
     </div>
 
@@ -290,12 +302,12 @@
       <div class="net-head">
         <span class="net-name">Arbitrum One</span>
         <span class="net-meta">chainId 42161</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos na L2 Arbitrum.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (bridged).</td></tr>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.arb.eth">Gas e pagamentos na L2 Arbitrum.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.arb.usdc">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.arb.usdt">D&oacute;lar digital (bridged).</td></tr>
       </tbody></table>
     </div>
 
@@ -303,12 +315,12 @@
       <div class="net-head">
         <span class="net-name">Linea Mainnet</span>
         <span class="net-meta">chainId 59144</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos na L2 Linea (Consensys).</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (bridged).</td></tr>
+        <tr><td class="sym">ETH</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.linea.eth">Gas e pagamentos na L2 Linea (Consensys).</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.linea.usdc">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.linea.usdt">D&oacute;lar digital (bridged).</td></tr>
       </tbody></table>
     </div>
 
@@ -316,12 +328,12 @@
       <div class="net-head">
         <span class="net-name">Monad Mainnet</span>
         <span class="net-meta">chainId 143</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">MON</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; L1 de alta performance.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital nativo.</td></tr>
-        <tr><td class="sym">USDT0</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital omnichain (Tether/LayerZero).</td></tr>
+        <tr><td class="sym">MON</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.monad.mon">Gas e pagamentos; L1 de alta performance.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.monad.usdc">D&oacute;lar digital nativo.</td></tr>
+        <tr><td class="sym">USDT0</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.monad.usdt0">D&oacute;lar digital omnichain (Tether/LayerZero).</td></tr>
       </tbody></table>
     </div>
 
@@ -329,15 +341,15 @@
       <div class="net-head">
         <span class="net-name">BNB Smart Chain</span>
         <span class="net-meta">chainId 56</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">BNB</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; utility do ecossistema Binance.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (Binance-Peg, 18 decimais).</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital (Binance-Peg).</td></tr>
-        <tr><td class="sym">BUSD</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital da Binance (em descontinua&ccedil;&atilde;o pelo emissor).</td></tr>
-        <tr><td class="sym">WBNB</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">BNB embrulhado para uso em DeFi/DEX.</td></tr>
-        <tr><td class="sym">CAKE</td><td class="cat"><span class="chip utility">Utilit&aacute;rio</span></td><td class="use">Token do PancakeSwap; DeFi e governan&ccedil;a.</td></tr>
+        <tr><td class="sym">BNB</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.bnb.bnb">Gas e pagamentos; utility do ecossistema Binance.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.bnb.usdc">D&oacute;lar digital (Binance-Peg, 18 decimais).</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.bnb.usdt">D&oacute;lar digital (Binance-Peg).</td></tr>
+        <tr><td class="sym">BUSD</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.bnb.busd">D&oacute;lar digital da Binance (em descontinua&ccedil;&atilde;o pelo emissor).</td></tr>
+        <tr><td class="sym">WBNB</td><td class="cat"><span class="chip wrapped" data-i18n="tokens.cat.wrapped">Wrapped</span></td><td class="use" data-i18n="tokens.use.bnb.wbnb">BNB embrulhado para uso em DeFi/DEX.</td></tr>
+        <tr><td class="sym">CAKE</td><td class="cat"><span class="chip utility" data-i18n="tokens.cat.utility">Utilit&aacute;rio</span></td><td class="use" data-i18n="tokens.use.bnb.cake">Token do PancakeSwap; DeFi e governan&ccedil;a.</td></tr>
       </tbody></table>
     </div>
 
@@ -345,11 +357,11 @@
       <div class="net-head">
         <span class="net-name">XDC Network</span>
         <span class="net-meta">chainId 50</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">XDC</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; foco enterprise/trade finance.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital.</td></tr>
+        <tr><td class="sym">XDC</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.xdc.xdc">Gas e pagamentos; foco enterprise/trade finance.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.xdc.usdc">D&oacute;lar digital.</td></tr>
       </tbody></table>
     </div>
 
@@ -357,12 +369,12 @@
       <div class="net-head">
         <span class="net-name">Arc</span>
         <span class="net-meta">chainId 5042</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip native">Moeda nativa</span> <span class="chip stable">Stablecoin</span></td><td class="use">Moeda de gas <strong>e</strong> meio de pagamento &mdash; a rede usa d&oacute;lar como unidade nativa.</td></tr>
-        <tr><td class="sym">EURC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Euro digital (Circle); pagamentos em EUR.</td></tr>
-        <tr><td class="sym">USYC</td><td class="cat"><span class="chip rwa">RWA</span></td><td class="use">Fundo de renda fixa tokenizado (Hashnote); rendimento de T-bills on-chain.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span> <span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n-html="tokens.use.arc.usdc">Moeda de gas <strong>e</strong> meio de pagamento &mdash; a rede usa d&oacute;lar como unidade nativa.</td></tr>
+        <tr><td class="sym">EURC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.arc.eurc">Euro digital (Circle); pagamentos em EUR.</td></tr>
+        <tr><td class="sym">USYC</td><td class="cat"><span class="chip rwa" data-i18n="tokens.cat.rwa">RWA</span></td><td class="use" data-i18n="tokens.use.arc.usyc">Fundo de renda fixa tokenizado (Hashnote); rendimento de T-bills on-chain.</td></tr>
       </tbody></table>
     </div>
 
@@ -370,59 +382,59 @@
       <div class="net-head">
         <span class="net-name">HAQQ Mainnet</span>
         <span class="net-meta">chainId 11235</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">ISLM</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Islamic Coin; gas e pagamentos em rede Shariah-compliant.</td></tr>
-        <tr><td class="sym">WISLM</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">ISLM embrulhado para uso em DeFi/ERC-20.</td></tr>
-        <tr><td class="sym">stISLM</td><td class="cat"><span class="chip staking">Staking</span></td><td class="use">ISLM em staking l&iacute;quido (Stride); acumula rendimento.</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital via IBC (Noble).</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital via IBC (Kava).</td></tr>
-        <tr><td class="sym">axlUSDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital bridged via Axelar.</td></tr>
-        <tr><td class="sym">axlUSDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">Tether bridged via Axelar.</td></tr>
-        <tr><td class="sym">axlDAI</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">DAI bridged via Axelar.</td></tr>
-        <tr><td class="sym">axlWBTC</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">Bitcoin bridged via Axelar; reserva de valor.</td></tr>
-        <tr><td class="sym">axlWETH</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">Ether bridged via Axelar.</td></tr>
-        <tr><td class="sym">AXL</td><td class="cat"><span class="chip utility">Utilit&aacute;rio</span></td><td class="use">Token da rede de interoperabilidade Axelar.</td></tr>
-        <tr><td class="sym">OSMO</td><td class="cat"><span class="chip utility">Utilit&aacute;rio</span></td><td class="use">Token da DEX Osmosis (ecossistema Cosmos).</td></tr>
-        <tr><td class="sym">ATOM</td><td class="cat"><span class="chip utility">Utilit&aacute;rio</span></td><td class="use">Token do Cosmos Hub; interoperabilidade IBC.</td></tr>
-        <tr><td class="sym">DEEN</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Deenar; token do ecossistema HAQQ.</td></tr>
+        <tr><td class="sym">ISLM</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.haqq.islm">Islamic Coin; gas e pagamentos em rede Shariah-compliant.</td></tr>
+        <tr><td class="sym">WISLM</td><td class="cat"><span class="chip wrapped" data-i18n="tokens.cat.wrapped">Wrapped</span></td><td class="use" data-i18n="tokens.use.haqq.wislm">ISLM embrulhado para uso em DeFi/ERC-20.</td></tr>
+        <tr><td class="sym">stISLM</td><td class="cat"><span class="chip staking" data-i18n="tokens.cat.staking">Staking</span></td><td class="use" data-i18n="tokens.use.haqq.stislm">ISLM em staking l&iacute;quido (Stride); acumula rendimento.</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.haqq.usdc">D&oacute;lar digital via IBC (Noble).</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.haqq.usdt">D&oacute;lar digital via IBC (Kava).</td></tr>
+        <tr><td class="sym">axlUSDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.haqq.axlusdc">D&oacute;lar digital bridged via Axelar.</td></tr>
+        <tr><td class="sym">axlUSDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.haqq.axlusdt">Tether bridged via Axelar.</td></tr>
+        <tr><td class="sym">axlDAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.haqq.axldai">DAI bridged via Axelar.</td></tr>
+        <tr><td class="sym">axlWBTC</td><td class="cat"><span class="chip wrapped" data-i18n="tokens.cat.wrapped">Wrapped</span></td><td class="use" data-i18n="tokens.use.haqq.axlwbtc">Bitcoin bridged via Axelar; reserva de valor.</td></tr>
+        <tr><td class="sym">axlWETH</td><td class="cat"><span class="chip wrapped" data-i18n="tokens.cat.wrapped">Wrapped</span></td><td class="use" data-i18n="tokens.use.haqq.axlweth">Ether bridged via Axelar.</td></tr>
+        <tr><td class="sym">AXL</td><td class="cat"><span class="chip utility" data-i18n="tokens.cat.utility">Utilit&aacute;rio</span></td><td class="use" data-i18n="tokens.use.haqq.axl">Token da rede de interoperabilidade Axelar.</td></tr>
+        <tr><td class="sym">OSMO</td><td class="cat"><span class="chip utility" data-i18n="tokens.cat.utility">Utilit&aacute;rio</span></td><td class="use" data-i18n="tokens.use.haqq.osmo">Token da DEX Osmosis (ecossistema Cosmos).</td></tr>
+        <tr><td class="sym">ATOM</td><td class="cat"><span class="chip utility" data-i18n="tokens.cat.utility">Utilit&aacute;rio</span></td><td class="use" data-i18n="tokens.use.haqq.atom">Token do Cosmos Hub; interoperabilidade IBC.</td></tr>
+        <tr><td class="sym">DEEN</td><td class="cat"><span class="chip project" data-i18n="tokens.cat.project">Projeto / comunidade</span></td><td class="use" data-i18n="tokens.use.haqq.deen">Deenar; token do ecossistema HAQQ.</td></tr>
       </tbody></table>
     </div>
 
-    <h2 class="section-title">Redes n&atilde;o-EVM</h2>
+    <h2 class="section-title" data-i18n="tokens.sec.nonevm">Redes n&atilde;o-EVM</h2>
 
     <div class="net-block">
       <div class="net-head">
         <span class="net-name">Bitcoin Mainnet</span>
-        <span class="net-meta">chainId interno 8000</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-meta" data-i18n="tokens.net.internalBtc">chainId interno 8000</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">BTC</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Reserva de valor e pagamentos on-chain (SegWit/Taproot).</td></tr>
+        <tr><td class="sym">BTC</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.btc.btc">Reserva de valor e pagamentos on-chain (SegWit/Taproot).</td></tr>
       </tbody></table>
     </div>
 
     <div class="net-block">
       <div class="net-head">
         <span class="net-name">KleverChain</span>
-        <span class="net-meta">chainId interno 8020</span>
-        <span class="net-kind mainnet">mainnet</span>
+        <span class="net-meta" data-i18n="tokens.net.internalKlv">chainId interno 8020</span>
+        <span class="net-kind mainnet" data-i18n="tokens.net.mainnet">mainnet</span>
       </div>
       <table class="asset-table"><tbody>
-        <tr><td class="sym">KLV</td><td class="cat"><span class="chip native">Moeda nativa</span></td><td class="use">Gas e pagamentos; utility da KleverChain.</td></tr>
-        <tr><td class="sym">KFI</td><td class="cat"><span class="chip utility">Governan&ccedil;a</span></td><td class="use">Klever Finance; governan&ccedil;a e taxas do ecossistema.</td></tr>
-        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital wrapped (KDA <code class="cmd">USDT-23V8</code>).</td></tr>
-        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable">Stablecoin</span></td><td class="use">D&oacute;lar digital wrapped (KDA <code class="cmd">USDC-1LN4</code>).</td></tr>
-        <tr><td class="sym">WBTC</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">Bitcoin wrapped (KDA <code class="cmd">WBTC-3FB5</code>).</td></tr>
-        <tr><td class="sym">WETH</td><td class="cat"><span class="chip wrapped">Wrapped</span></td><td class="use">Ether wrapped (KDA <code class="cmd">WETH-EFBC</code>).</td></tr>
-        <tr><td class="sym">DVK</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Devicoin; token de projeto.</td></tr>
-        <tr><td class="sym">DXB</td><td class="cat"><span class="chip project">Projeto / comunidade</span></td><td class="use">Dexbet; token de projeto.</td></tr>
+        <tr><td class="sym">KLV</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.klv.klv">Gas e pagamentos; utility da KleverChain.</td></tr>
+        <tr><td class="sym">KFI</td><td class="cat"><span class="chip utility" data-i18n="tokens.cat.gov">Governan&ccedil;a</span></td><td class="use" data-i18n="tokens.use.klv.kfi">Klever Finance; governan&ccedil;a e taxas do ecossistema.</td></tr>
+        <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n-html="tokens.use.klv.usdt">D&oacute;lar digital wrapped (KDA <code class="cmd">USDT-23V8</code>).</td></tr>
+        <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n-html="tokens.use.klv.usdc">D&oacute;lar digital wrapped (KDA <code class="cmd">USDC-1LN4</code>).</td></tr>
+        <tr><td class="sym">WBTC</td><td class="cat"><span class="chip wrapped" data-i18n="tokens.cat.wrapped">Wrapped</span></td><td class="use" data-i18n-html="tokens.use.klv.wbtc">Bitcoin wrapped (KDA <code class="cmd">WBTC-3FB5</code>).</td></tr>
+        <tr><td class="sym">WETH</td><td class="cat"><span class="chip wrapped" data-i18n="tokens.cat.wrapped">Wrapped</span></td><td class="use" data-i18n-html="tokens.use.klv.weth">Ether wrapped (KDA <code class="cmd">WETH-EFBC</code>).</td></tr>
+        <tr><td class="sym">DVK</td><td class="cat"><span class="chip project" data-i18n="tokens.cat.project">Projeto / comunidade</span></td><td class="use" data-i18n="tokens.use.klv.dvk">Devicoin; token de projeto.</td></tr>
+        <tr><td class="sym">DXB</td><td class="cat"><span class="chip project" data-i18n="tokens.cat.project">Projeto / comunidade</span></td><td class="use" data-i18n="tokens.use.klv.dxb">Dexbet; token de projeto.</td></tr>
       </tbody></table>
     </div>
 
-    <h2 class="section-title">Testnets &mdash; apenas para pr&aacute;tica</h2>
-    <p class="muted">
+    <h2 class="section-title" data-i18n="tokens.sec.testnet">Testnets &mdash; apenas para pr&aacute;tica</h2>
+    <p class="muted" data-i18n-html="tokens.testnets.p">
       As mesmas moedas existem em vers&atilde;o de teste, <strong>sem valor real</strong>: Sepolia e
       Bitcoin Testnet (ETH/BTC de faucet), Polygon Amoy, Base Sepolia, OP Sepolia, Arbitrum Sepolia,
       Linea Sepolia, Monad Testnet, Arc Testnet e HAQQ Testedge 2. Tokens de teste dispon&iacute;veis:
@@ -430,16 +442,16 @@
       EURC/USYC no Arc Testnet.
     </p>
 
-    <div class="callout">
+    <div class="callout" data-i18n-html="tokens.callout.tip">
       <strong>Dica de uso:</strong> para pagamentos, prefira <strong>stablecoins</strong> (valor
       previs&iacute;vel) ou a <strong>moeda nativa</strong> quando o recebedor quiser acumular o ativo da rede.
       Tokens wrapped, staking e de projeto podem ter liquidez menor &mdash; confirme com o recebedor antes de enviar.
     </div>
 
-    <a class="backlink" href="/">&larr; Voltar para a p&aacute;gina inicial</a>
+    <a class="backlink" href="/" data-i18n="common.back.home">&larr; Voltar para a p&aacute;gina inicial</a>
 
     <div class="footer">
-      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
+      <p data-i18n-html="common.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
     </div>
   </div>
 </body>

@@ -1,0 +1,54 @@
+/* i18n — seletor de idioma, anti-FOUC e ajustes RTL do site estático. */
+
+/* Esconde o body enquanto o dicionário do idioma detectado é carregado.
+   A classe é adicionada por snippet inline no <head> apenas para não-pt-BR
+   e removida pelo i18n.js (com failsafe de timeout). */
+html.i18n-loading body { visibility: hidden; }
+
+/* Barra de idiomas no topo de cada página */
+.lang-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.35rem;
+  padding-bottom: 0.5rem;
+}
+.lang-btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 0.45rem;
+  background: transparent;
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 0.3rem 0.4rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+}
+.lang-btn:hover {
+  border-color: var(--brand, #ea580c);
+  transform: translateY(-1px);
+}
+.lang-btn.active {
+  border-color: var(--brand, #ea580c);
+  background: rgba(234, 88, 12, 0.15);
+}
+.lang-btn:focus-visible {
+  outline: 2px solid var(--brand-500, #f97316);
+  outline-offset: 2px;
+}
+
+/* Ajustes RTL (árabe) — converte as propriedades físicas usadas nas páginas. */
+[dir="rtl"] .badge .dot { margin-right: 0; margin-left: 0.4rem; }
+[dir="rtl"] .step::before { left: auto; right: 1.19rem; }
+[dir="rtl"] .callout {
+  border-left-width: 1px;
+  border-right-width: 4px;
+}
+[dir="rtl"] .net-head .net-kind { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .latest-tag { margin-left: 0; margin-right: 0.4rem; }
+[dir="rtl"] .install-guide ol { padding-left: 0; padding-right: 1.5rem; }
+[dir="rtl"] .relay-table th, [dir="rtl"] .relay-table td,
+[dir="rtl"] .cmd-table th, [dir="rtl"] .cmd-table td,
+[dir="rtl"] .fee-table th, [dir="rtl"] .fee-table td,
+[dir="rtl"] .financial-table th, [dir="rtl"] .financial-table td,
+[dir="rtl"] .asset-table td { text-align: right; }

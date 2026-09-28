@@ -10,31 +10,43 @@
 
     gtag('config', 'G-WY96WV41T8');
   </script>
+  <script>
+    // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
+    window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
+  </script>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
-  <title>Escrow — Pagamento garantido | Rapport Crypto Chat</title>
-  <meta name="description" content="Envie cripto com segurança usando escrow arbitrado: o pagador escolhe um árbitro de confiança, o recebedor pode adicionar um segundo, e os fundos só são liberados após aprovação. Transparente, rastreável e on-chain."/>
+  <title data-i18n="escrow.meta.title">Escrow — Pagamento garantido | Rapport Crypto Chat</title>
+  <meta name="description" content="Envie cripto com segurança usando escrow arbitrado: o pagador escolhe um árbitro de confiança, o recebedor pode adicionar um segundo, e os fundos só são liberados após aprovação. Transparente, rastreável e on-chain." data-i18n-attr="content:escrow.meta.desc"/>
   <meta name="keywords" content="escrow, pagamento garantido, arbitragem blockchain, escrow cripto, contrato inteligente, rapport, pagamento seguro p2p"/>
   <meta name="theme-color" content="#020617"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/escrow"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/escrow"/>
+  <link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/escrow?lang=en"/>
+  <link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/escrow?lang=es"/>
+  <link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/escrow?lang=fr"/>
+  <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/escrow?lang=ar"/>
+  <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/escrow"/>
+  <link rel="stylesheet" href="/css/i18n.css"/>
+  <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="article"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
   <meta property="og:locale" content="pt_BR"/>
-  <meta property="og:title" content="Escrow — Pagamento garantido | Rapport Crypto Chat"/>
-  <meta property="og:description" content="Pagamentos cripto protegidos por arbitragem: árbitros escolhidos pelas partes, aprovação obrigatória após prontidão do recebedor, prazo com reembolso automático e trilha de auditoria no chat."/>
+  <meta property="og:title" content="Escrow — Pagamento garantido | Rapport Crypto Chat" data-i18n-attr="content:escrow.meta.title"/>
+  <meta property="og:description" content="Pagamentos cripto protegidos por arbitragem: árbitros escolhidos pelas partes, aprovação obrigatória após prontidão do recebedor, prazo com reembolso automático e trilha de auditoria no chat." data-i18n-attr="content:escrow.meta.ogDesc"/>
   <meta property="og:url" content="https://crypto-chat.rapport.tec.br/escrow"/>
   <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:image:alt" content="Rapport Crypto Chat — Escrow"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Escrow — Pagamento garantido | Rapport Crypto Chat"/>
-  <meta name="twitter:description" content="Pagamentos cripto protegidos por arbitragem on-chain com trilha de auditoria no chat."/>
+  <meta name="twitter:title" content="Escrow — Pagamento garantido | Rapport Crypto Chat" data-i18n-attr="content:escrow.meta.title"/>
+  <meta name="twitter:description" content="Pagamentos cripto protegidos por arbitragem on-chain com trilha de auditoria no chat." data-i18n-attr="content:escrow.meta.ogDesc"/>
   <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
   <script type="application/ld+json">
   {
@@ -221,18 +233,18 @@
 <body>
   <div class="container">
     <header class="hero">
-      <h1>Pagamento garantido com Escrow</h1>
-      <p class="tagline">Envie cripto com a proteção de um árbitro escolhido por voc&ecirc; &mdash; os fundos ficam custodiados em um contrato inteligente e s&oacute; s&atilde;o liberados com aprova&ccedil;&atilde;o.</p>
-      <p class="subtagline">Transparente: cada etapa aparece no chat de todos os envolvidos. Rastre&aacute;vel: cada decis&atilde;o &eacute; uma transa&ccedil;&atilde;o on-chain.</p>
-      <span class="badge"><span class="dot"></span>Escrow arbitrado on-chain</span>
+      <h1 data-i18n="escrow.hero.title">Pagamento garantido com Escrow</h1>
+      <p class="tagline" data-i18n="escrow.hero.tagline">Envie cripto com a proteção de um árbitro escolhido por voc&ecirc; &mdash; os fundos ficam custodiados em um contrato inteligente e s&oacute; s&atilde;o liberados com aprova&ccedil;&atilde;o.</p>
+      <p class="subtagline" data-i18n="escrow.hero.subtagline">Transparente: cada etapa aparece no chat de todos os envolvidos. Rastre&aacute;vel: cada decis&atilde;o &eacute; uma transa&ccedil;&atilde;o on-chain.</p>
+      <span class="badge"><span class="dot"></span><span data-i18n="escrow.hero.badge">Escrow arbitrado on-chain</span></span>
       <div class="cta-row">
-        <a class="cta cta-primary" href="/install">Instalar o app</a>
-        <a class="cta cta-secondary" href="/">Voltar ao in&iacute;cio</a>
+        <a class="cta cta-primary" href="/install" data-i18n="common.cta.install">Instalar o app</a>
+        <a class="cta cta-secondary" href="/" data-i18n="common.cta.back">Voltar ao in&iacute;cio</a>
       </div>
     </header>
 
-    <h2 class="section-title">O que &eacute; escrow</h2>
-    <p class="lead">
+    <h2 class="section-title" data-i18n="escrow.what.title">O que &eacute; escrow</h2>
+    <p class="lead" data-i18n-html="escrow.what.lead">
       Escrow &eacute; um pagamento <strong>com cust&oacute;dia neutra</strong>: em vez de enviar direto ao
       recebedor, o valor fica travado em um contrato inteligente (<code>EscrowVault</code>) at&eacute; que
       um <strong>&aacute;rbitro</strong> &mdash; uma terceira pessoa escolhida pelas partes &mdash; confirme
@@ -242,220 +254,239 @@
     <div class="cards">
       <div class="card">
         <span class="icon">&#128184;</span>
-        <h3>Pagador</h3>
-        <p>Quem envia. Emite <code>/escrow</code>, escolhe o primeiro &aacute;rbitro e deposita os fundos no contrato.</p>
+        <h3 data-i18n="escrow.role.payer.title">Pagador</h3>
+        <p data-i18n-html="escrow.role.payer.desc">Quem envia. Emite <code>/escrow</code>, escolhe o primeiro &aacute;rbitro e deposita os fundos no contrato.</p>
       </div>
       <div class="card">
         <span class="icon">&#129309;</span>
-        <h3>Recebedor</h3>
-        <p>Quem recebe. Pode aceitar 1 &aacute;rbitro ou convidar um segundo dos pr&oacute;prios contatos. Marca <em>pronto para receber</em> antes de qualquer aprova&ccedil;&atilde;o.</p>
+        <h3 data-i18n="escrow.role.recv.title">Recebedor</h3>
+        <p data-i18n-html="escrow.role.recv.desc">Quem recebe. Pode aceitar 1 &aacute;rbitro ou convidar um segundo dos pr&oacute;prios contatos. Marca <em>pronto para receber</em> antes de qualquer aprova&ccedil;&atilde;o.</p>
       </div>
       <div class="card">
         <span class="icon">&#9878;&#65039;</span>
-        <h3>&Aacute;rbitro(s)</h3>
-        <p>Contatos de confian&ccedil;a que julgam o pagamento. Com 2 &aacute;rbitros, <strong>ambos</strong> precisam aprovar. Um recebe convite no chat e precisa aceitar o papel.</p>
+        <h3 data-i18n="escrow.role.arb.title">&Aacute;rbitro(s)</h3>
+        <p data-i18n-html="escrow.role.arb.desc">Contatos de confian&ccedil;a que julgam o pagamento. Com 2 &aacute;rbitros, <strong>ambos</strong> precisam aprovar. Um recebe convite no chat e precisa aceitar o papel.</p>
       </div>
       <div class="card">
         <span class="icon">&#128737;&#65039;</span>
-        <h3>Gestor do app</h3>
-        <p>Mant&eacute;m a infraestrutura de contratos. Recebe uma taxa de 0,50% por escrow liquidado e &eacute; avisado quando uma rede ainda n&atilde;o tem suporte.</p>
+        <h3 data-i18n="escrow.role.mgr.title">Gestor do app</h3>
+        <p data-i18n="escrow.role.mgr.desc">Mant&eacute;m a infraestrutura de contratos. Recebe uma taxa de 0,50% por escrow liquidado e &eacute; avisado quando uma rede ainda n&atilde;o tem suporte.</p>
       </div>
     </div>
 
-    <h2 class="section-title">Como funciona &mdash; passo a passo</h2>
+    <h2 class="section-title" data-i18n="escrow.steps.title">Como funciona &mdash; passo a passo</h2>
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
         <div class="body">
-          <h3><span class="who">Pagador</span> inicia o escrow</h3>
-          <p>No chat com o recebedor, digita <code>/escrow &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;, &lt;dias&gt;</code> &mdash; ex.: <code>/escrow 100 POL, Polygon PoS, 7</code>. O prazo em dias &eacute; obrigat&oacute;rio (m&aacute;x. 365).</p>
+          <h3 data-i18n-html="escrow.s1.title"><span class="who">Pagador</span> inicia o escrow</h3>
+          <p data-i18n-html="escrow.s1.desc">No chat com o recebedor, digita <code>/escrow &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;, &lt;dias&gt;</code> &mdash; ex.: <code>/escrow 100 POL, Polygon PoS, 7</code>. O prazo em dias &eacute; obrigat&oacute;rio (m&aacute;x. 365).</p>
         </div>
       </div>
       <div class="step">
         <div class="num">2</div>
         <div class="body">
-          <h3><span class="who">Pagador</span> escolhe o &aacute;rbitro</h3>
-          <p>Uma lista dos contatos &eacute; aberta, <strong>ordenada pelos mais usados como &aacute;rbitro</strong>. O escolhido recebe um convite no pr&oacute;prio chat.</p>
+          <h3 data-i18n-html="escrow.s2.title"><span class="who">Pagador</span> escolhe o &aacute;rbitro</h3>
+          <p data-i18n-html="escrow.s2.desc">Uma lista dos contatos &eacute; aberta, <strong>ordenada pelos mais usados como &aacute;rbitro</strong>. O escolhido recebe um convite no pr&oacute;prio chat.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">3</div>
         <div class="body">
-          <h3><span class="who">&Aacute;rbitro</span> aceita ou recusa</h3>
-          <p>Segurando a mensagem de convite, o contato aceita ou recusa ser &aacute;rbitro. Se recusar, o fluxo para e o pagador escolhe outra pessoa.</p>
+          <h3 data-i18n-html="escrow.s3.title"><span class="who">&Aacute;rbitro</span> aceita ou recusa</h3>
+          <p data-i18n="escrow.s3.desc">Segurando a mensagem de convite, o contato aceita ou recusa ser &aacute;rbitro. Se recusar, o fluxo para e o pagador escolhe outra pessoa.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">4</div>
         <div class="body">
-          <h3><span class="who">Recebedor</span> decide: 1 ou 2 &aacute;rbitros</h3>
-          <p>Pode aceitar o &aacute;rbitro &uacute;nico <strong>ou</strong> convidar um segundo &aacute;rbitro dos pr&oacute;prios contatos &mdash; que tamb&eacute;m precisa aceitar o convite.</p>
+          <h3 data-i18n-html="escrow.s4.title"><span class="who">Recebedor</span> decide: 1 ou 2 &aacute;rbitros</h3>
+          <p data-i18n-html="escrow.s4.desc">Pode aceitar o &aacute;rbitro &uacute;nico <strong>ou</strong> convidar um segundo &aacute;rbitro dos pr&oacute;prios contatos &mdash; que tamb&eacute;m precisa aceitar o convite.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">5</div>
         <div class="body">
-          <h3><span class="who">Pagador</span> deposita os fundos</h3>
-          <p>Com os &aacute;rbitros aceitos, o app executa <code>createEscrow</code> on-chain: o valor sai da carteira do pagador e fica custodiado no contrato.</p>
+          <h3 data-i18n-html="escrow.s5.title"><span class="who">Pagador</span> deposita os fundos</h3>
+          <p data-i18n-html="escrow.s5.desc">Com os &aacute;rbitros aceitos, o app executa <code>createEscrow</code> on-chain: o valor sai da carteira do pagador e fica custodiado no contrato.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">6</div>
         <div class="body">
-          <h3><span class="who">Recebedor</span> sinaliza prontid&atilde;o</h3>
-          <p>Quando estiver pronto para receber, toca na mensagem do escrow (ou usa <code>/escrow done</code>) e confirma. <strong>Pagador e &aacute;rbitros recebem o alerta</strong> de que a decis&atilde;o est&aacute; liberada.</p>
+          <h3 data-i18n-html="escrow.s6.title"><span class="who">Recebedor</span> sinaliza prontid&atilde;o</h3>
+          <p data-i18n-html="escrow.s6.desc">Quando estiver pronto para receber, toca na mensagem do escrow (ou usa <code>/escrow done</code>) e confirma. <strong>Pagador e &aacute;rbitros recebem o alerta</strong> de que a decis&atilde;o est&aacute; liberada.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">7</div>
         <div class="body">
-          <h3><span class="who">&Aacute;rbitros</span> aprovam ou rejeitam</h3>
-          <p>Cada &aacute;rbitro segura a mensagem e escolhe <strong>Aprovar</strong> ou <strong>Rejeitar</strong>. Com 2 &aacute;rbitros, as duas aprova&ccedil;&otilde;es s&atilde;o exigidas.</p>
+          <h3 data-i18n-html="escrow.s7.title"><span class="who">&Aacute;rbitros</span> aprovam ou rejeitam</h3>
+          <p data-i18n-html="escrow.s7.desc">Cada &aacute;rbitro segura a mensagem e escolhe <strong>Aprovar</strong> ou <strong>Rejeitar</strong>. Com 2 &aacute;rbitros, as duas aprova&ccedil;&otilde;es s&atilde;o exigidas.</p>
         </div>
       </div>
       <div class="step">
         <div class="num">8</div>
         <div class="body">
-          <h3>Liquida&ccedil;&atilde;o autom&aacute;tica</h3>
-          <p><strong>Aprovado:</strong> o recebedor recebe o valor l&iacute;quido; gestor e &aacute;rbitros recebem suas taxas. <strong>Rejeitado ou prazo expirado:</strong> o pagador &eacute; reembolsado com desconto das taxas.</p>
+          <h3 data-i18n="escrow.s8.title">Liquida&ccedil;&atilde;o autom&aacute;tica</h3>
+          <p data-i18n-html="escrow.s8.desc"><strong>Aprovado:</strong> o recebedor recebe o valor l&iacute;quido; gestor e &aacute;rbitros recebem suas taxas. <strong>Rejeitado ou prazo expirado:</strong> o pagador &eacute; reembolsado com desconto das taxas.</p>
         </div>
       </div>
     </div>
 
-    <div class="callout">
+    <div class="callout" data-i18n-html="escrow.callout.fraud">
       <strong>Anti-fraude:</strong> o contrato <strong>n&atilde;o aceita aprova&ccedil;&otilde;es antes do recebedor marcar prontid&atilde;o</strong>.
       Nenhum &aacute;rbitro pode antecipar uma decis&atilde;o &mdash; a aprova&ccedil;&atilde;o s&oacute; existe depois do sinal de quem vai receber.
     </div>
 
-    <div class="callout ok">
+    <div class="callout ok" data-i18n-html="escrow.callout.refund">
       <strong>Deadline com reembolso:</strong> se o prazo em dias expirar sem decis&atilde;o, qualquer participante executa
       <code>refundExpired</code> e o pagador recupera os fundos &mdash; nada fica preso para sempre.
     </div>
 
-    <h2 class="section-title">Taxas</h2>
-    <p class="lead">Cobradas sobre o valor custodiado, no momento da liquida&ccedil;&atilde;o:</p>
+    <h2 class="section-title" data-i18n="escrow.fees.title">Taxas</h2>
+    <p class="lead" data-i18n="escrow.fees.lead">Cobradas sobre o valor custodiado, no momento da liquida&ccedil;&atilde;o:</p>
     <table class="fee-table">
       <thead>
-        <tr><th>Destinat&aacute;rio</th><th>Taxa</th><th>Quando</th></tr>
+        <tr><th data-i18n="escrow.fees.th1">Destinat&aacute;rio</th><th data-i18n="escrow.fees.th2">Taxa</th><th data-i18n="escrow.fees.th3">Quando</th></tr>
       </thead>
       <tbody>
-        <tr><td>Gestor do app</td><td class="pct">0,50%</td><td>Em toda liquida&ccedil;&atilde;o (aprova&ccedil;&atilde;o, rejei&ccedil;&atilde;o ou reembolso)</td></tr>
-        <tr><td>Cada &aacute;rbitro</td><td class="pct">0,25%</td><td>Por arbitragem realizada (1 ou 2 &aacute;rbitros)</td></tr>
-        <tr><td>Recebedor (aprova&ccedil;&atilde;o)</td><td class="pct">valor l&iacute;quido</td><td>Valor menos as taxas acima</td></tr>
-        <tr><td>Pagador (rejei&ccedil;&atilde;o/reembolso)</td><td class="pct">valor l&iacute;quido</td><td>Valor menos as taxas acima</td></tr>
+        <tr><td data-i18n="escrow.fees.r1to">Gestor do app</td><td class="pct">0,50%</td><td data-i18n="escrow.fees.r1when">Em toda liquida&ccedil;&atilde;o (aprova&ccedil;&atilde;o, rejei&ccedil;&atilde;o ou reembolso)</td></tr>
+        <tr><td data-i18n="escrow.fees.r2to">Cada &aacute;rbitro</td><td class="pct">0,25%</td><td data-i18n="escrow.fees.r2when">Por arbitragem realizada (1 ou 2 &aacute;rbitros)</td></tr>
+        <tr><td data-i18n="escrow.fees.r3to">Recebedor (aprova&ccedil;&atilde;o)</td><td class="pct" data-i18n="escrow.fees.net">valor l&iacute;quido</td><td data-i18n="escrow.fees.r3when">Valor menos as taxas acima</td></tr>
+        <tr><td data-i18n="escrow.fees.r4to">Pagador (rejei&ccedil;&atilde;o/reembolso)</td><td class="pct" data-i18n="escrow.fees.net">valor l&iacute;quido</td><td data-i18n="escrow.fees.r3when">Valor menos as taxas acima</td></tr>
       </tbody>
     </table>
-    <p class="muted">Exemplo: um escrow de 100 POL com 2 &aacute;rbitros liquida 99,00 POL ao recebedor, 0,50 POL ao gestor e 0,25 POL a cada &aacute;rbitro.</p>
+    <p class="muted" data-i18n="escrow.fees.example">Exemplo: um escrow de 100 POL com 2 &aacute;rbitros liquida 99,00 POL ao recebedor, 0,50 POL ao gestor e 0,25 POL a cada &aacute;rbitro.</p>
 
-    <h2 class="section-title">Transpar&ecirc;ncia e rastreabilidade</h2>
-    <p class="lead">
+    <h2 class="section-title" data-i18n="escrow.trace.title">Transpar&ecirc;ncia e rastreabilidade</h2>
+    <p class="lead" data-i18n-html="escrow.trace.lead">
       Cada evento do escrow &mdash; convite, aceite, recusa, dep&oacute;sito, prontid&atilde;o, aprova&ccedil;&atilde;o,
       rejei&ccedil;&atilde;o e reembolso &mdash; &eacute; publicado como mensagem cifrada <strong>nos chats de todos os
       envolvidos</strong>. Ningu&eacute;m age sem que os demais vejam. A camada on-chain guarda as decis&otilde;es
       financeiras; a camada de chat guarda a linha do tempo leg&iacute;vel.
     </p>
 
-    <h2 class="section-title">Tutorial r&aacute;pido</h2>
+    <h2 class="section-title" data-i18n="escrow.tut.title">Tutorial r&aacute;pido</h2>
     <div class="cards">
       <div class="card">
-        <h3>1. Abra o chat com o recebedor</h3>
-        <p>O escrow s&oacute; funciona em conversas diretas (n&atilde;o em grupos).</p>
+        <h3 data-i18n="escrow.tut.1.title">1. Abra o chat com o recebedor</h3>
+        <p data-i18n="escrow.tut.1.desc">O escrow s&oacute; funciona em conversas diretas (n&atilde;o em grupos).</p>
       </div>
       <div class="card">
-        <h3>2. Digite o comando</h3>
-        <p><code>/escrow 100 POL, Polygon PoS, 7</code> &mdash; valor, moeda, rede e prazo de 7 dias.</p>
+        <h3 data-i18n="escrow.tut.2.title">2. Digite o comando</h3>
+        <p data-i18n-html="escrow.tut.2.desc"><code>/escrow 100 POL, Polygon PoS, 7</code> &mdash; valor, moeda, rede e prazo de 7 dias.</p>
       </div>
       <div class="card">
-        <h3>3. Escolha o &aacute;rbitro</h3>
-        <p>Toque num contato da lista (ordenada por quem mais arbitragem fez).</p>
+        <h3 data-i18n="escrow.tut.3.title">3. Escolha o &aacute;rbitro</h3>
+        <p data-i18n="escrow.tut.3.desc">Toque num contato da lista (ordenada por quem mais arbitragem fez).</p>
       </div>
       <div class="card">
-        <h3>4. Acompanhe no chat</h3>
-        <p>As mensagens do escrow mostram o estado. Segure a mensagem para agir quando for sua vez.</p>
+        <h3 data-i18n="escrow.tut.4.title">4. Acompanhe no chat</h3>
+        <p data-i18n="escrow.tut.4.desc">As mensagens do escrow mostram o estado. Segure a mensagem para agir quando for sua vez.</p>
       </div>
       <div class="card">
-        <h3>5. Recebedor: pronto</h3>
-        <p><code>/escrow done</code> ou toque na mensagem e confirme <em>Estou pronto para receber</em>.</p>
+        <h3 data-i18n="escrow.tut.5.title">5. Recebedor: pronto</h3>
+        <p data-i18n-html="escrow.tut.5.desc"><code>/escrow done</code> ou toque na mensagem e confirme <em>Estou pronto para receber</em>.</p>
       </div>
       <div class="card">
-        <h3>6. &Aacute;rbitro: decida</h3>
-        <p>Segure a mensagem do escrow e escolha <strong>Aprovar pagamento</strong> ou <strong>Rejeitar</strong>.</p>
+        <h3 data-i18n="escrow.tut.6.title">6. &Aacute;rbitro: decida</h3>
+        <p data-i18n-html="escrow.tut.6.desc">Segure a mensagem do escrow e escolha <strong>Aprovar pagamento</strong> ou <strong>Rejeitar</strong>.</p>
       </div>
     </div>
-    <p class="muted">Comandos auxiliares: <code>/escrow status</code> mostra o estado atual; <code>/escrow cancel</code> cancela antes do dep&oacute;sito.</p>
+    <p class="muted" data-i18n-html="escrow.tut.aux">Comandos auxiliares: <code>/escrow status</code> mostra o estado atual; <code>/escrow cancel</code> cancela antes do dep&oacute;sito.</p>
 
-    <h2 class="section-title">Redes com escrow dispon&iacute;vel</h2>
-    <p class="muted" id="networks-note">O contrato precisa estar deployado na rede escolhida. Se a rede ainda n&atilde;o tiver suporte, o app avisa voc&ecirc; e notifica o gestor para priorizar o deploy.</p>
+    <h2 class="section-title" data-i18n="escrow.nets.title">Redes com escrow dispon&iacute;vel</h2>
+    <p class="muted" id="networks-note" data-i18n="escrow.nets.note">O contrato precisa estar deployado na rede escolhida. Se a rede ainda n&atilde;o tiver suporte, o app avisa voc&ecirc; e notifica o gestor para priorizar o deploy.</p>
     <div class="networks-grid" id="networks">
-      <div class="net-empty">Carregando redes&hellip;</div>
+      <div class="net-empty" data-i18n="escrow.net.loading">Carregando redes&hellip;</div>
     </div>
 
-    <h2 class="section-title">Perguntas frequentes</h2>
+    <h2 class="section-title" data-i18n="escrow.faq.title">Perguntas frequentes</h2>
     <div class="cards">
       <div class="card">
-        <h3>E se o &aacute;rbitro sumir?</h3>
-        <p>O prazo resolve: expirado o deadline, <code>refundExpired</code> devolve os fundos ao pagador. Nada fica bloqueado.</p>
+        <h3 data-i18n="escrow.faq.1.title">E se o &aacute;rbitro sumir?</h3>
+        <p data-i18n-html="escrow.faq.1.desc">O prazo resolve: expirado o deadline, <code>refundExpired</code> devolve os fundos ao pagador. Nada fica bloqueado.</p>
       </div>
       <div class="card">
-        <h3>O &aacute;rbitro pode roubar?</h3>
-        <p>N&atilde;o. O &aacute;rbitro s&oacute; decide a dire&ccedil;&atilde;o (recebedor ou pagador) &mdash; o contrato nunca libera fundos para o pr&oacute;prio &aacute;rbitro, apenas a taxa de arbitragem.</p>
+        <h3 data-i18n="escrow.faq.2.title">O &aacute;rbitro pode roubar?</h3>
+        <p data-i18n="escrow.faq.2.desc">N&atilde;o. O &aacute;rbitro s&oacute; decide a dire&ccedil;&atilde;o (recebedor ou pagador) &mdash; o contrato nunca libera fundos para o pr&oacute;prio &aacute;rbitro, apenas a taxa de arbitragem.</p>
       </div>
       <div class="card">
-        <h3>Posso ter 2 &aacute;rbitros depois?</h3>
-        <p>Sim &mdash; antes de confirmar prontid&atilde;o, o recebedor pode solicitar um segundo &aacute;rbitro a qualquer momento.</p>
+        <h3 data-i18n="escrow.faq.3.title">Posso ter 2 &aacute;rbitros depois?</h3>
+        <p data-i18n="escrow.faq.3.desc">Sim &mdash; antes de confirmar prontid&atilde;o, o recebedor pode solicitar um segundo &aacute;rbitro a qualquer momento.</p>
       </div>
       <div class="card">
-        <h3>Quais moedas?</h3>
-        <p>Todas as que o app suporta na rede: moeda nativa (ETH, POL&hellip;) e tokens ERC-20 (USDC, BRLA&hellip;).</p>
+        <h3 data-i18n="escrow.faq.4.title">Quais moedas?</h3>
+        <p data-i18n="escrow.faq.4.desc">Todas as que o app suporta na rede: moeda nativa (ETH, POL&hellip;) e tokens ERC-20 (USDC, BRLA&hellip;).</p>
       </div>
       <div class="card">
-        <h3>Quem controla o contrato?</h3>
-        <p>A administra&ccedil;&atilde;o &eacute; feita por uma multisig 2-de-3 da Rapport; upgrades passam por qu&oacute;rum, nunca por uma chave &uacute;nica.</p>
+        <h3 data-i18n="escrow.faq.5.title">Quem controla o contrato?</h3>
+        <p data-i18n="escrow.faq.5.desc">A administra&ccedil;&atilde;o &eacute; feita por uma multisig 2-de-3 da Rapport; upgrades passam por qu&oacute;rum, nunca por uma chave &uacute;nica.</p>
       </div>
       <div class="card">
-        <h3>O escrow &eacute; privado?</h3>
-        <p>As mensagens s&atilde;o cifradas ponta-a-ponta entre os participantes. On-chain constam apenas endere&ccedil;os, valores e decis&otilde;es &mdash; sem dados pessoais.</p>
+        <h3 data-i18n="escrow.faq.6.title">O escrow &eacute; privado?</h3>
+        <p data-i18n="escrow.faq.6.desc">As mensagens s&atilde;o cifradas ponta-a-ponta entre os participantes. On-chain constam apenas endere&ccedil;os, valores e decis&otilde;es &mdash; sem dados pessoais.</p>
       </div>
     </div>
 
-    <a class="backlink" href="/">&larr; Voltar para a p&aacute;gina inicial</a>
+    <a class="backlink" href="/" data-i18n="common.back.home">&larr; Voltar para a p&aacute;gina inicial</a>
 
     <div class="footer">
-      <p>&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
+      <p data-i18n-html="common.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
     </div>
   </div>
 
   <script>
-    (async function () {
+    (function () {
       const grid = document.getElementById('networks');
       const note = document.getElementById('networks-note');
-      try {
-        const res = await fetch('/escrow/contracts.json', { headers: { Accept: 'application/json' } });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const manifest = await res.json();
-        const nets = (manifest && manifest.networks) || [];
-        grid.innerHTML = '';
-        if (nets.length === 0) {
-          grid.innerHTML = '<div class="net-empty">Nenhuma rede com escrow publicada ainda — o deploy inicial está em andamento. Volte em breve.</div>';
+      let manifestCache = null;
+      let loadFailed = false;
+
+      function tt(k) { return (window.I18N && I18N.t(k)) || k; }
+
+      function render() {
+        if (loadFailed) {
+          grid.innerHTML = '<div class="net-empty">' + tt('escrow.net.error') + '</div>';
           return;
         }
-        note.textContent = 'Contratos EscrowVault deployados (proxy transparente, administrado por multisig 2-de-3):';
+        if (!manifestCache) return;
+        const nets = (manifestCache && manifestCache.networks) || [];
+        grid.innerHTML = '';
+        if (nets.length === 0) {
+          grid.innerHTML = '<div class="net-empty">' + tt('escrow.net.none') + '</div>';
+          return;
+        }
+        note.textContent = tt('escrow.net.note');
         for (const n of nets) {
           const card = document.createElement('div');
           card.className = 'net-card';
           const short = n.escrow ? n.escrow.slice(0, 10) + '…' + n.escrow.slice(-6) : '';
           const link = n.explorer && n.escrow
-            ? '<a class="net-link" href="' + n.explorer + '/address/' + n.escrow + '" target="_blank" rel="noopener">ver no explorer ↗</a>'
+            ? '<a class="net-link" href="' + n.explorer + '/address/' + n.escrow + '" target="_blank" rel="noopener">' + tt('escrow.net.explorer') + '</a>'
             : '';
           card.innerHTML =
             '<div class="net-name">' + n.name + '</div>' +
-            '<div class="net-kind">chainId ' + n.chainId + (n.isTestnet ? ' · testnet' : ' · mainnet') + '</div>' +
+            '<div class="net-kind">chainId ' + n.chainId + (n.isTestnet ? ' · ' + tt('escrow.net.testnet') : ' · ' + tt('escrow.net.mainnet')) + '</div>' +
             '<div class="net-addr">' + short + '</div>' + link;
           grid.appendChild(card);
         }
-      } catch (e) {
-        grid.innerHTML = '<div class="net-empty">Não foi possível carregar a lista de redes agora.</div>';
       }
+
+      async function load() {
+        try {
+          const res = await fetch('/escrow/contracts.json', { headers: { Accept: 'application/json' } });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          manifestCache = await res.json();
+        } catch (e) {
+          loadFailed = true;
+        }
+        render();
+      }
+
+      window.addEventListener('i18n:change', render);
+      load();
     })();
   </script>
 </body>

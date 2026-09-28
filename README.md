@@ -27,6 +27,15 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 
 As páginas HTML (`/`, `/install`, `/stats`, `/ajudar`, `/escrow`, `/tokens`, `/chat`, `/wallet`) incluem SEO completo: canonical, Open Graph, Twitter Cards, JSON-LD (Schema.org) e Google Analytics (`gtag.js`). Os assets `/favicon.png`, `/apple-touch-icon.png` e `/og-image.png` são derivados do ícone do dApp.
 
+### Internacionalização (i18n)
+
+Todas as páginas públicas são multilíngues. O idioma é resolvido client-side por `public/js/i18n.js` nesta ordem: `?lang=` na URL (persistido em `localStorage['rcc-lang']`), preferência salva, `navigator.languages` e, por fim, inglês como fallback. Idiomas suportados: `pt-BR` (fonte do HTML), `en`, `es`, `fr` e `ar` (`dir="rtl"`). A barra de bandeiras no topo troca o idioma sem reload.
+
+- Textos estáticos usam `data-i18n` / `data-i18n-html` / `data-i18n-attr` / `data-i18n-param-*`; o engine captura um snapshot do pt-BR e aplica o dicionário de `/js/i18n/<lang>.js` (carregado sob demanda).
+- Textos renderizados em JS (`/stats`, `/escrow`) usam `I18N.t(key)` + `I18N.locale` e escutam o evento `i18n:change` para re-renderizar.
+- A página `/install` é gerada por `scripts/build-android-apk.ts` — ao editar marcação i18n dela, altere `renderInstallPage()` e rode `npm run apk:regenerate`; editar o HTML gerado diretamente é perdido na próxima publicação de APK.
+- Para adicionar um idioma: crie `public/js/i18n/<code>.js` (`I18N.register(...)`), adicione-o em `LANGS` no `i18n.js` e no snippet de detecção de cada página + `renderInstallPage()`, e declare o `hreflang`.
+
 ## Environment
 
 > **Importante:** em produção/preview na Vercel, o relay **precisa de um Redis persistente** (Upstash Redis ou Vercel KV). As funções serverless da Vercel não compartilham memória entre invocações, então o armazenamento em memória não funciona na nuvem.
