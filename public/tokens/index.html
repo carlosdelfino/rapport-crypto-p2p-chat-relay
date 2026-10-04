@@ -19,8 +19,8 @@
   <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
   <title data-i18n="tokens.meta.title">Moedas e tokens — catálogo por rede | Rapport Crypto Chat</title>
-  <meta name="description" content="Catálogo completo das redes, moedas nativas e tokens suportados pelo Rapport Crypto Chat: stablecoins (USDC, USDT, DAI, PYUSD, BRLA, EURC), moedas de rede (ETH, POL, BTC, ISLM, MON, XDC, BNB, KLV) e tokens wrapped, staking, utilitários e de projeto." data-i18n-attr="content:tokens.meta.desc"/>
-  <meta name="keywords" content="usdc, usdt, dai, pyusd, brla, eurc, islm, eth, pol, btc, stablecoin, erc-20, tokens blockchain, rapport"/>
+  <meta name="description" content="Catálogo completo das redes, moedas nativas e tokens suportados pelo Rapport Crypto Chat: stablecoins (USDC, USDT, DAI, RAI, PYUSD, BRLA, BRZ, BRL1, BRLe, EURC), moedas de rede (ETH, POL, BTC, ISLM, MON, XDC, BNB, KLV) e tokens wrapped, staking, utilitários e de projeto." data-i18n-attr="content:tokens.meta.desc"/>
+  <meta name="keywords" content="usdc, usdt, dai, rai, pyusd, brla, brz, brl1, brle, eurc, islm, eth, pol, btc, stablecoin, erc-20, tokens blockchain, rapport"/>
   <meta name="theme-color" content="#020617"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/tokens"/>
@@ -64,7 +64,7 @@
       {
         "@type": "FAQPage",
         "mainEntity": [
-          { "@type": "Question", "name": "Quais stablecoins o app aceita?", "acceptedAnswer": { "@type": "Answer", "text": "USDC, USDT, USDT0, DAI, PYUSD, EURC, BRLA, BUSD e as versões bridged axlUSDC/axlUSDT/axlDAI na HAQQ, além de USYC (fundo tokenizado)." } },
+          { "@type": "Question", "name": "Quais stablecoins o app aceita?", "acceptedAnswer": { "@type": "Answer", "text": "USDC, USDT, USDT0, DAI, RAI, PYUSD, EURC, BRLA, BRZ, BRL1, BRLe, BUSD e as versões bridged axlUSDC/axlUSDT/axlDAI na HAQQ, além de USYC (fundo tokenizado)." } },
           { "@type": "Question", "name": "Posso pagar com a moeda nativa de cada rede?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. ETH, POL, BNB, XDC, MON, ISLM, BTC, KLV e USDC (na Arc, onde é a moeda de gas) podem ser enviados diretamente com /pay." } },
           { "@type": "Question", "name": "Moedas de testnet têm valor?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Ativos em Sepolia, Amoy, Base Sepolia, OP Sepolia, Arbitrum Sepolia, Linea Sepolia, Monad Testnet, Arc Testnet, HAQQ Testedge 2 e Bitcoin Testnet servem apenas para testes." } }
         ]
@@ -249,8 +249,10 @@
         <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.usdc">D&oacute;lar digital (Circle); principal stable para pagamentos.</td></tr>
         <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.usdt">D&oacute;lar digital (Tether); maior liquidez global.</td></tr>
         <tr><td class="sym">DAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.dai">D&oacute;lar digital descentralizado (Sky/MakerDAO).</td></tr>
+        <tr><td class="sym">RAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.rai">Ativo est&aacute;vel descentralizado lastreado em ETH (Reflexer), sem peg fixo.</td></tr>
         <tr><td class="sym">PYUSD</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.pyusd">D&oacute;lar digital do PayPal; foco em pagamentos.</td></tr>
         <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.brla">Real digital; pagamentos em reais on-chain.</td></tr>
+        <tr><td class="sym">BRZ</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.eth.brz">Real digital (Transfero); stable de real mais antiga e l&iacute;quida.</td></tr>
       </tbody></table>
     </div>
 
@@ -265,7 +267,11 @@
         <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.usdc">D&oacute;lar digital nativo; taxas baixas para pagamentos.</td></tr>
         <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.usdt">D&oacute;lar digital (PoS).</td></tr>
         <tr><td class="sym">DAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.dai">D&oacute;lar digital descentralizado (PoS).</td></tr>
+        <tr><td class="sym">RAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.rai">Ativo est&aacute;vel lastreado em ETH (Reflexer, PoS).</td></tr>
         <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.brla">Real digital; popular para pagamentos BR.</td></tr>
+        <tr><td class="sym">BRZ</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.brz">Real digital (Transfero, PoS).</td></tr>
+        <tr><td class="sym">BRL1</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.brl1">Real digital do cons&oacute;rcio BRL1 (Bitso, Foxbit, Mercado Bitcoin).</td></tr>
+        <tr><td class="sym">BRLe</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.polygon.brle">Real eletr&ocirc;nico (Brasil Bitcoin); 1 BRLe = R$ 1.</td></tr>
         <tr><td class="sym">CCZ</td><td class="cat"><span class="chip project" data-i18n="tokens.cat.project">Projeto / comunidade</span></td><td class="use" data-i18n="tokens.use.polygon.ccz">Token CusCuZ; projeto da comunidade.</td></tr>
         <tr><td class="sym">CAS</td><td class="cat"><span class="chip project" data-i18n="tokens.cat.project">Projeto / comunidade</span></td><td class="use" data-i18n="tokens.use.polygon.cas">Criptocoin Agentic Space; token de projeto.</td></tr>
       </tbody></table>
@@ -282,6 +288,7 @@
         <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.base.usdc">D&oacute;lar digital nativo.</td></tr>
         <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.base.usdt">D&oacute;lar digital (bridged).</td></tr>
         <tr><td class="sym">BRLA</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.base.brla">Real digital.</td></tr>
+        <tr><td class="sym">BRZ</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.base.brz">Real digital (Transfero).</td></tr>
       </tbody></table>
     </div>
 
@@ -295,6 +302,8 @@
         <tr><td class="sym">ETH</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.op.eth">Gas e pagamentos na L2 Optimism.</td></tr>
         <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.op.usdc">D&oacute;lar digital nativo.</td></tr>
         <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.op.usdt">D&oacute;lar digital (bridged).</td></tr>
+        <tr><td class="sym">RAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.op.rai">Ativo est&aacute;vel lastreado em ETH (Reflexer, bridged).</td></tr>
+        <tr><td class="sym">BRZ</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.op.brz">Real digital (Transfero).</td></tr>
       </tbody></table>
     </div>
 
@@ -308,6 +317,8 @@
         <tr><td class="sym">ETH</td><td class="cat"><span class="chip native" data-i18n="tokens.cat.native">Moeda nativa</span></td><td class="use" data-i18n="tokens.use.arb.eth">Gas e pagamentos na L2 Arbitrum.</td></tr>
         <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.arb.usdc">D&oacute;lar digital nativo.</td></tr>
         <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.arb.usdt">D&oacute;lar digital (bridged).</td></tr>
+        <tr><td class="sym">RAI</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.arb.rai">Ativo est&aacute;vel lastreado em ETH (Reflexer, bridged).</td></tr>
+        <tr><td class="sym">BRZ</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.arb.brz">Real digital (Transfero).</td></tr>
       </tbody></table>
     </div>
 
@@ -348,6 +359,7 @@
         <tr><td class="sym">USDC</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.bnb.usdc">D&oacute;lar digital (Binance-Peg, 18 decimais).</td></tr>
         <tr><td class="sym">USDT</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.bnb.usdt">D&oacute;lar digital (Binance-Peg).</td></tr>
         <tr><td class="sym">BUSD</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.bnb.busd">D&oacute;lar digital da Binance (em descontinua&ccedil;&atilde;o pelo emissor).</td></tr>
+        <tr><td class="sym">BRZ</td><td class="cat"><span class="chip stable" data-i18n="tokens.cat.stable">Stablecoin</span></td><td class="use" data-i18n="tokens.use.bnb.brz">Real digital (Transfero, 4 decimais).</td></tr>
         <tr><td class="sym">WBNB</td><td class="cat"><span class="chip wrapped" data-i18n="tokens.cat.wrapped">Wrapped</span></td><td class="use" data-i18n="tokens.use.bnb.wbnb">BNB embrulhado para uso em DeFi/DEX.</td></tr>
         <tr><td class="sym">CAKE</td><td class="cat"><span class="chip utility" data-i18n="tokens.cat.utility">Utilit&aacute;rio</span></td><td class="use" data-i18n="tokens.use.bnb.cake">Token do PancakeSwap; DeFi e governan&ccedil;a.</td></tr>
       </tbody></table>

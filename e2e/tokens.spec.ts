@@ -92,7 +92,11 @@ test.describe('página /tokens', () => {
       'CCZ',
       'CAS',
       'BRLA',
+      'BRZ',
+      'BRL1',
+      'BRLe',
       'PYUSD',
+      'RAI',
     ]) {
       await expect(
         page.locator('.asset-table .sym', { hasText: new RegExp(`^${sym}$`) }).first(),
@@ -104,11 +108,16 @@ test.describe('página /tokens', () => {
     const rows = page.locator('.asset-table tbody tr');
     const count = await rows.count();
     expect(count).toBeGreaterThanOrEqual(40);
-    for (let i = 0; i < count; i++) {
-      const row = rows.nth(i);
-      await expect(row.locator('.cat .chip').first()).toBeVisible();
-      expect((await row.locator('.use').innerText()).trim().length).toBeGreaterThan(10);
-    }
+    const rowMeta = await rows.evaluateAll((rs) =>
+      rs.map((r) => ({
+        chips: r.querySelectorAll('.cat .chip').length,
+        useLen: (r.querySelector('.use')?.textContent ?? '').trim().length,
+      })),
+    );
+    rowMeta.forEach(({ chips, useLen }, i) => {
+      expect(chips, `linha ${i} sem categoria`).toBeGreaterThan(0);
+      expect(useLen, `linha ${i} descrição vazia`).toBeGreaterThan(10);
+    });
 
     expectCleanRuntime(hygiene);
   });
