@@ -792,6 +792,7 @@ ${emptyState}
 
     <div class="footer">
       <p><a href="/" data-i18n="common.back">&larr; Voltar ao in&iacute;cio</a> &middot; <a href="/stats" data-i18n="home.p.stats.title">Estat&iacute;sticas</a></p>
+      <p data-i18n-html="common.footer.contacts">Contato: <a href="/ajudar#crypto-chat-support">Crypto Chat</a> &middot; <a href="https://wa.me/5585985254090" target="_blank" rel="noopener noreferrer">WhatsApp</a> &middot; <a href="mailto:admin@rapport.tec.br">admin@rapport.tec.br</a> &middot; <a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer">rapport.tec.br</a> &middot; <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a></p>
       <p data-i18n-html="install.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>.</p>
     </div>
   </div>

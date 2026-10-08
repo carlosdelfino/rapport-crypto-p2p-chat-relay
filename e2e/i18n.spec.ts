@@ -151,6 +151,9 @@ test.describe('i18n — detecção e seletor de idioma', () => {
     ).toBeVisible();
     await expect(page.getByText('Available versions')).toBeVisible();
     await expect(page.locator('.apk-download').first()).toHaveText('Download');
+    await expect(
+      page.locator('[data-i18n-html="common.footer.contacts"]'),
+    ).toContainText('Contact:');
 
     expectCleanRuntime(hygiene);
   });

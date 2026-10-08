@@ -39,11 +39,11 @@ test.describe('página /ajudar', () => {
     expectCleanRuntime(hygiene);
   });
 
-  test('lista carteiras da gestão Rapport e do desenvolvedor', async ({
+  test('REQ-RELAY-CONTACT-01 lista carteiras da gestão e suporte oficial', async ({
     page,
     hygiene,
   }) => {
-    await page.goto('/ajudar');
+    await page.goto('/ajudar#crypto-chat-support');
 
     await expect(
       page.getByRole('heading', { name: /Doações/ }),
@@ -54,8 +54,11 @@ test.describe('página /ajudar', () => {
       }),
     ).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: /Carteira do desenvolvedor/ }),
+      page.getByRole('heading', { name: /Suporte oficial no Crypto Chat/ }),
     ).toBeVisible();
+    await expect(page.locator('#crypto-chat-support')).toContainText(
+      '0x7010A4C4c189AB421028a622e2A2e623f432d18e',
+    );
 
     const addrs = page.locator('.donation-addr');
     expect(await addrs.count()).toBe(4);

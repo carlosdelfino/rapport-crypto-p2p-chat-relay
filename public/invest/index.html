@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WY96WV41T8');
+  </script>
+  <script>
+    // i18n: resolve o idioma antes do primeiro paint.
+    window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
+  </script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
+  <meta name="robots" content="index, follow"/>
+  <title data-i18n="invest.meta.title">Investimentos — Aave, Morpho, Ondo e xStocks | Rapport Crypto Chat</title>
+  <meta name="description" content="Invista em DeFi e ativos reais tokenizados a partir do chat usando /invest. Conheça as operadoras, ativos, riscos e como executar transações on-chain no Rapport Crypto Chat." data-i18n-attr="content:invest.meta.desc"/>
+  <meta name="keywords" content="investimentos crypto, DeFi, Aave, Morpho, Ondo, xStocks, tokenized stocks, RWA, yield, aave supply, morpho vaults, usdy, rapport crypto chat"/>
+  <meta name="theme-color" content="#020617"/>
+  <meta name="author" content="Rapport Tecnologia e Inovação"/>
+  <link rel="canonical" href="https://crypto-chat.rapport.tec.br/invest"/>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/invest"/>
+  <link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/invest?lang=en"/>
+  <link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/invest?lang=es"/>
+  <link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/invest?lang=fr"/>
+  <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/invest?lang=ar"/>
+  <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/invest"/>
+  <link rel="stylesheet" href="/css/i18n.css"/>
+  <script src="/js/i18n.js" defer></script>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="Rapport Crypto Chat"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta property="og:title" content="Investimentos — Aave, Morpho, Ondo e xStocks | Rapport Crypto Chat" data-i18n-attr="content:invest.meta.title"/>
+  <meta property="og:description" content="Invista em DeFi e ativos reais tokenizados a partir do chat usando /invest." data-i18n-attr="content:invest.meta.ogDesc"/>
+  <meta property="og:url" content="https://crypto-chat.rapport.tec.br/invest"/>
+  <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Rapport Crypto Chat — investimentos"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Investimentos — Aave, Morpho, Ondo e xStocks | Rapport Crypto Chat" data-i18n-attr="content:invest.meta.title"/>
+  <meta name="twitter:description" content="Invista em DeFi e ativos reais tokenizados a partir do chat usando /invest." data-i18n-attr="content:invest.meta.ogDesc"/>
+  <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Investimentos — Aave, Morpho, Ondo e xStocks",
+    "url": "https://crypto-chat.rapport.tec.br/invest",
+    "inLanguage": "pt-BR",
+    "description": "Invista em DeFi e ativos reais tokenizados a partir do chat usando /invest no Rapport Crypto Chat.",
+    "isPartOf": { "@type": "WebSite", "name": "Rapport Crypto Chat", "url": "https://crypto-chat.rapport.tec.br/" },
+    "publisher": { "@type": "Organization", "name": "Rapport Tecnologia e Inovação", "url": "https://rapport.tec.br" }
+  }
+  </script>
+  <style>
+    :root {
+      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
+      --border:#1e293b; --border-hover:#334155;
+      --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
+      --brand:#ea580c; --brand-light:#fb923c; --brand-dark:#c2410c;
+      --brand-300:#fdba74; --brand-500:#f97316;
+      --ok:#4ade80; --warn:#facc15;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6;
+      min-height:100vh; padding:1rem;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:52rem; margin:0 auto; padding:1rem 0; }
+
+    .hero { text-align:center; padding:3rem 1rem 2rem; }
+    .hero h1 {
+      font-size:clamp(1.9rem,5vw,2.8rem); font-weight:800;
+      color:var(--brand-light); margin-bottom:.75rem; letter-spacing:-.02em;
+    }
+    .hero .tagline { color:var(--secondary); font-size:1.1rem; max-width:40rem; margin:0 auto 1rem; }
+    .hero .subtagline { color:var(--muted); font-size:.9rem; max-width:36rem; margin:0 auto; }
+    .badge {
+      display:inline-block; margin-top:1rem; padding:.3rem .8rem;
+      border:1px solid var(--border); border-radius:999px;
+      font-size:.75rem; font-weight:600; color:var(--muted);
+      background:var(--card-60); backdrop-filter:blur(8px);
+    }
+    .badge .dot {
+      display:inline-block; width:.5rem; height:.5rem; border-radius:50%;
+      background:var(--brand-500); margin-right:.4rem; vertical-align:middle;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .cta-row { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; margin-top:1.5rem; }
+    .cta {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.8rem 1.6rem; border-radius:.7rem;
+      font-size:.95rem; font-weight:700; text-decoration:none;
+      transition:transform .2s, box-shadow .2s;
+    }
+    .cta-primary { background:var(--brand); color:#fff; box-shadow:0 8px 24px rgba(234,88,12,.2); }
+    .cta-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(234,88,12,.3); }
+    .cta-secondary { border:1px solid var(--border); color:var(--text); background:var(--card-60); backdrop-filter:blur(8px); }
+    .cta-secondary:hover { border-color:var(--brand); transform:translateY(-2px); }
+
+    .section-title {
+      font-size:1.25rem; font-weight:700; color:var(--brand-light);
+      margin:3rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
+    }
+    .lead { color:var(--secondary); font-size:1rem; margin-bottom:1rem; }
+    .muted { color:var(--muted); font-size:.9rem; }
+    .lead a, .muted a { color:var(--brand-light); text-decoration:none; }
+    .lead a:hover, .muted a:hover { color:var(--brand); }
+
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem; margin:1.5rem 0; }
+    .card {
+      border:1px solid var(--border); border-radius:1rem;
+      background:var(--card-60); backdrop-filter:blur(8px); padding:1.4rem;
+    }
+    .card .icon {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:2.4rem; height:2.4rem; border-radius:.7rem;
+      background:rgba(234,88,12,.12); color:var(--brand-light);
+      font-size:1.2rem; margin-bottom:.6rem;
+    }
+    .card h3 { font-size:.98rem; font-weight:700; margin-bottom:.35rem; }
+    .card p { font-size:.85rem; color:var(--muted); }
+    .card a.card-link {
+      display:inline-block; margin-top:.6rem;
+      font-size:.82rem; font-weight:700; color:var(--brand-light); text-decoration:none;
+    }
+    .card a.card-link:hover { color:var(--brand); }
+
+    .steps { display:flex; flex-direction:column; gap:0; margin:1.5rem 0; }
+    .step { display:flex; gap:1rem; padding:1rem 0; position:relative; }
+    .step::before {
+      content:""; position:absolute; left:1.19rem; top:2.9rem; bottom:-.4rem;
+      width:2px; background:var(--border);
+    }
+    .step:last-child::before { display:none; }
+    .step .num {
+      flex:0 0 2.4rem; height:2.4rem; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(234,88,12,.12); border:1px solid var(--brand);
+      color:var(--brand-light); font-weight:800; font-size:.9rem;
+      position:relative; z-index:1;
+    }
+    .step .body { flex:1; border:1px solid var(--border); border-radius:.9rem; background:var(--card-60); padding:1rem 1.2rem; }
+    .step .body h3 { font-size:.95rem; font-weight:700; margin-bottom:.3rem; }
+    .step .body p { font-size:.85rem; color:var(--muted); }
+    .step .body code, .cmd {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:.82rem; color:var(--brand-300);
+      background:rgba(234,88,12,.08); padding:.1rem .4rem; border-radius:.35rem;
+    }
+
+    .callout {
+      border:1px solid var(--brand); border-left-width:4px; border-radius:.9rem;
+      background:rgba(234,88,12,.08); padding:1rem 1.2rem; margin:1.5rem 0;
+      font-size:.9rem; color:var(--secondary);
+    }
+    .callout strong { color:var(--brand-light); }
+    .callout.ok { border-color:var(--ok); background:rgba(74,222,128,.07); }
+    .callout.ok strong { color:var(--ok); }
+    .callout.warn { border-color:var(--warn); background:rgba(250,204,21,.07); }
+    .callout.warn strong { color:var(--warn); }
+
+    .risk-list { list-style:none; margin:1rem 0; }
+    .risk-list li { position:relative; padding-left:1.5rem; margin-bottom:.6rem; color:var(--secondary); font-size:.9rem; }
+    .risk-list li::before {
+      content:"⚠"; position:absolute; left:0; top:-1px;
+      color:var(--warn); font-size:1rem;
+    }
+
+    .cmd-list { list-style:decimal; padding-left:1.2rem; margin:1rem 0; }
+    .cmd-list li { margin-bottom:.6rem; color:var(--secondary); font-size:.9rem; }
+
+    .footer {
+      text-align:center; color:var(--muted); font-size:.8rem;
+      margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
+    }
+    .footer a { color:var(--brand-light); text-decoration:none; }
+    .footer a:hover { color:var(--brand); }
+    .backlink { display:inline-block; margin-top:1rem; color:var(--brand-light); text-decoration:none; font-size:.9rem; }
+    .backlink:hover { color:var(--brand); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1 data-i18n="invest.hero.title">Investimentos no chat</h1>
+      <p class="tagline" data-i18n="invest.hero.tagline">Use /invest para descobrir protocolos DeFi e ativos tokenizados, e execute transa&ccedil;&otilde;es on-chain sem sair da conversa.</p>
+      <p class="subtagline" data-i18n="invest.hero.subtagline">Operadoras suportadas: Aave, Morpho, Ondo Finance e xStocks.</p>
+      <span class="badge"><span class="dot"></span>DeFi · RWA · self-custody</span>
+      <div class="cta-row">
+        <a class="cta cta-primary" href="/install" data-i18n="invest.cta.btn">Instalar o app</a>
+        <a class="cta cta-secondary" href="/" data-i18n="invest.cta.home">Voltar ao in&iacute;cio</a>
+      </div>
+    </header>
+
+    <h2 class="section-title" data-i18n="invest.command.title">Como funciona o comando</h2>
+    <p class="lead" data-i18n="invest.command.lead">O comando <code class="cmd">/invest</code> faz parte da wallet dentro do chat. Ele funciona em quatro n&iacute;veis:</p>
+    <ol class="cmd-list">
+      <li data-i18n-html="invest.command.l1"><strong>Listar operadoras:</strong> <code class="cmd">/invest</code> exibe Aave, Morpho, Ondo e xStocks.</li>
+      <li data-i18n-html="invest.command.l2"><strong>Listar ativos:</strong> <code class="cmd">/invest aave</code> mostra os ativos daquela operadora e as redes.</li>
+      <li data-i18n-html="invest.command.l3"><strong>Investir:</strong> <code class="cmd">/invest aave aUSDC 100, base</code> pede confirma&ccedil;&atilde;o e envia a transa&ccedil;&atilde;o on-chain.</li>
+      <li data-i18n-html="invest.command.l4"><strong>Resgatar:</strong> <code class="cmd">/invest redeem aave USDC 50, base</code> resgata o ativo investido para o ativo base, quando a operadora suportar.</li>
+    </ol>
+    <div class="callout ok">
+      <strong>Exemplo:</strong> <code class="cmd">/invest morpho USDC-GAUNTLET 50, base</code> deposita 50 USDC no vault Gauntlet USDC Prime na Base.
+    </div>
+    <div class="callout ok">
+      <strong>Resgate:</strong> <code class="cmd">/invest redeem aave USDC 50, base</code> resgata 50 aUSDC para USDC na Aave V3 na Base.
+    </div>
+
+    <h2 class="section-title" data-i18n="invest.operators.title">Operadoras suportadas</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="icon">A</span>
+        <h3 data-i18n="invest.aave.title">Aave</h3>
+        <p data-i18n="invest.aave.desc">Protocolo de empr&eacute;stimo. Deposite stablecoins ou ETH e receba aTokens que rendem juros vari&aacute;veis.</p>
+        <a class="card-link" href="https://aave.com" rel="noopener" target="_blank" data-i18n="invest.aave.link">Visitar aave.com &rarr;</a>
+      </div>
+      <div class="card">
+        <span class="icon">M</span>
+        <h3 data-i18n="invest.morpho.title">Morpho</h3>
+        <p data-i18n="invest.morpho.desc">Vaults de rendimento otimizados (MetaMorpho) sobre mercados de empr&eacute;stimo. Os dep&oacute;sitos viram shares ERC-4626.</p>
+        <a class="card-link" href="https://morpho.org" rel="noopener" target="_blank" data-i18n="invest.morpho.link">Visitar morpho.org &rarr;</a>
+      </div>
+      <div class="card">
+        <span class="icon">O</span>
+        <h3 data-i18n="invest.ondo.title">Ondo Finance</h3>
+        <p data-i18n="invest.ondo.desc">Renda fixa tokenizada (USDY, OUSG). USDY rende com T-bills dos EUA; OUSG exige allowlist/KYC.</p>
+        <a class="card-link" href="https://ondo.finance" rel="noopener" target="_blank" data-i18n="invest.ondo.link">Visitar ondo.finance &rarr;</a>
+      </div>
+      <div class="card">
+        <span class="icon">X</span>
+        <h3 data-i18n="invest.xstocks.title">xStocks</h3>
+        <p data-i18n="invest.xstocks.desc">A&ccedil;&otilde;es e ETFs tokenizados (AAPLx, TSLAx, COINx, MSTRx etc.) lastreados 1:1 por ativos reais. A aquisi&ccedil;&atilde;o costuma ser em DEXs/CEXs parceiras.</p>
+        <a class="card-link" href="https://xstocks.fi" rel="noopener" target="_blank" data-i18n="invest.xstocks.link">Visitar xstocks.fi &rarr;</a>
+      </div>
+    </div>
+
+    <h2 class="section-title" data-i18n="invest.risks.title">Riscos e limita&ccedil;&otilde;es</h2>
+    <p class="lead" data-i18n-html="invest.risks.lead">Este recurso &eacute; apenas para informa&ccedil;&atilde;o e conveni&ecirc;ncia de execu&ccedil;&atilde;o. <strong>N&atilde;o &eacute; recomenda&ccedil;&atilde;o financeira</strong>. Antes de investir:</p>
+    <ul class="risk-list">
+      <li data-i18n="invest.risks.l1">Riscos de smart contract, contraparte e liquidez existem em todo protocolo DeFi.</li>
+      <li data-i18n="invest.risks.l2">A&ccedil;&otilde;es tokenizadas podem ter restri&ccedil;&otilde;es de jurisdi&ccedil;&atilde;o, KYC ou hor&aacute;rio de mercado.</li>
+      <li data-i18n="invest.risks.l3">Produtos Ondo como OUSG podem exigir allowlist/KYC e n&atilde;o podem ser subscritos diretamente no app.</li>
+      <li data-i18n="invest.risks.l4">Taxas (APY) s&atilde;o estimativas e podem mudar; sempre consulte o site oficial do protocolo.</li>
+    </ul>
+    <div class="callout warn">
+      <strong>Aten&ccedil;&atilde;o:</strong> nunca invista mais do que pode perder. O Rapport n&atilde;o administra seus fundos, n&atilde;o tem guarda dos ativos e n&atilde;o garante rentabilidade.
+    </div>
+
+    <h2 class="section-title" data-i18n="invest.cta.title">Pronto para investir?</h2>
+    <p class="lead" data-i18n-html="invest.cta.lead">Instale o app, crie ou importe sua wallet e digite <code class="cmd">/invest</code> em qualquer conversa.</p>
+    <div class="cta-row">
+      <a class="cta cta-primary" href="/install" data-i18n="invest.cta.btn">Instalar o app</a>
+      <a class="cta cta-secondary" href="/" data-i18n="invest.cta.home">Voltar ao in&iacute;cio</a>
+    </div>
+
+    <div class="footer">
+      <p data-i18n-html="common.footer.contacts">Contato: <a href="/ajudar#crypto-chat-support">Crypto Chat</a> &middot; <a href="https://wa.me/5585985254090" target="_blank" rel="noopener noreferrer">WhatsApp</a> &middot; <a href="mailto:admin@rapport.tec.br">admin@rapport.tec.br</a> &middot; <a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer">rapport.tec.br</a> &middot; <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a></p>
+      <p data-i18n-html="common.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
+    </div>
+  </div>
+</body>
+</html>
