@@ -13,12 +13,12 @@ window.I18N && I18N.register('en', {
 
   // Home
   'home.meta.title': 'Rapport Crypto Chat',
-  'home.meta.desc': 'Protected, direct person-to-person chat app with no central server storing messages, powered by blockchain wallet identity. Download, install and chat privately.',
+  'home.meta.desc': 'Protected, direct person-to-person chat app with no central server storing messages, powered by blockchain wallet identity. Also a cryptocurrency wallet and crypto payment system with Escrow. Download, install and chat privately.',
   'home.meta.ogTitle': 'Rapport Crypto Chat — Protected, direct chat',
-  'home.meta.ogDesc': 'Protected, direct person-to-person chat with no central server storing messages, powered by blockchain wallet identity. No sign-up, no tracking.',
-  'home.meta.twDesc': 'Protected, direct person-to-person chat with no central server storing messages, powered by blockchain wallet identity.',
+  'home.meta.ogDesc': 'Protected, direct person-to-person chat with no central server storing messages, powered by blockchain wallet identity. Also a cryptocurrency wallet and crypto payment system with Escrow. No sign-up, no tracking.',
+  'home.meta.twDesc': 'Protected, direct person-to-person chat with no central server storing messages, powered by blockchain wallet identity. Also a cryptocurrency wallet and crypto payment system with Escrow.',
   'home.hero.badge': 'Signaling relay online',
-  'home.hero.tagline': 'Protected, direct person-to-person chat with no central server storing messages, powered by blockchain wallet identity.',
+  'home.hero.tagline': 'Protected, direct person-to-person chat with no central server storing messages, powered by blockchain wallet identity. Also a cryptocurrency wallet and crypto payment system with Escrow.',
   'home.hero.subtagline': 'No sign-up. No tracking. Just you, your wallet and cryptography.',
   'home.cta.download': 'Download APK',
   'home.cta.stats': 'View stats',

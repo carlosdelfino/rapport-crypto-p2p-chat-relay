@@ -13,12 +13,12 @@ window.I18N && I18N.register('fr', {
 
   // Accueil
   'home.meta.title': 'Rapport Crypto Chat',
-  'home.meta.desc': 'Application de chat protégé et direct entre personnes, sans serveur central stockant les messages, avec identité basée sur un wallet blockchain. Téléchargez, installez et conversez en toute confidentialité.',
+  'home.meta.desc': 'Application de chat protégé et direct entre personnes, sans serveur central stockant les messages, avec identité basée sur un wallet blockchain. Également un portefeuille de cryptomonnaies et système de paiement crypto avec Escrow. Téléchargez, installez et conversez en toute confidentialité.',
   'home.meta.ogTitle': 'Rapport Crypto Chat — Chat protégé et direct',
-  'home.meta.ogDesc': 'Chat protégé et direct entre personnes, sans serveur central stockant les messages, avec identité basée sur un wallet blockchain. Sans inscription, sans pistage.',
-  'home.meta.twDesc': 'Chat protégé et direct entre personnes, sans serveur central stockant les messages, avec identité basée sur un wallet blockchain.',
+  'home.meta.ogDesc': 'Chat protégé et direct entre personnes, sans serveur central stockant les messages, avec identité basée sur un wallet blockchain. Également un portefeuille de cryptomonnaies et système de paiement crypto avec Escrow. Sans inscription, sans pistage.',
+  'home.meta.twDesc': 'Chat protégé et direct entre personnes, sans serveur central stockant les messages, avec identité basée sur un wallet blockchain. Également un portefeuille de cryptomonnaies et système de paiement crypto avec Escrow.',
   'home.hero.badge': 'Relay de signalisation en ligne',
-  'home.hero.tagline': 'Chat protégé et direct entre personnes, sans serveur central stockant les messages, avec identité basée sur un wallet blockchain.',
+  'home.hero.tagline': 'Chat protégé et direct entre personnes, sans serveur central stockant les messages, avec identité basée sur un wallet blockchain. Également un portefeuille de cryptomonnaies et système de paiement crypto avec Escrow.',
   'home.hero.subtagline': 'Sans inscription. Sans pistage. Juste vous, votre wallet et la cryptographie.',
   'home.cta.download': 'Télécharger l’APK',
   'home.cta.stats': 'Voir les statistiques',

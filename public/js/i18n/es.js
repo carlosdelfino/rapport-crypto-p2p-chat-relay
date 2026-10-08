@@ -13,12 +13,12 @@ window.I18N && I18N.register('es', {
 
   // Inicio
   'home.meta.title': 'Rapport Crypto Chat',
-  'home.meta.desc': 'App de chat protegido y directo entre personas, sin servidor central que almacene mensajes, con identidad basada en wallet blockchain. Descarga, instala y conversa con privacidad.',
+  'home.meta.desc': 'App de chat protegido y directo entre personas, sin servidor central que almacene mensajes, con identidad basada en wallet blockchain. También es una wallet de criptomonedas y sistema de pago crypto con Escrow. Descarga, instala y conversa con privacidad.',
   'home.meta.ogTitle': 'Rapport Crypto Chat — Chat protegido y directo',
-  'home.meta.ogDesc': 'Chat protegido y directo entre personas, sin servidor central que almacene mensajes, con identidad basada en wallet blockchain. Sin registro, sin rastreo.',
-  'home.meta.twDesc': 'Chat protegido y directo entre personas, sin servidor central que almacene mensajes, con identidad basada en wallet blockchain.',
+  'home.meta.ogDesc': 'Chat protegido y directo entre personas, sin servidor central que almacene mensajes, con identidad basada en wallet blockchain. También es una wallet de criptomonedas y sistema de pago crypto con Escrow. Sin registro, sin rastreo.',
+  'home.meta.twDesc': 'Chat protegido y directo entre personas, sin servidor central que almacene mensajes, con identidad basada en wallet blockchain. También es una wallet de criptomonedas y sistema de pago crypto con Escrow.',
   'home.hero.badge': 'Relay de señalización en línea',
-  'home.hero.tagline': 'Chat protegido y directo entre personas, sin servidor central que almacene mensajes, con identidad basada en wallet blockchain.',
+  'home.hero.tagline': 'Chat protegido y directo entre personas, sin servidor central que almacene mensajes, con identidad basada en wallet blockchain. También es una wallet de criptomonedas y sistema de pago crypto con Escrow.',
   'home.hero.subtagline': 'Sin registro. Sin rastreo. Solo tú, tu wallet y la criptografía.',
   'home.cta.download': 'Descargar APK',
   'home.cta.stats': 'Ver estadísticas',
