@@ -211,6 +211,7 @@
       <li data-i18n-html="invest.command.l2"><strong>Listar ativos:</strong> <code class="cmd">/invest aave</code> mostra os ativos daquela operadora e as redes.</li>
       <li data-i18n-html="invest.command.l3"><strong>Investir:</strong> <code class="cmd">/invest aave aUSDC 100, base</code> pede confirma&ccedil;&atilde;o e envia a transa&ccedil;&atilde;o on-chain.</li>
       <li data-i18n-html="invest.command.l4"><strong>Resgatar:</strong> <code class="cmd">/invest redeem aave USDC 50, base</code> resgata o ativo investido para o ativo base, quando a operadora suportar.</li>
+      <li data-i18n-html="invest.command.l5"><strong>Saldo e rendimento:</strong> <code class="cmd">/invest balance aave USDC, base</code> mostra a posição, o equivalente no ativo base e o rendimento acumulado.</li>
     </ol>
     <div class="callout ok">
       <strong>Exemplo:</strong> <code class="cmd">/invest morpho USDC-GAUNTLET 50, base</code> deposita 50 USDC no vault Gauntlet USDC Prime na Base.
@@ -218,6 +219,14 @@
     <div class="callout ok">
       <strong>Resgate:</strong> <code class="cmd">/invest redeem aave USDC 50, base</code> resgata 50 aUSDC para USDC na Aave V3 na Base.
     </div>
+
+    <h2 class="section-title" data-i18n="invest.chat.title">Chat do contrato</h2>
+    <p class="lead" data-i18n-html="invest.chat.lead">Cada investimento cria uma conversa especial com o contrato do produto (item <strong>Investimentos</strong> no menu principal). Nela você conversa direto com o contrato: as confirmações aparecem como mensagens do contrato com o hash e o link do explorer, e os comandos ficam resumidos:</p>
+    <ul class="cmd-list">
+      <li data-i18n-html="invest.chat.l1"><code class="cmd">/invest 100</code> investe no produto da conversa.</li>
+      <li data-i18n-html="invest.chat.l2"><code class="cmd">/invest resgatar 50</code> resgata parte ou todo o investimento.</li>
+      <li data-i18n-html="invest.chat.l3"><code class="cmd">/invest saldo</code> mostra saldo, total investido e rendimento acumulado.</li>
+    </ul>
 
     <h2 class="section-title" data-i18n="invest.operators.title">Operadoras suportadas</h2>
     <div class="cards">

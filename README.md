@@ -22,10 +22,12 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 - `GET /tokens` — página HTML com o catálogo de redes, moedas nativas e tokens suportados pelo dApp, com o contexto de uso de cada ativo.
 - `GET /chat` — página HTML explicando como o dApp funciona: identidade por wallet, sinalização via relay, canal direto WebRTC e criptografia ponta a ponta.
 - `GET /wallet` — página HTML explicando o dApp como wallet self-custody multichain: recebimentos (`/collect`), pagamentos (`/pay`), saldos e Pagamento Garantido (`/escrow`).
+- `GET /invest` — página HTML explicando os investimentos DeFi/RWA via `/invest` (Aave, Morpho, Ondo, xStocks).
+- `GET /comandos` — página HTML com o tutorial completo dos comandos do chat (`/pay`, `/collect`, `/balance`, `/escrow`, `/invest`, `/tokens`, `/coin`, `/chain`, `/faucet`, `/contact`, `/help`) e a carteira de suporte oficial para sugestões e dúvidas.
 - `GET /sitemap.xml` — sitemap das páginas públicas (regenerado junto com `/install` via `apk:regenerate`/`apk:upload`).
 - `GET /robots.txt` — regras de crawling apontando para o sitemap.
 
-As páginas HTML (`/`, `/install`, `/stats`, `/ajudar`, `/escrow`, `/tokens`, `/chat`, `/wallet`) incluem SEO completo: canonical, Open Graph, Twitter Cards, JSON-LD (Schema.org) e Google Analytics (`gtag.js`). Os assets `/favicon.png`, `/apple-touch-icon.png` e `/og-image.png` são derivados do ícone do dApp.
+As páginas HTML (`/`, `/install`, `/stats`, `/ajudar`, `/escrow`, `/tokens`, `/chat`, `/wallet`, `/invest`, `/comandos`) incluem SEO completo: canonical, Open Graph, Twitter Cards, JSON-LD (Schema.org) e Google Analytics (`gtag.js`). Os assets `/favicon.png`, `/apple-touch-icon.png` e `/og-image.png` são derivados do ícone do dApp.
 
 ### Internacionalização (i18n)
 

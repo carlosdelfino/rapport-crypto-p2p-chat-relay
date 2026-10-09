@@ -45,13 +45,25 @@ test.describe('página /invest', () => {
     expectCleanRuntime(hygiene);
   });
 
-  test('explica os quatro níveis do comando /invest', async ({ page, hygiene }) => {
+  test('explica os cinco níveis do comando /invest', async ({ page, hygiene }) => {
     await page.goto('/invest');
 
     await expect(page.locator('code.cmd', { hasText: '/invest' }).first()).toBeVisible();
     await expect(page.locator('code.cmd', { hasText: '/invest aave' }).first()).toBeVisible();
     await expect(page.locator('code.cmd', { hasText: '/invest aave aUSDC 100, base' }).first()).toBeVisible();
     await expect(page.locator('code.cmd', { hasText: '/invest redeem aave USDC 50, base' }).first()).toBeVisible();
+    await expect(page.locator('code.cmd', { hasText: '/invest balance aave USDC' }).first()).toBeVisible();
+
+    expectCleanRuntime(hygiene);
+  });
+
+  test('documenta o chat do contrato e comandos resumidos', async ({ page, hygiene }) => {
+    await page.goto('/invest');
+
+    await expect(page.getByRole('heading', { name: /contrato|contract|contrat|العقد/ })).toBeVisible();
+    await expect(page.locator('code.cmd', { hasText: '/invest 100' }).first()).toBeVisible();
+    await expect(page.locator('code.cmd', { hasText: '/invest resgatar 50' }).first()).toBeVisible();
+    await expect(page.locator('code.cmd', { hasText: '/invest saldo' }).first()).toBeVisible();
 
     expectCleanRuntime(hygiene);
   });

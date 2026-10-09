@@ -69,10 +69,11 @@ test.describe('navegação e metadados do site', () => {
 
     // Permanecem apenas os destinos não cobertos pelos cards de Recursos.
     await expect(linksGrid.locator('a[href="/stats"]')).toHaveCount(1);
+    await expect(linksGrid.locator('a[href="/comandos"]')).toHaveCount(1);
     await expect(linksGrid.locator('a[href="/ajudar"]')).toHaveCount(1);
     expect(
       await linksGrid.locator('a.link-card').count(),
-    ).toBe(4);
+    ).toBe(5);
 
     expectCleanRuntime(hygiene);
   });
