@@ -458,7 +458,7 @@ window.I18N && I18N.register('en', {
   // Install page (generated — keys rendered via data-i18n in the template)
   'install.meta.title': 'Rapport Crypto P2P Chat — Install the Android app{vsuffix}',
   'install.meta.desc': 'Download the latest version of the Rapport Crypto P2P Chat app for Android.',
-  'install.hero.title': 'Install Rapport Crypto P2P Chat',
+  'install.hero.title': 'Install Rapport Crypto Chat',
   'install.hero.sub': 'Download the Android app directly from the distribution server.',
   'install.hero.latest': 'Latest version: <strong>{version}</strong>.',
   'install.list.title': 'Available versions',

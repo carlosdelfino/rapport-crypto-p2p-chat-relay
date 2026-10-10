@@ -146,7 +146,7 @@ test.describe('i18n — detecção e seletor de idioma', () => {
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: 'Install Rapport Crypto P2P Chat',
+        name: 'Install Rapport Crypto Chat',
       }),
     ).toBeVisible();
     await expect(page.getByText('Available versions')).toBeVisible();
