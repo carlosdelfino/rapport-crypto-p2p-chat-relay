@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WY96WV41T8');
+  </script>
   <meta charset="utf-8"/>
   <script>
     // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
@@ -24,6 +33,7 @@
   <link rel="stylesheet" href="/css/site.css"/>
   <link rel="stylesheet" href="/css/subpage.css"/>
   <script src="/js/i18n.js" defer></script>
+  <script src="/js/contact.js" defer></script>
   <meta property="og:type" content="article"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
   <meta property="og:locale" content="pt_BR"/>
@@ -75,7 +85,7 @@
 
 <div class="card">
 <h2 data-i18n="privacy.support.title">Fale com o suporte</h2>
-<p data-i18n-html="privacy.support">Converse conosco pela conta/carteira de suporte: <a class="support" dir="ltr" href="https://polygonscan.com/address/0x7010A4C4c189AB421028a622e2A2e623f432d18e">0x7010A4C4c189AB421028a622e2A2e623f432d18e</a>.</p>
+<p data-i18n-html="privacy.support">Converse conosco pela conta/carteira de suporte: <a class="support" dir="ltr" href="https://polygonscan.com/address/0x7010A4C4c189AB421028a622e2A2e623f432d18e" data-addr="0x7010A4C4c189AB421028a622e2A2e623f432d18e">0x7010A4C4c189AB421028a622e2A2e623f432d18e</a>.</p>
 <p data-i18n-html="privacy.closing">Vamos defender juntos o direito de ter nossos dados preservados e nossas mensagens respeitadas. Privacidade, liberdade e independência também dependem das escolhas que fazemos em tecnologia.</p>
 </div>
 <p><a href="/" data-i18n="common.cta.back">Voltar ao Rapport Crypto Chat</a></p>

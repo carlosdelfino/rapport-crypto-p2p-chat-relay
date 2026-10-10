@@ -71,10 +71,11 @@ test.describe('página /invest', () => {
   test('interconecta com home e install', async ({ page, hygiene }) => {
     await page.goto('/invest');
 
-    await expect(page.locator('a[href="/install"]').first()).toBeVisible();
+    // O CTA de instalação do header some no mobile; valida os links no conteúdo.
+    await expect(page.locator('main a[href="/install"]').first()).toBeVisible();
     await expect(page.locator('a[href="/"]').first()).toBeVisible();
 
-    await page.locator('a[href="/install"]').first().click();
+    await page.locator('main a[href="/install"]').first().click();
     await page.waitForURL('**/install');
     await expect(page).toHaveTitle(/Instalar|Install|Instalar|Télécharger|تثبيت/);
 

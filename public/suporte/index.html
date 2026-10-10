@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WY96WV41T8');
+  </script>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>  <script>
     // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
@@ -27,6 +36,8 @@
 <link rel="stylesheet" href="/css/i18n.css"/>
 <link rel="stylesheet" href="/css/site.css"/>
 <script src="/js/i18n.js" defer>
+</script>
+<script src="/js/contact.js" defer>
 </script>
 </head>
 <body>
@@ -58,12 +69,12 @@
 <section class="card">
 <h2>Crypto Chat</h2>
 <p data-i18n="site.support.steps" >Abra o Crypto Chat e adicione um contato usando a carteira abaixo. Envie o convite, aguarde o aceite e explique sua dúvida na conversa. Para questões de transação, informe a rede e o hash público; nunca envie sua frase de recuperação ou chave privada.</p>
-<code class="support-address" dir="ltr">0x7010A4C4c189AB421028a622e2A2e623f432d18e</code>
+<code class="support-address" dir="ltr" data-addr="0x7010A4C4c189AB421028a622e2A2e623f432d18e">0x7010A4C4c189AB421028a622e2A2e623f432d18e</code>
 <a data-i18n="home.cta.download" href="/install" class="button secondary">Baixar APK</a>
 </section>
 <section class="card">
 <h2>WhatsApp</h2>
-<p dir="ltr">+55 (85) 98520-5490</p>
+<p dir="ltr"><a class="wa-phone" href="https://wa.me/5585985205490" target="_blank" rel="noopener noreferrer">+55 (85) 98520-5490</a></p>
 <a data-i18n="site.support.whatsapp" href="https://wa.me/5585985205490" class="button" target="_blank" rel="noopener noreferrer">Conversar no WhatsApp</a>
 </section>
 </div>

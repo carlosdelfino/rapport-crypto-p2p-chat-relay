@@ -34,7 +34,8 @@ test.describe('página /ajudar', () => {
     await expect(
       page.locator('main', { hasText: /melhor forma de ajudar/i }),
     ).toBeVisible();
-    await expect(page.locator('a[href="/install"]').first()).toBeVisible();
+    // O CTA de instalação do header some no mobile; valida o link no conteúdo.
+    await expect(page.locator('main a[href="/install"]').first()).toBeVisible();
 
     expectCleanRuntime(hygiene);
   });

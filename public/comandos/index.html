@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="/css/site.css"/>
   <link rel="stylesheet" href="/css/subpage.css"/>
   <script src="/js/i18n.js" defer></script>
+  <script src="/js/contact.js" defer></script>
   <meta property="og:type" content="article"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
   <meta property="og:locale" content="pt_BR"/>
@@ -264,19 +265,5 @@
 </footer>
 
 <div class="toast" id="toast" data-i18n="ajudar.copied">Copiado!</div>
-
-<script>
-  function copySupportAddress() {
-    var el = document.getElementById('addr-support');
-    if (!el) return;
-    navigator.clipboard.writeText(el.getAttribute('data-addr')).then(function() {
-      var toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(function() { toast.classList.remove('show'); }, 2000);
-    });
-  }
-  document.querySelector('.copy-btn').addEventListener('click', copySupportAddress);
-  document.getElementById('addr-support').addEventListener('click', copySupportAddress);
-</script>
 </body>
 </html>

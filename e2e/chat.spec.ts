@@ -76,12 +76,12 @@ test.describe('página /chat', () => {
 
     for (const href of ['/wallet', '/escrow', '/tokens', '/install']) {
       await expect(
-        page.locator(`a[href="${href}"]`).first(),
+        page.locator(`main a[href="${href}"]`).first(),
         `link para ${href}`,
       ).toBeVisible();
     }
 
-    await page.locator('a[href="/wallet"]').first().click();
+    await page.locator('main a[href="/wallet"]').first().click();
     await page.waitForURL('**/wallet');
     await expect(
       page.getByRole('heading', { level: 1, name: /Wallet/i }),

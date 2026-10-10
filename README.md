@@ -38,6 +38,12 @@ Todas as páginas públicas são multilíngues. O idioma é resolvido client-sid
 - A página `/install` é gerada por `scripts/build-android-apk.ts` — ao editar marcação i18n dela, altere `renderInstallPage()` e rode `npm run apk:regenerate`; editar o HTML gerado diretamente é perdido na próxima publicação de APK.
 - Para adicionar um idioma: crie `public/js/i18n/<code>.js` (`I18N.register(...)`), adicione-o em `LANGS` no `i18n.js` e no snippet de detecção de cada página + `renderInstallPage()`, e declare o `hreflang`.
 
+### Contatos e assets
+
+- Carteira oficial de suporte/doações dev: `0x7010A4C4c189AB421028a622e2A2e623f432d18e`.
+- WhatsApp oficial do suporte: `+55 85 98520-5490` (`https://wa.me/5585985205490`). Links `wa.me` nas páginas ganham `?text=` com a página de origem via `public/js/contact.js`; endereços com `data-addr` copiam ao clique.
+- `public/images/rapport-logo.png` e `public/images/carlos-delfino-stand.jpg`: fornecidos pelo proprietário; `public/images/editorial/*.webp`: imagens editoriais geradas por IA; os depoimentos da home usam nomes e retratos fictícios (não são avaliações reais de clientes).
+
 ## Environment
 
 > **Importante:** em produção/preview na Vercel, o relay **precisa de um Redis persistente** (Upstash Redis ou Vercel KV). As funções serverless da Vercel não compartilham memória entre invocações, então o armazenamento em memória não funciona na nuvem.

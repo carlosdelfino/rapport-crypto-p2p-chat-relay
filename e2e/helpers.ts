@@ -40,6 +40,12 @@ export const test = base.extend<{ hygiene: Hygiene }>({
       return route.fulfill({ status: 200, body: '' });
     });
 
+    // /api/stats não existe no servidor estático: sem stub o 404 vira
+    // console.error e suja a higiene. Specs que precisam de dados
+    // específicos registram page.route no corpo do teste, que tem
+    // precedência por ser a última rota registrada.
+    await mockStatsApi(page);
+
     page.on('console', (msg) => {
       if (msg.type() === 'error') hygiene.consoleErrors.push(msg.text());
     });

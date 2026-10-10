@@ -362,6 +362,11 @@
       let loadFailed = false;
 
       function tt(k) { return (window.I18N && I18N.t(k)) || k; }
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, function(c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
 
       function render() {
         if (loadFailed) {
@@ -381,12 +386,12 @@
           card.className = 'net-card';
           const short = n.escrow ? n.escrow.slice(0, 10) + '…' + n.escrow.slice(-6) : '';
           const link = n.explorer && n.escrow
-            ? '<a class="net-link" href="' + n.explorer + '/address/' + n.escrow + '" target="_blank" rel="noopener">' + tt('escrow.net.explorer') + '</a>'
+            ? '<a class="net-link" href="' + esc(n.explorer) + '/address/' + esc(n.escrow) + '" target="_blank" rel="noopener">' + tt('escrow.net.explorer') + '</a>'
             : '';
           card.innerHTML =
-            '<div class="net-name">' + n.name + '</div>' +
-            '<div class="net-kind">chainId ' + n.chainId + (n.isTestnet ? ' · ' + tt('escrow.net.testnet') : ' · ' + tt('escrow.net.mainnet')) + '</div>' +
-            '<div class="net-addr">' + short + '</div>' + link;
+            '<div class="net-name">' + esc(n.name) + '</div>' +
+            '<div class="net-kind">chainId ' + esc(n.chainId) + (n.isTestnet ? ' · ' + tt('escrow.net.testnet') : ' · ' + tt('escrow.net.mainnet')) + '</div>' +
+            '<div class="net-addr">' + esc(short) + '</div>' + link;
           grid.appendChild(card);
         }
       }

@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WY96WV41T8');
+  </script>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>  <script>
     // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
@@ -177,28 +186,7 @@
 <div id="stats-content">
 <p data-i18n="stats.loading" >Carregando estatísticas…</p>
 </div>
-<details class="stats-details" open>
-<summary>
-<span data-i18n="stats.vol.title" >Volume transacionado</span>
-</summary>
-<div>
-<p data-i18n="stats.vol.desc" >Total de cripto movimentado pelo app em cada moeda e rede, reportado de forma anônima a cada transação confirmada — nenhum endereço de carteira é coletado ou exibido. O volume demonstra o crescimento do app e seu impacto na economia cripto.</p>
-<div id="financial-content">
-<p data-i18n="stats.loadingFinancial" >Carregando dados financeiros…</p>
-</div>
-</div>
-</details>
-<details class="stats-details" open>
-<summary>
-<span data-i18n="stats.esc.title" >Demanda por escrow</span>
-</summary>
-<div>
-<p data-i18n="stats.esc.desc" >Pedidos de usuários por suporte a escrow em redes ainda sem contrato deployado.</p>
-<div id="escrow-demand-content">
-<p data-i18n="stats.loadingEscrow" >Carregando pedidos de escrow…</p>
-</div>
-</div>
-</details>
+<div id="stats-summary"></div>
 <p>
 <a data-i18n="home.cta.stats" href="/stats">Ver estatísticas</a>
 </p>

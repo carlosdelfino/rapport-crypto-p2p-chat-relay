@@ -432,6 +432,10 @@ window.I18N && I18N.register('es', {
   'stats.escrow.none': 'Ningún pedido de escrow registrado.',
   'stats.escrow.col.requests': 'Pedidos',
   'stats.escrow.total': 'Total de pedidos:',
+  'stats.summary.networks': 'redes con volumen',
+  'stats.summary.empty': 'Aún sin actividad reportada.',
+  'wa.support.msg': '¡Hola! Necesito soporte en Rapport Crypto Chat. Estoy en la página: {page}',
+  'contact.copy.hint': 'Clic para copiar',
 
   // Página Ajudar
   'ajudar.meta.title': 'Rapport Crypto Chat — Cómo Ayudar',
@@ -598,7 +602,7 @@ window.I18N && I18N.register('es', {
   "privacy.b3": "Seguimos la evolución de la tokenización en Brasil, incluidas iniciativas relacionadas con el mercado financiero y B3. La oferta de activos tokenizados y la exposición al real brasileño dependen de los productos e integraciones disponibles; esto no significa que las acciones cotizadas en B3 ya estén disponibles en la aplicación.",
   "privacy.fees": "Cuando la aplicación alcance una amplia adopción, nuestro objetivo es cobrar una comisión del 0,10% sobre las transacciones cripto realizadas mediante el servicio, además de las tarifas de gas de la red. Como referencia, el 0,10% de R$ 10 en BRLA equivale a R$ 0,01 (un centavo); sobre R$ 1.000, equivale a R$ 1. Las tarifas de red varían y pueden no ser insignificantes en todo momento.",
   "privacy.faucet": "Si no tienes la moneda nativa necesaria para pagar el gas, contacta con soporte: durante la fase inicial, podemos ayudarte con las primeras tarifas, según disponibilidad. También puedes experimentar en redes de prueba, cuyos tokens no tienen valor monetario. Contáctanos para solicitar hasta 5 POL de prueba en Polygon Amoy. Podemos abastecer carteras con tokens de faucet y CAS de <a href=\"https://hubagentic.space\" target=\"_blank\" rel=\"noopener noreferrer\">Hub Agentic Space</a>; comprueba siempre la red y el saldo recibido.",
-  "privacy.support": "Conversa con nosotros mediante la cuenta/cartera de soporte: <a class=\"support\" dir=\"ltr\" href=\"https://polygonscan.com/address/0x7010A4C4c189AB421028a622e2A2e623f432d18e\">0x7010A4C4c189AB421028a622e2A2e623f432d18e</a>.",
+  "privacy.support": "Conversa con nosotros mediante la cuenta/cartera de soporte: <a class=\"support\" dir=\"ltr\" href=\"https://polygonscan.com/address/0x7010A4C4c189AB421028a622e2A2e623f432d18e\" data-addr=\"0x7010A4C4c189AB421028a622e2A2e623f432d18e\">0x7010A4C4c189AB421028a622e2A2e623f432d18e</a>.",
   "privacy.closing": "Defendamos juntos el derecho a que nuestros datos se preserven y nuestros mensajes se respeten. La privacidad, la libertad y la independencia también dependen de nuestras decisiones tecnológicas.",
   "home.hero.learnMore": "Haz clic aquí para saber más",
   "site.nav.features": "Funciones",

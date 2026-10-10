@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="/css/site.css"/>
   <link rel="stylesheet" href="/css/subpage.css"/>
   <script src="/js/i18n.js" defer></script>
+  <script src="/js/contact.js" defer></script>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
   <meta property="og:locale" content="pt_BR"/>
@@ -172,35 +173,5 @@
 </footer>
 
 <div class="toast" id="toast" data-i18n="ajudar.copied">Copiado!</div>
-
-<script>
-  function copyAddress(addrId) {
-    var el = document.getElementById(addrId);
-    if (!el) return;
-    var addr = el.getAttribute('data-addr');
-    navigator.clipboard.writeText(addr).then(function() {
-      var toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(function() { toast.classList.remove('show'); }, 2000);
-    });
-  }
-
-  document.querySelectorAll('.copy-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      copyAddress(btn.getAttribute('data-copy'));
-    });
-  });
-
-  document.querySelectorAll('.donation-addr').forEach(function(el) {
-    el.addEventListener('click', function() {
-      var addr = el.getAttribute('data-addr');
-      navigator.clipboard.writeText(addr).then(function() {
-        var toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(function() { toast.classList.remove('show'); }, 2000);
-      });
-    });
-  });
-</script>
 </body>
 </html>

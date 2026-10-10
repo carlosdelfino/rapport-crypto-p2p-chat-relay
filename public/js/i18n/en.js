@@ -432,6 +432,10 @@ window.I18N && I18N.register('en', {
   'stats.escrow.none': 'No escrow requests registered.',
   'stats.escrow.col.requests': 'Requests',
   'stats.escrow.total': 'Total requests:',
+  'stats.summary.networks': 'networks with volume',
+  'stats.summary.empty': 'No activity reported yet.',
+  'wa.support.msg': 'Hi! I need support on Rapport Crypto Chat. I am on the page: {page}',
+  'contact.copy.hint': 'Click to copy',
 
   // Ajudar page
   'ajudar.meta.title': 'Rapport Crypto Chat — How to Help',
@@ -598,7 +602,7 @@ window.I18N && I18N.register('en', {
   "privacy.b3": "We are following the development of tokenization in Brazil, including initiatives related to financial markets and B3. Tokenized assets and exposure to the Brazilian real depend on available products and integrations; this does not mean B3-listed shares are already available in the app.",
   "privacy.fees": "Once the app achieves broad adoption, we aim to charge a 0.10% fee on crypto transactions made through the service, in addition to network gas fees. For reference, 0.10% of R$10 in BRLA is R$0.01 (one centavo); on R$1,000, it is R$1. Network fees vary and may not always be negligible.",
   "privacy.faucet": "If you do not have the native coin needed for gas, contact support: during the initial phase, we may help with the first fees, subject to availability. You can also experiment on test networks, whose tokens have no monetary value. Contact us to request up to 5 test POL on Polygon Amoy. We may fund wallets with faucet tokens and CAS from <a href=\"https://hubagentic.space\" target=\"_blank\" rel=\"noopener noreferrer\">Hub Agentic Space</a>; always check the network and the balance received.",
-  "privacy.support": "Chat with us through the support account/wallet: <a class=\"support\" dir=\"ltr\" href=\"https://polygonscan.com/address/0x7010A4C4c189AB421028a622e2A2e623f432d18e\">0x7010A4C4c189AB421028a622e2A2e623f432d18e</a>.",
+  "privacy.support": "Chat with us through the support account/wallet: <a class=\"support\" dir=\"ltr\" href=\"https://polygonscan.com/address/0x7010A4C4c189AB421028a622e2A2e623f432d18e\" data-addr=\"0x7010A4C4c189AB421028a622e2A2e623f432d18e\">0x7010A4C4c189AB421028a622e2A2e623f432d18e</a>.",
   "privacy.closing": "Let us stand together for the right to have our data protected and our messages respected. Privacy, freedom and independence also depend on the technology choices we make.",
   "home.hero.learnMore": "Click here to learn more",
   "site.nav.features": "Features",
