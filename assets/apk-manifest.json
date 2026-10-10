@@ -1,36 +1,6 @@
 {
   "apks": [
     {
-      "filename": "rapport-crypto-p2p-chat-4.2.1-20260926-224043.apk",
-      "version": "4.2.1",
-      "uploadedAt": "2026-09-27T02:15:54.294Z",
-      "size": 170869237
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-4.3.1-20260928-234408.apk",
-      "version": "4.3.1",
-      "uploadedAt": "2026-09-29T03:44:40.421Z",
-      "size": 171054237
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-4.3.2-20260929-122151.apk",
-      "version": "4.3.2",
-      "uploadedAt": "2026-09-29T17:09:40.995Z",
-      "size": 171063733
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-4.4.2-20261004-183250.apk",
-      "version": "4.4.2",
-      "uploadedAt": "2026-10-04T21:57:25.763Z",
-      "size": 171089725
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-4.5.1-20261005-172134.apk",
-      "version": "4.5.1",
-      "uploadedAt": "2026-10-05T21:22:05.768Z",
-      "size": 171104529
-    },
-    {
       "filename": "rapport-crypto-p2p-chat-5.1.2-20261008-225413.apk",
       "version": "5.1.2",
       "uploadedAt": "2026-10-09T01:58:22.180Z",
