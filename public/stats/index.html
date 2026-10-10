@@ -20,7 +20,7 @@
   <meta name="robots" content="index, follow"/>
   <title data-i18n="stats.meta.title">Rapport Crypto Chat — Estatísticas</title>
   <meta name="description" content="Estatísticas em tempo real do relay Rapport Crypto Chat: carteiras, mensagens, volume transacionado e demanda por escrow." data-i18n-attr="content:stats.meta.desc"/>
-  <meta name="theme-color" content="#020617"/>
+  <meta name="theme-color" content="#ed5919"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/stats"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
@@ -32,6 +32,8 @@
   <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/stats?lang=ar"/>
   <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/stats"/>
   <link rel="stylesheet" href="/css/i18n.css"/>
+  <link rel="stylesheet" href="/css/site.css"/>
+  <link rel="stylesheet" href="/css/subpage.css"/>
   <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
@@ -62,195 +64,205 @@
     }
   }
   </script>
-  <style>
-    :root {
-      --bg:#020617; --card:#0f172a; --border:#1e293b; --text:#f1f5f9;
-      --muted:#94a3b8; --secondary:#cbd5e1; --brand:#ea580c;
-      --brand-light:#fb923c; --brand-dark:#c2410c;
-    }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body {
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg); color:var(--text); line-height:1.6;
-      min-height:100vh; padding:1rem;
-    }
-    .container { max-width:48rem; margin:0 auto; padding:1rem 0; }
-    h1 { font-size:1.75rem; font-weight:700; color:var(--brand-light); margin-bottom:.5rem; }
-    h2 { font-size:1.25rem; font-weight:600; color:var(--brand-light); margin:2rem 0 .75rem; }
-    p { color:var(--secondary); font-size:.95rem; margin-bottom:.75rem; }
-    .stats-grid {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));
-      gap:.75rem; margin:1.5rem 0;
-    }
-    .stat-card {
-      border:1px solid var(--border); border-radius:1rem; background:var(--card);
-      padding:1.25rem; text-align:center;
-    }
-    .stat-value { font-size:2rem; font-weight:800; color:var(--brand); }
-    .stat-label { font-size:.8rem; color:var(--muted); margin-top:.25rem; text-transform:uppercase; letter-spacing:.05em; }
-    .card {
-      border:1px solid var(--border); border-radius:1rem; background:var(--card);
-      padding:1.5rem; margin-bottom:1rem;
-    }
-    .updated { font-size:.75rem; color:var(--muted); margin-top:.5rem; }
-    .footer { text-align:center; color:var(--muted); font-size:.75rem; margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); }
-    a { color:var(--brand-light); text-decoration:none; }
-    a:hover { color:var(--brand); }
-    .loading { color:var(--muted); font-size:.9rem; }
-    .error { color:#ef4444; font-size:.9rem; }
-    .table-title { font-size:.85rem; font-weight:600; color:var(--brand-light); margin:.9rem 0 .4rem; }
-    .financial-table { width:100%; border-collapse:collapse; font-size:.85rem; }
-    .financial-table th, .financial-table td { padding:.5rem .6rem; text-align:left; border-bottom:1px solid var(--border); }
-    .financial-table th { color:var(--brand-light); font-weight:600; }
-    .financial-table td { color:var(--secondary); }
-    .financial-table tr:last-child td { border-bottom:none; }
-    .mono { font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; }
-    @media (max-width:640px) {
-      h1 { font-size:1.4rem; }
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <h1 data-i18n="stats.hero.title">Rapport Crypto Chat — Relay Stats</h1>
-    <p data-i18n="stats.hero.sub">Estatísticas em tempo real do relay de sinalização do Rapport Crypto Chat.</p>
+<a data-i18n="site.skip" href="#main" class="skip-link">Ir para o conteúdo</a>
+<header class="site-header">
+<div class="container wrap">
+<div class="header-row">
+<a class="brand" href="/">
+<img src="/favicon.png" alt="" width="44" height="44"/>Rapport Crypto Chat</a>
+<nav class="nav">
+<a data-i18n="site.nav.features" href="/#recursos" class="">Recursos</a>
+<a data-i18n="site.nav.freedom" href="/#liberdade" class="">Liberdade</a>
+<a data-i18n="site.nav.team" href="/#equipe" class="">Equipe</a>
+<a data-i18n="site.nav.pricing" href="/#precos" class="">Preços</a>
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+</nav>
+</div>
+</div>
+</header>
+<main id="main">
+<header class="page-hero">
+<div class="wrap">
+<h1 data-i18n="stats.hero.title">Rapport Crypto Chat — Relay Stats</h1>
+<p class="tagline" data-i18n="stats.hero.sub">Estatísticas em tempo real do relay de sinalização do Rapport Crypto Chat.</p>
+</div>
+</header>
+<div class="page">
+<div id="stats-content">
+<p class="loading" data-i18n="stats.loading">Carregando estatísticas…</p>
+</div>
 
-    <div id="stats-content">
-      <p class="loading" data-i18n="stats.loading">Carregando estatísticas…</p>
-    </div>
+<h2 class="section-title" data-i18n="stats.vol.title">Volume transacionado</h2>
+<p data-i18n="stats.vol.desc">Total de cripto movimentado pelo app em cada moeda e rede, reportado de forma anônima a cada transação confirmada — nenhum endereço de carteira é coletado ou exibido. O volume demonstra o crescimento do app e seu impacto na economia cripto.</p>
+<div class="card" id="financial-content">
+<p class="loading" data-i18n="stats.loadingFinancial">Carregando dados financeiros…</p>
+</div>
 
-    <h2 data-i18n="stats.vol.title">Volume transacionado</h2>
-    <p data-i18n="stats.vol.desc">Total de cripto movimentado pelo app em cada moeda e rede, reportado de forma anônima a cada transação confirmada — nenhum endereço de carteira é coletado ou exibido. O volume demonstra o crescimento do app e seu impacto na economia cripto.</p>
-    <div class="card" id="financial-content">
-      <p class="loading" data-i18n="stats.loadingFinancial">Carregando dados financeiros…</p>
-    </div>
+<h2 class="section-title" data-i18n="stats.esc.title">Demanda por escrow</h2>
+<p data-i18n="stats.esc.desc">Pedidos de usuários por suporte a escrow em redes ainda sem contrato deployado.</p>
+<div class="card" id="escrow-demand-content">
+<p class="loading" data-i18n="stats.loadingEscrow">Carregando pedidos de escrow…</p>
+</div>
 
-    <h2 data-i18n="stats.esc.title">Demanda por escrow</h2>
-    <p data-i18n="stats.esc.desc">Pedidos de usuários por suporte a escrow em redes ainda sem contrato deployado.</p>
-    <div class="card" id="escrow-demand-content">
-      <p class="loading" data-i18n="stats.loadingEscrow">Carregando pedidos de escrow…</p>
-    </div>
+<div class="resources">
+<a href="/" data-i18n="common.back">&larr; Voltar ao início</a>
+<a href="/ajudar" data-i18n="stats.helpLink">Como ajudar o projeto</a>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div class="footer-grid">
+<a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer" aria-label="Rapport Tecnologia">
+<img class="footer-logo" src="/images/rapport-logo.png" alt="Rapport Tecnologia" width="180" height="180" loading="lazy"/>
+</a>
+<div>
+<h3 data-i18n="site.footer.tagline" >Tecnologia, pessoas e liberdade digital.</h3>
+<div class="footer-links">
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.p.stats.title" href="/stats">Estatísticas</a>
+<a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a>
+</div>
+</div>
+<div class="socials">
+<a href="https://linkedin.com/in/carlosdelfino" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4M3 9h4v12H3zm6 0h4v2c1-2 6-3 7 1v9h-4v-8c0-2-3-2-3 0v8H9z"/>
+</svg>
+</a>
+<a href="https://instagram.com/rapport.tecnologia" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="18" cy="6" r="1"/>
+</svg>
+</a>
+</div>
+</div>
+<div class="copyright">
+<p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
+</div>
+</div>
+</footer>
 
-    <div class="footer">
-      <p><a href="/" data-i18n="common.back">&larr; Voltar ao início</a> &middot; <a href="/ajudar" data-i18n="stats.helpLink">Como ajudar o projeto</a></p>
-      <p data-i18n-html="common.footer.contacts">Contato: <a href="/ajudar#crypto-chat-support">Crypto Chat</a> &middot; <a href="https://wa.me/5585985205490" target="_blank" rel="noopener noreferrer">WhatsApp</a> &middot; <a href="mailto:admin@rapport.tec.br">admin@rapport.tec.br</a> &middot; <a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer">rapport.tec.br</a> &middot; <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a></p>
-      <p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
-    </div>
-  </div>
+<script>
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function(c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
 
-  <script>
-    function esc(s) {
-      return String(s).replace(/[&<>"']/g, function(c) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-      });
-    }
+  function tt(k) { return (window.I18N && I18N.t(k)) || k; }
+  function curLocale() { return (window.I18N && I18N.locale) || 'pt-BR'; }
 
-    function tt(k) { return (window.I18N && I18N.t(k)) || k; }
-    function curLocale() { return (window.I18N && I18N.locale) || 'pt-BR'; }
+  function formatNumber(n) {
+    return Number(n).toLocaleString(curLocale());
+  }
 
-    function formatNumber(n) {
-      return Number(n).toLocaleString(curLocale());
-    }
+  function formatCompact(n) {
+    return Number(n).toLocaleString(curLocale(), { notation: 'compact', maximumFractionDigits: 1 });
+  }
 
-    function formatCompact(n) {
-      return Number(n).toLocaleString(curLocale(), { notation: 'compact', maximumFractionDigits: 1 });
-    }
+  let lastStats = null;
+  let statsFailed = false;
 
-    let lastStats = null;
-    let statsFailed = false;
-
-    function renderAll() {
-      if (statsFailed) {
-        document.getElementById('stats-content').innerHTML =
-          '<p class="error">' + esc(tt('stats.error')) + '</p>';
-        return;
-      }
-      if (!lastStats) return;
-      renderStats(lastStats);
-      if (lastStats.financial) renderFinancial(lastStats.financial);
-      if (lastStats.escrowDemand) renderEscrowDemand(lastStats.escrowDemand);
-    }
-
-    function renderStats(s) {
+  function renderAll() {
+    if (statsFailed) {
       document.getElementById('stats-content').innerHTML =
-        '<div class="stats-grid">' +
-          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalWallets) + '</div><div class="stat-label">' + esc(tt('stats.card.wallets')) + '</div></div>' +
-          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.onlineWallets) + '</div><div class="stat-label">' + esc(tt('stats.card.online')) + '</div></div>' +
-          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalMessages) + '</div><div class="stat-label">' + esc(tt('stats.card.messages')) + '</div></div>' +
-          '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalChats) + '</div><div class="stat-label">' + esc(tt('stats.card.chats')) + '</div></div>' +
-        '</div>' +
-        '<p class="updated">' + esc(tt('stats.updatedAt')) + ' ' + new Date(s.updatedAt).toLocaleString(curLocale()) + '</p>';
+        '<p class="error">' + esc(tt('stats.error')) + '</p>';
+      return;
     }
+    if (!lastStats) return;
+    renderStats(lastStats);
+    if (lastStats.financial) renderFinancial(lastStats.financial);
+    if (lastStats.escrowDemand) renderEscrowDemand(lastStats.escrowDemand);
+  }
 
-    function renderFinancial(financial) {
-      const container = document.getElementById('financial-content');
-      const bySymbol = (financial && financial.volumeBySymbol) || [];
-      const byNetwork = (financial && financial.volumeByNetwork) || [];
-      if (!bySymbol.length && !byNetwork.length) {
-        container.innerHTML = '<p class="loading">' + esc(tt('stats.fin.none')) + '</p>';
-        return;
-      }
-      let html = '';
-      if (bySymbol.length) {
-        let rows = '';
-        for (const item of bySymbol) {
-          rows += '<tr><td class="mono">' + esc(item.symbol) + '</td><td>' + formatNumber(item.count) + '</td><td class="mono">' + formatNumber(item.amount) + '</td></tr>';
-        }
-        html += '<div class="table-title">' + esc(tt('stats.fin.bySymbol')) + '</div>' +
-          '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.asset')) + '</th><th>' + esc(tt('stats.fin.col.txs')) + '</th><th>' + esc(tt('stats.fin.col.amount')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>';
-      }
-      if (byNetwork.length) {
-        let rows = '';
-        for (const net of byNetwork) {
-          const assets = (net.symbols || [])
-            .map(function(s) { return formatNumber(s.amount) + ' ' + esc(s.symbol); })
-            .join(' · ');
-          rows += '<tr><td>' + esc(net.network) + '</td><td class="mono">' + net.chainId + '</td><td>' + formatNumber(net.count) + '</td><td class="mono">' + assets + '</td></tr>';
-        }
-        html += '<div class="table-title">' + esc(tt('stats.fin.byNetwork')) + '</div>' +
-          '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.network')) + '</th><th>Chain ID</th><th>' + esc(tt('stats.fin.col.txs')) + '</th><th>' + esc(tt('stats.fin.col.assets')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>';
-      }
-      const kinds = ((financial && financial.countByKind) || [])
-        .map(function(k) { return esc(k.kind) + ': ' + formatNumber(k.count); })
-        .join(' · ');
-      html += '<p class="updated" style="margin-top:.75rem;">' + esc(tt('stats.fin.total')) + ' <strong>' + formatNumber(financial.totalTransactions) + '</strong>' + (kinds ? ' · ' + kinds : '') + '</p>';
-      container.innerHTML = html;
+  function renderStats(s) {
+    document.getElementById('stats-content').innerHTML =
+      '<div class="stats-grid">' +
+        '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalWallets) + '</div><div class="stat-label">' + esc(tt('stats.card.wallets')) + '</div></div>' +
+        '<div class="stat-card"><div class="stat-value">' + formatNumber(s.onlineWallets) + '</div><div class="stat-label">' + esc(tt('stats.card.online')) + '</div></div>' +
+        '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalMessages) + '</div><div class="stat-label">' + esc(tt('stats.card.messages')) + '</div></div>' +
+        '<div class="stat-card"><div class="stat-value">' + formatNumber(s.totalChats) + '</div><div class="stat-label">' + esc(tt('stats.card.chats')) + '</div></div>' +
+      '</div>' +
+      '<p class="updated">' + esc(tt('stats.updatedAt')) + ' ' + new Date(s.updatedAt).toLocaleString(curLocale()) + '</p>';
+  }
+
+  function renderFinancial(financial) {
+    const container = document.getElementById('financial-content');
+    const bySymbol = (financial && financial.volumeBySymbol) || [];
+    const byNetwork = (financial && financial.volumeByNetwork) || [];
+    if (!bySymbol.length && !byNetwork.length) {
+      container.innerHTML = '<p class="loading">' + esc(tt('stats.fin.none')) + '</p>';
+      return;
     }
-
-    function renderEscrowDemand(demand) {
-      const container = document.getElementById('escrow-demand-content');
-      const byNetwork = (demand && demand.byNetwork) || [];
-      if (!byNetwork.length) {
-        container.innerHTML = '<p class="loading">' + esc(tt('stats.escrow.none')) + '</p>';
-        return;
+    let html = '';
+    if (bySymbol.length) {
+      let rows = '';
+      for (const item of bySymbol) {
+        rows += '<tr><td class="mono">' + esc(item.symbol) + '</td><td>' + formatNumber(item.count) + '</td><td class="mono">' + formatNumber(item.amount) + '</td></tr>';
       }
+      html += '<div class="table-title">' + esc(tt('stats.fin.bySymbol')) + '</div>' +
+        '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.asset')) + '</th><th>' + esc(tt('stats.fin.col.txs')) + '</th><th>' + esc(tt('stats.fin.col.amount')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    }
+    if (byNetwork.length) {
       let rows = '';
       for (const net of byNetwork) {
-        rows += '<tr><td>' + esc(net.network) + '</td><td class="mono">' + net.chainId + '</td><td>' + formatNumber(net.count) + '</td></tr>';
+        const assets = (net.symbols || [])
+          .map(function(s) { return formatNumber(s.amount) + ' ' + esc(s.symbol); })
+          .join(' · ');
+        rows += '<tr><td>' + esc(net.network) + '</td><td class="mono">' + net.chainId + '</td><td>' + formatNumber(net.count) + '</td><td class="mono">' + assets + '</td></tr>';
       }
-      container.innerHTML =
-        '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.network')) + '</th><th>Chain ID</th><th>' + esc(tt('stats.escrow.col.requests')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-        '<p class="updated" style="margin-top:.75rem;">' + esc(tt('stats.escrow.total')) + ' <strong>' + formatNumber(demand.totalRequests) + '</strong></p>';
+      html += '<div class="table-title">' + esc(tt('stats.fin.byNetwork')) + '</div>' +
+        '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.network')) + '</th><th>Chain ID</th><th>' + esc(tt('stats.fin.col.txs')) + '</th><th>' + esc(tt('stats.fin.col.assets')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>';
     }
+    const kinds = ((financial && financial.countByKind) || [])
+      .map(function(k) { return esc(k.kind) + ': ' + formatNumber(k.count); })
+      .join(' · ');
+    html += '<p class="updated" style="margin-top:.75rem;">' + esc(tt('stats.fin.total')) + ' <strong>' + formatNumber(financial.totalTransactions) + '</strong>' + (kinds ? ' · ' + kinds : '') + '</p>';
+    container.innerHTML = html;
+  }
 
-    async function loadStats() {
-      try {
-        const resp = await fetch('/api/stats');
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const json = await resp.json();
-        const s = json.data;
-        if (!s) throw new Error('Dados indisponíveis');
-        lastStats = s;
-        statsFailed = false;
-      } catch (err) {
-        statsFailed = true;
-      }
-      renderAll();
+  function renderEscrowDemand(demand) {
+    const container = document.getElementById('escrow-demand-content');
+    const byNetwork = (demand && demand.byNetwork) || [];
+    if (!byNetwork.length) {
+      container.innerHTML = '<p class="loading">' + esc(tt('stats.escrow.none')) + '</p>';
+      return;
     }
+    let rows = '';
+    for (const net of byNetwork) {
+      rows += '<tr><td>' + esc(net.network) + '</td><td class="mono">' + net.chainId + '</td><td>' + formatNumber(net.count) + '</td></tr>';
+    }
+    container.innerHTML =
+      '<table class="financial-table"><thead><tr><th>' + esc(tt('stats.fin.col.network')) + '</th><th>Chain ID</th><th>' + esc(tt('stats.escrow.col.requests')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+      '<p class="updated" style="margin-top:.75rem;">' + esc(tt('stats.escrow.total')) + ' <strong>' + formatNumber(demand.totalRequests) + '</strong></p>';
+  }
 
-    window.addEventListener('i18n:change', renderAll);
-    loadStats();
-    setInterval(loadStats, 60000);
-  </script>
+  async function loadStats() {
+    try {
+      const resp = await fetch('/api/stats');
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const json = await resp.json();
+      const s = json.data;
+      if (!s) throw new Error('Dados indisponíveis');
+      lastStats = s;
+      statsFailed = false;
+    } catch (err) {
+      statsFailed = true;
+    }
+    renderAll();
+  }
+
+  window.addEventListener('i18n:change', renderAll);
+  loadStats();
+  setInterval(loadStats, 60000);
+</script>
 </body>
 </html>

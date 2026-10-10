@@ -7,50 +7,115 @@
     window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
   <meta name="robots" content="index, follow"/>
   <title data-i18n="privacy.meta.title">Privacidade, soberania e liberdade financeira — Rapport Crypto Chat</title>
   <meta name="description" data-i18n-attr="content:privacy.meta.desc" content="Entenda por que privacidade e soberania sobre dados e mensagens são direitos de todos, e conheça pagamentos com escrow e ativos tokenizados no Rapport Crypto Chat."/>
+  <meta name="theme-color" content="#ed5919"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/privacidade"/>
+  <link rel="icon" href="/favicon.png"/>
+  <link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/privacidade"/>
+  <link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/privacidade?lang=en"/>
+  <link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/privacidade?lang=es"/>
+  <link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/privacidade?lang=fr"/>
+  <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/privacidade?lang=ar"/>
+  <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/privacidade"/>
   <link rel="stylesheet" href="/css/i18n.css"/>
+  <link rel="stylesheet" href="/css/site.css"/>
+  <link rel="stylesheet" href="/css/subpage.css"/>
   <script src="/js/i18n.js" defer></script>
-  <style>
-    :root { color-scheme:dark; --bg:#020617; --card:#0f172a; --border:#1e293b; --text:#f1f5f9; --muted:#cbd5e1; --brand:#fb923c; }
-    * { box-sizing:border-box; }
-    body { margin:0; padding:1.5rem; background:var(--bg); color:var(--text); font:1rem/1.7 Inter,system-ui,sans-serif; }
-    main { max-width:50rem; margin:2rem auto; }
-    h1,h2 { line-height:1.2; color:var(--brand); }
-    h1 { font-size:clamp(2rem,5vw,3rem); }
-    h2 { margin-top:2rem; font-size:1.45rem; }
-    p,li { color:var(--muted); }
-    a { color:var(--brand); }
-    .card { margin:1.5rem 0; padding:1.25rem; background:var(--card); border:1px solid var(--border); border-radius:1rem; }
-    .support { overflow-wrap:anywhere; }
-  </style>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="Rapport Crypto Chat"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta property="og:title" content="Privacidade, soberania e liberdade financeira — Rapport Crypto Chat" data-i18n-attr="content:privacy.meta.title"/>
+  <meta property="og:description" content="Entenda por que privacidade e soberania sobre dados e mensagens são direitos de todos, e conheça pagamentos com escrow e ativos tokenizados no Rapport Crypto Chat." data-i18n-attr="content:privacy.meta.desc"/>
+  <meta property="og:url" content="https://crypto-chat.rapport.tec.br/privacidade"/>
+  <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
 </head>
 <body>
-  <main class="container">
-    <p><a href="/" data-i18n="common.back">← Voltar ao Crypto Chat</a></p>
-    <h1 data-i18n="privacy.title">Privacidade, soberania e liberdade</h1>
-    <p data-i18n-html="privacy.intro">Privacidade não é esconder algo. É poder escolher o que compartilhar, com quem e em que contexto. Mensagens, relações e dados pessoais merecem respeito, mesmo quando não há nada a esconder. Preservar esses dados é uma questão de dignidade, autonomia e liberdade.</p>
-    <p data-i18n-html="privacy.chat">No Rapport Crypto Chat, a identidade é baseada em carteira blockchain e as conversas são feitas diretamente entre as pessoas, com criptografia ponta a ponta. O relay auxilia na sinalização da conexão; não é um servidor central que armazena o conteúdo das conversas. A proposta é devolver a você mais controle sobre seus dados e suas mensagens. Saiba mais sobre <a href="/chat">como funciona o chat</a>.</p>
+<a data-i18n="site.skip" href="#main" class="skip-link">Ir para o conteúdo</a>
+<header class="site-header">
+<div class="container wrap">
+<div class="header-row">
+<a class="brand" href="/">
+<img src="/favicon.png" alt="" width="44" height="44"/>Rapport Crypto Chat</a>
+<nav class="nav">
+<a data-i18n="site.nav.features" href="/#recursos" class="">Recursos</a>
+<a data-i18n="site.nav.freedom" href="/#liberdade" class="">Liberdade</a>
+<a data-i18n="site.nav.team" href="/#equipe" class="">Equipe</a>
+<a data-i18n="site.nav.pricing" href="/#precos" class="">Preços</a>
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+</nav>
+</div>
+</div>
+</header>
+<main id="main" class="wrap">
+<article>
+<header class="article-header">
+<a class="eyebrow" href="/" data-i18n="common.back">← Voltar ao Crypto Chat</a>
+<h1 data-i18n="privacy.title">Privacidade, soberania e liberdade</h1>
+<p class="intro" data-i18n-html="privacy.intro">Privacidade não é esconder algo. É poder escolher o que compartilhar, com quem e em que contexto. Mensagens, relações e dados pessoais merecem respeito, mesmo quando não há nada a esconder. Preservar esses dados é uma questão de dignidade, autonomia e liberdade.</p>
+</header>
+<div class="article-body">
+<p data-i18n-html="privacy.chat">No Rapport Crypto Chat, a identidade é baseada em carteira blockchain e as conversas são feitas diretamente entre as pessoas, com criptografia ponta a ponta. O relay auxilia na sinalização da conexão; não é um servidor central que armazena o conteúdo das conversas. A proposta é devolver a você mais controle sobre seus dados e suas mensagens. Saiba mais sobre <a href="/chat">como funciona o chat</a>.</p>
 
-    <h2 data-i18n="privacy.escrow.title">Pagamentos com proteção por escrow</h2>
-    <p data-i18n-html="privacy.escrow">O Crypto Chat também integra carteira e pagamentos em criptoativos. Em uma negociação, o escrow mantém os fundos em um contrato inteligente até que as condições combinadas sejam cumpridas. O fluxo pode incluir árbitros escolhidos pelas partes — inclusive uma terceira e uma quarta pessoa — para ajudar a resolver uma disputa sobre o serviço ou produto antes da liberação do pagamento. Conheça <a href="/escrow">o funcionamento do escrow</a>.</p>
+<h2 data-i18n="privacy.escrow.title">Pagamentos com proteção por escrow</h2>
+<p data-i18n-html="privacy.escrow">O Crypto Chat também integra carteira e pagamentos em criptoativos. Em uma negociação, o escrow mantém os fundos em um contrato inteligente até que as condições combinadas sejam cumpridas. O fluxo pode incluir árbitros escolhidos pelas partes — inclusive uma terceira e uma quarta pessoa — para ajudar a resolver uma disputa sobre o serviço ou produto antes da liberação do pagamento. Conheça <a href="/escrow">o funcionamento do escrow</a>.</p>
 
-    <h2 data-i18n="privacy.invest.title">Investimentos tokenizados</h2>
-    <p data-i18n-html="privacy.invest">O app também oferece acesso a oportunidades de investimento em criptoativos e ativos tokenizados, com liquidação em blockchain e sem a intermediação operacional de bancos ou financeiras tradicionais. A disponibilidade, o emissor, as regras, a liquidez e os riscos variam conforme cada produto. Retornos não são garantidos; confira as informações e os riscos de cada oferta antes de investir. Consulte os <a href="/invest">recursos de investimento</a> e os <a href="/tokens">ativos e redes suportados</a>.</p>
-    <p data-i18n-html="privacy.b3">Estamos acompanhando a evolução da tokenização no Brasil, inclusive iniciativas ligadas ao mercado financeiro e à B3. A oferta de ativos tokenizados e de exposição ao real depende de produtos e integrações disponíveis; não significa que ações da B3 já estejam disponíveis no aplicativo.</p>
+<h2 data-i18n="privacy.invest.title">Investimentos tokenizados</h2>
+<p data-i18n-html="privacy.invest">O app também oferece acesso a oportunidades de investimento em criptoativos e ativos tokenizados, com liquidação em blockchain e sem a intermediação operacional de bancos ou financeiras tradicionais. A disponibilidade, o emissor, as regras, a liquidez e os riscos variam conforme cada produto. Retornos não são garantidos; confira as informações e os riscos de cada oferta antes de investir. Consulte os <a href="/invest">recursos de investimento</a> e os <a href="/tokens">ativos e redes suportados</a>.</p>
+<p data-i18n-html="privacy.b3">Estamos acompanhando a evolução da tokenização no Brasil, inclusive iniciativas ligadas ao mercado financeiro e à B3. A oferta de ativos tokenizados e de exposição ao real depende de produtos e integrações disponíveis; não significa que ações da B3 já estejam disponíveis no aplicativo.</p>
 
-    <h2 data-i18n="privacy.fees.title">Como o projeto pretende se manter</h2>
-    <p data-i18n-html="privacy.fees">Quando o aplicativo alcançar ampla adoção, nosso objetivo é cobrar uma taxa de 0,10% sobre transações cripto realizadas pelo serviço, além das taxas de gás cobradas pela rede. Como referência, 0,10% de R$ 10 em BRLA corresponde a R$ 0,01 (um centavo); sobre R$ 1.000, corresponde a R$ 1. As taxas de rede variam e podem não ser irrisórias em todos os momentos.</p>
-    <p data-i18n-html="privacy.faucet">Se você não tiver a moeda nativa necessária para pagar o gás, fale com o suporte: durante a fase inicial, podemos ajudar com as primeiras taxas, conforme disponibilidade. Também é possível experimentar em redes de teste, cujos tokens não têm valor monetário. Entre em contato para solicitar até 5 POL de teste na Polygon Amoy. Podemos abastecer carteiras com tokens de faucet e CAS do <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a>; confira sempre a rede e o saldo recebido.</p>
+<h2 data-i18n="privacy.fees.title">Como o projeto pretende se manter</h2>
+<p data-i18n-html="privacy.fees">Quando o aplicativo alcançar ampla adoção, nosso objetivo é cobrar uma taxa de 0,10% sobre transações cripto realizadas pelo serviço, além das taxas de gás cobradas pela rede. Como referência, 0,10% de R$ 10 em BRLA corresponde a R$ 0,01 (um centavo); sobre R$ 1.000, corresponde a R$ 1. As taxas de rede variam e podem não ser irrisórias em todos os momentos.</p>
+<p data-i18n-html="privacy.faucet">Se você não tiver a moeda nativa necessária para pagar o gás, fale com o suporte: durante a fase inicial, podemos ajudar com as primeiras taxas, conforme disponibilidade. Também é possível experimentar em redes de teste, cujos tokens não têm valor monetário. Entre em contato para solicitar até 5 POL de teste na Polygon Amoy. Podemos abastecer carteiras com tokens de faucet e CAS do <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a>; confira sempre a rede e o saldo recebido.</p>
 
-    <div class="card">
-      <h2 data-i18n="privacy.support.title">Fale com o suporte</h2>
-      <p data-i18n-html="privacy.support">Converse conosco pela conta/carteira de suporte: <a class="support" dir="ltr" href="https://polygonscan.com/address/0x7010A4C4c189AB421028a622e2A2e623f432d18e">0x7010A4C4c189AB421028a622e2A2e623f432d18e</a>.</p>
-      <p data-i18n-html="privacy.closing">Vamos defender juntos o direito de ter nossos dados preservados e nossas mensagens respeitadas. Privacidade, liberdade e independência também dependem das escolhas que fazemos em tecnologia.</p>
-    </div>
-    <p><a href="/" data-i18n="common.cta.back">Voltar ao Rapport Crypto Chat</a></p>
-  </main>
+<div class="card">
+<h2 data-i18n="privacy.support.title">Fale com o suporte</h2>
+<p data-i18n-html="privacy.support">Converse conosco pela conta/carteira de suporte: <a class="support" dir="ltr" href="https://polygonscan.com/address/0x7010A4C4c189AB421028a622e2A2e623f432d18e">0x7010A4C4c189AB421028a622e2A2e623f432d18e</a>.</p>
+<p data-i18n-html="privacy.closing">Vamos defender juntos o direito de ter nossos dados preservados e nossas mensagens respeitadas. Privacidade, liberdade e independência também dependem das escolhas que fazemos em tecnologia.</p>
+</div>
+<p><a href="/" data-i18n="common.cta.back">Voltar ao Rapport Crypto Chat</a></p>
+</div>
+</article>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div class="footer-grid">
+<a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer" aria-label="Rapport Tecnologia">
+<img class="footer-logo" src="/images/rapport-logo.png" alt="Rapport Tecnologia" width="180" height="180" loading="lazy"/>
+</a>
+<div>
+<h3 data-i18n="site.footer.tagline" >Tecnologia, pessoas e liberdade digital.</h3>
+<div class="footer-links">
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.p.stats.title" href="/stats">Estatísticas</a>
+<a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a>
+</div>
+</div>
+<div class="socials">
+<a href="https://linkedin.com/in/carlosdelfino" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4M3 9h4v12H3zm6 0h4v2c1-2 6-3 7 1v9h-4v-8c0-2-3-2-3 0v8H9z"/>
+</svg>
+</a>
+<a href="https://instagram.com/rapport.tecnologia" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="18" cy="6" r="1"/>
+</svg>
+</a>
+</div>
+</div>
+<div class="copyright">
+<p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
+</div>
+</div>
+</footer>
 </body>
 </html>

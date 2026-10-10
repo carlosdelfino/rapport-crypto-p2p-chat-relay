@@ -5,12 +5,16 @@ from pathlib import Path
 import json,re,html
 P=Path('public'); C=Path('scripts/site-content'); langs=['pt-BR','en','es','fr','ar']
 articles=json.loads((C/'articles.json').read_text()); ui=json.loads((C/'ui.json').read_text()); reviews=json.loads((C/'reviews.json').read_text())
+articles.insert(0, json.loads((C/'crypto-investments.json').read_text()))
 translations={l:{} for l in langs}
 for k,values in ui.items():
  for l,v in zip(langs,values):translations[l][k]=v
 for a in articles:
  for l in langs:
   for suffix,v in zip(['title','intro','p1','p2','p3'],a[l]):translations[l]['blog.'+a['slug']+'.'+suffix]=v
+  for section in a.get('sections', []):
+   for suffix,v in zip(['heading','text'],section[l]):translations[l]['blog.'+a['slug']+'.'+section['id']+'.'+suffix]=v
+  if 'cta' in a:translations[l]['blog.'+a['slug']+'.cta']=a['cta'][l]
 for i,(_,_,values) in enumerate(reviews,3):
  for l,v in zip(langs,values):translations[l]['site.review.'+str(i)]=v
 for l in langs[1:]:
@@ -35,13 +39,13 @@ def head(title,key,path,desc='',desc_key='',img='/og-image.png'):
 def nav():
  return '''<header class="site-header"><div class="container wrap"><div class="header-row"><a class="brand" href="/"><img src="/favicon.png" alt="" width="44" height="44"/>Rapport Crypto Chat</a><nav class="nav">'''+''.join(link(k,url) for k,url in [('site.nav.features','/#recursos'),('site.nav.freedom','/#liberdade'),('site.nav.team','/#equipe'),('site.nav.pricing','/#precos')])+f'<a href="/blog">Blog</a>'+link('site.nav.support','/suporte')+old('home.cta.download','Baixar APK','a','href="/install" class="button"')+'</nav></div></div></header>'
 def footer():
- return '''<footer class="site-footer"><div class="wrap"><div class="footer-grid"><a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer"><img class="footer-logo" src="/images/rapport-logo.png" alt="Rapport Tecnologia" width="180" height="180" loading="lazy"/></a><div>'''+t('site.footer.tagline','h3')+'''<div class="footer-links"><a href="/blog">Blog</a>'''+link('site.nav.support','/suporte')+old('home.p.stats.title','Estatísticas','a','href="/stats"')+'''<a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a></div></div><div class="socials"><a href="https://linkedin.com/in/carlosdelfino" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4M3 9h4v12H3zm6 0h4v2c1-2 6-3 7 1v9h-4v-8c0-2-3-2-3 0v8H9z"/></svg></a><a href="https://instagram.com/rapport.tecnologia" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="6" r="1"/></svg></a></div></div><div class="copyright"><p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p></div></div></footer></body></html>'''
+ return '''<footer class="site-footer"><div class="wrap"><div class="footer-grid"><a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer" aria-label="Rapport Tecnologia"><img class="footer-logo" src="/images/rapport-logo.png" alt="Rapport Tecnologia" width="180" height="180" loading="lazy"/></a><div>'''+t('site.footer.tagline','h3')+'''<div class="footer-links"><a href="/blog">Blog</a>'''+link('site.nav.support','/suporte')+old('home.p.stats.title','Estatísticas','a','href="/stats"')+'''<a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a></div></div><div class="socials"><a href="https://linkedin.com/in/carlosdelfino" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4M3 9h4v12H3zm6 0h4v2c1-2 6-3 7 1v9h-4v-8c0-2-3-2-3 0v8H9z"/></svg></a><a href="https://instagram.com/rapport.tecnologia" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="6" r="1"/></svg></a></div></div><div class="copyright"><p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p></div></div></footer></body></html>'''
 def title(k,lead=None,level='h2'):return '<div class="section-head">'+t(k,level)+(t(lead,'p') if lead else '')+'</div>'
 def cards(items):
  out='<div class="grid">'
  for a in items:
   k='blog.'+a['slug'];url='/blog/'+a['slug']
-  out+=f'<article class="blog-card"><a href="{url}" tabindex="-1" aria-hidden="true"><img src="/images/editorial/{a["image"]}.webp" alt="" loading="lazy" width="1536" height="1024"/></a><div class="content"><h3>'+link(k+'.title',url)+'</h3>'+t(k+'.intro','p')+link('site.blog.read',url,'card-link')+'</div></article>'
+  out+=f'<article class="blog-card"><a href="{url}" tabindex="-1" aria-hidden="true"><img src="/images/editorial/{a.get("thumbnail", a["image"])}.webp" alt="" loading="lazy" width="1536" height="1024"/></a><div class="content"><h3>'+link(k+'.title',url)+'</h3>'+t(k+'.intro','p')+link('site.blog.read',url,'card-link')+'</div></article>'
  return out+'</div>'
 def save(path,s):
  f=P/path/'index.html' if path else P/'index.html';f.parent.mkdir(parents=True,exist_ok=True);f.write_text(s.replace('><', '>\n<'))
@@ -79,12 +83,20 @@ save('',s)
 s=head(ui['site.blog.title'][0],'site.blog.title','/blog',ui['site.blog.lead'][0],'site.blog.lead')+nav()+'<main id="main" class="section"><div class="wrap">'+title('site.blog.title','site.blog.lead','h1')+cards(articles)+'</div></main>'+footer();save('blog',s)
 for a in articles:
  k='blog.'+a['slug'];path='/blog/'+a['slug']
- s=head(a['pt-BR'][0],k+'.title',path,a['pt-BR'][1],k+'.intro','/images/editorial/'+a['image']+'.webp')+nav()+'<main id="main" class="wrap"><article><header class="article-header"><p class="eyebrow">'+link('site.blog.all','/blog')+'</p>'+t(k+'.title','h1')+t(k+'.intro','p')+t('site.blog.editorial','small')+'</header><img class="article-cover" src="/images/editorial/'+a['image']+'.webp" alt="" width="1536" height="1024" fetchpriority="high"/><div class="article-body">'+''.join(t(k+'.p'+str(i),'p') for i in [1,2,3])+t('site.blog.sources','h2')+f'<p><a href="{a["source"]}">{a["sourceLabel"]}</a></p>'+link('site.blog.all','/blog','button secondary')+'</div></article></main>'+footer();save('blog/'+a['slug'],s)
-s=head(ui['site.support.title'][0],'site.support.title','/suporte',ui['site.questions.desc'][0],'site.questions.desc')+nav()+'<main id="main" class="section"><div class="wrap">'+title('site.support.title','site.questions.desc','h1')+'<div class="support-grid"><section class="card"><h2>Crypto Chat</h2>'+t('site.support.steps','p')+'<code class="support-address" dir="ltr">0x7010A4C4c189AB421028a622e2A2e623f432d18e</code>'+old('home.cta.download','Baixar APK','a','href="/install" class="button secondary"')+'</section><section class="card"><h2>WhatsApp</h2><p dir="ltr">+55 (85) 98520-5490</p>'+link('site.support.whatsapp','https://wa.me/5585985205490','button')+'</section></div></div></main>'+footer();save('suporte',s)
+ if 'sections' in a:
+  body=''
+  for section in a['sections']:
+   body+=t(k+'.'+section['id']+'.heading','h2')+t(k+'.'+section['id']+'.text','p')
+   if section.get('links'):body+='<p>'+ ' · '.join(f'<a href="{html.escape(url,quote=True)}" target="_blank" rel="noopener noreferrer">{html.escape(label)}</a>' for url,label in section['links'])+'</p>'
+  body+=link(k+'.cta','/invest','button')
+ else:
+  body=''.join(t(k+'.p'+str(i),'p') for i in [1,2,3])+t('site.blog.sources','h2')+f'<p><a href="{a["source"]}">{a["sourceLabel"]}</a></p>'
+ s=head(a['pt-BR'][0],k+'.title',path,a['pt-BR'][1],k+'.intro','/images/editorial/'+a['image']+'.webp')+nav()+'<main id="main" class="wrap"><article><header class="article-header"><p class="eyebrow">'+link('site.blog.all','/blog')+'</p>'+t(k+'.title','h1')+t(k+'.intro','p')+t('site.blog.editorial','small')+'</header><img class="article-cover" src="/images/editorial/'+a['image']+'.webp" alt="" width="1536" height="1024" fetchpriority="high"/><div class="article-body">'+body+link('site.blog.all','/blog','button secondary')+'</div></article></main>'+footer();save('blog/'+a['slug'],s)
+s=head(ui['site.support.title'][0],'site.support.title','/suporte',ui['site.questions.desc'][0],'site.questions.desc')+nav()+'<main id="main" class="section"><div class="wrap">'+title('site.support.title','site.questions.desc','h1')+'<div class="support-grid"><section class="card"><h2>Crypto Chat</h2>'+t('site.support.steps','p')+'<code class="support-address" dir="ltr">0x7010A4C4c189AB421028a622e2A2e623f432d18e</code>'+old('home.cta.download','Baixar APK','a','href="/install" class="button secondary"')+'</section><section class="card"><h2>WhatsApp</h2><p dir="ltr">+55 (85) 98520-5490</p>'+t('site.support.whatsapp','a','href="https://wa.me/5585985205490" class="button" target="_blank" rel="noopener noreferrer"')+'</section></div></div></main>'+footer();save('suporte',s)
 # Add new canonical routes to the existing sitemap.
 f=P/'sitemap.xml';s=f.read_text()
 for path in ['/blog','/suporte','/privacidade']+['/blog/'+a['slug'] for a in articles]:
  url='https://crypto-chat.rapport.tec.br'+path
  if '<loc>'+url+'</loc>' not in s:s=s.replace('</urlset>',f'  <url><loc>{url}</loc></url>\n</urlset>')
 f.write_text(s)
-print('Generated home, blog, 7 articles, support and 4 translation dictionaries.')
+print(f'Generated home, blog, {len(articles)} articles, support and 4 translation dictionaries.')

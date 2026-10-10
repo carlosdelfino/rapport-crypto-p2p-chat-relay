@@ -1,4 +1,4 @@
-import { test, expect, expectCleanRuntime } from './helpers';
+import { test, expect, expectCleanRuntime, mockStatsApi } from './helpers';
 
 test.describe('navegação e metadados do site', () => {
   test('home linka para /tokens a partir de "Moedas e tokens"', async ({
@@ -29,23 +29,23 @@ test.describe('navegação e metadados do site', () => {
     await page.goto('/');
 
     // Os três cards de arquitetura apontam para /chat.
-    const chatLinks = page.locator('.feature-card a[href="/chat"]');
+    const chatLinks = page.locator('a.card-link[href="/chat"]');
     expect(await chatLinks.count()).toBe(3);
 
     // Redes suportadas e Moedas e tokens apontam para /tokens.
     expect(
-      await page.locator('.feature-card a[href="/tokens"]').count(),
+      await page.locator('a.card-link[href="/tokens"]').count(),
     ).toBeGreaterThanOrEqual(2);
 
     // Pagamento garantido -> /escrow; Wallet -> /wallet; Android nativo -> /install.
     await expect(
-      page.locator('.feature-card a[href="/escrow"]'),
+      page.locator('a.card-link[href="/escrow"]'),
     ).toHaveCount(1);
     await expect(
-      page.locator('.feature-card a[href="/wallet"]'),
+      page.locator('a.card-link[href="/wallet"]'),
     ).toHaveCount(1);
     await expect(
-      page.locator('.feature-card a[href="/install"]'),
+      page.locator('a.card-link[href="/install"]'),
     ).toHaveCount(1);
 
     expectCleanRuntime(hygiene);
@@ -57,23 +57,24 @@ test.describe('navegação e metadados do site', () => {
   }) => {
     await page.goto('/');
 
-    // Cards redundantes foram removidos: a grade de páginas só mantém
+    // Cards redundantes foram removidos: a grade de recursos só mantém
     // destinos sem card correspondente em Recursos.
-    const linksGrid = page.locator('.links-grid');
-    for (const href of ['/install', '/escrow', '/tokens', '/chat', '/wallet']) {
+    const resources = page.locator('.resources');
+    for (const href of ['/install', '/escrow', '/tokens', '/chat', '/wallet', '/stats', '/comandos']) {
       await expect(
-        linksGrid.locator(`a[href="${href}"]`),
-        `links-grid não deve linkar ${href}`,
+        resources.locator(`a[href="${href}"]`),
+        `resources não deve linkar ${href}`,
       ).toHaveCount(0);
     }
 
     // Permanecem apenas os destinos não cobertos pelos cards de Recursos.
-    await expect(linksGrid.locator('a[href="/stats"]')).toHaveCount(1);
-    await expect(linksGrid.locator('a[href="/comandos"]')).toHaveCount(1);
-    await expect(linksGrid.locator('a[href="/ajudar"]')).toHaveCount(1);
-    expect(
-      await linksGrid.locator('a.link-card').count(),
-    ).toBe(5);
+    await expect(resources.locator('a[href="/ajudar"]')).toHaveCount(1);
+    await expect(
+      resources.locator(
+        'a[href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat"]',
+      ),
+    ).toHaveCount(1);
+    expect(await resources.locator('a').count()).toBe(2);
 
     expectCleanRuntime(hygiene);
   });
@@ -103,24 +104,36 @@ test.describe('navegação e metadados do site', () => {
 
     for (const route of ['/', '/install', '/stats', '/ajudar', '/escrow', '/tokens', '/chat', '/wallet', '/invest']) {
       await page.goto(route);
-      const contacts = page.locator('[data-i18n-html="common.footer.contacts"]');
-      await expect(contacts, `rodapé de ${route}`).toBeVisible();
-      await expect(contacts.locator('a[href="/ajudar#crypto-chat-support"]')).toHaveText('Crypto Chat');
-      await expect(contacts.locator('a[href="https://wa.me/5585985254090"]')).toHaveText('WhatsApp');
-      await expect(contacts.locator('a[href="mailto:admin@rapport.tec.br"]')).toHaveText('admin@rapport.tec.br');
-      await expect(contacts.locator('a[href="https://rapport.tec.br"]')).toHaveText('rapport.tec.br');
-      await expect(contacts.locator('a[href="https://hubagentic.space"]')).toHaveText('Hub Agentic Space');
+      const footer = page.locator('.site-footer');
+      await expect(footer, `rodapé de ${route}`).toBeVisible();
+      await expect(footer.locator('a[href="/suporte"]')).toHaveCount(1);
+      await expect(
+        footer.locator('[data-i18n-html="common.footer"]'),
+      ).toBeVisible();
+      await expect(
+        footer.locator('[data-i18n-html="common.footer"] a[href="https://rapport.tec.br"]'),
+      ).toHaveText('Rapport Tecnologia e Inovação');
 
-      for (const href of [
-        'https://wa.me/5585985254090',
-        'https://rapport.tec.br',
-        'https://hubagentic.space',
-      ]) {
-        const external = contacts.locator(`a[href="${href}"]`);
-        await expect(external).toHaveAttribute('target', '_blank');
-        await expect(external).toHaveAttribute('rel', 'noopener noreferrer');
+      // Links externos do rodapé abrem em nova aba com rel seguro.
+      const socials = footer.locator('.socials a');
+      expect(await socials.count()).toBeGreaterThanOrEqual(2);
+      for (const social of await socials.all()) {
+        await expect(social).toHaveAttribute('target', '_blank');
+        await expect(social).toHaveAttribute('rel', 'noopener noreferrer');
       }
     }
+
+    // Contatos diretos ficam nas páginas de suporte e ajuda.
+    await page.goto('/suporte');
+    const whatsapp = page.locator('a[href="https://wa.me/5585985205490"]');
+    await expect(whatsapp).toBeVisible();
+    await expect(whatsapp).toHaveAttribute('target', '_blank');
+    await expect(whatsapp).toHaveAttribute('rel', 'noopener noreferrer');
+
+    await page.goto('/ajudar');
+    await expect(page.locator('#crypto-chat-support')).toContainText(
+      '0x7010A4C4c189AB421028a622e2A2e623f432d18e',
+    );
 
     expectCleanRuntime(hygiene);
   });
@@ -151,11 +164,11 @@ test.describe('navegação e metadados do site', () => {
 
     for (const route of ['/', '/install', '/stats', '/ajudar', '/escrow', '/tokens', '/chat', '/wallet', '/invest']) {
       await page.goto(route);
-      const contacts = page.locator('[data-i18n-html="common.footer.contacts"]');
-      const overflow = await contacts.evaluate(
+      const footer = page.locator('.site-footer');
+      const overflow = await footer.evaluate(
         (element) => element.scrollWidth - element.clientWidth,
       );
-      expect(overflow, `contatos do rodapé de ${route} não devem transbordar`).toBeLessThanOrEqual(1);
+      expect(overflow, `rodapé de ${route} não deve transbordar`).toBeLessThanOrEqual(1);
     }
 
     expectCleanRuntime(hygiene);

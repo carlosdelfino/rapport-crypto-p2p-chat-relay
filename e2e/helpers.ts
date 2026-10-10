@@ -49,6 +49,36 @@ export const test = base.extend<{ hygiene: Hygiene }>({
   },
 });
 
+/**
+ * Resposta estável de `/api/stats` para specs que abrem páginas com
+ * home-stats.js (a home faz fetch; sem o stub o 404 vira console.error
+ * e suja a higiene de runtime).
+ */
+export async function mockStatsApi(page: Page): Promise<void> {
+  await page.route('**/api/stats', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        data: {
+          totalWallets: 0,
+          onlineWallets: 0,
+          totalMessages: 0,
+          totalChats: 0,
+          updatedAt: '2026-10-08T00:00:00.000Z',
+          financial: {
+            volumeBySymbol: [],
+            volumeByNetwork: [],
+            countByKind: [],
+            totalTransactions: 0,
+          },
+          escrowDemand: { byNetwork: [], totalRequests: 0 },
+        },
+      }),
+    }),
+  );
+}
+
 export function expectCleanRuntime(hygiene: Hygiene): void {
   expect(
     hygiene.unexpectedExternal,

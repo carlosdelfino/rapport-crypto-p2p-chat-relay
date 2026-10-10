@@ -20,7 +20,7 @@
   <title data-i18n="comandos.meta.title">Comandos do chat — tutorial | Rapport Crypto Chat</title>
   <meta name="description" content="Tutorial completo dos comandos do Rapport Crypto Chat: /pay, /collect, /balance, /escrow, /invest, /tokens, /coin, /chain, /faucet, /contact e /help — sintaxe, exemplos e comportamento de cada comando dentro da conversa." data-i18n-attr="content:comandos.meta.desc"/>
   <meta name="keywords" content="comandos chat, /pay, /collect, /balance, /escrow, /invest, tutorial crypto chat, rapport crypto chat, comandos slash"/>
-  <meta name="theme-color" content="#020617"/>
+  <meta name="theme-color" content="#ed5919"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/comandos"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
@@ -32,6 +32,8 @@
   <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/comandos?lang=ar"/>
   <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/comandos"/>
   <link rel="stylesheet" href="/css/i18n.css"/>
+  <link rel="stylesheet" href="/css/site.css"/>
+  <link rel="stylesheet" href="/css/subpage.css"/>
   <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="article"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
@@ -59,331 +61,222 @@
     "publisher": { "@type": "Organization", "name": "Rapport Tecnologia e Inovação", "url": "https://rapport.tec.br" }
   }
   </script>
-  <style>
-    :root {
-      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
-      --border:#1e293b; --border-hover:#334155;
-      --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
-      --brand:#ea580c; --brand-light:#fb923c; --brand-dark:#c2410c;
-      --brand-300:#fdba74; --brand-500:#f97316;
-      --ok:#4ade80; --warn:#facc15;
-    }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body {
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg); color:var(--text); line-height:1.6;
-      min-height:100vh; padding:1rem;
-      -webkit-font-smoothing:antialiased;
-    }
-    .container { max-width:52rem; margin:0 auto; padding:1rem 0; }
-
-    .hero { text-align:center; padding:3rem 1rem 2rem; }
-    .hero h1 {
-      font-size:clamp(1.9rem,5vw,2.8rem); font-weight:800;
-      color:var(--brand-light); margin-bottom:.75rem; letter-spacing:-.02em;
-    }
-    .hero .tagline { color:var(--secondary); font-size:1.1rem; max-width:40rem; margin:0 auto 1rem; }
-    .hero .subtagline { color:var(--muted); font-size:.9rem; max-width:36rem; margin:0 auto; }
-    .badge {
-      display:inline-block; margin-top:1rem; padding:.3rem .8rem;
-      border:1px solid var(--border); border-radius:999px;
-      font-size:.75rem; font-weight:600; color:var(--muted);
-      background:var(--card-60); backdrop-filter:blur(8px);
-    }
-    .badge .dot {
-      display:inline-block; width:.5rem; height:.5rem; border-radius:50%;
-      background:var(--brand-500); margin-right:.4rem; vertical-align:middle;
-      animation:pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-    .cta-row { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; margin-top:1.5rem; }
-    .cta {
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.8rem 1.6rem; border-radius:.7rem;
-      font-size:.95rem; font-weight:700; text-decoration:none;
-      transition:transform .2s, box-shadow .2s;
-    }
-    .cta-primary { background:var(--brand); color:#fff; box-shadow:0 8px 24px rgba(234,88,12,.2); }
-    .cta-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(234,88,12,.3); }
-    .cta-secondary { border:1px solid var(--border); color:var(--text); background:var(--card-60); backdrop-filter:blur(8px); }
-    .cta-secondary:hover { border-color:var(--brand); transform:translateY(-2px); }
-
-    .section-title {
-      font-size:1.25rem; font-weight:700; color:var(--brand-light);
-      margin:3rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
-    }
-    .lead { color:var(--secondary); font-size:1rem; margin-bottom:1rem; }
-    .muted { color:var(--muted); font-size:.9rem; }
-    .lead a, .muted a { color:var(--brand-light); text-decoration:none; }
-    .lead a:hover, .muted a:hover { color:var(--brand); }
-
-    code, .cmd {
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-      font-size:.85em; color:var(--brand-300);
-      background:rgba(234,88,12,.08); padding:.1rem .4rem; border-radius:.35rem;
-    }
-
-    /* Cards de comportamento */
-    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); gap:1rem; margin:1.5rem 0; }
-    .card {
-      border:1px solid var(--border); border-radius:1rem;
-      background:var(--card-60); backdrop-filter:blur(8px); padding:1.4rem;
-    }
-    .card .icon {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:2.4rem; height:2.4rem; border-radius:.7rem;
-      background:rgba(234,88,12,.12); color:var(--brand-light);
-      font-size:1.2rem; margin-bottom:.6rem;
-    }
-    .card h3 { font-size:.98rem; font-weight:700; margin-bottom:.35rem; }
-    .card p { font-size:.85rem; color:var(--muted); }
-
-    /* Blocos de comando */
-    .cmd-block {
-      border:1px solid var(--border); border-radius:1rem;
-      background:var(--card-60); backdrop-filter:blur(8px);
-      padding:1.4rem; margin-bottom:1rem;
-    }
-    .cmd-block h3 {
-      display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;
-      font-size:1.05rem; font-weight:800; margin-bottom:.5rem;
-    }
-    .cmd-block h3 code { font-size:1rem; padding:.2rem .6rem; }
-    .tag {
-      font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
-      padding:.18rem .55rem; border-radius:999px; border:1px solid var(--border);
-      color:var(--muted); background:var(--bg);
-    }
-    .tag.local { color:var(--ok); border-color:rgba(74,222,128,.4); }
-    .tag.send { color:var(--brand-light); border-color:rgba(251,146,60,.4); }
-    .tag.confirm { color:var(--warn); border-color:rgba(250,204,21,.4); }
-    .syntax {
-      display:block; font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-      font-size:.85rem; color:var(--text); background:var(--bg);
-      border:1px solid var(--border); border-radius:.5rem;
-      padding:.55rem .8rem; margin:.6rem 0; overflow-x:auto;
-    }
-    .cmd-block p { font-size:.9rem; color:var(--secondary); margin-bottom:.5rem; }
-    .cmd-block p.examples { color:var(--muted); font-size:.85rem; margin-bottom:0; }
-    .cmd-block a { color:var(--brand-light); text-decoration:none; }
-    .cmd-block a:hover { color:var(--brand); }
-
-    .callout {
-      border:1px solid var(--brand); border-left-width:4px; border-radius:.9rem;
-      background:rgba(234,88,12,.08); padding:1rem 1.2rem; margin:1.5rem 0;
-      font-size:.9rem; color:var(--secondary);
-    }
-    .callout strong { color:var(--brand-light); }
-
-    .tip-list { list-style:none; margin:1rem 0; }
-    .tip-list li {
-      position:relative; padding-left:1.6rem; margin-bottom:.7rem;
-      color:var(--secondary); font-size:.9rem;
-    }
-    .tip-list li::before {
-      content:"→"; position:absolute; left:0; top:0;
-      color:var(--brand-light); font-weight:700;
-    }
-
-    /* Carteira de suporte (mesmo padrão de /ajudar) */
-    .donation-item {
-      display:flex; flex-direction:column; gap:.4rem; padding:1rem;
-      border:1px solid var(--border); border-radius:.75rem; background:var(--bg);
-    }
-    .donation-label { font-size:.75rem; font-weight:700; color:var(--brand-light); text-transform:uppercase; letter-spacing:.08em; }
-    .donation-addr {
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-      font-size:.85rem; color:var(--text); word-break:break-all; cursor:pointer;
-      padding:.4rem .6rem; border-radius:.4rem; border:1px solid var(--border);
-      background:var(--card); transition:border-color .2s;
-    }
-    .donation-addr:hover { border-color:var(--brand); }
-    .donation-addr:active { border-color:var(--brand-light); }
-    .donation-hint { font-size:.75rem; color:var(--muted); }
-    .copy-btn {
-      display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .7rem;
-      border:1px solid var(--border); border-radius:.4rem; background:var(--card);
-      color:var(--secondary); font-size:.75rem; cursor:pointer; transition:all .2s;
-      align-self:flex-start;
-    }
-    .copy-btn:hover { border-color:var(--brand); color:var(--brand-light); }
-    .toast {
-      position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
-      padding:.6rem 1.2rem; border-radius:.5rem; background:var(--brand);
-      color:#fff; font-size:.85rem; font-weight:600; opacity:0;
-      transition:opacity .3s; pointer-events:none; z-index:100;
-    }
-    .toast.show { opacity:1; }
-
-    .footer {
-      text-align:center; color:var(--muted); font-size:.8rem;
-      margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
-    }
-    .footer a { color:var(--brand-light); text-decoration:none; }
-    .footer a:hover { color:var(--brand); }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <header class="hero">
-      <h1 data-i18n="comandos.hero.title">Comandos do chat</h1>
-      <p class="tagline" data-i18n="comandos.hero.tagline">No Rapport Crypto Chat tudo acontece dentro da conversa: pagar, cobrar, ver saldo, criar escrow e investir são comandos que voc&ecirc; digita no campo de mensagem.</p>
-      <p class="subtagline" data-i18n-html="comandos.hero.subtagline">Comece com <code class="cmd">/help</code> dentro do app &mdash; ele lista todos os comandos dispon&iacute;veis.</p>
-      <span class="badge"><span class="dot"></span><span data-i18n="comandos.hero.badge">comandos slash &middot; dentro da conversa</span></span>
-      <div class="cta-row">
-        <a class="cta cta-primary" href="/install" data-i18n="common.cta.install">Instalar o app</a>
-        <a class="cta cta-secondary" href="/" data-i18n="common.cta.back">Voltar ao in&iacute;cio</a>
-      </div>
-    </header>
+<a data-i18n="site.skip" href="#main" class="skip-link">Ir para o conteúdo</a>
+<header class="site-header">
+<div class="container wrap">
+<div class="header-row">
+<a class="brand" href="/">
+<img src="/favicon.png" alt="" width="44" height="44"/>Rapport Crypto Chat</a>
+<nav class="nav">
+<a data-i18n="site.nav.features" href="/#recursos" class="">Recursos</a>
+<a data-i18n="site.nav.freedom" href="/#liberdade" class="">Liberdade</a>
+<a data-i18n="site.nav.team" href="/#equipe" class="">Equipe</a>
+<a data-i18n="site.nav.pricing" href="/#precos" class="">Preços</a>
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+</nav>
+</div>
+</div>
+</header>
+<main id="main">
+<header class="page-hero">
+<div class="wrap">
+<h1 data-i18n="comandos.hero.title">Comandos do chat</h1>
+<p class="tagline" data-i18n="comandos.hero.tagline">No Rapport Crypto Chat tudo acontece dentro da conversa: pagar, cobrar, ver saldo, criar escrow e investir são comandos que voc&ecirc; digita no campo de mensagem.</p>
+<p class="subtagline" data-i18n-html="comandos.hero.subtagline">Comece com <code class="cmd">/help</code> dentro do app &mdash; ele lista todos os comandos dispon&iacute;veis.</p>
+<span class="badge"><span class="dot"></span><span data-i18n="comandos.hero.badge">comandos slash &middot; dentro da conversa</span></span>
+<div class="actions">
+<a class="button" href="/install" data-i18n="common.cta.install">Instalar o app</a>
+<a class="button secondary" href="/" data-i18n="common.cta.back">Voltar ao in&iacute;cio</a>
+</div>
+</div>
+</header>
+<div class="page">
+<h2 class="section-title" data-i18n="comandos.how.title">Como os comandos funcionam</h2>
+<p class="lead" data-i18n-html="comandos.how.lead">Comandos come&ccedil;am com <code class="cmd">/</code> (barra) e s&atilde;o digitados no campo de mensagem como um texto comum. Ao digitar <code class="cmd">/</code>, o app sugere os comandos dispon&iacute;veis e voc&ecirc; pode tocar para autocompletar. Cada comando tem um comportamento:</p>
+<div class="cards">
+<div class="card">
+<span class="icon">&#128065;&#65039;</span>
+<h3 data-i18n="comandos.how.local.title">Local</h3>
+<p data-i18n-html="comandos.how.local.desc">O resultado aparece <strong>somente na sua tela</strong> &mdash; nada &eacute; enviado ao contato. Ex.: <code class="cmd">/balance</code>, <code class="cmd">/chain</code>, <code class="cmd">/help</code>.</p>
+</div>
+<div class="card">
+<span class="icon">&#128228;</span>
+<h3 data-i18n="comandos.how.send.title">Envio</h3>
+<p data-i18n-html="comandos.how.send.desc">O comando vira uma <strong>mensagem estruturada na conversa</strong>, criptografada de ponta a ponta. Ex.: <code class="cmd">/collect</code> envia a cobran&ccedil;a ao contato.</p>
+</div>
+<div class="card">
+<span class="icon">&#9989;</span>
+<h3 data-i18n="comandos.how.confirm.title">Confirma&ccedil;&atilde;o</h3>
+<p data-i18n-html="comandos.how.confirm.desc">Comandos que movimentam fundos <strong>pedem confirma&ccedil;&atilde;o antes de assinar e enviar</strong> a transa&ccedil;&atilde;o on-chain. Ex.: <code class="cmd">/pay</code>, <code class="cmd">/escrow</code>, <code class="cmd">/invest</code>.</p>
+</div>
+</div>
+<div class="callout">
+<span data-i18n-html="comandos.how.note"><strong>Regras gerais:</strong> comandos financeiros (<code class="cmd">/pay</code>, <code class="cmd">/collect</code>, <code class="cmd">/escrow</code>) s&oacute; funcionam em conversas diretas &mdash; em grupos s&atilde;o rejeitados por seguran&ccedil;a. Quando a rede &eacute; opcional, ela vem depois de uma v&iacute;rgula (ex.: <code class="cmd">/pay 5 USDC, base</code>); se omitida, o app usa a rede nativa da moeda. Valores usam ponto como separador decimal (ex.: <code class="cmd">10.5</code>).</span>
+</div>
 
-    <h2 class="section-title" data-i18n="comandos.how.title">Como os comandos funcionam</h2>
-    <p class="lead" data-i18n-html="comandos.how.lead">Comandos come&ccedil;am com <code class="cmd">/</code> (barra) e s&atilde;o digitados no campo de mensagem como um texto comum. Ao digitar <code class="cmd">/</code>, o app sugere os comandos dispon&iacute;veis e voc&ecirc; pode tocar para autocompletar. Cada comando tem um comportamento:</p>
-    <div class="cards">
-      <div class="card">
-        <span class="icon">&#128065;&#65039;</span>
-        <h3 data-i18n="comandos.how.local.title">Local</h3>
-        <p data-i18n-html="comandos.how.local.desc">O resultado aparece <strong>somente na sua tela</strong> &mdash; nada &eacute; enviado ao contato. Ex.: <code class="cmd">/balance</code>, <code class="cmd">/chain</code>, <code class="cmd">/help</code>.</p>
-      </div>
-      <div class="card">
-        <span class="icon">&#128228;</span>
-        <h3 data-i18n="comandos.how.send.title">Envio</h3>
-        <p data-i18n-html="comandos.how.send.desc">O comando vira uma <strong>mensagem estruturada na conversa</strong>, criptografada de ponta a ponta. Ex.: <code class="cmd">/collect</code> envia a cobran&ccedil;a ao contato.</p>
-      </div>
-      <div class="card">
-        <span class="icon">&#9989;</span>
-        <h3 data-i18n="comandos.how.confirm.title">Confirma&ccedil;&atilde;o</h3>
-        <p data-i18n-html="comandos.how.confirm.desc">Comandos que movimentam fundos <strong>pedem confirma&ccedil;&atilde;o antes de assinar e enviar</strong> a transa&ccedil;&atilde;o on-chain. Ex.: <code class="cmd">/pay</code>, <code class="cmd">/escrow</code>, <code class="cmd">/invest</code>.</p>
-      </div>
-    </div>
-    <div class="callout">
-      <span data-i18n-html="comandos.how.note"><strong>Regras gerais:</strong> comandos financeiros (<code class="cmd">/pay</code>, <code class="cmd">/collect</code>, <code class="cmd">/escrow</code>) s&oacute; funcionam em conversas diretas &mdash; em grupos s&atilde;o rejeitados por seguran&ccedil;a. Quando a rede &eacute; opcional, ela vem depois de uma v&iacute;rgula (ex.: <code class="cmd">/pay 5 USDC, base</code>); se omitida, o app usa a rede nativa da moeda. Valores usam ponto como separador decimal (ex.: <code class="cmd">10.5</code>).</span>
-    </div>
+<h2 class="section-title" data-i18n="comandos.ref.title">Refer&ecirc;ncia dos comandos</h2>
+<p class="lead" data-i18n-html="comandos.ref.lead">Todos os comandos dispon&iacute;veis na conversa, com sintaxe e exemplos. Dentro do app, <code class="cmd">/help &lt;comando&gt;</code> mostra o mesmo resumo.</p>
 
-    <h2 class="section-title" data-i18n="comandos.ref.title">Refer&ecirc;ncia dos comandos</h2>
-    <p class="lead" data-i18n-html="comandos.ref.lead">Todos os comandos dispon&iacute;veis na conversa, com sintaxe e exemplos. Dentro do app, <code class="cmd">/help &lt;comando&gt;</code> mostra o mesmo resumo.</p>
+<div class="cmd-block">
+<h3><code>/help</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
+<span class="syntax" data-i18n="comandos.help.syntax">/help [&lt;comando&gt;]</span>
+<p data-i18n="comandos.help.desc">Lista todos os comandos dispon&iacute;veis ou mostra a ajuda detalhada de um comando espec&iacute;fico. &Eacute; o ponto de partida quando voc&ecirc; esquece a sintaxe.</p>
+<p class="examples" data-i18n-html="comandos.help.ex"><strong>Exemplos:</strong> <code class="cmd">/help</code> &middot; <code class="cmd">/help pay</code> &middot; <code class="cmd">/help escrow</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/help</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
-      <span class="syntax" data-i18n="comandos.help.syntax">/help [&lt;comando&gt;]</span>
-      <p data-i18n="comandos.help.desc">Lista todos os comandos dispon&iacute;veis ou mostra a ajuda detalhada de um comando espec&iacute;fico. &Eacute; o ponto de partida quando voc&ecirc; esquece a sintaxe.</p>
-      <p class="examples" data-i18n-html="comandos.help.ex"><strong>Exemplos:</strong> <code class="cmd">/help</code> &middot; <code class="cmd">/help pay</code> &middot; <code class="cmd">/help escrow</code></p>
-    </div>
+<div class="cmd-block">
+<h3><code>/pay</code><span class="tag confirm" data-i18n="comandos.tag.confirm">confirma&ccedil;&atilde;o</span></h3>
+<span class="syntax" data-i18n="comandos.pay.syntax">/pay &lt;valor&gt; &lt;moeda&gt;[, &lt;rede&gt;]</span>
+<p data-i18n-html="comandos.pay.desc">Assina e envia um pagamento ao contato da conversa. Se existir um <code class="cmd">/collect</code> correspondente, o app reutiliza a rede e o endere&ccedil;o da solicita&ccedil;&atilde;o; caso contr&aacute;rio, resolve o endere&ccedil;o de pagamento do contato para a fam&iacute;lia da rede. O saldo &eacute; verificado antes do envio e a confirma&ccedil;&atilde;o aparece na conversa com o hash e o link do explorer.</p>
+<p class="examples" data-i18n-html="comandos.pay.ex"><strong>Exemplos:</strong> <code class="cmd">/pay 10 POL</code> &middot; <code class="cmd">/pay 5 USDC, base</code> &middot; <code class="cmd">/pay 0.01 BTC</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/pay</code><span class="tag confirm" data-i18n="comandos.tag.confirm">confirma&ccedil;&atilde;o</span></h3>
-      <span class="syntax" data-i18n="comandos.pay.syntax">/pay &lt;valor&gt; &lt;moeda&gt;[, &lt;rede&gt;]</span>
-      <p data-i18n-html="comandos.pay.desc">Assina e envia um pagamento ao contato da conversa. Se existir um <code class="cmd">/collect</code> correspondente, o app reutiliza a rede e o endere&ccedil;o da solicita&ccedil;&atilde;o; caso contr&aacute;rio, resolve o endere&ccedil;o de pagamento do contato para a fam&iacute;lia da rede. O saldo &eacute; verificado antes do envio e a confirma&ccedil;&atilde;o aparece na conversa com o hash e o link do explorer.</p>
-      <p class="examples" data-i18n-html="comandos.pay.ex"><strong>Exemplos:</strong> <code class="cmd">/pay 10 POL</code> &middot; <code class="cmd">/pay 5 USDC, base</code> &middot; <code class="cmd">/pay 0.01 BTC</code></p>
-    </div>
+<div class="cmd-block">
+<h3><code>/collect</code><span class="tag send" data-i18n="comandos.tag.send">envio</span></h3>
+<span class="syntax" data-i18n="comandos.collect.syntax">/collect &lt;valor&gt; &lt;moeda&gt;[, &lt;rede&gt;]</span>
+<p data-i18n-html="comandos.collect.desc">Solicita um pagamento &agrave; outra parte: envia uma mensagem estruturada j&aacute; com valor, moeda, rede e o seu endere&ccedil;o correto &mdash; o contato s&oacute; precisa confirmar. Tamb&eacute;m aceita o alias <code class="cmd">/colect</code>.</p>
+<p class="examples" data-i18n-html="comandos.collect.ex"><strong>Exemplos:</strong> <code class="cmd">/collect 50 USDC, Polygon PoS</code> &middot; <code class="cmd">/collect 10 POL</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/collect</code><span class="tag send" data-i18n="comandos.tag.send">envio</span></h3>
-      <span class="syntax" data-i18n="comandos.collect.syntax">/collect &lt;valor&gt; &lt;moeda&gt;[, &lt;rede&gt;]</span>
-      <p data-i18n-html="comandos.collect.desc">Solicita um pagamento &agrave; outra parte: envia uma mensagem estruturada j&aacute; com valor, moeda, rede e o seu endere&ccedil;o correto &mdash; o contato s&oacute; precisa confirmar. Tamb&eacute;m aceita o alias <code class="cmd">/colect</code>.</p>
-      <p class="examples" data-i18n-html="comandos.collect.ex"><strong>Exemplos:</strong> <code class="cmd">/collect 50 USDC, Polygon PoS</code> &middot; <code class="cmd">/collect 10 POL</code></p>
-    </div>
+<div class="cmd-block">
+<h3><code>/balance</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
+<span class="syntax" data-i18n="comandos.balance.syntax">/balance [&lt;moeda&gt;][, &lt;rede&gt;]</span>
+<p data-i18n="comandos.balance.desc">Mostra o saldo da sua conta na moeda e rede indicadas. Sem argumentos, lista os saldos de todas as redes configuradas. O resultado &eacute; privado: aparece apenas na sua tela.</p>
+<p class="examples" data-i18n-html="comandos.balance.ex"><strong>Exemplos:</strong> <code class="cmd">/balance</code> &middot; <code class="cmd">/balance POL</code> &middot; <code class="cmd">/balance USDC, base</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/balance</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
-      <span class="syntax" data-i18n="comandos.balance.syntax">/balance [&lt;moeda&gt;][, &lt;rede&gt;]</span>
-      <p data-i18n="comandos.balance.desc">Mostra o saldo da sua conta na moeda e rede indicadas. Sem argumentos, lista os saldos de todas as redes configuradas. O resultado &eacute; privado: aparece apenas na sua tela.</p>
-      <p class="examples" data-i18n-html="comandos.balance.ex"><strong>Exemplos:</strong> <code class="cmd">/balance</code> &middot; <code class="cmd">/balance POL</code> &middot; <code class="cmd">/balance USDC, base</code></p>
-    </div>
+<div class="cmd-block">
+<h3><code>/escrow</code><span class="tag confirm" data-i18n="comandos.tag.confirm">confirma&ccedil;&atilde;o</span></h3>
+<span class="syntax" data-i18n="comandos.escrow.syntax">/escrow &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;, &lt;dias&gt;</span>
+<p data-i18n-html="comandos.escrow.desc">Inicia um Pagamento Garantido: o valor fica custodiado no contrato EscrowVault e s&oacute; &eacute; liberado ap&oacute;s aprova&ccedil;&atilde;o de um &aacute;rbitro escolhido por voc&ecirc;. O prazo (1 a 365 dias) &eacute; obrigat&oacute;rio e garante reembolso autom&aacute;tico se expirar. Depois do comando, o app abre a lista de contatos para escolher o &aacute;rbitro. Dispon&iacute;vel apenas em redes EVM com contrato deployado.</p>
+<p class="examples" data-i18n-html="comandos.escrow.ex"><strong>Exemplo:</strong> <code class="cmd">/escrow 100 POL, Polygon PoS, 7</code> &mdash; custodia 100 POL por at&eacute; 7 dias.</p>
+<p data-i18n-html="comandos.escrow.sub"><strong>Subcomandos:</strong> <code class="cmd">/escrow status</code> mostra o estado do escrow ativo na conversa; <code class="cmd">/escrow done</code> registra a prontid&atilde;o de recebimento (etapa do recebedor); <code class="cmd">/escrow cancel</code> cancela o escrow antes do dep&oacute;sito. Tutorial completo em <a href="/escrow">/escrow</a>.</p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/escrow</code><span class="tag confirm" data-i18n="comandos.tag.confirm">confirma&ccedil;&atilde;o</span></h3>
-      <span class="syntax" data-i18n="comandos.escrow.syntax">/escrow &lt;valor&gt; &lt;moeda&gt;, &lt;rede&gt;, &lt;dias&gt;</span>
-      <p data-i18n-html="comandos.escrow.desc">Inicia um Pagamento Garantido: o valor fica custodiado no contrato EscrowVault e s&oacute; &eacute; liberado ap&oacute;s aprova&ccedil;&atilde;o de um &aacute;rbitro escolhido por voc&ecirc;. O prazo (1 a 365 dias) &eacute; obrigat&oacute;rio e garante reembolso autom&aacute;tico se expirar. Depois do comando, o app abre a lista de contatos para escolher o &aacute;rbitro. Dispon&iacute;vel apenas em redes EVM com contrato deployado.</p>
-      <p class="examples" data-i18n-html="comandos.escrow.ex"><strong>Exemplo:</strong> <code class="cmd">/escrow 100 POL, Polygon PoS, 7</code> &mdash; custodia 100 POL por at&eacute; 7 dias.</p>
-      <p data-i18n-html="comandos.escrow.sub"><strong>Subcomandos:</strong> <code class="cmd">/escrow status</code> mostra o estado do escrow ativo na conversa; <code class="cmd">/escrow done</code> registra a prontid&atilde;o de recebimento (etapa do recebedor); <code class="cmd">/escrow cancel</code> cancela o escrow antes do dep&oacute;sito. Tutorial completo em <a href="/escrow">/escrow</a>.</p>
-    </div>
+<div class="cmd-block">
+<h3><code>/invest</code><span class="tag confirm" data-i18n="comandos.tag.confirm">confirma&ccedil;&atilde;o</span></h3>
+<span class="syntax" data-i18n="comandos.invest.syntax">/invest [&lt;operadora&gt; [&lt;ativo&gt; &lt;valor&gt;[, &lt;rede&gt;]]]</span>
+<p data-i18n-html="comandos.invest.desc">Investe em produtos DeFi/RWA sem sair da conversa. Funciona em n&iacute;veis: <code class="cmd">/invest</code> lista as operadoras (Aave, Morpho, Ondo, xStocks); <code class="cmd">/invest &lt;operadora&gt;</code> lista os ativos dela; <code class="cmd">/invest &lt;operadora&gt; &lt;ativo&gt; &lt;valor&gt;[, &lt;rede&gt;]</code> executa o investimento com confirma&ccedil;&atilde;o. Aceita o alias <code class="cmd">/investir</code>.</p>
+<p class="examples" data-i18n-html="comandos.invest.ex"><strong>Exemplos:</strong> <code class="cmd">/invest</code> &middot; <code class="cmd">/invest aave</code> &middot; <code class="cmd">/invest aave aUSDC 100, base</code></p>
+<p data-i18n-html="comandos.invest.sub"><strong>Resgate e posi&ccedil;&atilde;o:</strong> <code class="cmd">/invest redeem &lt;operadora&gt; &lt;ativo base&gt; &lt;valor&gt;[, &lt;rede&gt;]</code> resgata para o ativo base; <code class="cmd">/invest balance &lt;operadora&gt; &lt;ativo&gt;</code> mostra saldo investido e rendimento. Nos chats de contrato (abertos pelo cat&aacute;logo de investimentos), os atalhos <code class="cmd">/invest &lt;valor&gt;</code>, <code class="cmd">/invest resgatar &lt;valor&gt;</code> e <code class="cmd">/invest saldo</code> operam direto no produto. Detalhes em <a href="/invest">/invest</a>.</p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/invest</code><span class="tag confirm" data-i18n="comandos.tag.confirm">confirma&ccedil;&atilde;o</span></h3>
-      <span class="syntax" data-i18n="comandos.invest.syntax">/invest [&lt;operadora&gt; [&lt;ativo&gt; &lt;valor&gt;[, &lt;rede&gt;]]]</span>
-      <p data-i18n-html="comandos.invest.desc">Investe em produtos DeFi/RWA sem sair da conversa. Funciona em n&iacute;veis: <code class="cmd">/invest</code> lista as operadoras (Aave, Morpho, Ondo, xStocks); <code class="cmd">/invest &lt;operadora&gt;</code> lista os ativos dela; <code class="cmd">/invest &lt;operadora&gt; &lt;ativo&gt; &lt;valor&gt;[, &lt;rede&gt;]</code> executa o investimento com confirma&ccedil;&atilde;o. Aceita o alias <code class="cmd">/investir</code>.</p>
-      <p class="examples" data-i18n-html="comandos.invest.ex"><strong>Exemplos:</strong> <code class="cmd">/invest</code> &middot; <code class="cmd">/invest aave</code> &middot; <code class="cmd">/invest aave aUSDC 100, base</code></p>
-      <p data-i18n-html="comandos.invest.sub"><strong>Resgate e posi&ccedil;&atilde;o:</strong> <code class="cmd">/invest redeem &lt;operadora&gt; &lt;ativo base&gt; &lt;valor&gt;[, &lt;rede&gt;]</code> resgata para o ativo base; <code class="cmd">/invest balance &lt;operadora&gt; &lt;ativo&gt;</code> mostra saldo investido e rendimento. Nos chats de contrato (abertos pelo cat&aacute;logo de investimentos), os atalhos <code class="cmd">/invest &lt;valor&gt;</code>, <code class="cmd">/invest resgatar &lt;valor&gt;</code> e <code class="cmd">/invest saldo</code> operam direto no produto. Detalhes em <a href="/invest">/invest</a>.</p>
-    </div>
+<div class="cmd-block">
+<h3><code>/tokens</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
+<span class="syntax" data-i18n="comandos.tokens.syntax">/tokens [&lt;rede&gt;]</span>
+<p data-i18n-html="comandos.tokens.desc">Lista os tokens dispon&iacute;veis em todas as redes suportadas ou apenas os de uma rede espec&iacute;fica. O cat&aacute;logo completo com o contexto de uso de cada ativo est&aacute; em <a href="/tokens">/tokens</a>.</p>
+<p class="examples" data-i18n-html="comandos.tokens.ex"><strong>Exemplos:</strong> <code class="cmd">/tokens</code> &middot; <code class="cmd">/tokens polygon</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/tokens</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
-      <span class="syntax" data-i18n="comandos.tokens.syntax">/tokens [&lt;rede&gt;]</span>
-      <p data-i18n-html="comandos.tokens.desc">Lista os tokens dispon&iacute;veis em todas as redes suportadas ou apenas os de uma rede espec&iacute;fica. O cat&aacute;logo completo com o contexto de uso de cada ativo est&aacute; em <a href="/tokens">/tokens</a>.</p>
-      <p class="examples" data-i18n-html="comandos.tokens.ex"><strong>Exemplos:</strong> <code class="cmd">/tokens</code> &middot; <code class="cmd">/tokens polygon</code></p>
-    </div>
+<div class="cmd-block">
+<h3><code>/coin</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
+<span class="syntax" data-i18n="comandos.coin.syntax">/coin</span>
+<p data-i18n="comandos.coin.desc">Lista as moedas suportadas &mdash; nativas e tokens &mdash; organizadas por rede. &Uacute;til para descobrir qual s&iacute;mbolo usar em /pay, /collect e /escrow.</p>
+<p class="examples" data-i18n-html="comandos.coin.ex"><strong>Exemplo:</strong> <code class="cmd">/coin</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/coin</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
-      <span class="syntax" data-i18n="comandos.coin.syntax">/coin</span>
-      <p data-i18n="comandos.coin.desc">Lista as moedas suportadas &mdash; nativas e tokens &mdash; organizadas por rede. &Uacute;til para descobrir qual s&iacute;mbolo usar em /pay, /collect e /escrow.</p>
-      <p class="examples" data-i18n-html="comandos.coin.ex"><strong>Exemplo:</strong> <code class="cmd">/coin</code></p>
-    </div>
+<div class="cmd-block">
+<h3><code>/chain</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
+<span class="syntax" data-i18n="comandos.chain.syntax">/chain [&lt;rede&gt;]</span>
+<p data-i18n="comandos.chain.desc">Lista as redes blockchain configuradas ou detalha uma rede espec&iacute;fica: fam&iacute;lia (EVM, Bitcoin, Klever), moeda nativa, tipo (mainnet/testnet), aliases, explorer e faucet.</p>
+<p class="examples" data-i18n-html="comandos.chain.ex"><strong>Exemplos:</strong> <code class="cmd">/chain</code> &middot; <code class="cmd">/chain polygon</code> &middot; <code class="cmd">/chain sepolia</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/chain</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
-      <span class="syntax" data-i18n="comandos.chain.syntax">/chain [&lt;rede&gt;]</span>
-      <p data-i18n="comandos.chain.desc">Lista as redes blockchain configuradas ou detalha uma rede espec&iacute;fica: fam&iacute;lia (EVM, Bitcoin, Klever), moeda nativa, tipo (mainnet/testnet), aliases, explorer e faucet.</p>
-      <p class="examples" data-i18n-html="comandos.chain.ex"><strong>Exemplos:</strong> <code class="cmd">/chain</code> &middot; <code class="cmd">/chain polygon</code> &middot; <code class="cmd">/chain sepolia</code></p>
-    </div>
+<div class="cmd-block">
+<h3><code>/faucet</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
+<span class="syntax" data-i18n="comandos.faucet.syntax">/faucet [&lt;rede&gt;]</span>
+<p data-i18n="comandos.faucet.desc">Lista os faucets das testnets configuradas junto com o seu saldo atual nelas, ou detalha o faucet de uma rede espec&iacute;fica &mdash; ideal para praticar sem risco antes de usar mainnet.</p>
+<p class="examples" data-i18n-html="comandos.faucet.ex"><strong>Exemplos:</strong> <code class="cmd">/faucet</code> &middot; <code class="cmd">/faucet sepolia</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/faucet</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
-      <span class="syntax" data-i18n="comandos.faucet.syntax">/faucet [&lt;rede&gt;]</span>
-      <p data-i18n="comandos.faucet.desc">Lista os faucets das testnets configuradas junto com o seu saldo atual nelas, ou detalha o faucet de uma rede espec&iacute;fica &mdash; ideal para praticar sem risco antes de usar mainnet.</p>
-      <p class="examples" data-i18n-html="comandos.faucet.ex"><strong>Exemplos:</strong> <code class="cmd">/faucet</code> &middot; <code class="cmd">/faucet sepolia</code></p>
-    </div>
+<div class="cmd-block">
+<h3><code>/contact</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
+<span class="syntax" data-i18n="comandos.contact.syntax">/contact</span>
+<p data-i18n="comandos.contact.desc">Abre a sua lista de contatos e envia o contato selecionado nesta conversa &mdash; a forma mais f&aacute;cil de apresentar duas pessoas ou compartilhar a carteira de suporte.</p>
+<p class="examples" data-i18n-html="comandos.contact.ex"><strong>Exemplo:</strong> <code class="cmd">/contact</code></p>
+</div>
 
-    <div class="cmd-block">
-      <h3><code>/contact</code><span class="tag local" data-i18n="comandos.tag.local">local</span></h3>
-      <span class="syntax" data-i18n="comandos.contact.syntax">/contact</span>
-      <p data-i18n="comandos.contact.desc">Abre a sua lista de contatos e envia o contato selecionado nesta conversa &mdash; a forma mais f&aacute;cil de apresentar duas pessoas ou compartilhar a carteira de suporte.</p>
-      <p class="examples" data-i18n-html="comandos.contact.ex"><strong>Exemplo:</strong> <code class="cmd">/contact</code></p>
-    </div>
+<h2 class="section-title" data-i18n="comandos.tips.title">Dicas r&aacute;pidas</h2>
+<ul class="tip-list">
+<li data-i18n-html="comandos.tips.1">Digite <code class="cmd">/</code> no campo de mensagem e o autocompletar sugere os comandos &mdash; toque para preencher.</li>
+<li data-i18n-html="comandos.tips.2">Esqueceu a sintaxe? <code class="cmd">/help &lt;comando&gt;</code> mostra o formato exato dentro do app.</li>
+<li data-i18n-html="comandos.tips.3">A rede vem depois de uma v&iacute;rgula: <code class="cmd">/pay 5 USDC, base</code>. Sem rede, o app escolhe a nativa da moeda.</li>
+<li data-i18n-html="comandos.tips.4">Em testnets (Sepolia, Amoy&hellip;) voc&ecirc; pratica de gra&ccedil;a: use <code class="cmd">/faucet</code> para pegar moedas de teste.</li>
+<li data-i18n-html="comandos.tips.5">Comandos que movimentam fundos sempre pedem confirma&ccedil;&atilde;o &mdash; revise valor, moeda e rede antes de assinar.</li>
+</ul>
 
-    <h2 class="section-title" data-i18n="comandos.tips.title">Dicas r&aacute;pidas</h2>
-    <ul class="tip-list">
-      <li data-i18n-html="comandos.tips.1">Digite <code class="cmd">/</code> no campo de mensagem e o autocompletar sugere os comandos &mdash; toque para preencher.</li>
-      <li data-i18n-html="comandos.tips.2">Esqueceu a sintaxe? <code class="cmd">/help &lt;comando&gt;</code> mostra o formato exato dentro do app.</li>
-      <li data-i18n-html="comandos.tips.3">A rede vem depois de uma v&iacute;rgula: <code class="cmd">/pay 5 USDC, base</code>. Sem rede, o app escolhe a nativa da moeda.</li>
-      <li data-i18n-html="comandos.tips.4">Em testnets (Sepolia, Amoy&hellip;) voc&ecirc; pratica de gra&ccedil;a: use <code class="cmd">/faucet</code> para pegar moedas de teste.</li>
-      <li data-i18n-html="comandos.tips.5">Comandos que movimentam fundos sempre pedem confirma&ccedil;&atilde;o &mdash; revise valor, moeda e rede antes de assinar.</li>
-    </ul>
+<h2 class="section-title" data-i18n="comandos.support.title">Sugest&otilde;es e d&uacute;vidas</h2>
+<p class="lead" data-i18n-html="comandos.support.lead">Este tutorial cobre os comandos atuais, mas o app evolui rápido. Tem uma ideia de comando novo, encontrou um comportamento estranho ou ficou com d&uacute;vida? <strong>Envie sua sugest&atilde;o ou d&uacute;vida para a carteira de suporte oficial</strong>: adicione-a como contato no Crypto Chat e converse direto com a equipe.</p>
+<div class="card" id="crypto-chat-support">
+<h3 data-i18n="comandos.support.h3">Suporte oficial no Crypto Chat</h3>
+<div class="donation-item">
+<span class="donation-label">Ethereum / Polygon (POL) / Amoy / Sepolia</span>
+<span class="donation-addr" data-addr="0x7010A4C4c189AB421028a622e2A2e623f432d18e" id="addr-support">0x7010A4C4c189AB421028a622e2A2e623f432d18e</span>
+<button class="copy-btn" data-copy="addr-support" data-i18n="ajudar.copy">&#128203; Copiar</button>
+<span class="donation-hint" data-i18n="comandos.support.hint">Adicione como contato no Crypto Chat para conversar diretamente com o suporte oficial &mdash; sugest&otilde;es e d&uacute;vidas s&atilde;o bem-vindas</span>
+</div>
+</div>
 
-    <h2 class="section-title" data-i18n="comandos.support.title">Sugest&otilde;es e d&uacute;vidas</h2>
-    <p class="lead" data-i18n-html="comandos.support.lead">Este tutorial cobre os comandos atuais, mas o app evolui rápido. Tem uma ideia de comando novo, encontrou um comportamento estranho ou ficou com d&uacute;vida? <strong>Envie sua sugest&atilde;o ou d&uacute;vida para a carteira de suporte oficial</strong>: adicione-a como contato no Crypto Chat e converse direto com a equipe.</p>
-    <div class="card" id="crypto-chat-support">
-      <h3 data-i18n="comandos.support.h3">Suporte oficial no Crypto Chat</h3>
-      <div class="donation-item">
-        <span class="donation-label">Ethereum / Polygon (POL) / Amoy / Sepolia</span>
-        <span class="donation-addr" data-addr="0x7010A4C4c189AB421028a622e2A2e623f432d18e" id="addr-support">0x7010A4C4c189AB421028a622e2A2e623f432d18e</span>
-        <button class="copy-btn" data-copy="addr-support" data-i18n="ajudar.copy">&#128203; Copiar</button>
-        <span class="donation-hint" data-i18n="comandos.support.hint">Adicione como contato no Crypto Chat para conversar diretamente com o suporte oficial &mdash; sugest&otilde;es e d&uacute;vidas s&atilde;o bem-vindas</span>
-      </div>
-    </div>
+<div class="resources">
+<a href="/" data-i18n="common.back">&larr; Voltar ao início</a>
+<a href="/ajudar" data-i18n="comandos.helpLink">Como ajudar o projeto</a>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div class="footer-grid">
+<a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer" aria-label="Rapport Tecnologia">
+<img class="footer-logo" src="/images/rapport-logo.png" alt="Rapport Tecnologia" width="180" height="180" loading="lazy"/>
+</a>
+<div>
+<h3 data-i18n="site.footer.tagline" >Tecnologia, pessoas e liberdade digital.</h3>
+<div class="footer-links">
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.p.stats.title" href="/stats">Estatísticas</a>
+<a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a>
+</div>
+</div>
+<div class="socials">
+<a href="https://linkedin.com/in/carlosdelfino" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4M3 9h4v12H3zm6 0h4v2c1-2 6-3 7 1v9h-4v-8c0-2-3-2-3 0v8H9z"/>
+</svg>
+</a>
+<a href="https://instagram.com/rapport.tecnologia" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="18" cy="6" r="1"/>
+</svg>
+</a>
+</div>
+</div>
+<div class="copyright">
+<p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
+</div>
+</div>
+</footer>
 
-    <div class="footer">
-      <p><a href="/" data-i18n="common.back">&larr; Voltar ao início</a> &middot; <a href="/ajudar" data-i18n="comandos.helpLink">Como ajudar o projeto</a></p>
-      <p data-i18n-html="common.footer.contacts">Contato: <a href="/ajudar#crypto-chat-support">Crypto Chat</a> &middot; <a href="https://wa.me/5585985205490" target="_blank" rel="noopener noreferrer">WhatsApp</a> &middot; <a href="mailto:admin@rapport.tec.br">admin@rapport.tec.br</a> &middot; <a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer">rapport.tec.br</a> &middot; <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a></p>
-      <p data-i18n-html="common.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
-    </div>
-  </div>
+<div class="toast" id="toast" data-i18n="ajudar.copied">Copiado!</div>
 
-  <div class="toast" id="toast" data-i18n="ajudar.copied">Copiado!</div>
-
-  <script>
-    function copySupportAddress() {
-      var el = document.getElementById('addr-support');
-      if (!el) return;
-      navigator.clipboard.writeText(el.getAttribute('data-addr')).then(function() {
-        var toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(function() { toast.classList.remove('show'); }, 2000);
-      });
-    }
-    document.querySelector('.copy-btn').addEventListener('click', copySupportAddress);
-    document.getElementById('addr-support').addEventListener('click', copySupportAddress);
-  </script>
+<script>
+  function copySupportAddress() {
+    var el = document.getElementById('addr-support');
+    if (!el) return;
+    navigator.clipboard.writeText(el.getAttribute('data-addr')).then(function() {
+      var toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    });
+  }
+  document.querySelector('.copy-btn').addEventListener('click', copySupportAddress);
+  document.getElementById('addr-support').addEventListener('click', copySupportAddress);
+</script>
 </body>
 </html>

@@ -20,7 +20,7 @@
   <meta name="robots" content="index, follow"/>
   <title data-i18n="ajudar.meta.title">Rapport Crypto Chat — Como Ajudar</title>
   <meta name="description" content="A melhor forma de ajudar o Rapport Crypto Chat é usá-lo. Doações de qualquer valor também são importantes — veja as carteiras do projeto." data-i18n-attr="content:ajudar.meta.desc"/>
-  <meta name="theme-color" content="#020617"/>
+  <meta name="theme-color" content="#ed5919"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/ajudar"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
@@ -32,6 +32,8 @@
   <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/ajudar?lang=ar"/>
   <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/ajudar"/>
   <link rel="stylesheet" href="/css/i18n.css"/>
+  <link rel="stylesheet" href="/css/site.css"/>
+  <link rel="stylesheet" href="/css/subpage.css"/>
   <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
@@ -62,144 +64,143 @@
     }
   }
   </script>
-  <style>
-    :root {
-      --bg:#020617; --card:#0f172a; --border:#1e293b; --text:#f1f5f9;
-      --muted:#94a3b8; --secondary:#cbd5e1; --brand:#ea580c;
-      --brand-light:#fb923c; --brand-dark:#c2410c; --code-bg:#1e293b;
-    }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body {
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg); color:var(--text); line-height:1.6;
-      min-height:100vh; padding:1rem;
-    }
-    .container { max-width:48rem; margin:0 auto; padding:1rem 0; }
-    h1 { font-size:1.75rem; font-weight:700; color:var(--brand-light); margin-bottom:.5rem; }
-    h2 { font-size:1.25rem; font-weight:600; color:var(--brand-light); margin:2rem 0 .75rem; }
-    h3 { font-size:.95rem; font-weight:600; color:var(--text); margin-bottom:.75rem; }
-    p { color:var(--secondary); font-size:.95rem; margin-bottom:.75rem; }
-    .card {
-      border:1px solid var(--border); border-radius:1rem; background:var(--card);
-      padding:1.5rem; margin-bottom:1rem;
-    }
-    .donation-item {
-      display:flex; flex-direction:column; gap:.4rem; padding:1rem;
-      border:1px solid var(--border); border-radius:.75rem; background:var(--code-bg);
-      margin-bottom:.75rem;
-    }
-    .donation-item:last-child { margin-bottom:0; }
-    .donation-label { font-size:.75rem; font-weight:700; color:var(--brand-light); text-transform:uppercase; letter-spacing:.08em; }
-    .donation-addr {
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-      font-size:.85rem; color:var(--text); word-break:break-all; cursor:pointer;
-      padding:.4rem .6rem; border-radius:.4rem; border:1px solid var(--border);
-      background:var(--bg); transition:border-color .2s;
-    }
-    .donation-addr:hover { border-color:var(--brand); }
-    .donation-addr:active { border-color:var(--brand-light); }
-    .donation-hint { font-size:.75rem; color:var(--muted); }
-    .copy-btn {
-      display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .7rem;
-      border:1px solid var(--border); border-radius:.4rem; background:var(--card);
-      color:var(--secondary); font-size:.75rem; cursor:pointer; transition:all .2s;
-      align-self:flex-start;
-    }
-    .copy-btn:hover { border-color:var(--brand); color:var(--brand-light); }
-    .toast {
-      position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
-      padding:.6rem 1.2rem; border-radius:.5rem; background:var(--brand);
-      color:#fff; font-size:.85rem; font-weight:600; opacity:0;
-      transition:opacity .3s; pointer-events:none; z-index:100;
-    }
-    .toast.show { opacity:1; }
-    .footer { text-align:center; color:var(--muted); font-size:.75rem; margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); }
-    a { color:var(--brand-light); text-decoration:none; }
-    a:hover { color:var(--brand); }
-    @media (max-width:640px) {
-      h1 { font-size:1.4rem; }
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <h1 data-i18n="ajudar.h1">Como Ajudar</h1>
-    <p data-i18n-html="ajudar.intro">A melhor forma de ajudar o Rapport Crypto Chat é <strong>usá-lo</strong>: instale o app, converse, movimente a wallet e divulgue para outras pessoas. Cada usuário ativo fortalece a rede e demonstra o valor do projeto.</p>
-    <p data-i18n-html="ajudar.ctas"><a href="/install">Baixe o APK</a> ou conheça <a href="/chat">como o dApp funciona</a>.</p>
+<a data-i18n="site.skip" href="#main" class="skip-link">Ir para o conteúdo</a>
+<header class="site-header">
+<div class="container wrap">
+<div class="header-row">
+<a class="brand" href="/">
+<img src="/favicon.png" alt="" width="44" height="44"/>Rapport Crypto Chat</a>
+<nav class="nav">
+<a data-i18n="site.nav.features" href="/#recursos" class="">Recursos</a>
+<a data-i18n="site.nav.freedom" href="/#liberdade" class="">Liberdade</a>
+<a data-i18n="site.nav.team" href="/#equipe" class="">Equipe</a>
+<a data-i18n="site.nav.pricing" href="/#precos" class="">Preços</a>
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+</nav>
+</div>
+</div>
+</header>
+<main id="main">
+<header class="page-hero">
+<div class="wrap">
+<h1 data-i18n="ajudar.h1">Como Ajudar</h1>
+<p class="tagline" data-i18n-html="ajudar.intro">A melhor forma de ajudar o Rapport Crypto Chat é <strong>usá-lo</strong>: instale o app, converse, movimente a wallet e divulgue para outras pessoas. Cada usuário ativo fortalece a rede e demonstra o valor do projeto.</p>
+<p class="subtagline" data-i18n-html="ajudar.ctas"><a href="/install">Baixe o APK</a> ou conheça <a href="/chat">como o dApp funciona</a>.</p>
+</div>
+</header>
+<div class="page">
+<h2 class="section-title" data-i18n="ajudar.donate.h2">Doações</h2>
+<p data-i18n="ajudar.donate.lead">Doações de qualquer valor são importantes e ajudam a manter o relay, a infraestrutura e o desenvolvimento contínuo do projeto.</p>
 
-    <h2 data-i18n="ajudar.donate.h2">Doações</h2>
-    <p data-i18n="ajudar.donate.lead">Doações de qualquer valor são importantes e ajudam a manter o relay, a infraestrutura e o desenvolvimento contínuo do projeto.</p>
+<div class="card">
+<h3 data-i18n="ajudar.card1.h3">Carteiras da gestão dos projetos Rapport</h3>
+<div class="donation-item">
+<span class="donation-label">Ethereum / Polygon (POL) / Amoy / Sepolia</span>
+<span class="donation-addr" data-addr="0x66682BBeD9e540017967692cCdd069fE5F833888" id="addr-evm">0x66682BBeD9e540017967692cCdd069fE5F833888</span>
+<button class="copy-btn" data-copy="addr-evm" data-i18n="ajudar.copy">📋 Copiar</button>
+<span class="donation-hint" data-i18n="ajudar.hint.evm">Mesmo endereço para mainnet Ethereum, Polygon, testnets Amoy e Sepolia</span>
+</div>
 
-    <div class="card">
-      <h3 data-i18n="ajudar.card1.h3">Carteiras da gestão dos projetos Rapport</h3>
-      <div class="donation-item">
-        <span class="donation-label">Ethereum / Polygon (POL) / Amoy / Sepolia</span>
-        <span class="donation-addr" data-addr="0x66682BBeD9e540017967692cCdd069fE5F833888" id="addr-evm">0x66682BBeD9e540017967692cCdd069fE5F833888</span>
-        <button class="copy-btn" data-copy="addr-evm" data-i18n="ajudar.copy">📋 Copiar</button>
-        <span class="donation-hint" data-i18n="ajudar.hint.evm">Mesmo endereço para mainnet Ethereum, Polygon, testnets Amoy e Sepolia</span>
-      </div>
+<div class="donation-item">
+<span class="donation-label">Bitcoin</span>
+<span class="donation-addr" data-addr="bc1qs89ud4zdafk3u2f7qzcghhlzhrh27d849kcz9h" id="addr-btc">bc1qs89ud4zdafk3u2f7qzcghhlzhrh27d849kcz9h</span>
+<button class="copy-btn" data-copy="addr-btc" data-i18n="ajudar.copy">📋 Copiar</button>
+</div>
 
-      <div class="donation-item">
-        <span class="donation-label">Bitcoin</span>
-        <span class="donation-addr" data-addr="bc1qs89ud4zdafk3u2f7qzcghhlzhrh27d849kcz9h" id="addr-btc">bc1qs89ud4zdafk3u2f7qzcghhlzhrh27d849kcz9h</span>
-        <button class="copy-btn" data-copy="addr-btc" data-i18n="ajudar.copy">📋 Copiar</button>
-      </div>
+<div class="donation-item">
+<span class="donation-label">Solana</span>
+<span class="donation-addr" data-addr="ovBzDFqPqJUuQrRUvy7FXsJX5FaJH4ta4DaGkyaCXZY" id="addr-sol">ovBzDFqPqJUuQrRUvy7FXsJX5FaJH4ta4DaGkyaCXZY</span>
+<button class="copy-btn" data-copy="addr-sol" data-i18n="ajudar.copy">📋 Copiar</button>
+</div>
+</div>
 
-      <div class="donation-item">
-        <span class="donation-label">Solana</span>
-        <span class="donation-addr" data-addr="ovBzDFqPqJUuQrRUvy7FXsJX5FaJH4ta4DaGkyaCXZY" id="addr-sol">ovBzDFqPqJUuQrRUvy7FXsJX5FaJH4ta4DaGkyaCXZY</span>
-        <button class="copy-btn" data-copy="addr-sol" data-i18n="ajudar.copy">📋 Copiar</button>
-      </div>
-    </div>
+<div class="card" id="crypto-chat-support">
+<h3 data-i18n="ajudar.card2.h3">Suporte oficial no Crypto Chat</h3>
+<p data-i18n="ajudar.card2.p">Adicione esta conta oficial como contato no Crypto Chat para falar diretamente com o suporte do app.</p>
+<div class="donation-item">
+<span class="donation-label">Ethereum / Polygon (POL) / Amoy / Sepolia</span>
+<span class="donation-addr" data-addr="0x7010A4C4c189AB421028a622e2A2e623f432d18e" id="addr-dev">0x7010A4C4c189AB421028a622e2A2e623f432d18e</span>
+<button class="copy-btn" data-copy="addr-dev" data-i18n="ajudar.copy">📋 Copiar</button>
+<span class="donation-hint" data-i18n="ajudar.hint.dev">Adicione como contato no Crypto Chat para conversar diretamente com o suporte oficial</span>
+</div>
+</div>
 
-    <div class="card" id="crypto-chat-support">
-      <h3 data-i18n="ajudar.card2.h3">Suporte oficial no Crypto Chat</h3>
-      <p data-i18n="ajudar.card2.p">Adicione esta conta oficial como contato no Crypto Chat para falar diretamente com o suporte do app.</p>
-      <div class="donation-item">
-        <span class="donation-label">Ethereum / Polygon (POL) / Amoy / Sepolia</span>
-        <span class="donation-addr" data-addr="0x7010A4C4c189AB421028a622e2A2e623f432d18e" id="addr-dev">0x7010A4C4c189AB421028a622e2A2e623f432d18e</span>
-        <button class="copy-btn" data-copy="addr-dev" data-i18n="ajudar.copy">📋 Copiar</button>
-        <span class="donation-hint" data-i18n="ajudar.hint.dev">Adicione como contato no Crypto Chat para conversar diretamente com o suporte oficial</span>
-      </div>
-    </div>
+<div class="resources">
+<a href="/" data-i18n="common.back">&larr; Voltar ao início</a>
+<a href="/stats" data-i18n="ajudar.statsLink">Estatísticas do relay</a>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div class="footer-grid">
+<a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer" aria-label="Rapport Tecnologia">
+<img class="footer-logo" src="/images/rapport-logo.png" alt="Rapport Tecnologia" width="180" height="180" loading="lazy"/>
+</a>
+<div>
+<h3 data-i18n="site.footer.tagline" >Tecnologia, pessoas e liberdade digital.</h3>
+<div class="footer-links">
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.p.stats.title" href="/stats">Estatísticas</a>
+<a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a>
+</div>
+</div>
+<div class="socials">
+<a href="https://linkedin.com/in/carlosdelfino" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4M3 9h4v12H3zm6 0h4v2c1-2 6-3 7 1v9h-4v-8c0-2-3-2-3 0v8H9z"/>
+</svg>
+</a>
+<a href="https://instagram.com/rapport.tecnologia" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="18" cy="6" r="1"/>
+</svg>
+</a>
+</div>
+</div>
+<div class="copyright">
+<p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
+</div>
+</div>
+</footer>
 
-    <div class="footer">
-      <p><a href="/" data-i18n="common.back">&larr; Voltar ao início</a> &middot; <a href="/stats" data-i18n="ajudar.statsLink">Estatísticas do relay</a></p>
-      <p data-i18n-html="common.footer.contacts">Contato: <a href="/ajudar#crypto-chat-support">Crypto Chat</a> &middot; <a href="https://wa.me/5585985205490" target="_blank" rel="noopener noreferrer">WhatsApp</a> &middot; <a href="mailto:admin@rapport.tec.br">admin@rapport.tec.br</a> &middot; <a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer">rapport.tec.br</a> &middot; <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a></p>
-      <p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
-    </div>
-  </div>
+<div class="toast" id="toast" data-i18n="ajudar.copied">Copiado!</div>
 
-  <div class="toast" id="toast" data-i18n="ajudar.copied">Copiado!</div>
+<script>
+  function copyAddress(addrId) {
+    var el = document.getElementById(addrId);
+    if (!el) return;
+    var addr = el.getAttribute('data-addr');
+    navigator.clipboard.writeText(addr).then(function() {
+      var toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    });
+  }
 
-  <script>
-    function copyAddress(addrId) {
-      var el = document.getElementById(addrId);
-      if (!el) return;
+  document.querySelectorAll('.copy-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      copyAddress(btn.getAttribute('data-copy'));
+    });
+  });
+
+  document.querySelectorAll('.donation-addr').forEach(function(el) {
+    el.addEventListener('click', function() {
       var addr = el.getAttribute('data-addr');
       navigator.clipboard.writeText(addr).then(function() {
         var toast = document.getElementById('toast');
         toast.classList.add('show');
         setTimeout(function() { toast.classList.remove('show'); }, 2000);
       });
-    }
-
-    document.querySelectorAll('.copy-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        copyAddress(btn.getAttribute('data-copy'));
-      });
     });
-
-    document.querySelectorAll('.donation-addr').forEach(function(el) {
-      el.addEventListener('click', function() {
-        var addr = el.getAttribute('data-addr');
-        navigator.clipboard.writeText(addr).then(function() {
-          var toast = document.getElementById('toast');
-          toast.classList.add('show');
-          setTimeout(function() { toast.classList.remove('show'); }, 2000);
-        });
-      });
-    });
-  </script>
+  });
+</script>
 </body>
 </html>

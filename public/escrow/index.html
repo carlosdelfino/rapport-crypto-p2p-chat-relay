@@ -21,7 +21,7 @@
   <title data-i18n="escrow.meta.title">Escrow — Pagamento garantido | Rapport Crypto Chat</title>
   <meta name="description" content="Envie cripto com segurança usando escrow arbitrado: o pagador escolhe um árbitro de confiança, o recebedor pode adicionar um segundo, e os fundos só são liberados após aprovação. Transparente, rastreável e on-chain." data-i18n-attr="content:escrow.meta.desc"/>
   <meta name="keywords" content="escrow, pagamento garantido, arbitragem blockchain, escrow cripto, contrato inteligente, rapport, pagamento seguro p2p"/>
-  <meta name="theme-color" content="#020617"/>
+  <meta name="theme-color" content="#ed5919"/>
   <meta name="author" content="Rapport Tecnologia e Inovação"/>
   <link rel="canonical" href="https://crypto-chat.rapport.tec.br/escrow"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
@@ -33,6 +33,8 @@
   <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/escrow?lang=ar"/>
   <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/escrow"/>
   <link rel="stylesheet" href="/css/i18n.css"/>
+  <link rel="stylesheet" href="/css/site.css"/>
+  <link rel="stylesheet" href="/css/subpage.css"/>
   <script src="/js/i18n.js" defer></script>
   <meta property="og:type" content="article"/>
   <meta property="og:site_name" content="Rapport Crypto Chat"/>
@@ -88,160 +90,41 @@
     ]
   }
   </script>
-  <style>
-    :root {
-      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
-      --border:#1e293b; --border-hover:#334155;
-      --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
-      --brand:#ea580c; --brand-light:#fb923c; --brand-dark:#c2410c;
-      --brand-300:#fdba74; --brand-500:#f97316;
-      --ok:#4ade80; --danger:#f87171;
-    }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body {
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg); color:var(--text); line-height:1.6;
-      min-height:100vh; padding:1rem;
-      -webkit-font-smoothing:antialiased;
-    }
-    .container { max-width:52rem; margin:0 auto; padding:1rem 0; }
 
-    .hero { text-align:center; padding:3rem 1rem 2rem; }
-    .hero h1 {
-      font-size:clamp(1.9rem,5vw,2.8rem); font-weight:800;
-      color:var(--brand-light); margin-bottom:.75rem; letter-spacing:-.02em;
-    }
-    .hero .tagline { color:var(--secondary); font-size:1.1rem; max-width:40rem; margin:0 auto 1rem; }
-    .hero .subtagline { color:var(--muted); font-size:.9rem; max-width:36rem; margin:0 auto; }
-    .badge {
-      display:inline-block; margin-top:1rem; padding:.3rem .8rem;
-      border:1px solid var(--border); border-radius:999px;
-      font-size:.75rem; font-weight:600; color:var(--muted);
-      background:var(--card-60); backdrop-filter:blur(8px);
-    }
-    .badge .dot {
-      display:inline-block; width:.5rem; height:.5rem; border-radius:50%;
-      background:var(--brand-500); margin-right:.4rem; vertical-align:middle;
-      animation:pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-    .cta-row { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; margin-top:1.5rem; }
-    .cta {
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.8rem 1.6rem; border-radius:.7rem;
-      font-size:.95rem; font-weight:700; text-decoration:none;
-      transition:transform .2s, box-shadow .2s;
-    }
-    .cta-primary { background:var(--brand); color:#fff; box-shadow:0 8px 24px rgba(234,88,12,.2); }
-    .cta-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(234,88,12,.3); }
-    .cta-secondary { border:1px solid var(--border); color:var(--text); background:var(--card-60); backdrop-filter:blur(8px); }
-    .cta-secondary:hover { border-color:var(--brand); transform:translateY(-2px); }
-
-    .section-title {
-      font-size:1.25rem; font-weight:700; color:var(--brand-light);
-      margin:3rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
-    }
-    .lead { color:var(--secondary); font-size:1rem; margin-bottom:1rem; }
-    .muted { color:var(--muted); font-size:.9rem; }
-
-    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem; margin:1.5rem 0; }
-    .card {
-      border:1px solid var(--border); border-radius:1rem;
-      background:var(--card-60); backdrop-filter:blur(8px); padding:1.4rem;
-    }
-    .card .icon {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:2.4rem; height:2.4rem; border-radius:.7rem;
-      background:rgba(234,88,12,.12); color:var(--brand-light);
-      font-size:1.2rem; margin-bottom:.6rem;
-    }
-    .card h3 { font-size:.98rem; font-weight:700; margin-bottom:.35rem; }
-    .card p { font-size:.85rem; color:var(--muted); }
-
-    /* Timeline do fluxo */
-    .steps { display:flex; flex-direction:column; gap:0; margin:1.5rem 0; }
-    .step {
-      display:flex; gap:1rem; padding:1rem 0; position:relative;
-    }
-    .step::before {
-      content:""; position:absolute; left:1.19rem; top:2.9rem; bottom:-.4rem;
-      width:2px; background:var(--border);
-    }
-    .step:last-child::before { display:none; }
-    .step .num {
-      flex:0 0 2.4rem; height:2.4rem; border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      background:rgba(234,88,12,.12); border:1px solid var(--brand);
-      color:var(--brand-light); font-weight:800; font-size:.9rem;
-      position:relative; z-index:1;
-    }
-    .step .body { flex:1; border:1px solid var(--border); border-radius:.9rem; background:var(--card-60); padding:1rem 1.2rem; }
-    .step .body h3 { font-size:.95rem; font-weight:700; margin-bottom:.3rem; }
-    .step .body h3 .who { color:var(--brand-light); font-weight:700; }
-    .step .body p { font-size:.85rem; color:var(--muted); }
-    .step .body code, .cmd {
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-      font-size:.82rem; color:var(--brand-300);
-      background:rgba(234,88,12,.08); padding:.1rem .4rem; border-radius:.35rem;
-    }
-
-    .callout {
-      border:1px solid var(--brand); border-left-width:4px; border-radius:.9rem;
-      background:rgba(234,88,12,.08); padding:1rem 1.2rem; margin:1.5rem 0;
-      font-size:.9rem; color:var(--secondary);
-    }
-    .callout strong { color:var(--brand-light); }
-    .callout.ok { border-color:var(--ok); background:rgba(74,222,128,.07); }
-    .callout.ok strong { color:var(--ok); }
-
-    /* Tabela de taxas */
-    .fee-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.9rem; }
-    .fee-table th, .fee-table td {
-      text-align:left; padding:.7rem .9rem; border:1px solid var(--border);
-    }
-    .fee-table th { background:var(--card); color:var(--brand-light); font-weight:700; }
-    .fee-table td { color:var(--secondary); }
-    .fee-table td.pct { color:var(--brand-light); font-weight:700; white-space:nowrap; }
-
-    /* Redes */
-    .networks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(11rem,1fr)); gap:.75rem; margin:1rem 0; }
-    .net-card {
-      border:1px solid var(--border); border-radius:.8rem;
-      background:var(--card-60); padding:.9rem 1rem; font-size:.85rem;
-    }
-    .net-card .net-name { font-weight:700; color:var(--text); }
-    .net-card .net-kind { color:var(--muted); font-size:.75rem; }
-    .net-card .net-addr {
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-      font-size:.7rem; color:var(--brand-300); word-break:break-all; margin-top:.3rem;
-    }
-    .net-card .net-link { color:var(--brand-light); font-size:.75rem; text-decoration:none; }
-    .net-card .net-link:hover { color:var(--brand); }
-    .net-empty { color:var(--muted); font-size:.9rem; padding:1rem; border:1px dashed var(--border); border-radius:.8rem; }
-
-    .footer {
-      text-align:center; color:var(--muted); font-size:.8rem;
-      margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
-    }
-    .footer a { color:var(--brand-light); text-decoration:none; }
-    .footer a:hover { color:var(--brand); }
-    .backlink { display:inline-block; margin-top:1rem; color:var(--brand-light); text-decoration:none; font-size:.9rem; }
-    .backlink:hover { color:var(--brand); }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <header class="hero">
-      <h1 data-i18n="escrow.hero.title">Pagamento garantido com Escrow</h1>
-      <p class="tagline" data-i18n="escrow.hero.tagline">Envie cripto com a proteção de um árbitro escolhido por voc&ecirc; &mdash; os fundos ficam custodiados em um contrato inteligente e s&oacute; s&atilde;o liberados com aprova&ccedil;&atilde;o.</p>
-      <p class="subtagline" data-i18n="escrow.hero.subtagline">Transparente: cada etapa aparece no chat de todos os envolvidos. Rastre&aacute;vel: cada decis&atilde;o &eacute; uma transa&ccedil;&atilde;o on-chain.</p>
-      <span class="badge"><span class="dot"></span><span data-i18n="escrow.hero.badge">Escrow arbitrado on-chain</span></span>
-      <div class="cta-row">
-        <a class="cta cta-primary" href="/install" data-i18n="common.cta.install">Instalar o app</a>
-        <a class="cta cta-secondary" href="/" data-i18n="common.cta.back">Voltar ao in&iacute;cio</a>
-      </div>
-    </header>
+<a data-i18n="site.skip" href="#main" class="skip-link">Ir para o conteúdo</a>
+<header class="site-header">
+<div class="container wrap">
+<div class="header-row">
+<a class="brand" href="/">
+<img src="/favicon.png" alt="" width="44" height="44"/>Rapport Crypto Chat</a>
+<nav class="nav">
+<a data-i18n="site.nav.features" href="/#recursos" class="">Recursos</a>
+<a data-i18n="site.nav.freedom" href="/#liberdade" class="">Liberdade</a>
+<a data-i18n="site.nav.team" href="/#equipe" class="">Equipe</a>
+<a data-i18n="site.nav.pricing" href="/#precos" class="">Preços</a>
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+</nav>
+</div>
+</div>
+</header>
+<main id="main">
+<header class="page-hero">
+<div class="wrap">
+<h1 data-i18n="escrow.hero.title">Pagamento garantido com Escrow</h1>
+<p class="tagline" data-i18n="escrow.hero.tagline">Envie cripto com a proteção de um árbitro escolhido por voc&ecirc; &mdash; os fundos ficam custodiados em um contrato inteligente e s&oacute; s&atilde;o liberados com aprova&ccedil;&atilde;o.</p>
+<p class="subtagline" data-i18n="escrow.hero.subtagline">Transparente: cada etapa aparece no chat de todos os envolvidos. Rastre&aacute;vel: cada decis&atilde;o &eacute; uma transa&ccedil;&atilde;o on-chain.</p>
+<span class="badge"><span class="dot"></span><span data-i18n="escrow.hero.badge">Escrow arbitrado on-chain</span></span>
+<div class="actions">
+<a class="button" href="/install" data-i18n="common.cta.install">Instalar o app</a>
+<a class="button secondary" href="/" data-i18n="common.cta.back">Voltar ao in&iacute;cio</a>
+</div>
+</div>
+</header>
+<div class="page">
 
     <h2 class="section-title" data-i18n="escrow.what.title">O que &eacute; escrow</h2>
     <p class="lead" data-i18n-html="escrow.what.lead">
@@ -430,13 +313,46 @@
       </div>
     </div>
 
-    <a class="backlink" href="/" data-i18n="common.back.home">&larr; Voltar para a p&aacute;gina inicial</a>
-
-    <div class="footer">
-      <p data-i18n-html="common.footer.contacts">Contato: <a href="/ajudar#crypto-chat-support">Crypto Chat</a> &middot; <a href="https://wa.me/5585985205490" target="_blank" rel="noopener noreferrer">WhatsApp</a> &middot; <a href="mailto:admin@rapport.tec.br">admin@rapport.tec.br</a> &middot; <a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer">rapport.tec.br</a> &middot; <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a></p>
-      <p data-i18n-html="common.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
-    </div>
-  </div>
+<div class="resources">
+<a href="/" data-i18n="common.back.home">&larr; Voltar para a p&aacute;gina inicial</a>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div class="footer-grid">
+<a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer" aria-label="Rapport Tecnologia">
+<img class="footer-logo" src="/images/rapport-logo.png" alt="Rapport Tecnologia" width="180" height="180" loading="lazy"/>
+</a>
+<div>
+<h3 data-i18n="site.footer.tagline" >Tecnologia, pessoas e liberdade digital.</h3>
+<div class="footer-links">
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.p.stats.title" href="/stats">Estatísticas</a>
+<a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a>
+</div>
+</div>
+<div class="socials">
+<a href="https://linkedin.com/in/carlosdelfino" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4M3 9h4v12H3zm6 0h4v2c1-2 6-3 7 1v9h-4v-8c0-2-3-2-3 0v8H9z"/>
+</svg>
+</a>
+<a href="https://instagram.com/rapport.tecnologia" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="18" cy="6" r="1"/>
+</svg>
+</a>
+</div>
+</div>
+<div class="copyright">
+<p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
+</div>
+</div>
+</footer>
 
   <script>
     (function () {

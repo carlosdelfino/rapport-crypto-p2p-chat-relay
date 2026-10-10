@@ -1,0 +1,11 @@
+{
+  "tool": "image_gen built-in",
+  "header": {
+    "file": "public/images/editorial/crypto-investments-header.webp",
+    "prompt": "Use case: photorealistic-natural. Asset type: landscape editorial blog cover for Rapport Crypto Chat about understanding crypto investment choices: lending pools, curated vaults and tokenized assets. Create a sophisticated warm architectural still life photograph: three distinct low travertine platforms connected by subtle brass channels; an amber glass pool with small unbranded brass coins, a translucent olive green geometric vault, and a terracotta architectural block suggesting real-world assets. Cream plaster backdrop, soft afternoon sun, natural shadows, a small olive branch, orange #ed5919, golden yellow #ffc62f, olive #526841, brown #533a28. Quiet educational mood matching premium editorial financial still-life photography. Wide 3:2 composition, objects in central horizontal band for banner cropping. No text, numbers, logos, charts, upward arrows or promises of wealth."
+  },
+  "thumbnail": {
+    "file": "public/images/editorial/crypto-investments-thumb.webp",
+    "prompt": "Use case: photorealistic-natural. Asset type: landscape 3:2 blog thumbnail, premium warm editorial still life for an educational crypto investments article. Tight simple composition of three objects on a cream travertine desk: small amber glass bowl holding plain brass tokens, olive green translucent glass vault cube, miniature terracotta building, connected with subtle brass channels. Cream plaster background, afternoon sunlight, realistic material texture and shadows. Rapport palette orange #ed5919, yellow #ffc62f, olive #526841 and brown #533a28. Objects large and centered, clear silhouettes readable at small card size. No text, logos, numbers, charts or arrows."
+  }
+}

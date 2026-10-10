@@ -102,22 +102,19 @@ test.describe('página /comandos', () => {
     expectCleanRuntime(hygiene);
   });
 
-  test('home tem o CTA do tutorial entre Baixar APK e Ver estatísticas', async ({
+  test('home tem o CTA do tutorial ao lado de Baixar APK no hero', async ({
     page,
     hygiene,
   }) => {
     await page.goto('/');
 
-    const ctas = page.locator('.hero .cta-row a');
-    expect(await ctas.count()).toBe(3);
+    const ctas = page.locator('.hero .actions a');
+    expect(await ctas.count()).toBe(2);
     await expect(ctas.nth(0)).toHaveAttribute('href', '/install');
     await expect(ctas.nth(1)).toHaveAttribute('href', '/comandos');
-    await expect(ctas.nth(2)).toHaveAttribute('href', '/stats');
 
-    // O card na grade de páginas também linka para /comandos.
-    await expect(
-      page.locator('.links-grid a[href="/comandos"]'),
-    ).toBeVisible();
+    // A seção de estatísticas também é alcançável pela home.
+    await expect(page.locator('a[href="/stats"]').first()).toBeVisible();
 
     await ctas.nth(1).click();
     await page.waitForURL('**/comandos');

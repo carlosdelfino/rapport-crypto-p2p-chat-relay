@@ -32,7 +32,7 @@ test.describe('página /ajudar', () => {
     await page.goto('/ajudar');
 
     await expect(
-      page.locator('.container', { hasText: /melhor forma de ajudar/i }),
+      page.locator('main', { hasText: /melhor forma de ajudar/i }),
     ).toBeVisible();
     await expect(page.locator('a[href="/install"]').first()).toBeVisible();
 
@@ -87,7 +87,7 @@ test.describe('página /ajudar', () => {
   }) => {
     await page.goto('/');
 
-    const card = page.locator('.links-grid a[href="/ajudar"]');
+    const card = page.locator('.resources a[href="/ajudar"]');
     await expect(card).toBeVisible();
     await card.click();
     await page.waitForURL('**/ajudar');

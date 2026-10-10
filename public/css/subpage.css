@@ -1,0 +1,166 @@
+/* subpage.css — componentes das páginas internas do site estático.
+   Carregado junto de i18n.css e site.css pelas páginas de documentação
+   (/chat, /wallet, /escrow, /tokens, /comandos, /invest, /install,
+   /stats, /ajudar, /privacidade). Usa as mesmas variáveis do site.css. */
+
+/* --- estrutura da página interna ----------------------------------------- */
+.page-hero{padding:64px 0 56px;text-align:center;background:radial-gradient(ellipse at 80% 30%,#ffdfa5 0,transparent 60%),#fff8ea}
+.page-hero h1{color:var(--brown);font-size:clamp(2.1rem,4.6vw,3.2rem)}
+.page-hero .tagline{color:#5a5248;font-size:1.08rem;max-width:44rem;margin:0 auto 1rem}
+.page-hero .subtagline{color:var(--muted);font-size:.9rem;max-width:38rem;margin:0 auto}
+.page-hero .actions{justify-content:center;margin-bottom:0}
+.badge{display:inline-block;margin-top:1rem;padding:.3rem .8rem;border:1px solid var(--line);border-radius:999px;font-size:.75rem;font-weight:600;color:var(--muted);background:#fff}
+.badge .dot{display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--brand);margin-right:.4rem;vertical-align:middle;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.page{width:min(52rem,calc(100% - 40px));margin:auto;padding:56px 0 72px}
+.page.wide{width:min(56rem,calc(100% - 40px))}
+
+/* --- tipografia de documento ---------------------------------------------- */
+.section-title{font-size:1.3rem;font-weight:800;color:var(--brown);letter-spacing:-.02em;margin:3rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--line)}
+.lead{color:#5a5248;font-size:1rem;margin-bottom:1rem}
+.muted{color:var(--muted);font-size:.9rem}
+main code,code.cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.85em;color:#a63c10;background:#f9ecdd;padding:.1rem .4rem;border-radius:.35rem}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+
+/* --- cards e grades --------------------------------------------------------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin:1.5rem 0}
+.cards .card{padding:1.4rem}
+.page .card{margin-bottom:1rem}
+.page .card h3{font-size:1.02rem;margin-bottom:.35rem}
+.cards .card p{font-size:.85rem}
+.card .icon{display:inline-flex;align-items:center;justify-content:center;width:2.4rem;height:2.4rem;border-radius:.7rem;background:#fde9d8;color:#9d461c;font-size:1.2rem;margin-bottom:.6rem}
+.card a.card-link{display:inline-block;margin-top:.6rem;font-size:.82rem;font-weight:700}
+.article-body .card{margin:1.5rem 0}
+
+/* --- passo a passo ------------------------------------------------------------ */
+.steps{display:flex;flex-direction:column;margin:1.5rem 0}
+.step{display:flex;gap:1rem;padding:1rem 0;position:relative}
+.step::before{content:"";position:absolute;left:1.19rem;top:2.9rem;bottom:-.4rem;width:2px;background:var(--line)}
+.step:last-child::before{display:none}
+.step .num{flex:0 0 2.4rem;height:2.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fde9d8;border:1px solid var(--brand);color:#9d461c;font-weight:800;font-size:.9rem;position:relative;z-index:1}
+.step .body{flex:1;border:1px solid var(--line);border-radius:.9rem;background:#fff;padding:1rem 1.2rem}
+.step .body h3{font-size:.95rem;margin-bottom:.3rem}
+.step .body h3 .who{color:#9d461c;font-weight:700}
+.step .body p{font-size:.85rem}
+
+/* --- callouts ----------------------------------------------------------------- */
+.callout{border:1px solid var(--brand);border-left-width:4px;border-radius:.9rem;background:#fdf0e3;padding:1rem 1.2rem;margin:1.5rem 0;font-size:.9rem;color:#5a5248}
+.callout strong{color:#9d461c}
+.callout.ok{border-color:var(--green);background:#eef1e6}
+.callout.ok strong{color:var(--green)}
+.callout.warn{border-color:#c98a1b;background:#fdf3d7}
+.callout.warn strong{color:#92650a}
+
+/* --- listas --------------------------------------------------------------------- */
+.risk-list,.tip-list{list-style:none;margin:1rem 0;padding:0}
+.risk-list li,.tip-list li{position:relative;padding-left:1.5rem;margin-bottom:.6rem;color:#5a5248;font-size:.9rem}
+.risk-list li::before{content:"⚠";position:absolute;left:0;top:-1px;color:#b45309;font-size:1rem}
+.tip-list li::before{content:"→";position:absolute;left:0;top:0;color:#9d461c;font-weight:700}
+.cmd-list{list-style:decimal;padding-left:1.2rem;margin:1rem 0}
+.cmd-list li{margin-bottom:.6rem;color:#5a5248;font-size:.9rem}
+
+/* --- tabelas de referência --------------------------------------------------------- */
+.cmd-table,.relay-table,.fee-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+.cmd-table th,.cmd-table td,.relay-table th,.relay-table td,.fee-table th,.fee-table td{text-align:left;padding:.7rem .9rem;border:1px solid var(--line);vertical-align:top}
+.cmd-table th,.relay-table th,.fee-table th{background:#f7efdf;color:var(--brown);font-weight:700}
+.cmd-table td,.relay-table td,.fee-table td{color:#5a5248}
+.cmd-table td.cmd-name{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:#a63c10;font-weight:700;overflow-wrap:anywhere}
+.relay-table td.do{color:var(--green);font-weight:700;white-space:nowrap}
+.relay-table td.dont{color:#b3402a;font-weight:700;white-space:nowrap}
+.fee-table td.pct{color:#9d461c;font-weight:700;white-space:nowrap}
+
+/* --- /stats: versão clara dos componentes de estatística ----------------------------- */
+.page .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.75rem;margin:1.5rem 0}
+.page .stat-card{border:1px solid var(--line);border-radius:1rem;background:#fff;padding:1.25rem;text-align:center}
+.page .stat-value{font-size:2rem;font-weight:800;color:var(--brand)}
+.page .stat-label{font-size:.8rem;color:var(--muted);margin-top:.25rem;text-transform:uppercase;letter-spacing:.05em}
+.page .updated{color:var(--muted)}
+.page .table-title{font-size:.85rem;font-weight:700;color:#9d461c;margin:.9rem 0 .4rem}
+.page .financial-table th{color:#9d461c;font-weight:600}
+.page .financial-table td{color:#5a5248;border-bottom:1px solid var(--line)}
+.page .financial-table tr:last-child td{border-bottom:none}
+.loading{color:var(--muted);font-size:.9rem}
+.error{color:#b3402a;font-size:.9rem}
+
+/* --- /install ----------------------------------------------------------------------- */
+.apk-list{display:flex;flex-direction:column;gap:.75rem}
+.apk-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;border:1px solid var(--line);border-radius:1rem;background:#fff;padding:1.25rem 1.5rem;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s,box-shadow .2s}
+.apk-row:hover{border-color:var(--brand);transform:translateY(-1px);box-shadow:0 6px 20px rgba(237,89,25,.1)}
+.apk-latest{border-color:var(--brand)}
+.apk-info{display:flex;flex-direction:column;gap:.2rem;min-width:0}
+.apk-version{font-size:1.1rem;font-weight:700;color:var(--ink)}
+.latest-tag{display:inline-block;padding:.1rem .5rem;border-radius:999px;background:#fde9d8;color:#9d461c;font-size:.7rem;font-weight:700;margin-left:.4rem;vertical-align:middle}
+.apk-meta{font-size:.8rem;color:var(--muted)}
+.apk-filename{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.75rem;color:#5a5248;word-break:break-all}
+.apk-comment{font-size:.8rem;color:#5a5248;margin-top:.25rem;white-space:pre-wrap;word-break:break-word}
+.apk-download{flex-shrink:0;padding:.6rem 1.2rem;border-radius:.6rem;background:var(--brand);color:#fff;font-size:.85rem;font-weight:700;white-space:nowrap}
+.apk-row:hover .apk-download{background:#b74010}
+.empty{color:var(--muted);text-align:center;padding:2rem}
+.install-guide{border:1px solid var(--line);border-radius:1rem;background:#fff;padding:1.5rem;margin-top:1.5rem}
+.install-guide h2{font-size:.95rem;font-weight:700;color:#9d461c;margin-bottom:.75rem}
+.install-guide ol{padding-left:1.5rem;color:#5a5248;font-size:.85rem}
+.install-guide li{margin-bottom:.4rem}
+
+/* --- doações e carteiras (/ajudar, /comandos) ---------------------------------------- */
+.donation-item{display:flex;flex-direction:column;gap:.4rem;padding:1rem;border:1px solid var(--line);border-radius:.75rem;background:#f7efdf;margin-bottom:.75rem}
+.donation-item:last-child{margin-bottom:0}
+.donation-label{font-size:.75rem;font-weight:700;color:#9d461c;text-transform:uppercase;letter-spacing:.08em}
+.donation-addr{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.85rem;color:var(--ink);word-break:break-all;cursor:pointer;padding:.4rem .6rem;border-radius:.4rem;border:1px solid var(--line);background:#fff;transition:border-color .2s}
+.donation-addr:hover{border-color:var(--brand)}
+.donation-hint{font-size:.75rem;color:var(--muted)}
+.copy-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;border:1px solid var(--line);border-radius:.4rem;background:#fff;color:#5a5248;font-size:.75rem;cursor:pointer;transition:all .2s;align-self:flex-start}
+.copy-btn:hover{border-color:var(--brand);color:#9d461c}
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:.6rem 1.2rem;border-radius:.5rem;background:var(--brand);color:#fff;font-size:.85rem;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:100}
+.toast.show{opacity:1}
+.support{overflow-wrap:anywhere}
+
+/* --- /comandos ------------------------------------------------------------------------ */
+.cmd-block{border:1px solid var(--line);border-radius:1rem;background:#fff;padding:1.4rem;margin-bottom:1rem}
+.cmd-block h3{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;font-size:1.05rem;font-weight:800;margin-bottom:.5rem}
+.cmd-block h3 code{font-size:1rem;padding:.2rem .6rem}
+.tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.18rem .55rem;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:#fff}
+.tag.local{color:var(--green);border-color:#a3b089}
+.tag.send{color:#a63c10;border-color:#e0a070}
+.tag.confirm{color:#92650a;border-color:#d9b85c}
+.syntax{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.85rem;color:var(--ink);background:#f7efdf;border:1px solid var(--line);border-radius:.5rem;padding:.55rem .8rem;margin:.6rem 0;overflow-x:auto}
+.cmd-block p{font-size:.9rem;color:#5a5248;margin-bottom:.5rem}
+.cmd-block p.examples{color:var(--muted);font-size:.85rem;margin-bottom:0}
+
+/* --- /tokens ---------------------------------------------------------------------------- */
+.legend{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.5rem}
+.chip{display:inline-flex;align-items:center;gap:.35rem;padding:.25rem .7rem;border-radius:999px;font-size:.72rem;font-weight:700;border:1px solid var(--line);white-space:nowrap}
+.chip.stable{background:#eef1e6;color:#526841;border-color:#b3bf97}
+.chip.native{background:#fde9d8;color:#9d461c;border-color:#ecb98a}
+.chip.wrapped{background:#e8eefb;color:#3b5ba9;border-color:#b3c3e8}
+.chip.staking{background:#f3ebfa;color:#7a4fa3;border-color:#cfb8e5}
+.chip.utility{background:#fdf3d7;color:#92650a;border-color:#e5cf8f}
+.chip.project{background:#fbe9f0;color:#a3406b;border-color:#e5b3c9}
+.chip.rwa{background:#e6f3f0;color:#2a6b5e;border-color:#a8d0c6}
+.net-block{border:1px solid var(--line);border-radius:1rem;background:#fff;margin:1rem 0;overflow:hidden}
+.net-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem;padding:.9rem 1.2rem;border-bottom:1px solid var(--line);background:#f7efdf}
+.net-head .net-name{font-size:1rem;font-weight:700;color:var(--ink)}
+.net-head .net-meta{font-size:.78rem;color:var(--muted)}
+.net-head .net-kind{margin-left:auto;font-size:.7rem;font-weight:800;letter-spacing:.04em;padding:.15rem .6rem;border-radius:999px;text-transform:uppercase}
+.net-kind.mainnet{background:#eef1e6;color:var(--green);border:1px solid #b3bf97}
+.net-kind.testnet{background:#fdf3d7;color:#92650a;border:1px solid #e5cf8f}
+.asset-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.asset-table td{padding:.6rem 1.2rem;border-bottom:1px solid var(--line);vertical-align:top}
+.asset-table tr:last-child td{border-bottom:none}
+.asset-table .sym{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-weight:700;color:#a63c10;white-space:nowrap;width:7.5rem}
+.asset-table .cat{width:9.5rem}
+.asset-table .use{color:var(--muted);font-size:.82rem}
+
+/* --- /escrow ---------------------------------------------------------------------------- */
+.networks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.75rem;margin:1rem 0}
+.net-card{border:1px solid var(--line);border-radius:.8rem;background:#fff;padding:.9rem 1rem;font-size:.85rem}
+.net-card .net-name{font-weight:700;color:var(--ink)}
+.net-card .net-kind{color:var(--muted);font-size:.75rem}
+.net-card .net-addr{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.7rem;color:#a63c10;word-break:break-all;margin-top:.3rem}
+.net-card .net-link{font-size:.75rem;text-decoration:none}
+.net-empty{color:var(--muted);font-size:.9rem;padding:1rem;border:1px dashed var(--line);border-radius:.8rem}
+
+@media(max-width:600px){
+.page-hero{padding:44px 0 40px}
+.page{width:calc(100% - 32px);padding:40px 0 56px}
+.step{gap:.7rem}
+}
