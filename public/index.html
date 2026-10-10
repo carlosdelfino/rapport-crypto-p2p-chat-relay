@@ -1,347 +1,437 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-WY96WV41T8');
-  </script>
-  <script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>  <script>
     // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
     window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
   </script>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
-  <meta name="robots" content="index, follow"/>
-  <title data-i18n="home.meta.title">Rapport Crypto Chat</title>
-  <meta name="description" content="Aplicativo de chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain. Tamb&eacute;m &eacute; uma wallet de criptomoedas e sistema de pagamento crypto com Escrow. Baixe, instale e converse com privacidade." data-i18n-attr="content:home.meta.desc"/>
-  <meta name="keywords" content="chat criptografado, blockchain, ethereum, web3, mensagens privadas, e2e, webrtc, rapport, android apk"/>
-  <meta name="theme-color" content="#020617"/>
-  <meta name="author" content="Rapport Tecnologia e Inovação"/>
-  <link rel="canonical" href="https://crypto-chat.rapport.tec.br/"/>
-  <link rel="icon" type="image/png" href="/favicon.png"/>
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-  <link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/"/>
-  <link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/?lang=en"/>
-  <link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/?lang=es"/>
-  <link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/?lang=fr"/>
-  <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/?lang=ar"/>
-  <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/"/>
-  <link rel="stylesheet" href="/css/i18n.css"/>
-  <script src="/js/i18n.js" defer></script>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Rapport Crypto Chat"/>
-  <meta property="og:locale" content="pt_BR"/>
-  <meta property="og:title" content="Rapport Crypto Chat — Chat protegido e direto" data-i18n-attr="content:home.meta.ogTitle"/>
-  <meta property="og:description" content="Chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain. Tamb&eacute;m &eacute; uma wallet de criptomoedas e sistema de pagamento crypto com Escrow. Sem cadastro, sem rastreamento." data-i18n-attr="content:home.meta.ogDesc"/>
-  <meta property="og:url" content="https://crypto-chat.rapport.tec.br/"/>
-  <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
-  <meta property="og:image:width" content="1200"/>
-  <meta property="og:image:height" content="630"/>
-  <meta property="og:image:alt" content="Rapport Crypto Chat — logo"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Rapport Crypto Chat — Chat protegido e direto" data-i18n-attr="content:home.meta.ogTitle"/>
-  <meta name="twitter:description" content="Chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain. Tamb&eacute;m &eacute; uma wallet de criptomoedas e sistema de pagamento crypto com Escrow." data-i18n-attr="content:home.meta.twDesc"/>
-  <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "name": "Rapport Crypto Chat",
-        "url": "https://crypto-chat.rapport.tec.br/",
-        "inLanguage": "pt-BR",
-        "publisher": {
-          "@type": "Organization",
-          "name": "Rapport Tecnologia e Inovação",
-          "url": "https://rapport.tec.br"
-        }
-      },
-      {
-        "@type": "SoftwareApplication",
-        "name": "Rapport Crypto Chat",
-        "operatingSystem": "Android",
-        "applicationCategory": "CommunicationApplication",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
-        "url": "https://crypto-chat.rapport.tec.br/",
-        "downloadUrl": "https://crypto-chat.rapport.tec.br/install",
-        "description": "Aplicativo de chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain. Também é uma wallet de criptomoedas e sistema de pagamento crypto com Escrow.",
-        "author": {
-          "@type": "Organization",
-          "name": "Rapport Tecnologia e Inovação",
-          "url": "https://rapport.tec.br"
-        }
-      }
-    ]
-  }
-  </script>
-  <style>
-    :root {
-      --bg:#020617; --card:#0f172a; --card-60:rgba(15,23,42,0.6);
-      --border:#1e293b; --border-hover:#334155;
-      --text:#f1f5f9; --muted:#94a3b8; --secondary:#cbd5e1;
-      --brand:#ea580c; --brand-light:#fb923c; --brand-dark:#c2410c;
-      --brand-300:#fdba74; --brand-500:#f97316;
-    }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body {
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg); color:var(--text); line-height:1.6;
-      min-height:100vh; padding:1rem;
-      -webkit-font-smoothing:antialiased;
-    }
-    .container { max-width:52rem; margin:0 auto; padding:1rem 0; }
-
-    /* Hero */
-    .hero { text-align:center; padding:3rem 1rem 2.5rem; }
-    .hero h1 {
-      font-size:clamp(2rem,5vw,3rem); font-weight:800;
-      color:var(--brand-light); margin-bottom:.75rem; letter-spacing:-.02em;
-    }
-    .hero .tagline {
-      color:var(--secondary); font-size:1.15rem; max-width:38rem;
-      margin:0 auto 1rem; line-height:1.5;
-    }
-    .hero .subtagline {
-      color:var(--muted); font-size:.9rem; max-width:34rem; margin:0 auto;
-    }
-    .badge {
-      display:inline-block; margin-top:1rem; padding:.3rem .8rem;
-      border:1px solid var(--border); border-radius:999px;
-      font-size:.75rem; font-weight:600; color:var(--muted);
-      background:var(--card-60); backdrop-filter:blur(8px);
-    }
-    .badge .dot {
-      display:inline-block; width:.5rem; height:.5rem; border-radius:50%;
-      background:var(--brand-500); margin-right:.4rem; vertical-align:middle;
-      animation:pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-    /* CTA buttons */
-    .cta-row {
-      display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center;
-      margin-top:1.5rem;
-    }
-    .cta {
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.8rem 1.6rem; border-radius:.7rem;
-      font-size:.95rem; font-weight:700; text-decoration:none;
-      transition:transform .2s, box-shadow .2s;
-    }
-    .cta-primary {
-      background:var(--brand); color:#fff;
-      box-shadow:0 8px 24px rgba(234,88,12,.2);
-    }
-    .cta-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(234,88,12,.3); }
-    .cta-secondary {
-      border:1px solid var(--border); color:var(--text);
-      background:var(--card-60); backdrop-filter:blur(8px);
-    }
-    .cta-secondary:hover { border-color:var(--brand); transform:translateY(-2px); }
-
-    /* Features */
-    .section-title {
-      font-size:1.25rem; font-weight:700; color:var(--brand-light);
-      margin:3rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
-    }
-    .features-grid {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));
-      gap:1rem; margin:1.5rem 0;
-    }
-    .feature-card {
-      border:1px solid var(--border); border-radius:1rem;
-      background:var(--card-60); backdrop-filter:blur(8px);
-      padding:1.5rem;
-    }
-    .feature-card .icon {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:2.5rem; height:2.5rem; border-radius:.75rem;
-      background:rgba(234,88,12,.12); color:var(--brand-light);
-      font-size:1.25rem; margin-bottom:.75rem;
-    }
-    .feature-card h3 { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:.4rem; }
-    .feature-card p { font-size:.85rem; color:var(--muted); }
-    .feature-card a.card-link {
-      display:inline-block; margin-top:.6rem;
-      font-size:.82rem; font-weight:700; color:var(--brand-light); text-decoration:none;
-    }
-    .feature-card a.card-link:hover { color:var(--brand); }
-
-    /* Pages grid */
-    .links-grid {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));
-      gap:1rem; margin:1.5rem 0;
-    }
-    .link-card {
-      display:flex; flex-direction:column; gap:.5rem;
-      border:1px solid var(--border); border-radius:1rem;
-      background:var(--card-60); backdrop-filter:blur(8px);
-      padding:1.5rem; text-decoration:none; color:inherit;
-      transition:border-color .2s, transform .2s, box-shadow .2s;
-    }
-    .link-card:hover {
-      border-color:var(--brand); transform:translateY(-2px);
-      box-shadow:0 8px 24px rgba(234,88,12,.12);
-    }
-    .link-card .icon {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:2.5rem; height:2.5rem; border-radius:.75rem;
-      background:rgba(234,88,12,.12); color:var(--brand-light);
-      font-size:1.25rem; margin-bottom:.25rem;
-    }
-    .link-card .title { font-size:1.05rem; font-weight:700; color:var(--text); }
-    .link-card .desc { font-size:.85rem; color:var(--muted); }
-    .link-card .path {
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-      font-size:.8rem; color:var(--brand-300); margin-top:.25rem;
-    }
-
-    /* API list */
-    .api-list { display:flex; flex-direction:column; gap:.5rem; margin:1rem 0; }
-    .api-row {
-      display:flex; align-items:center; gap:.75rem;
-      border:1px solid var(--border); border-radius:.75rem;
-      background:var(--card-60); backdrop-filter:blur(8px);
-      padding:.85rem 1.1rem; text-decoration:none; color:inherit;
-      transition:border-color .2s;
-    }
-    .api-row:hover { border-color:var(--brand); }
-    .api-method {
-      display:inline-flex; align-items:center; justify-content:center;
-      min-width:3rem; padding:.2rem .5rem; border-radius:.35rem;
-      font-size:.7rem; font-weight:800; letter-spacing:.05em;
-      background:rgba(34,197,94,.12); color:#4ade80;
-    }
-    .api-method.post { background:rgba(234,88,12,.12); color:var(--brand-light); }
-    .api-path {
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-      font-size:.85rem; color:var(--text); flex:1;
-    }
-    .api-desc { font-size:.8rem; color:var(--muted); }
-
-    .footer {
-      text-align:center; color:var(--muted); font-size:.8rem;
-      margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);
-    }
-    .footer a { color:var(--brand-light); text-decoration:none; }
-    .footer a:hover { color:var(--brand); }
-  </style>
+<title data-i18n="home.meta.title">Rapport Crypto Chat</title>
+<meta name="description" content="Chat, carteira e pagamentos com privacidade e soberania." data-i18n-attr="content:home.meta.desc"/>
+<link rel="canonical" href="https://crypto-chat.rapport.tec.br/"/>
+<link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/?lang=pt-BR"/>
+<link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/?lang=en"/>
+<link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/?lang=es"/>
+<link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/?lang=fr"/>
+<link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/?lang=ar"/>
+<link rel="icon" href="/favicon.png"/>
+<meta name="theme-color" content="#ed5919"/>
+<meta name="base:app_id" content="6aa172c842c4b455d97a3d60"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta property="og:title" content="Rapport Crypto Chat" data-i18n-attr="content:home.meta.title"/>
+<meta property="og:description" content="Chat, carteira e pagamentos com privacidade e soberania." data-i18n-attr="content:home.meta.desc"/>
+<meta property="og:locale" content="pt_BR"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://crypto-chat.rapport.tec.br/"/>
+<meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+<link rel="stylesheet" href="/css/i18n.css"/>
+<link rel="stylesheet" href="/css/site.css"/>
+<script src="/js/i18n.js" defer>
+</script>
 </head>
 <body>
-  <div class="container">
-    <header class="hero">
-      <h1>Rapport Crypto Chat</h1>
-      <p class="tagline" data-i18n="home.hero.tagline">Chat protegido e direto entre pessoas, sem servidor central armazenando mensagens, com identidade baseada em carteira blockchain. Tamb&eacute;m &eacute; uma wallet de criptomoedas e sistema de pagamento crypto com Escrow.</p>
-      <p class="subtagline" data-i18n="home.hero.subtagline">Sem cadastro. Sem rastreamento. Apenas voc&ecirc;, sua carteira e a criptografia.</p>
-      <span class="badge"><span class="dot"></span><span data-i18n="home.hero.badge">Signaling relay online</span></span>
-      <div class="cta-row">
-        <a class="cta cta-primary" href="/install" data-i18n="home.cta.download">Baixar APK</a>
-        <a class="cta cta-secondary" href="/comandos" data-i18n="home.cta.comandos">Tutorial de comandos</a>
-        <a class="cta cta-secondary" href="/stats" data-i18n="home.cta.stats">Ver estat&iacute;sticas</a>
-      </div>
-    </header>
-
-    <h2 class="section-title" data-i18n="home.section.features">Recursos</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="icon">&#128274;</span>
+<a data-i18n="site.skip" href="#main" class="skip-link">Ir para o conteúdo</a>
+<header class="site-header">
+<div class="container wrap">
+<div class="header-row">
+<a class="brand" href="/">
+<img src="/favicon.png" alt="" width="44" height="44"/>Rapport Crypto Chat</a>
+<nav class="nav">
+<a data-i18n="site.nav.features" href="/#recursos" class="">Recursos</a>
+<a data-i18n="site.nav.freedom" href="/#liberdade" class="">Liberdade</a>
+<a data-i18n="site.nav.team" href="/#equipe" class="">Equipe</a>
+<a data-i18n="site.nav.pricing" href="/#precos" class="">Preços</a>
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+</nav>
+</div>
+</div>
+</header>
+<main id="main">
+<section class="hero">
+<div class="wrap hero-grid">
+<div class="hero-copy">
+<p data-i18n="site.hero.eyebrow" class="eyebrow">COMUNICAÇÃO • IDENTIDADE • LIBERDADE</p>
+<h1 data-i18n="site.hero.title" >Suas conversas. Sua carteira. Sua liberdade.</h1>
+<p data-i18n="home.hero.tagline" >Chat protegido e direto entre pessoas, sem servidor central armazenando seus dados e suas mensagens. Você tem soberania sobre seus dados e mensagens, com identidade baseada em carteira blockchain. Também é uma wallet de criptomoedas e sistema de pagamentos com criptoativos e escrow.</p>
+<a data-i18n="home.hero.learnMore" href="/privacidade">Saiba mais clicando aqui</a>
+<div class="actions">
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+<a data-i18n="home.cta.comandos" href="/comandos" class="button secondary">Tutorial de comandos</a>
+</div>
+<p data-i18n="home.hero.subtagline" >Sem cadastro. Sem rastreamento. Apenas você, sua carteira e a criptografia.</p>
+</div>
+<div class="hero-art">
+<img src="/images/editorial/privacy.webp" alt="" fetchpriority="high" width="1536" height="1024"/>
+<div class="hero-caption">
+<span data-i18n="site.freedom.communication" >Comunicação autossoberana</span>
+</div>
+</div>
+</div>
+</section>
+<div class="value-strip">
+<div class="wrap">
+<a data-i18n="site.freedom.communication" href="/chat" class="">Comunicação autossoberana</a>
+<a data-i18n="site.freedom.identity" href="/wallet" class="">Sua identidade, suas chaves</a>
+<a data-i18n="site.pricing.tx" href="/escrow" class="">Transações cripto</a>
+<a data-i18n="site.nav.freedom" href="/privacidade" class="">Liberdade</a>
+</div>
+</div>
+<section class="section" id="recursos">
+<div class="wrap">
+<div class="section-head">
+<h2 data-i18n="site.features.title" >Mais possibilidades em cada conversa</h2>
+<p data-i18n="site.features.lead" >Converse, pague e explore a economia digital com sua própria identidade.</p>
+</div>
+<div class="grid">
+      <div class="card">
+        <span class="feature-icon">&#128274;</span>
         <h3 data-i18n="home.f.e2e.title">Criptografia E2E</h3>
         <p data-i18n="home.f.e2e.desc">Mensagens cifradas com X25519 + ChaCha20-Poly1305 antes de sair do seu dispositivo.</p>
         <a class="card-link" href="/chat" data-i18n="common.link.howItWorks">Como funciona &rarr;</a>
       </div>
-      <div class="feature-card">
-        <span class="icon">&#129689;</span>
+      <div class="card">
+        <span class="feature-icon">&#129689;</span>
         <h3 data-i18n="home.f.direct.title">Conex&atilde;o direta</h3>
         <p data-i18n="home.f.direct.desc">Chat direto entre dispositivos via WebRTC. O relay apenas sinaliza &mdash; nunca carrega conte&uacute;do.</p>
         <a class="card-link" href="/chat" data-i18n="common.link.howItWorks">Como funciona &rarr;</a>
       </div>
-      <div class="feature-card">
-        <span class="icon">&#128179;</span>
+      <div class="card">
+        <span class="feature-icon">&#128179;</span>
         <h3 data-i18n="home.f.identity.title">Identidade blockchain</h3>
         <p data-i18n="home.f.identity.desc">Sua carteira &eacute; sua identidade. Sem e-mail, sem telefone, sem KYC.</p>
         <a class="card-link" href="/chat" data-i18n="common.link.howItWorks">Como funciona &rarr;</a>
       </div>
-      <div class="feature-card">
-        <span class="icon">&#127760;</span>
+      <div class="card">
+        <span class="feature-icon">&#127760;</span>
         <h3 data-i18n="home.f.networks.title">Redes suportadas</h3>
         <p data-i18n="home.f.networks.desc">Ethereum, Polygon, Base, Optimism, Arbitrum, Linea, Monad, XDC, Arc, HAQQ, Bitcoin e Klever &mdash; com testnets para pr&aacute;tica.</p>
         <a class="card-link" href="/tokens" data-i18n="home.f.networks.link">Ver cat&aacute;logo de redes &rarr;</a>
       </div>
-      <div class="feature-card">
-        <span class="icon">&#128176;</span>
+      <div class="card">
+        <span class="feature-icon">&#128176;</span>
         <h3 data-i18n="home.f.coins.title">Moedas e tokens</h3>
         <p data-i18n="home.f.coins.desc">Stablecoins (USDC, USDT, DAI, RAI, BRLA, BRZ, BRL1, BRLe, PYUSD, EURC), moedas nativas (BTC, ETH, POL, MON, ISLM, XDC, BNB, KLV) e tokens wrapped, staking e de projeto.</p>
         <a class="card-link" href="/tokens" data-i18n="home.f.coins.link">Ver cat&aacute;logo completo &rarr;</a>
       </div>
-      <div class="feature-card">
-        <span class="icon">&#128091;</span>
+      <div class="card">
+        <span class="feature-icon">&#128091;</span>
         <h3 data-i18n="home.f.wallet.title">Wallet</h3>
         <p data-i18n="home.f.wallet.desc">A mesma conta do chat &eacute; sua carteira: receba, pague e custodie em escrow sem sair da conversa.</p>
         <a class="card-link" href="/wallet" data-i18n="home.f.wallet.link">Como funciona a wallet &rarr;</a>
       </div>
-      <div class="feature-card">
-        <span class="icon">&#128737;&#65039;</span>
+      <div class="card">
+        <span class="feature-icon">&#128737;&#65039;</span>
         <h3 data-i18n="home.f.escrow.title">Pagamento garantido</h3>
         <p data-i18n="home.f.escrow.desc">Escrow arbitrado on-chain: um contato de confian&ccedil;a valida o pagamento antes da libera&ccedil;&atilde;o dos fundos.</p>
         <a class="card-link" href="/escrow" data-i18n="common.link.howEscrow">Como funciona o escrow &rarr;</a>
       </div>
-      <div class="feature-card">
-        <span class="icon">&#128200;</span>
+      <div class="card">
+        <span class="feature-icon">&#128200;</span>
         <h3 data-i18n="home.f.invest.title">Investimentos DeFi/RWA</h3>
         <p data-i18n="home.f.invest.desc">Invista em Aave, Morpho, Ondo e xStocks direto no chat: liste operadoras, veja ativos e execute transa&ccedil;&otilde;es on-chain com um &uacute;nico comando.</p>
         <a class="card-link" href="/invest" data-i18n="home.f.invest.link">Como funcionam os investimentos &rarr;</a>
       </div>
-      <div class="feature-card">
-        <span class="icon">&#128241;</span>
+      <div class="card">
+        <span class="feature-icon">&#128241;</span>
         <h3 data-i18n="home.f.android.title">Android nativo</h3>
         <p data-i18n="home.f.android.desc">App Android via Expo + React Native. Instala&ccedil;&atilde;o direta por APK, sem loja.</p>
         <a class="card-link" href="/install" data-i18n="common.link.downloadApk">Baixar o APK &rarr;</a>
       </div>
     </div>
-
-    <h2 class="section-title" data-i18n="home.section.pages">P&aacute;ginas</h2>
-    <div class="links-grid">
-      <a class="link-card" href="/stats">
-        <span class="icon">&#128202;</span>
-        <span class="title" data-i18n="home.p.stats.title">Estat&iacute;sticas</span>
-        <span class="desc" data-i18n="home.p.stats.desc">M&eacute;tricas em tempo real do relay de sinaliza&ccedil;&atilde;o.</span>
-        <span class="path">/stats</span>
-      </a>
-      <a class="link-card" href="/comandos">
-        <span class="icon">&#9000;&#65039;</span>
-        <span class="title" data-i18n="home.p.comandos.title">Comandos do chat</span>
-        <span class="desc" data-i18n="home.p.comandos.desc">Tutorial completo: pagar, cobrar, ver saldo, criar escrow e investir digitando na conversa.</span>
-        <span class="path">/comandos</span>
-      </a>
-      <a class="link-card" href="/ajudar">
-        <span class="icon">&#129309;</span>
-        <span class="title" data-i18n="home.p.ajudar.title">Como Ajudar</span>
-        <span class="desc" data-i18n="home.p.ajudar.desc">A melhor forma de ajudar &eacute; usar o app. Doa&ccedil;&otilde;es de qualquer valor tamb&eacute;m s&atilde;o bem-vindas.</span>
-        <span class="path">/ajudar</span>
-      </a>
-      <a class="link-card" href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat" rel="noopener" target="_blank">
-        <span class="icon">&#128187;</span>
-        <span class="title" data-i18n="home.p.github.title">C&oacute;digo-fonte</span>
-        <span class="desc" data-i18n="home.p.github.desc">Reposit&oacute;rio do dApp e do relay no GitHub.</span>
-        <span class="path">github.com/carlosdelfino/rapport-crypto-p2p-chat</span>
-      </a>
-      <a class="link-card" href="https://rapport.tec.br" rel="noopener" target="_blank">
-        <span class="icon">&#127891;</span>
-        <span class="title" data-i18n="home.p.rapport.title">Rapport Tecnologia</span>
-        <span class="desc" data-i18n="home.p.rapport.desc">Site institucional da Rapport Tecnologia e Inova&ccedil;&atilde;o.</span>
-        <span class="path">rapport.tec.br</span>
-      </a>
-    </div>
-
-    <h2 class="section-title">API</h2>
-    <div class="api-list">
+<div class="resources">
+<a data-i18n="home.p.ajudar.title" href="/ajudar">Como ajudar</a>
+<a data-i18n="home.p.github.title" href="https://github.com/carlosdelfino/rapport-crypto-p2p-chat">Código-fonte</a>
+</div>
+</div>
+</section>
+<section class="section tint" id="liberdade">
+<div class="wrap">
+<div class="section-head">
+<h2 data-i18n="site.freedom.title" >Liberdade para se conectar. Autonomia para escolher.</h2>
+<p data-i18n="site.freedom.lead" >Uma tecnologia que coloca pessoas, privacidade e controle no centro.</p>
+</div>
+<div class="grid">
+<article class="portfolio-card">
+<img src="/images/editorial/sovereignty.webp" alt="" loading="lazy" width="1536" height="1024"/>
+<a data-i18n="site.freedom.communication" href="/blog/soberania-digital" class="">Comunicação autossoberana</a>
+</article>
+<article class="portfolio-card">
+<img src="/images/editorial/identity.webp" alt="" loading="lazy" width="1536" height="1024"/>
+<a data-i18n="site.freedom.identity" href="/blog/identidade-autossoberana" class="">Sua identidade, suas chaves</a>
+</article>
+<article class="portfolio-card">
+<img src="/images/editorial/funds.webp" alt="" loading="lazy" width="1536" height="1024"/>
+<a data-i18n="site.freedom.finance" href="/blog/fundos-cripto" class="">Liberdade financeira consciente</a>
+</article>
+</div>
+</div>
+</section>
+<section class="section stats-section" id="estatisticas">
+<div class="wrap">
+<div class="section-head">
+<h2 data-i18n="site.stats.title" >Acompanhe o Crypto Chat</h2>
+<p data-i18n="site.stats.lead" >Dados reais do relay, volume transacionado e demanda por escrow.</p>
+</div>
+<div id="stats-content">
+<p data-i18n="stats.loading" >Carregando estatísticas…</p>
+</div>
+<details class="stats-details" open>
+<summary>
+<span data-i18n="stats.vol.title" >Volume transacionado</span>
+</summary>
+<div>
+<p data-i18n="stats.vol.desc" >Total de cripto movimentado pelo app em cada moeda e rede, reportado de forma anônima a cada transação confirmada — nenhum endereço de carteira é coletado ou exibido. O volume demonstra o crescimento do app e seu impacto na economia cripto.</p>
+<div id="financial-content">
+<p data-i18n="stats.loadingFinancial" >Carregando dados financeiros…</p>
+</div>
+</div>
+</details>
+<details class="stats-details" open>
+<summary>
+<span data-i18n="stats.esc.title" >Demanda por escrow</span>
+</summary>
+<div>
+<p data-i18n="stats.esc.desc" >Pedidos de usuários por suporte a escrow em redes ainda sem contrato deployado.</p>
+<div id="escrow-demand-content">
+<p data-i18n="stats.loadingEscrow" >Carregando pedidos de escrow…</p>
+</div>
+</div>
+</details>
+<p>
+<a data-i18n="home.cta.stats" href="/stats">Ver estatísticas</a>
+</p>
+</div>
+</section>
+<script src="/js/home-stats.js" defer>
+</script>
+<section class="section" id="precos">
+<div class="wrap">
+<div class="section-head">
+<h2 data-i18n="site.pricing.title" >Conversa livre. Taxas transparentes.</h2>
+</div>
+<div class="grid">
+<article class="card price-card ">
+<h3 data-i18n="site.pricing.chat" >Chat sempre gratuito</h3>
+<div class="price">R$ 0</div>
+<p data-i18n="site.pricing.chatdesc" >Sem mensalidade para conversar. Sua identidade é sua carteira.</p>
+<a data-i18n="site.nav.support" href="/suporte" class="button secondary">Suporte</a>
+</article>
+<article class="card price-card highlight">
+<h3 data-i18n="site.pricing.tx" >Transações cripto</h3>
+<div class="price">0.10%</div>
+<p data-i18n="site.pricing.txdesc" >Sobre o valor transacionado, cobrado na origem, de quem envia, além do gás de cada rede. Modelo previsto para a ampla adoção do app.</p>
+<p data-i18n="site.pricing.example" >R$ 10 → R$ 0,01 de taxa · R$ 1.000 → R$ 1 de taxa</p>
+<a data-i18n="site.nav.support" href="/suporte" class="button secondary">Suporte</a>
+</article>
+<article class="card price-card ">
+<h3 data-i18n="site.pricing.gas" >Gás da rede</h3>
+<div class="price">
+<span data-i18n="site.pricing.variable" >Variável</span>
+</div>
+<p data-i18n="site.pricing.gasdesc" >Varia conforme a rede e a operação. Confira o custo total antes de confirmar. Precisa de ajuda nas primeiras transações? Fale com o suporte.</p>
+<a data-i18n="site.nav.support" href="/suporte" class="button secondary">Suporte</a>
+</article>
+</div>
+</div>
+</section>
+<section class="section tint" id="equipe">
+<div class="wrap">
+<div class="section-head">
+<h2 data-i18n="site.team.title" >Conheça quem está construindo</h2>
+</div>
+<div class="team">
+<a href="https://carlosdelfino.eti.br" target="_blank" rel="noopener noreferrer">
+<img src="/images/carlos-delfino-stand.jpg" alt="Carlos Delfino" width="340" height="340" loading="lazy"/>
+</a>
+<div>
+<h3>Carlos Delfino</h3>
+<p class="role">Founder / CEO / CTO</p>
+<p data-i18n="site.team.bio" >Tecnologia integrada para uma vida melhor. Carlos Delfino lidera a construção do Crypto Chat e da Rapport Tecnologia, conectando comunicação, blockchain e autonomia digital.</p>
+<a data-i18n="site.team.link" href="https://carlosdelfino.eti.br" class="button secondary">Conheça Carlos Delfino</a>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="depoimentos">
+<div class="wrap">
+<div class="section-head">
+<h2 data-i18n="site.reviews.title" >Como o Crypto Chat pode fazer parte da sua vida</h2>
+</div>
+<p data-i18n="site.reviews.note" class="review-note">Depoimentos ilustrativos: nomes, relatos e retratos são fictícios, criados para demonstrar possibilidades de uso. Não são avaliações de clientes reais.</p>
+<div class="reviews-grid">
+<article class="review">
+<blockquote data-i18n="site.review.ana" >Para um trabalho freelance, eu combinaria a entrega na conversa e usaria escrow para deixar as condições do pagamento claras.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-ana.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Ana Souza</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.lucas" >Gosto da ideia de conversar com identidade por carteira e começar pelas redes de teste para aprender antes de transferir valores reais.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-lucas.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Lucas Oliveira</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.3" >Eu usaria a carteira integrada para combinar pagamentos com meus clientes sem sair da conversa.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-3.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Marina Costa</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.4" >Poder escolher os árbitros antes de contratar um serviço me ajudaria a deixar o acordo mais claro.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-4.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Rafael Aoki</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.5" >A proposta de manter minhas conversas sob meu controle combina com a privacidade que procuro.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-5.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Helena Martins</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.6" >Para aprender sobre cripto, começar com moedas de teste seria uma forma prática de ganhar confiança.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-6.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>André Nascimento</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.7" >Ter chat e escrow juntos faria sentido para os projetos que entrego por etapas.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-7.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Beatriz Lima</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.8" >Uma taxa apresentada antes da operação me ajudaria a entender o custo de cada transferência.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-8.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Paulo Ribeiro</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.9" >Gosto de conhecer quem desenvolve o aplicativo e de ter um canal direto com o suporte.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-9.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Clara Mendes</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+<article class="review">
+<blockquote data-i18n="site.review.10" >Usaria os artigos para entender identidade por carteira e os cuidados com minhas próprias chaves.</blockquote>
+<div class="review-person">
+<img src="/images/editorial/review-10.webp" alt="" loading="lazy" width="56" height="56"/>
+<div>
+<strong>Diego Santos</strong>
+<small data-i18n="site.review.role" >Personagem fictício</small>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section class="section tint">
+<div class="wrap">
+<div class="section-head">
+<h2 data-i18n="site.blog.title" >Ideias para uma vida digital mais livre</h2>
+<p data-i18n="site.blog.lead" >Artigos sobre cripto, pagamentos e o direito de controlar seus dados.</p>
+</div>
+<div class="grid">
+<article class="blog-card">
+<a href="/blog/criptomoedas" tabindex="-1" aria-hidden="true">
+<img src="/images/editorial/crypto.webp" alt="" loading="lazy" width="1536" height="1024"/>
+</a>
+<div class="content">
+<h3>
+<a data-i18n="blog.criptomoedas.title" href="/blog/criptomoedas" class="">Criptomoedas: entenda antes de transferir</a>
+</h3>
+<p data-i18n="blog.criptomoedas.intro" >Uma carteira, uma rede e uma escolha consciente.</p>
+<a data-i18n="site.blog.read" href="/blog/criptomoedas" class="card-link">Ler artigo</a>
+</div>
+</article>
+<article class="blog-card">
+<a href="/blog/fundos-cripto" tabindex="-1" aria-hidden="true">
+<img src="/images/editorial/funds.webp" alt="" loading="lazy" width="1536" height="1024"/>
+</a>
+<div class="content">
+<h3>
+<a data-i18n="blog.fundos-cripto.title" href="/blog/fundos-cripto" class="">Fundos de cripto: o que avaliar</a>
+</h3>
+<p data-i18n="blog.fundos-cripto.intro" >Estratégia, custos e liquidez antes da rentabilidade.</p>
+<a data-i18n="site.blog.read" href="/blog/fundos-cripto" class="card-link">Ler artigo</a>
+</div>
+</article>
+<article class="blog-card">
+<a href="/blog/pagamentos-escrow" tabindex="-1" aria-hidden="true">
+<img src="/images/editorial/escrow.webp" alt="" loading="lazy" width="1536" height="1024"/>
+</a>
+<div class="content">
+<h3>
+<a data-i18n="blog.pagamentos-escrow.title" href="/blog/pagamentos-escrow" class="">Escrow: combine as regras antes de pagar</a>
+</h3>
+<p data-i18n="blog.pagamentos-escrow.intro" >Pagamento condicionado à entrega, com arbitragem.</p>
+<a data-i18n="site.blog.read" href="/blog/pagamentos-escrow" class="card-link">Ler artigo</a>
+</div>
+</article>
+</div>
+<div class="actions" style="justify-content:center">
+<a data-i18n="site.blog.all" href="/blog" class="button secondary">Todos os artigos</a>
+</div>
+</div>
+</section>
+<section class="cta-band">
+<div class="wrap cta-inner">
+<h2 data-i18n="site.cta.title" >Sua próxima conversa pode ser mais livre.</h2>
+<p data-i18n="site.cta.desc" >Instale o Crypto Chat. Crie sua carteira. Comece a conversar.</p>
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+</div>
+</section>
+<section class="section">
+<div class="wrap questions">
+<div>
+<h2 data-i18n="site.questions.title" >Ficou com alguma dúvida?</h2>
+<p data-i18n="site.questions.desc" >Fale com uma pessoa pelo Crypto Chat ou pelo WhatsApp.</p>
+</div>
+<a data-i18n="site.nav.support" href="/suporte" class="button">Suporte</a>
+</div>
+</section>
+<details class="wrap api-details">
+<summary>API</summary>
+<div class="api-list">
       <a class="api-row" href="/api/health">
         <span class="api-method">GET</span>
         <span class="api-path">/api/health</span>
@@ -398,11 +488,42 @@
         <span class="api-desc" data-i18n="home.api.contracts">Manifest de contratos EscrowVault por rede</span>
       </a>
     </div>
-
-    <div class="footer">
-      <p data-i18n-html="common.footer.contacts">Contato: <a href="/ajudar#crypto-chat-support">Crypto Chat</a> &middot; <a href="https://wa.me/5585985254090" target="_blank" rel="noopener noreferrer">WhatsApp</a> &middot; <a href="mailto:admin@rapport.tec.br">admin@rapport.tec.br</a> &middot; <a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer">rapport.tec.br</a> &middot; <a href="https://hubagentic.space" target="_blank" rel="noopener noreferrer">Hub Agentic Space</a></p>
-      <p data-i18n-html="common.footer">&copy; 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inova&ccedil;&atilde;o</a>. Projeto em desenvolvimento.</p>
-    </div>
-  </div>
+</details>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div class="footer-grid">
+<a href="https://rapport.tec.br" target="_blank" rel="noopener noreferrer">
+<img class="footer-logo" src="/images/rapport-logo.png" alt="Rapport Tecnologia" width="180" height="180" loading="lazy"/>
+</a>
+<div>
+<h3 data-i18n="site.footer.tagline" >Tecnologia, pessoas e liberdade digital.</h3>
+<div class="footer-links">
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.p.stats.title" href="/stats">Estatísticas</a>
+<a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a>
+</div>
+</div>
+<div class="socials">
+<a href="https://linkedin.com/in/carlosdelfino" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4M3 9h4v12H3zm6 0h4v2c1-2 6-3 7 1v9h-4v-8c0-2-3-2-3 0v8H9z"/>
+</svg>
+</a>
+<a href="https://instagram.com/rapport.tecnologia" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="18" cy="6" r="1"/>
+</svg>
+</a>
+</div>
+</div>
+<div class="copyright">
+<p data-i18n-html="common.footer">© 2026 <a href="https://rapport.tec.br">Rapport Tecnologia e Inovação</a>. Projeto em desenvolvimento.</p>
+</div>
+</div>
+</footer>
 </body>
 </html>

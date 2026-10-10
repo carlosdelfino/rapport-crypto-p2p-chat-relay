@@ -1,0 +1,338 @@
+{
+  "site.nav.features": [
+    "Recursos",
+    "Features",
+    "Funciones",
+    "Fonctionnalités",
+    "الميزات"
+  ],
+  "site.nav.freedom": [
+    "Liberdade",
+    "Freedom",
+    "Libertad",
+    "Liberté",
+    "الحرية"
+  ],
+  "site.nav.team": [
+    "Equipe",
+    "Team",
+    "Equipo",
+    "Équipe",
+    "الفريق"
+  ],
+  "site.nav.pricing": [
+    "Preços",
+    "Pricing",
+    "Precios",
+    "Tarifs",
+    "الأسعار"
+  ],
+  "site.nav.support": [
+    "Suporte",
+    "Support",
+    "Soporte",
+    "Support",
+    "الدعم"
+  ],
+  "site.hero.eyebrow": [
+    "COMUNICAÇÃO • IDENTIDADE • LIBERDADE",
+    "COMMUNICATION • IDENTITY • FREEDOM",
+    "COMUNICACIÓN • IDENTIDAD • LIBERTAD",
+    "COMMUNICATION • IDENTITÉ • LIBERTÉ",
+    "تواصل • هوية • حرية"
+  ],
+  "site.hero.title": [
+    "Suas conversas. Sua carteira. Sua liberdade.",
+    "Your conversations. Your wallet. Your freedom.",
+    "Tus conversaciones. Tu cartera. Tu libertad.",
+    "Vos conversations. Votre portefeuille. Votre liberté.",
+    "محادثاتك. محفظتك. حريتك."
+  ],
+  "site.features.title": [
+    "Mais possibilidades em cada conversa",
+    "More possibilities in every conversation",
+    "Más posibilidades en cada conversación",
+    "Plus de possibilités dans chaque conversation",
+    "إمكانات أكثر في كل محادثة"
+  ],
+  "site.features.lead": [
+    "Converse, pague e explore a economia digital com sua própria identidade.",
+    "Chat, pay and explore the digital economy with your own identity.",
+    "Conversa, paga y explora la economía digital con tu propia identidad.",
+    "Échangez, payez et explorez l’économie numérique avec votre propre identité.",
+    "تواصل وادفع واستكشف الاقتصاد الرقمي بهويتك الخاصة."
+  ],
+  "site.freedom.title": [
+    "Liberdade para se conectar. Autonomia para escolher.",
+    "Freedom to connect. Autonomy to choose.",
+    "Libertad para conectar. Autonomía para elegir.",
+    "La liberté de se connecter. L’autonomie de choisir.",
+    "حرية التواصل. واستقلالية الاختيار."
+  ],
+  "site.freedom.lead": [
+    "Uma tecnologia que coloca pessoas, privacidade e controle no centro.",
+    "Technology that puts people, privacy and control at its heart.",
+    "Tecnología que pone a las personas, la privacidad y el control en el centro.",
+    "Une technologie centrée sur les personnes, la vie privée et le contrôle.",
+    "تقنية تضع الإنسان والخصوصية والتحكم في المركز."
+  ],
+  "site.freedom.communication": [
+    "Comunicação autossoberana",
+    "Self-sovereign communication",
+    "Comunicación autosoberana",
+    "Communication autosouveraine",
+    "تواصل بسيادة ذاتية"
+  ],
+  "site.freedom.identity": [
+    "Sua identidade, suas chaves",
+    "Your identity, your keys",
+    "Tu identidad, tus claves",
+    "Votre identité, vos clés",
+    "هويتك ومفاتيحك"
+  ],
+  "site.freedom.finance": [
+    "Liberdade financeira consciente",
+    "Informed financial freedom",
+    "Libertad financiera consciente",
+    "Liberté financière éclairée",
+    "حرية مالية واعية"
+  ],
+  "site.stats.title": [
+    "Acompanhe o Crypto Chat",
+    "Follow Crypto Chat’s activity",
+    "Sigue la actividad de Crypto Chat",
+    "Suivez l’activité de Crypto Chat",
+    "تابع نشاط Crypto Chat"
+  ],
+  "site.stats.lead": [
+    "Dados reais do relay, volume transacionado e demanda por escrow.",
+    "Real relay data, transaction volume and escrow demand.",
+    "Datos reales del relay, volumen de transacciones y demanda de escrow.",
+    "Données réelles du relais, volumes échangés et demandes d’escrow.",
+    "بيانات فعلية للترحيل وحجم المعاملات والطلب على الضمان."
+  ],
+  "site.team.title": [
+    "Conheça quem está construindo",
+    "Meet the person building it",
+    "Conoce a quien lo construye",
+    "Rencontrez son créateur",
+    "تعرّف على من يبني المشروع"
+  ],
+  "site.team.bio": [
+    "Tecnologia integrada para uma vida melhor. Carlos Delfino lidera a construção do Crypto Chat e da Rapport Tecnologia, conectando comunicação, blockchain e autonomia digital.",
+    "Integrated technology for a better life. Carlos Delfino leads Crypto Chat and Rapport Tecnologia, connecting communication, blockchain and digital autonomy.",
+    "Tecnología integrada para una vida mejor. Carlos Delfino lidera Crypto Chat y Rapport Tecnologia, conectando comunicación, blockchain y autonomía digital.",
+    "Une technologie intégrée pour une vie meilleure. Carlos Delfino dirige Crypto Chat et Rapport Tecnologia, reliant communication, blockchain et autonomie numérique.",
+    "تقنية متكاملة لحياة أفضل. يقود Carlos Delfino تطوير Crypto Chat وRapport Tecnologia، جامعاً التواصل والبلوك تشين والاستقلالية الرقمية."
+  ],
+  "site.team.link": [
+    "Conheça Carlos Delfino",
+    "Meet Carlos Delfino",
+    "Conoce a Carlos Delfino",
+    "Découvrir Carlos Delfino",
+    "تعرّف على Carlos Delfino"
+  ],
+  "site.reviews.title": [
+    "Como o Crypto Chat pode fazer parte da sua vida",
+    "How Crypto Chat could fit into your life",
+    "Cómo Crypto Chat puede formar parte de tu vida",
+    "Comment Crypto Chat peut trouver sa place dans votre vie",
+    "كيف يمكن أن يصبح Crypto Chat جزءاً من حياتك"
+  ],
+  "site.reviews.note": [
+    "Depoimentos ilustrativos: nomes, relatos e retratos são fictícios, criados para demonstrar possibilidades de uso. Não são avaliações de clientes reais.",
+    "Illustrative testimonials: names, stories and portraits are fictional and demonstrate possible uses. They are not reviews from real customers.",
+    "Testimonios ilustrativos: nombres, relatos y retratos son ficticios y muestran posibles usos. No son opiniones de clientes reales.",
+    "Témoignages illustratifs : noms, récits et portraits fictifs présentent des usages possibles. Ce ne sont pas des avis de clients réels.",
+    "شهادات توضيحية: الأسماء والقصص والصور خيالية لعرض استخدامات محتملة، وليست تقييمات عملاء حقيقيين."
+  ],
+  "site.review.ana": [
+    "Para um trabalho freelance, eu combinaria a entrega na conversa e usaria escrow para deixar as condições do pagamento claras.",
+    "For a freelance project, I would agree on delivery in the conversation and use escrow to make payment conditions clear.",
+    "Para un proyecto freelance, acordaría la entrega en la conversación y usaría escrow para aclarar las condiciones de pago.",
+    "Pour une mission freelance, je conviendrais de la livraison dans la conversation et utiliserais l’escrow pour clarifier le paiement.",
+    "في مشروع مستقل، سأتفق على التسليم في المحادثة وأستخدم الضمان لتوضيح شروط الدفع."
+  ],
+  "site.review.lucas": [
+    "Gosto da ideia de conversar com identidade por carteira e começar pelas redes de teste para aprender antes de transferir valores reais.",
+    "I like the idea of chatting with a wallet identity and starting on test networks to learn before transferring real value.",
+    "Me gusta conversar con identidad por cartera y empezar en redes de prueba para aprender antes de transferir valor real.",
+    "J’aime l’idée d’une identité par portefeuille et de commencer sur les réseaux de test avant de transférer de la valeur réelle.",
+    "تعجبني فكرة الدردشة بهوية المحفظة والبدء بشبكات الاختبار للتعلم قبل تحويل قيمة حقيقية."
+  ],
+  "site.review.role": [
+    "Personagem fictício",
+    "Fictional character",
+    "Personaje ficticio",
+    "Personnage fictif",
+    "شخصية خيالية"
+  ],
+  "site.pricing.title": [
+    "Conversa livre. Taxas transparentes.",
+    "Free conversations. Transparent fees.",
+    "Conversaciones libres. Tarifas transparentes.",
+    "Conversations libres. Frais transparents.",
+    "محادثات مجانية. ورسوم واضحة."
+  ],
+  "site.pricing.chat": [
+    "Chat sempre gratuito",
+    "Chat is always free",
+    "Chat siempre gratuito",
+    "Chat toujours gratuit",
+    "الدردشة مجانية دائماً"
+  ],
+  "site.pricing.chatdesc": [
+    "Sem mensalidade para conversar. Sua identidade é sua carteira.",
+    "No monthly fee to chat. Your wallet is your identity.",
+    "Sin cuota mensual para conversar. Tu cartera es tu identidad.",
+    "Aucun abonnement pour discuter. Votre portefeuille est votre identité.",
+    "دون اشتراك شهري للدردشة. محفظتك هي هويتك."
+  ],
+  "site.pricing.tx": [
+    "Transações cripto",
+    "Crypto transactions",
+    "Transacciones cripto",
+    "Transactions crypto",
+    "معاملات مشفّرة"
+  ],
+  "site.pricing.txdesc": [
+    "Sobre o valor transacionado, cobrado na origem, de quem envia, além do gás de cada rede. Modelo previsto para a ampla adoção do app.",
+    "On the transaction amount, charged at the source to the sender, plus each network’s gas fees. Planned model for broad app adoption.",
+    "Sobre el importe, cobrado en origen al remitente, más el gas de cada red. Modelo previsto para la adopción amplia de la app.",
+    "Sur le montant, facturé à l’expéditeur à la source, plus le gas de chaque réseau. Modèle prévu lors de l’adoption à grande échelle.",
+    "على مبلغ المعاملة، تُحصّل من المرسل عند المصدر، إضافة إلى غاز كل شبكة. نموذج مخطط له مع انتشار التطبيق."
+  ],
+  "site.pricing.example": [
+    "R$ 10 → R$ 0,01 de taxa · R$ 1.000 → R$ 1 de taxa",
+    "R$10 → R$0.01 fee · R$1,000 → R$1 fee",
+    "R$ 10 → R$ 0,01 de comisión · R$ 1.000 → R$ 1",
+    "10 R$ → 0,01 R$ de frais · 1 000 R$ → 1 R$",
+    "10 ريالات → 0.01 ريال رسوم · 1,000 ريال → ريال واحد"
+  ],
+  "site.pricing.gas": [
+    "Gás da rede",
+    "Network gas",
+    "Gas de la red",
+    "Gas du réseau",
+    "غاز الشبكة"
+  ],
+  "site.pricing.gasdesc": [
+    "Varia conforme a rede e a operação. Confira o custo total antes de confirmar. Precisa de ajuda nas primeiras transações? Fale com o suporte.",
+    "Varies by network and transaction. Check the total before confirming. Need help with your first transactions? Contact support.",
+    "Varía según la red y la operación. Revisa el total antes de confirmar. ¿Necesitas ayuda al empezar? Contacta con soporte.",
+    "Varie selon le réseau et l’opération. Vérifiez le total avant confirmation. Besoin d’aide pour débuter ? Contactez le support.",
+    "يختلف حسب الشبكة والعملية. راجع الإجمالي قبل التأكيد. تحتاج مساعدة في معاملاتك الأولى؟ تواصل مع الدعم."
+  ],
+  "site.blog.title": [
+    "Ideias para uma vida digital mais livre",
+    "Ideas for a freer digital life",
+    "Ideas para una vida digital más libre",
+    "Des idées pour une vie numérique plus libre",
+    "أفكار لحياة رقمية أكثر حرية"
+  ],
+  "site.blog.lead": [
+    "Artigos sobre cripto, pagamentos e o direito de controlar seus dados.",
+    "Articles on crypto, payments and the right to control your data.",
+    "Artículos sobre cripto, pagos y el derecho a controlar tus datos.",
+    "Articles sur la crypto, les paiements et le droit de contrôler ses données.",
+    "مقالات عن العملات المشفّرة والمدفوعات وحق التحكم ببياناتك."
+  ],
+  "site.blog.read": [
+    "Ler artigo",
+    "Read article",
+    "Leer artículo",
+    "Lire l’article",
+    "اقرأ المقال"
+  ],
+  "site.blog.all": [
+    "Todos os artigos",
+    "All articles",
+    "Todos los artículos",
+    "Tous les articles",
+    "كل المقالات"
+  ],
+  "site.blog.sources": [
+    "Fontes e leitura complementar",
+    "Sources and further reading",
+    "Fuentes y lecturas adicionales",
+    "Sources et lectures complémentaires",
+    "المصادر وقراءات إضافية"
+  ],
+  "site.blog.editorial": [
+    "Editorial Crypto Chat · Conteúdo educativo",
+    "Crypto Chat editorial · Educational content",
+    "Editorial Crypto Chat · Contenido educativo",
+    "Rédaction Crypto Chat · Contenu pédagogique",
+    "تحرير Crypto Chat · محتوى تعليمي"
+  ],
+  "site.cta.title": [
+    "Sua próxima conversa pode ser mais livre.",
+    "Your next conversation can be freer.",
+    "Tu próxima conversación puede ser más libre.",
+    "Votre prochaine conversation peut être plus libre.",
+    "محادثتك القادمة يمكن أن تكون أكثر حرية."
+  ],
+  "site.cta.desc": [
+    "Instale o Crypto Chat. Crie sua carteira. Comece a conversar.",
+    "Install Crypto Chat. Create your wallet. Start chatting.",
+    "Instala Crypto Chat. Crea tu cartera. Empieza a conversar.",
+    "Installez Crypto Chat. Créez votre portefeuille. Commencez à discuter.",
+    "ثبّت Crypto Chat. أنشئ محفظتك. وابدأ المحادثة."
+  ],
+  "site.questions.title": [
+    "Ficou com alguma dúvida?",
+    "Have any questions?",
+    "¿Tienes alguna pregunta?",
+    "Vous avez des questions ?",
+    "هل لديك أسئلة؟"
+  ],
+  "site.questions.desc": [
+    "Fale com uma pessoa pelo Crypto Chat ou pelo WhatsApp.",
+    "Talk to a person through Crypto Chat or WhatsApp.",
+    "Habla con una persona por Crypto Chat o WhatsApp.",
+    "Échangez avec une personne via Crypto Chat ou WhatsApp.",
+    "تحدث مع شخص عبر Crypto Chat أو WhatsApp."
+  ],
+  "site.support.title": [
+    "Estamos aqui para ajudar",
+    "We are here to help",
+    "Estamos aquí para ayudarte",
+    "Nous sommes là pour vous aider",
+    "نحن هنا لمساعدتك"
+  ],
+  "site.support.steps": [
+    "Abra o Crypto Chat e adicione um contato usando a carteira abaixo. Envie o convite, aguarde o aceite e explique sua dúvida na conversa. Para questões de transação, informe a rede e o hash público; nunca envie sua frase de recuperação ou chave privada.",
+    "Open Crypto Chat and add a contact using the wallet below. Send an invitation, wait for acceptance and explain your question in the conversation. For transaction questions, provide the network and public hash; never send your recovery phrase or private key.",
+    "Abre Crypto Chat y añade un contacto con la cartera siguiente. Envía la invitación, espera su aceptación y explica tu consulta. Para transacciones, indica la red y el hash público; nunca envíes tu frase de recuperación ni clave privada.",
+    "Ouvrez Crypto Chat et ajoutez un contact avec le portefeuille ci-dessous. Envoyez une invitation, attendez son acceptation et expliquez votre question. Pour une transaction, indiquez le réseau et le hash public ; n’envoyez jamais votre phrase de récupération ou clé privée.",
+    "افتح Crypto Chat وأضف جهة اتصال باستخدام المحفظة أدناه. أرسل دعوة وانتظر قبولها ثم اشرح سؤالك. لأسئلة المعاملات، أرسل الشبكة والمعرّف العام؛ لا ترسل عبارة الاسترداد أو المفتاح الخاص أبداً."
+  ],
+  "site.support.whatsapp": [
+    "Conversar no WhatsApp",
+    "Chat on WhatsApp",
+    "Hablar por WhatsApp",
+    "Discuter sur WhatsApp",
+    "تواصل عبر WhatsApp"
+  ],
+  "site.footer.tagline": [
+    "Tecnologia, pessoas e liberdade digital.",
+    "Technology, people and digital freedom.",
+    "Tecnología, personas y libertad digital.",
+    "Technologie, personnes et liberté numérique.",
+    "تقنية وإنسان وحرية رقمية."
+  ],
+  "site.skip": [
+    "Ir para o conteúdo",
+    "Skip to content",
+    "Ir al contenido",
+    "Aller au contenu",
+    "انتقل إلى المحتوى"
+  ],
+  "site.pricing.variable": [
+    "Variável",
+    "Variable",
+    "Variable",
+    "Variable",
+    "متغيّر"
+  ]
+}
