@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-23T02:48:26.777Z",
+  "updatedAt": "2026-10-14T00:03:07.656Z",
   "networks": [
     {
       "chainId": 137,
@@ -14,6 +14,20 @@
       "explorer": "https://polygonscan.com",
       "verified": true,
       "deployedAt": "2026-09-23T02:46:11.995Z",
+      "contractVersion": "1.0.0"
+    },
+    {
+      "chainId": 146,
+      "network": "sonic",
+      "name": "sonic",
+      "isTestnet": false,
+      "escrow": "0x5151A34EaC7bA08cd6B540b32cD30316218A2287",
+      "implementation": "0xB129009625296b0F92b1f7639af48ca2f8063429",
+      "multisig": "0x1570cb4dfFEbDb74B0Ee4459C1889af6bcf5c5D0",
+      "manager": "0x7010A4C4c189AB421028a622e2A2e623f432d18e",
+      "explorer": "https://sonicscan.org",
+      "verified": true,
+      "deployedAt": "2026-10-13T23:49:27.200Z",
       "contractVersion": "1.0.0"
     },
     {

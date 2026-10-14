@@ -1,3 +1,11 @@
+![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Rapport%20P2P%20Signaling%20Relay&fontSize=36&fontAlignY=35&animation=twinkling)
+
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=RapportTecnologia.Rapport_Blockchain_Chat.relay_readme)
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-blue.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+![Language: Portuguese](https://img.shields.io/badge/Language-Portuguese-brightgreen.svg)
+![Status](https://img.shields.io/badge/Status-Ongoing-yellow)
+[![GitHub Issues](https://img.shields.io/github/issues/RapportTecnologia/Rapport_Blockchain_Chat)](https://github.com/RapportTecnologia/Rapport_Blockchain_Chat/issues)
+
 # Rapport P2P Signaling Relay
 
 Serverless relay hosted on Vercel. It does **not** carry message content; it only helps peers discover each other and exchange WebRTC signaling data (SDP offers/answers and ICE candidates).
@@ -19,7 +27,7 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 - `GET /stats` — página HTML com estatísticas dinâmicas do relay.
 - `GET /ajudar` — página HTML "Como Ajudar": formas de apoiar o projeto e endereços de doação (gestão Rapport e carteira do desenvolvedor).
 - `GET /escrow` — página HTML com tutorial do escrow arbitrado on-chain e manifest de contratos (`/escrow/contracts.json`).
-- `GET /tokens` — página HTML com o catálogo de redes, moedas nativas e tokens suportados pelo dApp, com o contexto de uso de cada ativo.
+- `GET /tokens` — página HTML com o catálogo de redes, moedas nativas e tokens suportados pelo dApp, com o contexto de uso de cada ativo. Inclui Sonic mainnet (`146`) com `S`, `wS`, `WETH`, `USDC`, `EURC` bridged e `USDT` bridged, além da Sonic testnet (`14601`) com `wS` e `USDC` sem valor real.
 - `GET /chat` — página HTML explicando como o dApp funciona: identidade por wallet, sinalização via relay, canal direto WebRTC e criptografia ponta a ponta.
 - `GET /wallet` — página HTML explicando o dApp como wallet self-custody multichain: recebimentos (`/collect`), pagamentos (`/pay`), saldos e Pagamento Garantido (`/escrow`).
 - `GET /invest` — página HTML explicando os investimentos DeFi/RWA via `/invest` (Aave, Morpho, Ondo, xStocks).
@@ -135,3 +143,5 @@ manifest local (`assets/apk-manifest.json`) e no `manifest.json` público
 | `APK_PUBLIC_URL` | `https://apk.rapport.tec.br` | URL pública base |
 | `RELAY_INSTALL_URL` | `https://rapport-crypto-p2p-chat-relay.vercel.app/install` | URL da página /install no relay |
 | `EAS_PROFILE` | `preview` | Perfil do eas.json |
+
+![footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer&animation=twinkling)

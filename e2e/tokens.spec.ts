@@ -36,6 +36,7 @@ test.describe('página /tokens', () => {
       'Arbitrum One',
       'Linea Mainnet',
       'Monad Mainnet',
+      'Sonic Mainnet',
       'BNB Smart Chain',
       'XDC Network',
       'Arc',
@@ -103,6 +104,15 @@ test.describe('página /tokens', () => {
         `símbolo ${sym}`,
       ).toBeVisible();
     }
+
+    const sonic = page.locator('.net-block', { has: page.getByText('Sonic Mainnet', { exact: true }) });
+    await expect(sonic.locator('.net-meta')).toHaveText('chainId 146');
+    for (const symbol of ['S', 'wS', 'WETH', 'USDC', 'EURC', 'USDT']) {
+      await expect(sonic.locator('.sym', { hasText: new RegExp(`^${symbol}$`) })).toBeVisible();
+    }
+    const testnets = page.locator('p.muted[data-i18n-html="tokens.testnets.p"]');
+    await expect(testnets).toContainText('Sonic Testnet');
+    await expect(testnets).toContainText('wS e USDC');
 
     // Toda linha de ativo tem categoria (chip) e descrição de uso preenchida.
     const rows = page.locator('.asset-table tbody tr');
