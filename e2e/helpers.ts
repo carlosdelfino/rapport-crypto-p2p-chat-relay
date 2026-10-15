@@ -4,7 +4,11 @@ import { test as base, expect, type Page } from '@playwright/test';
  * Domínios externos que as páginas acessam por design (analytics).
  * São interceptados com fulfill() — nenhuma chamada externa real sai do teste.
  */
-const ALLOWED_EXTERNAL = new Set(['www.googletagmanager.com']);
+const ALLOWED_EXTERNAL = new Set([
+  'www.googletagmanager.com',
+  'connect.facebook.net',
+  'www.facebook.com',
+]);
 
 export interface Hygiene {
   /** Requisições externas fora da allowlist — deve ser vazio ao final do teste. */

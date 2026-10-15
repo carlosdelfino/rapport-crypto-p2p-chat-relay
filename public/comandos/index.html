@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Facebook Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1757670742628895');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=1757670742628895&ev=PageView&noscript=1"/></noscript>
+  <!-- End Facebook Pixel Code -->
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
   <script>
@@ -161,8 +169,8 @@
 <div class="cmd-block">
 <h3><code>/invest</code><span class="tag confirm" data-i18n="comandos.tag.confirm">confirma&ccedil;&atilde;o</span></h3>
 <span class="syntax" data-i18n="comandos.invest.syntax">/invest [&lt;operadora&gt; [&lt;ativo&gt; &lt;valor&gt;[, &lt;rede&gt;]]]</span>
-<p data-i18n-html="comandos.invest.desc">Investe em produtos DeFi/RWA sem sair da conversa. Funciona em n&iacute;veis: <code class="cmd">/invest</code> lista as operadoras (Aave, Morpho, Ondo, xStocks); <code class="cmd">/invest &lt;operadora&gt;</code> lista os ativos dela; <code class="cmd">/invest &lt;operadora&gt; &lt;ativo&gt; &lt;valor&gt;[, &lt;rede&gt;]</code> executa o investimento com confirma&ccedil;&atilde;o. Aceita o alias <code class="cmd">/investir</code>.</p>
-<p class="examples" data-i18n-html="comandos.invest.ex"><strong>Exemplos:</strong> <code class="cmd">/invest</code> &middot; <code class="cmd">/invest aave</code> &middot; <code class="cmd">/invest aave aUSDC 100, base</code></p>
+<p data-i18n-html="comandos.invest.desc">Investe em produtos DeFi/RWA sem sair da conversa. Funciona em n&iacute;veis: <code class="cmd">/invest</code> lista as operadoras (Aave, Silo, Euler, Morpho, Beets, Pendle, Ondo, xStocks); <code class="cmd">/invest &lt;operadora&gt;</code> lista os ativos dela agrupados por rede e <code class="cmd">/invest &lt;operadora&gt; &lt;rede&gt;</code> filtra uma rede; <code class="cmd">/invest &lt;operadora&gt; &lt;ativo&gt; &lt;valor&gt;[, &lt;rede&gt;]</code> executa o investimento com confirma&ccedil;&atilde;o. Aceita o alias <code class="cmd">/investir</code>.</p>
+<p class="examples" data-i18n-html="comandos.invest.ex"><strong>Exemplos:</strong> <code class="cmd">/invest</code> &middot; <code class="cmd">/invest aave</code> &middot; <code class="cmd">/invest silo sonic</code> &middot; <code class="cmd">/invest aave aUSDC 100, base</code></p>
 <p data-i18n-html="comandos.invest.sub"><strong>Resgate e posi&ccedil;&atilde;o:</strong> <code class="cmd">/invest redeem &lt;operadora&gt; &lt;ativo base&gt; &lt;valor&gt;[, &lt;rede&gt;]</code> resgata para o ativo base; <code class="cmd">/invest balance &lt;operadora&gt; &lt;ativo&gt;</code> mostra saldo investido e rendimento. Nos chats de contrato (abertos pelo cat&aacute;logo de investimentos), os atalhos <code class="cmd">/invest &lt;valor&gt;</code>, <code class="cmd">/invest resgatar &lt;valor&gt;</code> e <code class="cmd">/invest saldo</code> operam direto no produto. Detalhes em <a href="/invest">/invest</a>.</p>
 </div>
 

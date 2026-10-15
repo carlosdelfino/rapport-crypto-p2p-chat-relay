@@ -28,14 +28,32 @@ test.describe('página /invest', () => {
   test('apresenta operadoras e links oficiais', async ({ page, hygiene }) => {
     await page.goto('/invest');
 
-    for (const operator of ['Aave', 'Morpho', 'Ondo', 'xStocks']) {
+    for (const operator of [
+      'Aave',
+      'Silo',
+      'Euler',
+      'Morpho',
+      'Beets',
+      'Pendle',
+      'Ondo',
+      'xStocks',
+    ]) {
       await expect(
         page.getByRole('heading', { name: new RegExp(operator), level: 3 }),
         `operadora ${operator}`,
       ).toBeVisible();
     }
 
-    for (const domain of ['aave.com', 'morpho.org', 'ondo.finance', 'xstocks.fi']) {
+    for (const domain of [
+      'aave.com',
+      'silo.finance',
+      'euler.finance',
+      'morpho.org',
+      'beets.fi',
+      'pendle.finance',
+      'ondo.finance',
+      'xstocks.fi',
+    ]) {
       await expect(
         page.locator(`a[href*="${domain}"][rel="noopener"]`).first(),
         `link para ${domain}`,
@@ -51,6 +69,9 @@ test.describe('página /invest', () => {
     await expect(page.locator('code.cmd', { hasText: '/invest' }).first()).toBeVisible();
     await expect(page.locator('code.cmd', { hasText: '/invest aave' }).first()).toBeVisible();
     await expect(page.locator('code.cmd', { hasText: '/invest aave aUSDC 100, base' }).first()).toBeVisible();
+    await expect(page.locator('code.cmd', { hasText: '/invest aave sonic' }).first()).toBeVisible();
+    await expect(page.locator('code.cmd', { hasText: '/invest silo siloUSDC-S 25, sonic' }).first()).toBeVisible();
+    await expect(page.locator('code.cmd', { hasText: '/invest beets stS 10, sonic' }).first()).toBeVisible();
     await expect(page.locator('code.cmd', { hasText: '/invest redeem aave USDC 50, base' }).first()).toBeVisible();
     await expect(page.locator('code.cmd', { hasText: '/invest balance aave USDC' }).first()).toBeVisible();
 
