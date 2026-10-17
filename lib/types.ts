@@ -57,6 +57,29 @@ export interface TxReportRecord {
   receivedAt: number;
 }
 
+/**
+ * Proposta de banimento espelhada da BanQuadraticDAO (Polygon). A
+ * justificativa nunca sai da chain — apenas o hash é exposto.
+ */
+export interface BanProposalRecord {
+  proposalId: string;
+  requester: string;
+  target: string;
+  reasonHash: string;
+  createdAt: number;
+  votingDeadline: number;
+  forWeight: string;
+  againstWeight: string;
+  /** Estado numérico do enum ProposalState on-chain (1 = Active). */
+  state: number;
+}
+
+/** Cache do flag on-chain `isBanned` por carteira. */
+export interface BanFlagRecord {
+  banned: boolean;
+  checkedAt: number;
+}
+
 export interface ApiResponse<T = unknown> {
   code: number;
   message: string;

@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import type { SignalEnvelope, PeerRecord, EscrowRequestRecord, TxReportRecord } from './types.js';
+import type { SignalEnvelope, PeerRecord, EscrowRequestRecord, TxReportRecord, BanFlagRecord } from './types.js';
 
 const PEER_TTL_MS = 5 * 60 * 1000;
 const SIGNAL_TTL_S = 60 * 60;
@@ -17,6 +17,8 @@ const TX_NETWORK_NAME_KEY = 'stats:tx:net:name';
 const TX_KIND_COUNT_KEY = 'stats:tx:cnt:kind';
 const TX_DEDUP_PREFIX = 'stats:tx:seen:';
 const TX_DEDUP_TTL_S = 90 * 24 * 60 * 60;
+const BAN_FLAGS_KEY = 'ban:flags';
+const BAN_OVERRIDES_KEY = 'ban:overrides';
 
 function parseAmount(amount: string): number {
   const normalized = String(amount).replace(/,/g, '').trim();
@@ -175,6 +177,10 @@ interface Store {
   addEscrowRequest(request: EscrowRequestRecord): Promise<void>;
   getEscrowRequests(chainId?: number): Promise<EscrowRequestRecord[]>;
   addTxReport(report: TxReportRecord): Promise<boolean>;
+  getBanFlag(wallet: string): Promise<BanFlagRecord | null>;
+  setBanFlag(wallet: string, banned: boolean): Promise<void>;
+  getBanOverrides(): Promise<Record<string, boolean>>;
+  setBanOverride(wallet: string, banned: boolean): Promise<void>;
 }
 
 class UpstashStore implements Store {
@@ -448,6 +454,39 @@ class UpstashStore implements Store {
     console.log(`[relay:store] addTxReport chainId:${report.chainId} symbol:${report.symbol} kind:${report.kind}`);
     return true;
   }
+
+  async getBanFlag(wallet: string): Promise<BanFlagRecord | null> {
+    const raw = await this.redis.hget<string>(BAN_FLAGS_KEY, wallet);
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw) as BanFlagRecord;
+    } catch {
+      return null;
+    }
+  }
+
+  async setBanFlag(wallet: string, banned: boolean): Promise<void> {
+    const record: BanFlagRecord = { banned, checkedAt: Date.now() };
+    await this.redis.hset(BAN_FLAGS_KEY, { [wallet]: JSON.stringify(record) });
+  }
+
+  async getBanOverrides(): Promise<Record<string, boolean>> {
+    const raw = await this.redis.hgetall<Record<string, string>>(BAN_OVERRIDES_KEY);
+    const out: Record<string, boolean> = {};
+    if (!raw) return out;
+    for (const [wallet, value] of Object.entries(raw)) {
+      out[wallet] = value === '1';
+    }
+    return out;
+  }
+
+  async setBanOverride(wallet: string, banned: boolean): Promise<void> {
+    if (banned) {
+      await this.redis.hset(BAN_OVERRIDES_KEY, { [wallet]: '1' });
+    } else {
+      await this.redis.hdel(BAN_OVERRIDES_KEY, wallet);
+    }
+  }
 }
 
 class MemoryStore implements Store {
@@ -464,6 +503,8 @@ class MemoryStore implements Store {
   private txNetworkNames = new Map<string, string>();
   private txKindCount = new Map<string, number>();
   private txSeen = new Map<string, number>();
+  private banFlags = new Map<string, BanFlagRecord>();
+  private banOverrides = new Map<string, boolean>();
 
   async addSignal(topic: string, envelope: SignalEnvelope): Promise<void> {
     const list = this.signals.get(topic) ?? [];
@@ -578,6 +619,28 @@ class MemoryStore implements Store {
       this.txNetworkNames.set(String(report.chainId), report.network);
     }
     return true;
+  }
+
+  async getBanFlag(wallet: string): Promise<BanFlagRecord | null> {
+    return this.banFlags.get(wallet) ?? null;
+  }
+
+  async setBanFlag(wallet: string, banned: boolean): Promise<void> {
+    this.banFlags.set(wallet, { banned, checkedAt: Date.now() });
+  }
+
+  async getBanOverrides(): Promise<Record<string, boolean>> {
+    const out: Record<string, boolean> = {};
+    for (const [wallet, banned] of this.banOverrides) out[wallet] = banned;
+    return out;
+  }
+
+  async setBanOverride(wallet: string, banned: boolean): Promise<void> {
+    if (banned) {
+      this.banOverrides.set(wallet, true);
+    } else {
+      this.banOverrides.delete(wallet);
+    }
   }
 }
 

@@ -209,6 +209,13 @@
 <p class="examples" data-i18n-html="comandos.contact.ex"><strong>Exemplo:</strong> <code class="cmd">/contact</code></p>
 </div>
 
+<div class="cmd-block">
+<h3><code>/ban</code><span class="tag send" data-i18n="comandos.tag.send">envio</span></h3>
+<span class="syntax" data-i18n="comandos.ban.syntax">/ban [&lt;motivo&gt;] &middot; /ban accept [&lt;motivo&gt;] &middot; /ban not [&lt;motivo&gt;] &middot; /ban explain &middot; /ban pol [jur] [0x&lt;alvo&gt;] [&lt;motivo&gt;]</span>
+<p data-i18n="comandos.ban.desc">Numa conversa direta, solicita à carteira de suporte a abertura de uma votação de banimento da carteira do chat. O suporte aceita (/ban accept) ou recusa (/ban not) — ambos com justificativa opcional entre colchetes. Aceito o pedido, a DAO abre a votação na Polygon e qualquer carteira com CAS vota enviando /ban no chat do alvo; o peso do voto é a raiz quadrada do saldo de CAS. Pedido e voto custam 1 CAS cada, repassado à tesouraria. A carteira de suporte também pode banir diretamente, sem votação, com /ban pol (violação da política de uso) ou /ban pol jur (ordem judicial).</p>
+<p class="examples" data-i18n-html="comandos.ban.ex"><strong>Exemplos:</strong> <code class="cmd">/ban [spam]</code> &middot; <code class="cmd">/ban accept [evidências]</code> &middot; <code class="cmd">/ban not accept</code> &mdash; votações abertas em <a href="/ban">/ban</a> &middot; veja a <a href="/termes">política de uso</a>.</p>
+</div>
+
 <h2 class="section-title" data-i18n="comandos.tips.title">Dicas r&aacute;pidas</h2>
 <ul class="tip-list">
 <li data-i18n-html="comandos.tips.1">Digite <code class="cmd">/</code> no campo de mensagem e o autocompletar sugere os comandos &mdash; toque para preencher.</li>
@@ -249,6 +256,7 @@
 <a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
 <a data-i18n="home.p.stats.title" href="/stats">Estatísticas</a>
 <a href="/privacidade" data-i18n="privacy.title">Privacidade, soberania e liberdade</a>
+<a href="/termes" data-i18n="termes.title">Política de uso do Crypto Chat</a>
 </div>
 </div>
 <div class="socials">

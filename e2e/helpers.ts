@@ -8,6 +8,8 @@ const ALLOWED_EXTERNAL = new Set([
   'www.googletagmanager.com',
   'connect.facebook.net',
   'www.facebook.com',
+  'fonts.googleapis.com',
+  'fonts.gstatic.com',
 ]);
 
 export interface Hygiene {
@@ -49,6 +51,7 @@ export const test = base.extend<{ hygiene: Hygiene }>({
     // específicos registram page.route no corpo do teste, que tem
     // precedência por ser a última rota registrada.
     await mockStatsApi(page);
+    await mockBanApi(page);
 
     page.on('console', (msg) => {
       if (msg.type() === 'error') hygiene.consoleErrors.push(msg.text());
@@ -84,6 +87,26 @@ export async function mockStatsApi(page: Page): Promise<void> {
           },
           escrowDemand: { byNetwork: [], totalRequests: 0 },
         },
+      }),
+    }),
+  );
+}
+
+/**
+ * Resposta estável de `/api/ban` para a página /ban: sem o stub o 404 do
+ * servidor estático vira console.error e suja a higiene. Specs que
+ * precisam de propostas específicas registram page.route depois — a
+ * última rota registrada tem precedência.
+ */
+export async function mockBanApi(page: Page): Promise<void> {
+  await page.route('**/api/ban', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        code: 200,
+        message: 'Ban votes retrieved',
+        data: { enabled: false, daoAddress: null, proposals: [] },
       }),
     }),
   );

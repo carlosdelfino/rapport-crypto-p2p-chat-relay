@@ -2,6 +2,7 @@ import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 import { createStore } from '../lib/store.js';
 import { isSignatureRequired, isRecentTimestamp, verifyRequestSignature } from '../lib/auth.js';
+import { isBannedWallet } from '../lib/banlist.js';
 import { getAddress } from 'viem';
 import type { SignalEnvelope, SignalType, ApiResponse } from '../lib/types.js';
 
@@ -82,6 +83,17 @@ async function postSignal(req: VercelRequest, res: VercelResponse): Promise<void
     return;
   }
 
+  // Banlist: carteiras banidas (DAO de banimento ou override do suporte)
+  // não podem enviar nem receber sinais pelo relay.
+  if (await isBannedWallet(normalizedFrom)) {
+    res.status(403).json({ code: 403, message: 'Sender wallet is banned from the network' });
+    return;
+  }
+  if (to && (await isBannedWallet(getAddress(to)))) {
+    res.status(403).json({ code: 403, message: 'Recipient wallet is banned from the network' });
+    return;
+  }
+
   const messageToSign = JSON.stringify({ topic, type, payload, from, to, timestamp });
 
   if (isSignatureRequired() && !body.signature) {
@@ -141,6 +153,10 @@ async function getSignals(req: VercelRequest, res: VercelResponse): Promise<void
       normalizedTo = getAddress(cleaned);
     } catch {
       res.status(400).json({ code: 400, message: 'Invalid recipient checksum' });
+      return;
+    }
+    if (await isBannedWallet(normalizedTo)) {
+      res.status(403).json({ code: 403, message: 'Recipient wallet is banned from the network' });
       return;
     }
   }

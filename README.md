@@ -35,7 +35,7 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 - `GET /sitemap.xml` — sitemap das páginas públicas (regenerado junto com `/install` via `apk:regenerate`/`apk:upload`).
 - `GET /robots.txt` — regras de crawling apontando para o sitemap.
 
-As páginas HTML (`/`, `/install`, `/stats`, `/ajudar`, `/escrow`, `/tokens`, `/chat`, `/wallet`, `/invest`, `/comandos`, `/suporte`, `/privacidade`, `/blog/*`) incluem SEO completo: canonical, Open Graph, Twitter Cards, JSON-LD (Schema.org), Google Analytics (`gtag.js`) e Meta Pixel (`fbevents.js`, PageView). Os assets `/favicon.png`, `/apple-touch-icon.png` e `/og-image.png` são derivados do ícone do dApp.
+As páginas HTML (`/`, `/install`, `/stats`, `/ajudar`, `/escrow`, `/tokens`, `/chat`, `/wallet`, `/invest`, `/comandos`, `/suporte`, `/privacidade`, `/termes`, `/ban`, `/blog/*`) incluem SEO completo: canonical, Open Graph, Twitter Cards, JSON-LD (Schema.org), Google Analytics (`gtag.js`) e Meta Pixel (`fbevents.js`, PageView). Os assets `/favicon.png`, `/apple-touch-icon.png` e `/og-image.png` são derivados do ícone do dApp.
 
 ### Internacionalização (i18n)
 

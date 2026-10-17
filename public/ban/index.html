@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Facebook Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1757670742628895');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=1757670742628895&ev=PageView&noscript=1"/></noscript>
+  <!-- End Facebook Pixel Code -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WY96WV41T8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WY96WV41T8');
+  </script>
+  <script>
+    // i18n: resolve o idioma antes do primeiro paint; oculta o body para não-pt-BR até o dicionário aplicar.
+    window.__i18nLang=function(){var q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}var s=null;try{s=localStorage.getItem('rcc-lang')}catch(e){}var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var c=String(q||s||n||'').toLowerCase();var m={pt:'pt-BR',en:'en',es:'es',fr:'fr',ar:'ar'};var l=m[c.split('-')[0].split('_')[0]]||'en';if(l!=='pt-BR'){document.documentElement.classList.add('i18n-loading');setTimeout(function(){document.documentElement.classList.remove('i18n-loading')},2500)}return l}();
+  </script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="index, follow"/>
+  <title data-i18n="ban.meta.title">Banimentos — votações abertas | Rapport Crypto Chat</title>
+  <meta name="description" content="Votações de banimento em aberto na DAO do Rapport Crypto Chat. Para votar é preciso ter CAS em carteira — o peso do voto é a raiz quadrada do saldo. Toque na carteira para abrir o chat no app e votar com /ban." data-i18n-attr="content:ban.meta.desc"/>
+  <meta name="keywords" content="banimento, votação, DAO, CAS, quadratic voting, rapport crypto chat, moderação descentralizada"/>
+  <meta name="theme-color" content="#ed5919"/>
+  <meta name="author" content="Rapport Tecnologia e Inovação"/>
+  <link rel="canonical" href="https://crypto-chat.rapport.tec.br/ban"/>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="alternate" hreflang="pt-BR" href="https://crypto-chat.rapport.tec.br/ban"/>
+  <link rel="alternate" hreflang="en" href="https://crypto-chat.rapport.tec.br/ban?lang=en"/>
+  <link rel="alternate" hreflang="es" href="https://crypto-chat.rapport.tec.br/ban?lang=es"/>
+  <link rel="alternate" hreflang="fr" href="https://crypto-chat.rapport.tec.br/ban?lang=fr"/>
+  <link rel="alternate" hreflang="ar" href="https://crypto-chat.rapport.tec.br/ban?lang=ar"/>
+  <link rel="alternate" hreflang="x-default" href="https://crypto-chat.rapport.tec.br/ban"/>
+  <link rel="stylesheet" href="/css/i18n.css"/>
+  <link rel="stylesheet" href="/css/site.css"/>
+  <link rel="stylesheet" href="/css/subpage.css"/>
+  <script src="/js/i18n.js" defer></script>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="Rapport Crypto Chat"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta property="og:title" content="Banimentos — votações abertas | Rapport Crypto Chat" data-i18n-attr="content:ban.meta.title"/>
+  <meta property="og:description" content="Acompanhe as votações de banimento da DAO e vote pelo chat do app — o peso do voto é a raiz quadrada do seu saldo de CAS." data-i18n-attr="content:ban.meta.ogDesc"/>
+  <meta property="og:url" content="https://crypto-chat.rapport.tec.br/ban"/>
+  <meta property="og:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Rapport Crypto Chat — Votações de banimento"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Banimentos — votações abertas | Rapport Crypto Chat" data-i18n-attr="content:ban.meta.title"/>
+  <meta name="twitter:description" content="Votações de banimento em aberto na DAO — vote pelo chat do app com CAS em carteira." data-i18n-attr="content:ban.meta.ogDesc"/>
+  <meta name="twitter:image" content="https://crypto-chat.rapport.tec.br/og-image.png"/>
+  <style>
+    .vote-grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); margin:22px 0 8px; }
+    .vote-card { border:1px solid #1e293b; border-radius:14px; padding:16px 18px; background:rgba(15,23,42,.6); }
+    .vote-target { font-family:ui-monospace,monospace; font-size:.95rem; color:#fb923c; word-break:break-all; }
+    .vote-meta { color:#cbd5e1; font-size:.85rem; margin-top:6px; }
+    .vote-weights { display:flex; gap:14px; margin-top:10px; font-size:.85rem; color:#94a3b8; }
+    .vote-weights strong { color:#f1f5f9; }
+    .vote-deadline { margin-top:10px; font-size:.85rem; color:#cbd5e1; }
+    .vote-empty { border:1px dashed #334155; border-radius:14px; padding:26px; color:#94a3b8; text-align:center; }
+    .vote-cta { display:inline-block; margin-top:10px; }
+  </style>
+</head>
+<body>
+<a data-i18n="site.skip" href="#main" class="skip-link">Ir para o conteúdo</a>
+<header class="site-header">
+<div class="container wrap">
+<div class="header-row">
+<a class="brand" href="/">
+<img src="/favicon.png" alt="" width="44" height="44"/>Rapport Crypto Chat</a>
+<nav class="nav">
+<a data-i18n="site.nav.features" href="/#recursos" class="">Recursos</a>
+<a data-i18n="site.nav.freedom" href="/#liberdade" class="">Liberdade</a>
+<a data-i18n="site.nav.team" href="/#equipe" class="">Equipe</a>
+<a data-i18n="site.nav.pricing" href="/#precos" class="">Preços</a>
+<a href="/blog">Blog</a>
+<a data-i18n="site.nav.support" href="/suporte" class="">Suporte</a>
+<a data-i18n="home.cta.download" href="/install" class="button">Baixar APK</a>
+</nav>
+</div>
+</div>
+</header>
+<main id="main">
+<header class="page-hero">
+<div class="wrap">
+<h1 data-i18n="ban.hero.title">Votações de banimento</h1>
+<p class="tagline" data-i18n="ban.hero.tagline">A moderação da rede é decidida pela comunidade: cada votação aberta pela carteira de suporte fica listada aqui até o encerramento.</p>
+<p class="subtagline" data-i18n-html="ban.hero.subtagline">Para votar você precisa ter <strong>CAS</strong> em carteira. O peso do voto é a <strong>raiz quadrada</strong> do saldo &mdash; ninguém compra a decisão sozinho.</p>
+<span class="badge"><span class="dot"></span><span data-i18n="ban.hero.badge">DAO de banimento &middot; Polygon</span></span>
+<div class="actions">
+<a class="button" href="/install" data-i18n="common.cta.install">Instalar o app</a>
+<a class="button secondary" href="/" data-i18n="common.cta.back">Voltar ao início</a>
+</div>
+</div>
+</header>
+<div class="page">
+
+    <h2 class="section-title" data-i18n="ban.how.title">Como funciona</h2>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span><h3 data-i18n="ban.how.s1.title">Pedido</h3><p data-i18n-html="ban.how.s1.desc">No chat com a carteira em questão, alguém envia <code class="cmd">/ban [motivo]</code> e autoriza a taxa de <strong>1 CAS</strong>. O pedido vai para a carteira de suporte.</p></div>
+      <div class="step"><span class="step-num">2</span><h3 data-i18n="ban.how.s2.title">Aceite</h3><p data-i18n-html="ban.how.s2.desc">O suporte aceita com <code class="cmd">/ban accept</code> ou recusa com <code class="cmd">/ban not</code> &mdash; ambos podem levar justificativa entre colchetes. Ao aceitar, a taxa de 1 CAS do solicitante é recolhida para a tesouraria.</p></div>
+      <div class="step"><span class="step-num">3</span><h3 data-i18n="ban.how.s3.title">Votação</h3><p data-i18n-html="ban.how.s3.desc">Aceito o pedido, a DAO abre a votação. Qualquer carteira com CAS vota abrindo o chat com o alvo e enviando <code class="cmd">/ban</code> &mdash; cada voto também custa <strong>1 CAS</strong>, repassado à tesouraria.</p></div>
+      <div class="step"><span class="step-num">4</span><h3 data-i18n="ban.how.s4.title">Resultado</h3><p data-i18n-html="ban.how.s4.desc">Atingido quorum e maioria, o banimento é executado on-chain após o timelock e a carteira fica bloqueada no app e no relay.</p></div>
+    </div>
+
+    <h2 class="section-title" data-i18n="ban.open.title">Votações em aberto</h2>
+    <p class="lead" data-i18n-html="ban.open.lead">Toque na carteira em votação para abrir o chat com ela no app &mdash; lá, envie <code class="cmd">/ban</code> para registrar seu voto. O alvo é avisado de cada voto pela carteira de suporte, sem saber quem votou.</p>
+    <div id="ban-grid" class="vote-grid" aria-live="polite">
+      <div class="vote-empty" data-i18n="ban.open.loading">Carregando votações…</div>
+    </div>
+    <p class="note" id="ban-note"></p>
+
+    <h2 class="section-title" data-i18n="ban.cas.title">Como obter CAS para votar</h2>
+    <p class="lead" data-i18n-html="ban.cas.lead">Votar exige <strong>CAS</strong> em carteira — o peso do voto é a raiz quadrada do saldo. Pedido e voto custam <strong>1 CAS</strong> cada, repassado à tesouraria do projeto. Você pode adquirir CAS conversando com a carteira de suporte dentro do app ou nas principais DEX.</p>
+    <div class="actions">
+      <a class="button" href="https://hubagentic.space/info/cas-token/swap" target="_blank" rel="noopener" data-i18n="ban.cas.cta">Onde comprar CAS</a>
+    </div>
+
+    <h2 class="section-title" data-i18n="ban.privacy.title">Privacidade e justificativas</h2>
+    <p class="lead" data-i18n-html="ban.privacy.lead">Justificativas circulam apenas no chat criptografado entre as partes e o suporte; na chain fica só o hash. O voto é anônimo para o alvo: ele recebe um aviso da carteira de suporte a cada voto, sem identificar o eleitor.</p>
+
+    <div class="cta">
+      <a class="button" href="/comandos" data-i18n="ban.cta.commands">Ver comandos do chat</a>
+      <a class="button secondary" href="/install" data-i18n="common.cta.install">Instalar o app</a>
+    </div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container wrap">
+<p data-i18n="site.footer.copy">© Rapport Tecnologia e Inovação</p>
+</div>
+</footer>
+<script>
+  (function () {
+    var grid = document.getElementById('ban-grid');
+    var note = document.getElementById('ban-note');
+    var data = null;
+    var failed = false;
+
+    function tt(key, fallback) {
+      try {
+        if (window.i18n && typeof window.i18n.t === 'function') {
+          var v = window.i18n.t(key);
+          if (v && v !== key) return v;
+        }
+      } catch (e) {}
+      return fallback || key;
+    }
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function render() {
+      if (!grid) return;
+      grid.innerHTML = '';
+      if (failed) {
+        grid.innerHTML = '<div class="vote-empty">' + esc(tt('ban.open.unavailable', 'Votações indisponíveis no momento.')) + '</div>';
+        note.textContent = '';
+        return;
+      }
+      if (!data) {
+        grid.innerHTML = '<div class="vote-empty">' + esc(tt('ban.open.loading', 'Carregando votações…')) + '</div>';
+        return;
+      }
+      var proposals = (data.proposals) || [];
+      if (proposals.length === 0) {
+        grid.innerHTML = '<div class="vote-empty">' + esc(tt('ban.open.none', 'Nenhuma votação de banimento aberta no momento.')) + '</div>';
+        note.textContent = data.enabled ? '' : tt('ban.open.disabled', 'A DAO de banimento ainda não foi configurada neste relay.');
+        return;
+      }
+      note.textContent = tt('ban.open.hint', 'O voto exige CAS em carteira; o peso é a raiz quadrada do saldo.');
+      for (var i = 0; i < proposals.length; i++) {
+        var p = proposals[i];
+        var card = document.createElement('div');
+        card.className = 'vote-card';
+        var deadline = p.votingDeadline ? new Date(p.votingDeadline * 1000).toLocaleString() : '—';
+        var link = 'rapportchat://chat/' + encodeURIComponent(p.target);
+        card.innerHTML =
+          '<div class="vote-target"><a href="' + esc(link) + '">' + esc(p.target) + '</a></div>' +
+          '<div class="vote-meta">' + esc(tt('ban.open.requester', 'Solicitante')) + ': ' + esc(p.requester) + '</div>' +
+          '<div class="vote-weights"><span>' + esc(tt('ban.open.for', 'A favor')) + ': <strong>' + esc(p.forWeight) + '</strong></span>' +
+          '<span>' + esc(tt('ban.open.against', 'Contra')) + ': <strong>' + esc(p.againstWeight) + '</strong></span></div>' +
+          '<div class="vote-deadline">' + esc(tt('ban.open.deadline', 'Votação até')) + ': ' + esc(deadline) + '</div>' +
+          '<a class="button vote-cta" href="' + esc(link) + '">' + esc(tt('ban.open.vote', 'Abrir chat e votar')) + '</a>';
+        grid.appendChild(card);
+      }
+    }
+
+    async function load() {
+      try {
+        var res = await fetch('/api/ban', { headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        var body = await res.json();
+        data = (body && body.data) || {};
+      } catch (e) {
+        failed = true;
+      }
+      render();
+    }
+
+    window.addEventListener('i18n:change', render);
+    load();
+  })();
+</script>
+</body>
+</html>

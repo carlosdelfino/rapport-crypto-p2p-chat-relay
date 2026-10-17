@@ -32,7 +32,7 @@ test.describe('página /comandos', () => {
     await page.goto('/comandos');
 
     const blocks = page.locator('.cmd-block');
-    expect(await blocks.count()).toBe(11);
+    expect(await blocks.count()).toBe(12);
 
     for (const cmd of [
       '/help',
@@ -46,6 +46,7 @@ test.describe('página /comandos', () => {
       '/chain',
       '/faucet',
       '/contact',
+      '/ban',
     ]) {
       await expect(
         page.locator('.cmd-block h3 code', { hasText: cmd }),
@@ -54,8 +55,8 @@ test.describe('página /comandos', () => {
     }
 
     // Cada bloco tem sintaxe e exemplo(s).
-    expect(await page.locator('.cmd-block .syntax').count()).toBe(11);
-    expect(await page.locator('.cmd-block .examples').count()).toBe(11);
+    expect(await page.locator('.cmd-block .syntax').count()).toBe(12);
+    expect(await page.locator('.cmd-block .examples').count()).toBe(12);
 
     expectCleanRuntime(hygiene);
   });

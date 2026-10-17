@@ -59,7 +59,19 @@
       ]
     },
     {
+      "source": "/ban",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=60, s-maxage=60" }
+      ]
+    },
+    {
       "source": "/comandos",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" }
+      ]
+    },
+    {
+      "source": "/termes",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" }
       ]

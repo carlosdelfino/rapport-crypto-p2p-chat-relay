@@ -1,6 +1,7 @@
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import { createStore } from '../lib/store.js';
 import { isSignatureRequired, isRecentTimestamp, verifyRequestSignature } from '../lib/auth.js';
+import { isBannedWallet } from '../lib/banlist.js';
 import { getAddress } from 'viem';
 import type { PeerRecord, ApiResponse } from '../lib/types.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
@@ -43,6 +44,13 @@ async function registerPeer(req: VercelRequest, res: VercelResponse): Promise<vo
     normalized = getAddress(wallet);
   } catch {
     res.status(400).json({ code: 400, message: 'Invalid wallet checksum' });
+    return;
+  }
+
+  // Banlist: carteira banida não registra presença e é removida da lista.
+  if (await isBannedWallet(normalized)) {
+    await store.removePeer(normalized);
+    res.status(403).json({ code: 403, message: 'Wallet is banned from the network' });
     return;
   }
 
@@ -102,7 +110,8 @@ async function getPeers(req: VercelRequest, res: VercelResponse): Promise<void> 
       res.status(400).json({ code: 400, message: 'Invalid wallet address' });
       return;
     }
-    const record = await store.getPeer(getAddress(normalized));
+    const walletAddr = getAddress(normalized);
+    const record = (await isBannedWallet(walletAddr)) ? null : await store.getPeer(walletAddr);
     const response: ApiResponse<PeerRecord | null> = {
       code: 200,
       message: record ? 'Peer found' : 'Peer not found or offline',
@@ -127,10 +136,15 @@ async function getPeers(req: VercelRequest, res: VercelResponse): Promise<void> 
   }
 
   const peers = await store.getPeers();
+  const visible: PeerRecord[] = [];
+  for (const peer of peers) {
+    if (await isBannedWallet(peer.wallet)) continue;
+    visible.push(peer);
+  }
   const response: ApiResponse<PeerRecord[]> = {
     code: 200,
     message: 'Online peers listed',
-    data: peers,
+    data: visible,
     next_step: 'Use peer data to dial or send signal',
   };
   res.status(200).json(response);
