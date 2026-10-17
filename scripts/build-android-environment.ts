@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readFileSync, readdirSync } from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 
@@ -113,6 +113,28 @@ export function loadDappEnvironment(envPath: string): Record<string, string> {
   return dotenv.parse(readFileSync(envPath));
 }
 
+/**
+ * Resolve ANDROID_NDK_HOME a partir do SDK: escolhe a versão mais recente
+ * instalada em `$ANDROID_HOME/ndk/` (semver-like, ordenação natural) ou o
+ * legado `ndk-bundle`. Retorna undefined quando nenhum NDK está instalado.
+ */
+export function resolveNdkHome(androidHome: string): string | undefined {
+  const ndkDir = path.join(androidHome, 'ndk');
+  if (existsSync(ndkDir)) {
+    const versions = readdirSync(ndkDir)
+      .filter((entry) => existsSync(path.join(ndkDir, entry, 'source.properties')))
+      .sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }),
+      );
+    const latest = versions[versions.length - 1];
+    if (latest) {
+      return path.join(ndkDir, latest);
+    }
+  }
+  const legacyBundle = path.join(androidHome, 'ndk-bundle');
+  return existsSync(legacyBundle) ? legacyBundle : undefined;
+}
+
 export function composeBuildEnvironment(
   inheritedEnvironment: Readonly<Record<string, string | undefined>>,
   dappEnvironment: Record<string, string>,
@@ -125,12 +147,21 @@ export function composeBuildEnvironment(
     inheritedNodeEnvironment === 'production'
       ? inheritedNodeEnvironment
       : 'production';
+  const ndkHome =
+    inheritedEnvironment.ANDROID_NDK_HOME ??
+    resolveNdkHome(toolchain.androidHome);
   return {
     ...inheritedEnvironment,
     ...dappEnvironment,
     NODE_ENV: nodeEnvironment,
     ANDROID_HOME: toolchain.androidHome,
     ANDROID_SDK_ROOT: toolchain.androidHome,
+    // A fase "expo doctor" do eas-cli-local-build-plugin tem timeout fixo de
+    // 30s e um bug de kill ESRCH que derruba o build inteiro quando o npx
+    // demora para baixar o pacote. Ela so emite warnings; desabilitamos.
+    EAS_BUILD_DISABLE_EXPO_DOCTOR_STEP:
+      inheritedEnvironment.EAS_BUILD_DISABLE_EXPO_DOCTOR_STEP ?? '1',
+    ...(ndkHome ? { ANDROID_NDK_HOME: ndkHome } : {}),
     JAVA_HOME: toolchain.javaHome,
     NVM_DIR: toolchain.nvmDir,
     HOME: toolchain.home,
