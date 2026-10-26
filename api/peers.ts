@@ -1,3 +1,4 @@
+import { protectRequest } from '../lib/protection.js';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import { createStore } from '../lib/store.js';
 import { isSignatureRequired, isRecentTimestamp, verifyRequestSignature } from '../lib/auth.js';
@@ -7,7 +8,8 @@ import type { PeerRecord, ApiResponse } from '../lib/types.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
-const store = createStore();
+let instance: ReturnType<typeof createStore> | undefined;
+const store = () => (instance ??= createStore());
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   setCorsHeaders(res, req);
@@ -16,6 +18,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     handleOptions(res);
     return;
   }
+
+  if (!(await protectRequest(req, res))) return;
 
   if (req.method === 'POST') {
     await registerPeer(req, res);
@@ -49,7 +53,7 @@ async function registerPeer(req: VercelRequest, res: VercelResponse): Promise<vo
 
   // Banlist: carteira banida não registra presença e é removida da lista.
   if (await isBannedWallet(normalized)) {
-    await store.removePeer(normalized);
+    await store().removePeer(normalized);
     res.status(403).json({ code: 403, message: 'Wallet is banned from the network' });
     return;
   }
@@ -90,7 +94,7 @@ async function registerPeer(req: VercelRequest, res: VercelResponse): Promise<vo
     signature: body.signature,
   };
 
-  await store.addPeer(peer);
+  await store().addPeer(peer);
 
   const response: ApiResponse<PeerRecord> = {
     code: 200,
@@ -111,7 +115,7 @@ async function getPeers(req: VercelRequest, res: VercelResponse): Promise<void> 
       return;
     }
     const walletAddr = getAddress(normalized);
-    const record = (await isBannedWallet(walletAddr)) ? null : await store.getPeer(walletAddr);
+    const record = (await isBannedWallet(walletAddr)) ? null : await store().getPeer(walletAddr);
     const response: ApiResponse<PeerRecord | null> = {
       code: 200,
       message: record ? 'Peer found' : 'Peer not found or offline',
@@ -123,7 +127,7 @@ async function getPeers(req: VercelRequest, res: VercelResponse): Promise<void> 
   }
 
   if (peerId) {
-    const all = await store.getPeers();
+    const all = await store().getPeers();
     const record = all.find((p) => p.peerId === peerId);
     const response: ApiResponse<PeerRecord | null> = {
       code: 200,
@@ -135,7 +139,7 @@ async function getPeers(req: VercelRequest, res: VercelResponse): Promise<void> 
     return;
   }
 
-  const peers = await store.getPeers();
+  const peers = await store().getPeers();
   const visible: PeerRecord[] = [];
   for (const peer of peers) {
     if (await isBannedWallet(peer.wallet)) continue;

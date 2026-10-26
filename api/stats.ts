@@ -1,3 +1,4 @@
+import { protectRequest } from '../lib/protection.js';
 import { setCorsHeaders } from '../lib/cors.js';
 import { createStore } from '../lib/store.js';
 import type { RelayStats } from '../lib/store.js';
@@ -37,6 +38,8 @@ export default async function handler(
     res.status(204).end();
     return;
   }
+
+  if (!(await protectRequest(_req, res))) return;
 
   let stats: RelayStats;
   try {

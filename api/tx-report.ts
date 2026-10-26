@@ -1,3 +1,4 @@
+import { protectRequest } from '../lib/protection.js';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import { createStore } from '../lib/store.js';
 import { isRecentTimestamp } from '../lib/auth.js';
@@ -8,7 +9,8 @@ const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12
 const SYMBOL_REGEX = /^[A-Z0-9][A-Z0-9._-]{0,11}$/;
 const KIND_REGEX = /^[a-z][a-z0-9_]{0,23}$/;
 const MAX_AMOUNT = 1e15;
-const store = createStore();
+let instance: ReturnType<typeof createStore> | undefined;
+const store = () => (instance ??= createStore());
 
 /**
  * POST /api/tx-report — o dApp reporta volume transacionado de forma
@@ -30,6 +32,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     handleOptions(res);
     return;
   }
+
+  if (!(await protectRequest(req, res))) return;
 
   if (req.method !== 'POST') {
     res.status(405).json({ code: 405, message: 'Method not allowed' });
@@ -82,7 +86,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     receivedAt: Date.now(),
   };
 
-  const accepted = await store.addTxReport(record);
+  const accepted = await store().addTxReport(record);
 
   const response: ApiResponse<{ reportId: string; accepted: boolean }> = {
     code: 200,

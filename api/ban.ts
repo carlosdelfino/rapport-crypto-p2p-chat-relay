@@ -1,3 +1,4 @@
+import { protectRequest } from '../lib/protection.js';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 import { isRecentTimestamp, verifyRequestSignature } from '../lib/auth.js';
@@ -44,6 +45,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     handleOptions(res);
     return;
   }
+
+  if (!(await protectRequest(req, res))) return;
 
   if (req.method === 'GET') {
     await getBan(req, res);

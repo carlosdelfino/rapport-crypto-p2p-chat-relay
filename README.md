@@ -52,6 +52,27 @@ Todas as páginas públicas são multilíngues. O idioma é resolvido client-sid
 - WhatsApp oficial do suporte: `+55 85 98520-5490` (`https://wa.me/5585985205490`). Links `wa.me` nas páginas ganham `?text=` com a página de origem via `public/js/contact.js`; endereços com `data-addr` copiam ao clique.
 - `public/images/rapport-logo.png` e `public/images/carlos-delfino-stand.jpg`: fornecidos pelo proprietário; `public/images/editorial/*.webp`: imagens editoriais geradas por IA; os depoimentos da home usam nomes e retratos fictícios (não são avaliações reais de clientes).
 
+## Proteção anti-flood e contrato da API
+
+- Cada cliente pode armazenar somente um sinal a cada 1000ms, somando todos os tópicos e tipos (`data`, ACK, handshake, ICE, offer, answer, chat_request). Carteiras com assinatura verificada têm cota própria; requisições sem assinatura usam cota por IP, nunca a identidade apenas declarada.
+- A **11ª tentativa** POST `/api/signal` em **1000ms móveis**, inclusive tentativas inválidas/recusadas, suspende o IP. A suspensão é `min(30s × reincidência², 1h)`: 30s, 120s, 270s etc. Novo flood durante suspensão aumenta a penalidade no máximo uma vez por segundo; uma consulta isolada não a renova. Histórico reinicia após 24h sem abuso.
+- Cota HTTP separada: 600 requisições/IP em janela fixa de 60s nas rotas signal, peers, stats, health, ban, tx-report, escrow-request e onramp-session. Mais de 30 falhas de validação/assinatura de signal por minuto móvel também suspendem. OPTIONS não conta como mensagem. O onramp também compartilha o orçamento HTTP; não foram alteradas operações on-chain.
+- Respostas 429 contêm `code`, `message`, `details.reason`, `details.retry_after_ms`, `details.cooldown_until`, `next_step` e alias `nest_step`. O header `Retry-After` é exposto por CORS. Aguarde antes de reenviar; sinais recusados não são gravados.
+- IP vem do header confiável da plataforma Vercel ou do socket local. Não há confiança automática em `X-Forwarded-For` no servidor local. IPv4 mapeado e IPv6 são normalizados. **Usuários atrás de NAT compartilham cotas por IP.**
+- Redis usa scripts Lua curtos e atômicos, com TTL de 25h; não há fallback silencioso para memória em produção. Falha da proteção retorna 503 e orientação de espera. Memória local é somente para desenvolvimento/testes, com quantidade de entradas e histórico limitados.
+- Health check não cria mensagens de teste nem faz leitura completa de tópicos. Logs de penalidade registram transições com hash parcial de identificação, sem IP literal, conteúdo, assinatura ou segredo.
+- É mitigação de DoS de aplicação, não proteção contra saturação de rede/DDoS distribuído. WAF e limites de borda exigem configuração operacional separada; nada é implantado automaticamente.
+
+Contrato: [OpenAPI JSON](public/openapi.json). Visualizadores disponíveis em `/swagger` e `/redoc`, somente leitura, sem submissão de requisições nem validação remota do contrato. Assets públicos dos visualizadores têm versões fixas e SRI; sem CDN, o link JSON continua disponível. A autenticação de POST continua condicionada a `RELAY_REQUIRE_SIGNATURE=true`; assinaturas fornecidas sempre são verificadas. Humanos e agentes usam a mesma política, sem privilégio de bypass.
+
+Requisitos compartilhados: [RF-RELAY-01 a RF-RELAY-10](../rapport-crypto-p2p-chat/REQUIREMENTS.md). Testes do backend: `npm test` (Node/tsx); a prova de atomicidade exige `redis-server` e `redis-cli` locais e cria instância isolada sem persistência nem porta TCP. Nunca executar testes contra Redis de produção.
+
+### Mitigação do onramp e auditoria residual
+
+O onramp valida strings e limita `assets.tokens`, `assets.chains` e `assets.pairs` a 16 entradas antes de chamar o SDK; cada identificador limita-se a 64 caracteres. Requisições com Content-Length acima de 8192 são recusadas. Campos desconhecidos não são encaminhados. Erros não incluem diagnóstico do SDK, token de sessão, appUserId ou endereço nos logs/respostas de falha.
+
+Isso mitiga a entrada excessiva em Zod, mas **não corrige a dependência upstream**: `@circle-fin/onramp-kit` 1.0.6 ainda fixa Zod 3.25.67 e o advisory exige 4.6.6+. Não foi forçado override de major nem upgrade sem benefício de segurança. A auditoria `npm audit --omit=dev` continua com **2 findings altos no relay**; publicação permanece bloqueada. No aplicativo foram autorizadas correções parciais em Solana/brace-expansion, com findings residuais documentados nos requisitos. Nenhuma transação ou sessão real foi criada nos testes.
+
 ## Environment
 
 > **Importante:** em produção/preview na Vercel, o relay **precisa de um Redis persistente** (Upstash Redis ou Vercel KV). As funções serverless da Vercel não compartilham memória entre invocações, então o armazenamento em memória não funciona na nuvem.

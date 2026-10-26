@@ -192,9 +192,7 @@ class UpstashStore implements Store {
     if (!url || !token) {
       throw new Error('Missing Upstash Redis credentials. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN.');
     }
-    const maskedUrl = url.replace(/\/\/[^@]+@/, '//***@');
-    const maskedToken = token.slice(0, 4) + '***';
-    console.log(`[relay:store] UpstashStore connecting to ${maskedUrl} token:${maskedToken}`);
+    console.log(`[${new Date().toISOString()}] [store:constructor] info Redis backend initialized`);
     this.redis = new Redis({ url, token });
   }
 

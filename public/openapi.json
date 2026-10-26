@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Rapport Relay — signaling and abuse protection",
+    "version": "1.2.0",
+    "description": "Protection contract for relay endpoints. All POST /api/signal envelopes (including ICE, SDP, ACK and data) share one accepted send per 1000ms per verified wallet, or per IP for unsigned requests. The 11th attempted signal in a rolling 1000ms window suspends the entire IP. Cooldown is min(30s * strike squared, 1 hour), with rehabilitation after 24h without abuse. New flood episodes can escalate at most once per second, including during cooldown. HTTP budgets are separate: 600 requests per IP per 60s fixed window, and more than 30 invalid signaling envelopes/signatures per rolling minute. OPTIONS is not counted. IPs behind NAT share flood and HTTP budgets. This is application-layer mitigation, not volumetric DDoS protection."
+  },
+  "servers": [{ "url": "/" }],
+  "security": [],
+  "paths": {
+    "/api/signal": {
+      "post": {
+        "summary": "Store a signaling envelope",
+        "description": "Authentication: EIP-191 signature in the body is mandatory when RELAY_REQUIRE_SIGNATURE=true; supplied signatures are always verified. Agent level: any wallet, no privileged role. Usable by humans through signed HTTP clients and by agents. Envelopes refused with 429 are NOT stored. Never blindly retry a POST after timeout: its storage outcome is unknown. Temporary protection storage failure produces 503 before storage.",
+        "x-authentication": "conditional-body-signature",
+        "x-agent-level": "any-wallet",
+        "x-human-usable": true,
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Signal" } } } },
+        "responses": {
+          "200": { "$ref": "#/components/responses/Success" },
+          "400": { "$ref": "#/components/responses/Invalid" },
+          "401": { "$ref": "#/components/responses/Invalid" },
+          "403": { "$ref": "#/components/responses/Invalid" },
+          "429": { "$ref": "#/components/responses/Limited" },
+          "503": { "$ref": "#/components/responses/Unavailable" }
+        }
+      },
+      "get": {
+        "summary": "Poll signals without consuming send slots",
+        "description": "Authentication: none; wallet ban checks still apply. Agent level: public. Human usable: yes. Polling shares the separate HTTP/IP budget, not the one-signal-per-second slot. Respect Retry-After, prevent overlapping polls and use bounded round-robin topic polling.",
+        "x-authentication": "none", "x-agent-level": "public", "x-human-usable": true,
+        "parameters": [
+          { "name": "topic", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "since", "in": "query", "schema": { "type": "string" } },
+          { "name": "to", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      },
+      "delete": {
+        "summary": "Trim processed signals",
+        "description": "Authentication: none in the existing protocol; no authorization redesign is included here. Agent level: public. Human usable: yes. Shares the HTTP/IP budget and cooldown, not send slots.",
+        "x-authentication": "none", "x-agent-level": "public", "x-human-usable": true,
+        "parameters": [
+          { "name": "topic", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "beforeId", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      }
+    },
+    "/api/peers": {
+      "get": {
+        "summary": "Discover peers",
+        "description": "Authentication: none. Agent level: public; human usable: yes. Separate HTTP budget and IP cooldown apply.",
+        "parameters": [{ "name": "wallet", "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      },
+      "post": {
+        "summary": "Register or refresh a peer",
+        "description": "Authentication: EIP-191 signature in body when RELAY_REQUIRE_SIGNATURE=true. Agent level: any wallet; human usable: signed HTTP client. Existing peer registration payload is unchanged. HTTP budget and IP cooldown apply; this does not consume a signal send slot.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "summary": "Check relay availability without creating signals",
+        "description": "Authentication: none. Agent level: public; human usable: yes. Checks protection backend availability and returns configured store type. Does not test signal writes, create health-test topics, or return internal error messages. Returns 503 if the protection backend is unavailable. Subject to the HTTP/IP budget.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      }
+    },
+    "/api/stats": {
+      "get": {
+        "summary": "Read aggregate statistics",
+        "description": "Authentication: none. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown. Existing statistics payload is unchanged.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      }
+    },
+    "/api/tx-report": {
+      "post": {
+        "summary": "Report anonymous transaction statistics",
+        "description": "Authentication: none. Agent level: application; human usable: no normal UI workflow. Existing anonymous report payload and deduplication are unchanged. Shares the HTTP/IP budget and cooldown.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      }
+    },
+    "/api/escrow-request": {
+      "get": {
+        "summary": "Read escrow support requests",
+        "description": "Authentication: none in the existing endpoint. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown. Existing response payload is unchanged.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      },
+      "post": {
+        "summary": "Create an escrow support request",
+        "description": "Authentication: body signature when RELAY_REQUIRE_SIGNATURE=true. Agent level: any wallet; human usable: signed HTTP client. Existing request payload is unchanged. Shares the HTTP/IP budget and cooldown.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      }
+    },
+    "/api/onramp-session": {
+      "post": {
+        "summary": "Create a bounded onramp widget session",
+        "description": "Authentication: none in the existing route; authorization redesign is outside this change. Agent level: application. Human usable through the wallet onramp workflow. Shares the HTTP/IP budget and cooldown. Known scalar and asset fields are validated and copied before invoking the SDK: at most 16 items per collection, strings at most 64 characters, appUserId at most 128. Content-Length above 8192 is rejected; bounded known-field validation also applies when that header is absent. Unknown fields are not forwarded. This mitigates oversized collection input to vulnerable upstream Zod 3; it does NOT remove the dependency advisory. Errors expose only a safe request ID, not SDK diagnostics or session tokens.",
+        "x-authentication": "none", "x-agent-level": "application", "x-human-usable": true,
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OnrampInput" } } } },
+        "responses": {
+          "200": { "$ref": "#/components/responses/Success" },
+          "400": { "$ref": "#/components/responses/Invalid" },
+          "413": { "$ref": "#/components/responses/Invalid" },
+          "429": { "$ref": "#/components/responses/Limited" },
+          "502": { "$ref": "#/components/responses/Invalid" },
+          "503": { "$ref": "#/components/responses/Unavailable" }
+        }
+      }
+    },
+    "/api/ban": {
+      "get": {
+        "summary": "Read wallet ban status or proposals",
+        "description": "Authentication: none. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      },
+      "post": {
+        "summary": "Perform an authorized ban administration action",
+        "description": "Authentication: EIP-191 signature by the existing support/admin wallet is mandatory. Agent level: administrator; human usable: signed administrative client. Existing permissions and payload are unchanged. Shares the HTTP/IP budget and cooldown.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OnrampInput": {
+        "type": "object", "required": ["appUserId", "destinationAddress"],
+        "properties": {
+          "appUserId": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "destinationAddress": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$" },
+          "assets": {
+            "type": "object",
+            "properties": {
+              "tokens": { "type": "array", "maxItems": 16, "items": { "type": "string", "minLength": 1, "maxLength": 64 } },
+              "chains": { "type": "array", "maxItems": 16, "items": { "type": "string", "minLength": 1, "maxLength": 64 } },
+              "pairs": { "type": "array", "maxItems": 16, "items": { "type": "object", "required": ["token", "chain"], "properties": { "token": { "type": "string", "minLength": 1, "maxLength": 64 }, "chain": { "type": "string", "minLength": 1, "maxLength": 64 } } } }
+            }
+          }
+        }
+      },
+      "Signal": {
+        "type": "object",
+        "required": ["topic", "type", "payload", "from", "timestamp"],
+        "properties": {
+          "topic": { "type": "string", "maxLength": 128 },
+          "type": { "type": "string", "enum": ["offer", "answer", "ice", "chat_request", "data"] },
+          "payload": { "type": "string", "description": "Maximum UTF-8 size 65536 bytes; never logged by protection." },
+          "from": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$" },
+          "to": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$" },
+          "timestamp": { "type": "number", "description": "Unix milliseconds; within 300 seconds of server time. Generate at dispatch, not queue entry." },
+          "signature": { "type": "string", "description": "EIP-191 signature of JSON.stringify({topic,type,payload,from,to,timestamp}); normalize addresses to lowercase, omit absent to." }
+        }
+      },
+      "Response": {
+        "type": "object", "required": ["code", "message", "next_step"],
+        "properties": { "code": { "type": "integer" }, "message": { "type": "string" }, "data": {}, "details": { "type": "object" }, "next_step": { "type": "string" }, "nest_step": { "type": "string", "description": "Compatibility alias in rate-limit responses." } }
+      },
+      "ProtectionError": {
+        "type": "object", "required": ["code", "message", "details", "next_step"],
+        "properties": {
+          "code": { "type": "integer", "enum": [429, 503] },
+          "message": { "type": "string" },
+          "details": {
+            "type": "object",
+            "properties": {
+              "reason": { "type": "string", "enum": ["interval", "cooldown"] },
+              "retry_after_ms": { "type": "integer", "minimum": 0 },
+              "cooldown_until": { "type": "integer", "description": "Unix milliseconds; zero for the simple per-client interval." }
+            }
+          },
+          "next_step": { "type": "string" },
+          "nest_step": { "type": "string" }
+        }
+      }
+    },
+    "responses": {
+      "Success": { "description": "Existing successful response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Response" } } } },
+      "Invalid": { "description": "Invalid request, authentication or wallet restrictions; fix before retrying.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Response" } } } },
+      "Limited": {
+        "description": "Request refused without storing the signal. Wait for cooldown; sustained flood increases suspension quadratically.",
+        "headers": { "Retry-After": { "description": "Whole seconds until retry; exposed to browser clients by CORS.", "schema": { "type": "integer", "minimum": 1 } } },
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProtectionError" }, "example": { "code": 429, "message": "Please wait before sending again.", "details": { "reason": "cooldown", "retry_after_ms": 30000, "cooldown_until": 1792973457000 }, "next_step": "Wait for Retry-After before retrying." } } }
+      },
+      "Unavailable": {
+        "description": "Protection storage unavailable; no fail-open fallback to per-instance memory in Vercel production.",
+        "headers": { "Retry-After": { "schema": { "type": "integer", "example": 5 } } },
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProtectionError" } } }
+      }
+    }
+  }
+}

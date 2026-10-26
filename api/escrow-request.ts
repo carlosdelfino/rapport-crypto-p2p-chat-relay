@@ -1,3 +1,4 @@
+import { protectRequest } from '../lib/protection.js';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import { createStore } from '../lib/store.js';
 import { isSignatureRequired, isRecentTimestamp, verifyRequestSignature } from '../lib/auth.js';
@@ -7,7 +8,8 @@ import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const store = createStore();
+let instance: ReturnType<typeof createStore> | undefined;
+const store = () => (instance ??= createStore());
 
 /**
  * POST /api/escrow-request — o dApp registra um pedido de suporte de escrow
@@ -21,6 +23,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     handleOptions(res);
     return;
   }
+
+  if (!(await protectRequest(req, res))) return;
 
   if (req.method === 'POST') {
     await createEscrowRequest(req, res);
@@ -107,7 +111,7 @@ async function createEscrowRequest(req: VercelRequest, res: VercelResponse): Pro
     signature: body.signature,
   };
 
-  await store.addEscrowRequest(record);
+  await store().addEscrowRequest(record);
 
   const response: ApiResponse<EscrowRequestRecord> = {
     code: 200,
@@ -127,7 +131,7 @@ async function listEscrowRequests(req: VercelRequest, res: VercelResponse): Prom
     return;
   }
 
-  const requests = await store.getEscrowRequests(filter);
+  const requests = await store().getEscrowRequests(filter);
   const response: ApiResponse<EscrowRequestRecord[]> = {
     code: 200,
     message: requests.length > 0 ? 'Escrow network requests listed' : 'No pending escrow requests',
