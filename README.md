@@ -14,6 +14,7 @@ Serverless relay hosted on Vercel. It does **not** carry message content; it onl
 
 - `GET /` — landing page com links para as páginas e endpoints da API.
 - `GET /api/health` — health check.
+- `GET /api/status` — status público com cache para o ponto pulsante da dApp (RF-RELAY-12). Verifica Redis por PING, distingue cota excedida, indisponibilidade e falta de configuração; sinalização/presença/proteção são estados derivados da dependência, não testes ponta a ponta. HTTP 200 indica relatório acessível, não saúde integral. Sem autenticação, para humanos/agentes públicos. Não usa proteção Redis das rotas de negócio; não altera essas rotas. Single-flight e cache local de 60s (300s para cota), timeout 3s, CDN 60s; múltiplas instâncias/cold starts ainda fazem probes próprios. Não expõe diagnóstico bruto. Requisitos e limitações: `../rapport-crypto-p2p-chat/REQUIREMENTS.md`, RF-RELAY-12.
 - `POST /api/peers` — register or refresh peer online status.
 - `GET /api/peers?wallet=...` — get peer info.
 - `GET /api/peers` — list online peers.

@@ -60,6 +60,19 @@
         "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       }
     },
+    "/api/status": {
+      "get": {
+        "summary": "Cached relay dependency status for the dApp indicator",
+        "description": "Authentication: none. Agent level: public. Human usable: yes. Read-only operational flags; no wallet or payload data. Unlike protected business routes this endpoint does not use Redis-backed abuse checks, so status remains readable during quota exhaustion. One PING per warm function instance per 60 seconds, or 300 seconds after quota failure, with concurrent requests coalesced; cold starts and distinct instances have independent caches. CDN cache 60 seconds, browser cache 30 seconds. HTTP 200 means the status report is reachable, not that Redis is healthy. data.status is available or degraded; data.services.redis is available, quota_exceeded, unavailable or not_configured. signaling, presence and protection are Redis dependency-derived available/unavailable flags, not end-to-end checks. checked_at is an ISO timestamp; retry_after_ms is 60000 or 300000. No blockchain, balance or payment probe. Infrastructure may still reject requests with 429/503; respect Retry-After.",
+        "x-authentication": "none", "x-agent-level": "public", "x-human-usable": true,
+        "responses": {
+          "200": { "description": "Cached dependency snapshot in data with code, message, next_step and nest_step", "content": { "application/json": { "schema": { "type": "object", "required": ["code", "message", "data", "next_step", "nest_step"], "properties": { "code": { "type": "integer", "enum": [200] }, "message": { "type": "string" }, "data": { "type": "object", "required": ["status", "checked_at", "retry_after_ms", "services"], "properties": { "status": { "type": "string", "enum": ["available", "degraded"] }, "checked_at": { "type": "string", "format": "date-time" }, "retry_after_ms": { "type": "integer", "enum": [60000, 300000] }, "services": { "type": "object", "properties": { "redis": { "type": "string", "enum": ["available", "quota_exceeded", "unavailable", "not_configured"] }, "signaling": { "type": "string", "enum": ["available", "unavailable"] }, "presence": { "type": "string", "enum": ["available", "unavailable"] }, "protection": { "type": "string", "enum": ["available", "unavailable"] } } } } }, "next_step": { "type": "string" }, "nest_step": { "type": "string" } } } } } },
+          "405": { "description": "Only GET and OPTIONS are supported" },
+          "429": { "$ref": "#/components/responses/Limited" },
+          "503": { "$ref": "#/components/responses/Unavailable" }
+        }
+      }
+    },
     "/api/health": {
       "get": {
         "summary": "Check relay availability without creating signals",
