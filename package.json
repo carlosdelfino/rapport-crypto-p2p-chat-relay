@@ -7,7 +7,7 @@
     "dev": "vercel dev",
     "deploy": "vercel --prod",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx --test lib/*.test.ts",
+    "test": "node --import tsx --import ./lib/test-environment.mjs --test lib/*.test.ts",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
