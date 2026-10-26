@@ -187,7 +187,8 @@ export async function rejectInvalidSignal(req: VercelRequest, res: VercelRespons
     const decision = await createProtectionService().failures(digest(clientIp(req)), true);
     if (!reject(res, decision)) return;
   } catch {
-    res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: {}, next_step: 'Retry later.' });
+    res.setHeader('Retry-After', '5');
+    res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: { retry_after_ms: 5000 }, next_step: 'Wait five seconds before retrying.' });
     return;
   }
   res.status(code).json({ code, message: body.message, details: {}, next_step: 'Correct the envelope and signature before retrying.' });
