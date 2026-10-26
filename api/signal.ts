@@ -1,3 +1,4 @@
+import { authorizeRelayClient } from '../lib/client-guard.js';
 import { protectRequest, protectSignalClient, rejectInvalidSignal } from '../lib/protection.js';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
@@ -20,6 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
+  if (!(await authorizeRelayClient(req, res))) return;
   if (!(await protectRequest(req, res, req.method === 'POST'))) return;
 
   if (req.method === 'POST') {

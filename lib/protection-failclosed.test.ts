@@ -6,7 +6,7 @@ test('RF-RELAY-04 cold starts without Redis return safe 503 instead of module fa
   process.env.VERCEL = '1';
   process.env.VERCEL_ENV = 'production';
   for (const key of ['UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_TOKEN', 'KV_REST_API_URL', 'KV_REST_API_TOKEN']) delete process.env[key];
-  const request = { method: 'POST', body: {}, query: {}, headers: { 'x-vercel-forwarded-for': '192.0.2.100' }, socket: {} } as unknown as VercelRequest;
+  const request = { method: 'POST', body: {}, query: {}, headers: { 'x-vercel-forwarded-for': '192.0.2.100', origin: 'https://relay.test', host: 'relay.test' }, socket: {} } as unknown as VercelRequest;
   for (const path of ['signal', 'peers', 'tx-report', 'escrow-request', 'onramp-session', 'health', 'stats', 'ban']) {
     const { default: handler } = await import(`../api/${path}.ts`);
     let code = 0;

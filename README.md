@@ -53,6 +53,34 @@ Todas as páginas públicas são multilíngues. O idioma é resolvido client-sid
 - WhatsApp oficial do suporte: `+55 85 98520-5490` (`https://wa.me/5585985205490`). Links `wa.me` nas páginas ganham `?text=` com a página de origem via `public/js/contact.js`; endereços com `data-addr` copiam ao clique.
 - `public/images/rapport-logo.png` e `public/images/carlos-delfino-stand.jpg`: fornecidos pelo proprietário; `public/images/editorial/*.webp`: imagens editoriais geradas por IA; os depoimentos da home usam nomes e retratos fictícios (não são avaliações reais de clientes).
 
+## Admissão de clientes (RF-RELAY-13)
+
+O relay só atende dois públicos: a página web do próprio relay e o dApp
+oficial. Toda rota `/api/*` passa por `authorizeRelayClient` antes do rate
+limit e da lógica de negócio:
+
+- **Browser com `Origin`:** a requisição é processada, mas o header
+  `Access-Control-Allow-Origin` só é emitido quando a origem é o próprio
+  host do relay ou consta em `ALLOWED_ORIGINS` — o navegador bloqueia a
+  resposta para origens estranhas. Não há mais `Access-Control-Allow-Origin: *`.
+- **Browser sem `Origin` (GETs):** aceito quando `Sec-Fetch-Site` é
+  `same-origin`/`same-site`/`none` ou o `Referer` é do próprio host.
+- **Client não-browser (dApp, scripts):** exige o header
+  `X-Rapport-Client-Key` com uma das chaves de `RELAY_CLIENT_KEYS`
+  (comparadas por hash SHA-256 + `timingSafeEqual`). Requisições sem
+  credencial válida recebem `401` e contam para o orçamento de falhas do
+  IP. Em produção na Vercel, a ausência de `RELAY_CLIENT_KEYS` falha
+  fechado (rejeita todo client não-browser); em desenvolvimento local,
+  falha aberto com um warning único.
+- **POSTs assinados:** `POST /api/signal`, `/api/peers` e
+  `/api/escrow-request` exigem assinatura EIP-191 por padrão
+  (`RELAY_REQUIRE_SIGNATURE=false` desativa apenas em desenvolvimento).
+
+A credencial é um identificador de cliente, não prova de identidade: a
+identidade real continua sendo a assinatura da carteira. A chave viaja
+embutida no bundle do dApp (`EXPO_PUBLIC_RELAY_CLIENT_KEY`); sua função é
+barrar bots e scrapers genéricos, não substituir a assinatura.
+
 ## Proteção anti-flood e contrato da API
 
 - Cada cliente pode armazenar somente um sinal a cada 1000ms, somando todos os tópicos e tipos (`data`, ACK, handshake, ICE, offer, answer, chat_request). Carteiras com assinatura verificada têm cota própria; requisições sem assinatura usam cota por IP, nunca a identidade apenas declarada.
@@ -105,7 +133,8 @@ Then set the environment variables in the Vercel dashboard.
 
 - Messages are end-to-end encrypted by the mobile app using X25519 + ChaCha20-Poly1305 before being sent over WebRTC.
 - The relay only stores encrypted signaling metadata and peer multiaddrs.
-- Set `RELAY_REQUIRE_SIGNATURE=true` to require EIP-191 signatures on `POST` requests.
+- EIP-191 signatures are required on signed `POST` endpoints by default; `RELAY_REQUIRE_SIGNATURE=false` disables only for development.
+- Non-browser clients must send `X-Rapport-Client-Key` (env `RELAY_CLIENT_KEYS`); CORS no longer emits `Access-Control-Allow-Origin: *`.
 
 ## Testes
 

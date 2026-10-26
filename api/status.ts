@@ -1,10 +1,12 @@
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
+import { authorizeRelayClient } from '../lib/client-guard.js';
 import { relayStatusService } from '../lib/relay-status.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   setCorsHeaders(res, req);
   if (req.method === 'OPTIONS') { handleOptions(res); return; }
+  if (!(await authorizeRelayClient(req, res))) return;
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET, OPTIONS');
     res.status(405).json({ code: 405, message: 'Method not allowed', details: {}, next_step: 'Use GET /api/status', nest_step: 'Use GET /api/status' });

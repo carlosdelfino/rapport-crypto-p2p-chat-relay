@@ -1,3 +1,4 @@
+import { authorizeRelayClient } from '../lib/client-guard.js';
 import { protectRequest } from '../lib/protection.js';
 import { setCorsHeaders } from '../lib/cors.js';
 import { createStore } from '../lib/store.js';
@@ -32,13 +33,14 @@ export default async function handler(
   _req: VercelRequest,
   res: VercelResponse,
 ): Promise<void> {
-  setCorsHeaders(res);
+  setCorsHeaders(res, _req);
 
   if (_req.method === 'OPTIONS') {
     res.status(204).end();
     return;
   }
 
+  if (!(await authorizeRelayClient(_req, res))) return;
   if (!(await protectRequest(_req, res))) return;
 
   let stats: RelayStats;

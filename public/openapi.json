@@ -3,16 +3,16 @@
   "info": {
     "title": "Rapport Relay — signaling and abuse protection",
     "version": "1.2.0",
-    "description": "Protection contract for relay endpoints. All POST /api/signal envelopes (including ICE, SDP, ACK and data) share one accepted send per 1000ms per verified wallet, or per IP for unsigned requests. The 11th attempted signal in a rolling 1000ms window suspends the entire IP. Cooldown is min(30s * strike squared, 1 hour), with rehabilitation after 24h without abuse. New flood episodes can escalate at most once per second, including during cooldown. HTTP budgets are separate: 600 requests per IP per 60s fixed window, and more than 30 invalid signaling envelopes/signatures per rolling minute. OPTIONS is not counted. IPs behind NAT share flood and HTTP budgets. This is application-layer mitigation, not volumetric DDoS protection."
+    "description": "Protection contract for relay endpoints. Client admission: every /api/* request must come either from a browser origin allowed by CORS (same host as the relay page or an entry in ALLOWED_ORIGINS) or carry a valid X-Rapport-Client-Key credential (env RELAY_CLIENT_KEYS). Non-browser clients without the credential receive 401, which also counts toward the abuse budget. Browser requests from disallowed origins are answered without Access-Control-Allow-Origin so the browser blocks the response. POST endpoints signed by EIP-191 require the signature by default (RELAY_REQUIRE_SIGNATURE=false disables). All POST /api/signal envelopes (including ICE, SDP, ACK and data) share one accepted send per 1000ms per verified wallet, or per IP for unsigned requests. The 11th attempted signal in a rolling 1000ms window suspends the entire IP. Cooldown is min(30s * strike squared, 1 hour), with rehabilitation after 24h without abuse. New flood episodes can escalate at most once per second, including during cooldown. HTTP budgets are separate: 600 requests per IP per 60s fixed window, and more than 30 invalid signaling envelopes/signatures per rolling minute. OPTIONS is not counted. IPs behind NAT share flood and HTTP budgets. This is application-layer mitigation, not volumetric DDoS protection."
   },
   "servers": [{ "url": "/" }],
-  "security": [],
+  "security": [{ "ClientKey": [] }, {}],
   "paths": {
     "/api/signal": {
       "post": {
         "summary": "Store a signaling envelope",
-        "description": "Authentication: EIP-191 signature in the body is mandatory when RELAY_REQUIRE_SIGNATURE=true; supplied signatures are always verified. Agent level: any wallet, no privileged role. Usable by humans through signed HTTP clients and by agents. Envelopes refused with 429 are NOT stored. Never blindly retry a POST after timeout: its storage outcome is unknown. Temporary protection storage failure produces 503 before storage.",
-        "x-authentication": "conditional-body-signature",
+        "description": "Authentication: EIP-191 signature in the body is mandatory by default (disable only via RELAY_REQUIRE_SIGNATURE=false); supplied signatures are always verified. Agent level: any wallet, no privileged role. Usable by humans through signed HTTP clients and by agents. Envelopes refused with 429 are NOT stored. Never blindly retry a POST after timeout: its storage outcome is unknown. Temporary protection storage failure produces 503 before storage.",
+        "x-authentication": "body-signature+client-key-or-cors-origin",
         "x-agent-level": "any-wallet",
         "x-human-usable": true,
         "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Signal" } } } },
@@ -21,53 +21,55 @@
           "400": { "$ref": "#/components/responses/Invalid" },
           "401": { "$ref": "#/components/responses/Invalid" },
           "403": { "$ref": "#/components/responses/Invalid" },
+          "401": { "$ref": "#/components/responses/Invalid" },
           "429": { "$ref": "#/components/responses/Limited" },
           "503": { "$ref": "#/components/responses/Unavailable" }
         }
       },
       "get": {
         "summary": "Poll signals without consuming send slots",
-        "description": "Authentication: none; wallet ban checks still apply. Agent level: public. Human usable: yes. Polling shares the separate HTTP/IP budget, not the one-signal-per-second slot. Respect Retry-After, prevent overlapping polls and use bounded round-robin topic polling.",
-        "x-authentication": "none", "x-agent-level": "public", "x-human-usable": true,
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS; wallet ban checks still apply. Agent level: public. Human usable: yes. Polling shares the separate HTTP/IP budget, not the one-signal-per-second slot. Respect Retry-After, prevent overlapping polls and use bounded round-robin topic polling.",
+        "x-authentication": "client-key-or-cors-origin", "x-agent-level": "public", "x-human-usable": true,
         "parameters": [
           { "name": "topic", "in": "query", "required": true, "schema": { "type": "string" } },
           { "name": "since", "in": "query", "schema": { "type": "string" } },
           { "name": "to", "in": "query", "schema": { "type": "string" } }
         ],
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Invalid" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       },
       "delete": {
         "summary": "Trim processed signals",
-        "description": "Authentication: none in the existing protocol; no authorization redesign is included here. Agent level: public. Human usable: yes. Shares the HTTP/IP budget and cooldown, not send slots.",
-        "x-authentication": "none", "x-agent-level": "public", "x-human-usable": true,
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS in the existing protocol; no authorization redesign is included here. Agent level: public. Human usable: yes. Shares the HTTP/IP budget and cooldown, not send slots.",
+        "x-authentication": "client-key-or-cors-origin", "x-agent-level": "public", "x-human-usable": true,
         "parameters": [
           { "name": "topic", "in": "query", "required": true, "schema": { "type": "string" } },
           { "name": "beforeId", "in": "query", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Invalid" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       }
     },
     "/api/peers": {
       "get": {
         "summary": "Discover peers",
-        "description": "Authentication: none. Agent level: public; human usable: yes. Separate HTTP budget and IP cooldown apply.",
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS. Agent level: public; human usable: yes. Separate HTTP budget and IP cooldown apply.",
         "parameters": [{ "name": "wallet", "in": "query", "schema": { "type": "string" } }],
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       },
       "post": {
         "summary": "Register or refresh a peer",
-        "description": "Authentication: EIP-191 signature in body when RELAY_REQUIRE_SIGNATURE=true. Agent level: any wallet; human usable: signed HTTP client. Existing peer registration payload is unchanged. HTTP budget and IP cooldown apply; this does not consume a signal send slot.",
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "description": "Authentication: EIP-191 signature in body, required by default (RELAY_REQUIRE_SIGNATURE=false disables). Agent level: any wallet; human usable: signed HTTP client. Existing peer registration payload is unchanged. HTTP budget and IP cooldown apply; this does not consume a signal send slot.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       }
     },
     "/api/status": {
       "get": {
         "summary": "Cached relay dependency status for the dApp indicator",
-        "description": "Authentication: none. Agent level: public. Human usable: yes. Read-only operational flags; no wallet or payload data. Unlike protected business routes this endpoint does not use Redis-backed abuse checks, so status remains readable during quota exhaustion. One PING per warm function instance per 60 seconds, or 300 seconds after quota failure, with concurrent requests coalesced; cold starts and distinct instances have independent caches. CDN cache 60 seconds, browser cache 30 seconds. HTTP 200 means the status report is reachable, not that Redis is healthy. data.status is available or degraded; data.services.redis is available, quota_exceeded, unavailable or not_configured. signaling, presence and protection are Redis dependency-derived available/unavailable flags, not end-to-end checks. checked_at is an ISO timestamp; retry_after_ms is 60000 or 300000. No blockchain, balance or payment probe. Infrastructure may still reject requests with 429/503; respect Retry-After.",
-        "x-authentication": "none", "x-agent-level": "public", "x-human-usable": true,
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS. Agent level: public. Human usable: yes. Read-only operational flags; no wallet or payload data. Unlike protected business routes this endpoint does not use Redis-backed abuse checks, so status remains readable during quota exhaustion. One PING per warm function instance per 60 seconds, or 300 seconds after quota failure, with concurrent requests coalesced; cold starts and distinct instances have independent caches. CDN cache 60 seconds, browser cache 30 seconds. HTTP 200 means the status report is reachable, not that Redis is healthy. data.status is available or degraded; data.services.redis is available, quota_exceeded, unavailable or not_configured. signaling, presence and protection are Redis dependency-derived available/unavailable flags, not end-to-end checks. checked_at is an ISO timestamp; retry_after_ms is 60000 or 300000. No blockchain, balance or payment probe. Infrastructure may still reject requests with 429/503; respect Retry-After.",
+        "x-authentication": "client-key-or-cors-origin", "x-agent-level": "public", "x-human-usable": true,
         "responses": {
-          "200": { "description": "Cached dependency snapshot in data with code, message, next_step and nest_step", "content": { "application/json": { "schema": { "type": "object", "required": ["code", "message", "data", "next_step", "nest_step"], "properties": { "code": { "type": "integer", "enum": [200] }, "message": { "type": "string" }, "data": { "type": "object", "required": ["status", "checked_at", "retry_after_ms", "services"], "properties": { "status": { "type": "string", "enum": ["available", "degraded"] }, "checked_at": { "type": "string", "format": "date-time" }, "retry_after_ms": { "type": "integer", "enum": [60000, 300000] }, "services": { "type": "object", "properties": { "redis": { "type": "string", "enum": ["available", "quota_exceeded", "unavailable", "not_configured"] }, "signaling": { "type": "string", "enum": ["available", "unavailable"] }, "presence": { "type": "string", "enum": ["available", "unavailable"] }, "protection": { "type": "string", "enum": ["available", "unavailable"] } } } } }, "next_step": { "type": "string" }, "nest_step": { "type": "string" } } } } } },
+          "401": { "$ref": "#/components/responses/Invalid" }, "200": { "description": "Cached dependency snapshot in data with code, message, next_step and nest_step", "content": { "application/json": { "schema": { "type": "object", "required": ["code", "message", "data", "next_step", "nest_step"], "properties": { "code": { "type": "integer", "enum": [200] }, "message": { "type": "string" }, "data": { "type": "object", "required": ["status", "checked_at", "retry_after_ms", "services"], "properties": { "status": { "type": "string", "enum": ["available", "degraded"] }, "checked_at": { "type": "string", "format": "date-time" }, "retry_after_ms": { "type": "integer", "enum": [60000, 300000] }, "services": { "type": "object", "properties": { "redis": { "type": "string", "enum": ["available", "quota_exceeded", "unavailable", "not_configured"] }, "signaling": { "type": "string", "enum": ["available", "unavailable"] }, "presence": { "type": "string", "enum": ["available", "unavailable"] }, "protection": { "type": "string", "enum": ["available", "unavailable"] } } } } }, "next_step": { "type": "string" }, "nest_step": { "type": "string" } } } } } },
           "405": { "description": "Only GET and OPTIONS are supported" },
+          "401": { "$ref": "#/components/responses/Invalid" },
           "429": { "$ref": "#/components/responses/Limited" },
           "503": { "$ref": "#/components/responses/Unavailable" }
         }
@@ -76,46 +78,47 @@
     "/api/health": {
       "get": {
         "summary": "Check relay availability without creating signals",
-        "description": "Authentication: none. Agent level: public; human usable: yes. Checks protection backend availability and returns configured store type. Does not test signal writes, create health-test topics, or return internal error messages. Returns 503 if the protection backend is unavailable. Subject to the HTTP/IP budget.",
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS. Agent level: public; human usable: yes. Checks protection backend availability and returns configured store type. Does not test signal writes, create health-test topics, or return internal error messages. Returns 503 if the protection backend is unavailable. Subject to the HTTP/IP budget.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       }
     },
     "/api/stats": {
       "get": {
         "summary": "Read aggregate statistics",
-        "description": "Authentication: none. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown. Existing statistics payload is unchanged.",
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown. Existing statistics payload is unchanged.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       }
     },
     "/api/tx-report": {
       "post": {
         "summary": "Report anonymous transaction statistics",
-        "description": "Authentication: none. Agent level: application; human usable: no normal UI workflow. Existing anonymous report payload and deduplication are unchanged. Shares the HTTP/IP budget and cooldown.",
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS. Agent level: application; human usable: no normal UI workflow. Existing anonymous report payload and deduplication are unchanged. Shares the HTTP/IP budget and cooldown.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       }
     },
     "/api/escrow-request": {
       "get": {
         "summary": "Read escrow support requests",
-        "description": "Authentication: none in the existing endpoint. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown. Existing response payload is unchanged.",
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS in the existing endpoint. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown. Existing response payload is unchanged.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       },
       "post": {
         "summary": "Create an escrow support request",
-        "description": "Authentication: body signature when RELAY_REQUIRE_SIGNATURE=true. Agent level: any wallet; human usable: signed HTTP client. Existing request payload is unchanged. Shares the HTTP/IP budget and cooldown.",
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "description": "Authentication: body signature, required by default (RELAY_REQUIRE_SIGNATURE=false disables). Agent level: any wallet; human usable: signed HTTP client. Existing request payload is unchanged. Shares the HTTP/IP budget and cooldown.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       }
     },
     "/api/onramp-session": {
       "post": {
         "summary": "Create a bounded onramp widget session",
-        "description": "Authentication: none in the existing route; authorization redesign is outside this change. Agent level: application. Human usable through the wallet onramp workflow. Shares the HTTP/IP budget and cooldown. Known scalar and asset fields are validated and copied before invoking the SDK: at most 16 items per collection, strings at most 64 characters, appUserId at most 128. Content-Length above 8192 is rejected; bounded known-field validation also applies when that header is absent. Unknown fields are not forwarded. This mitigates oversized collection input to vulnerable upstream Zod 3; it does NOT remove the dependency advisory. Errors expose only a safe request ID, not SDK diagnostics or session tokens.",
-        "x-authentication": "none", "x-agent-level": "application", "x-human-usable": true,
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS in the existing route; authorization redesign is outside this change. Agent level: application. Human usable through the wallet onramp workflow. Shares the HTTP/IP budget and cooldown. Known scalar and asset fields are validated and copied before invoking the SDK: at most 16 items per collection, strings at most 64 characters, appUserId at most 128. Content-Length above 8192 is rejected; bounded known-field validation also applies when that header is absent. Unknown fields are not forwarded. This mitigates oversized collection input to vulnerable upstream Zod 3; it does NOT remove the dependency advisory. Errors expose only a safe request ID, not SDK diagnostics or session tokens.",
+        "x-authentication": "client-key-or-cors-origin", "x-agent-level": "application", "x-human-usable": true,
         "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OnrampInput" } } } },
         "responses": {
           "200": { "$ref": "#/components/responses/Success" },
           "400": { "$ref": "#/components/responses/Invalid" },
           "413": { "$ref": "#/components/responses/Invalid" },
+          "401": { "$ref": "#/components/responses/Invalid" },
           "429": { "$ref": "#/components/responses/Limited" },
           "502": { "$ref": "#/components/responses/Invalid" },
           "503": { "$ref": "#/components/responses/Unavailable" }
@@ -125,17 +128,25 @@
     "/api/ban": {
       "get": {
         "summary": "Read wallet ban status or proposals",
-        "description": "Authentication: none. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown.",
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "description": "Authentication: X-Rapport-Client-Key for non-browser clients; allowed browser origins pass via CORS. Agent level: public; human usable: yes. Shares the HTTP/IP budget and cooldown.",
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       },
       "post": {
         "summary": "Perform an authorized ban administration action",
         "description": "Authentication: EIP-191 signature by the existing support/admin wallet is mandatory. Agent level: administrator; human usable: signed administrative client. Existing permissions and payload are unchanged. Shares the HTTP/IP budget and cooldown.",
-        "responses": { "200": { "$ref": "#/components/responses/Success" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "401": { "$ref": "#/components/responses/Invalid" }, "429": { "$ref": "#/components/responses/Limited" }, "503": { "$ref": "#/components/responses/Unavailable" } }
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "ClientKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Rapport-Client-Key",
+        "description": "Client credential issued for the official dApp; required on requests that do not carry an Origin allowed by CORS or browser same-origin fetch metadata."
+      }
+    },
     "schemas": {
       "OnrampInput": {
         "type": "object", "required": ["appUserId", "destinationAddress"],

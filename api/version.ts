@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 import { setCorsHeaders } from '../lib/cors.js';
+import { authorizeRelayClient } from '../lib/client-guard.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 
 const MANIFEST_PATH = path.resolve(process.cwd(), 'public', 'install', 'manifest.json');
@@ -28,7 +29,8 @@ function readManifest(): PublicManifest | null {
  * GET /api/version
  *
  * Retorna metadados da última versão do APK publicada pelo script
- * build-android-apk.ts. Não requer autenticação. Utilizável por humano
+ * build-android-apk.ts. Não requer assinatura; exige credencial de cliente
+ * (X-Rapport-Client-Key) para clients não-browser. Utilizável por humano
  * e por agente.
  *
  * Resposta:
@@ -39,12 +41,14 @@ export default async function handler(
   _req: VercelRequest,
   res: VercelResponse,
 ): Promise<void> {
-  setCorsHeaders(res);
+  setCorsHeaders(res, _req);
 
   if (_req.method === 'OPTIONS') {
     res.status(204).end();
     return;
   }
+
+  if (!(await authorizeRelayClient(_req, res))) return;
 
   const manifest = readManifest();
 

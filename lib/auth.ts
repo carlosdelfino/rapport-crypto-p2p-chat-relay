@@ -7,8 +7,13 @@ export interface SignedPayload {
   payload?: string;
 }
 
+/**
+ * EIP-191 signatures are mandatory on signed endpoints by default; set
+ * RELAY_REQUIRE_SIGNATURE=false only for local development or legacy
+ * migration windows.
+ */
 export function isSignatureRequired(): boolean {
-  return process.env.RELAY_REQUIRE_SIGNATURE === 'true';
+  return process.env.RELAY_REQUIRE_SIGNATURE !== 'false';
 }
 
 export async function verifyRequestSignature(

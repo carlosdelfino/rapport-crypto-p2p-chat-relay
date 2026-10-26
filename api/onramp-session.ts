@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
+import { authorizeRelayClient } from '../lib/client-guard.js';
 import { protectRequest } from '../lib/protection.js';
 import { OnrampInputError, parseOnrampInput } from '../lib/onramp-validation.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
@@ -24,6 +25,7 @@ export function createOnrampHandler(factory: () => SessionServer = createServer)
       handleOptions(res);
       return;
     }
+    if (!(await authorizeRelayClient(req, res))) return;
     if (!(await protectRequest(req, res))) return;
     if (req.method !== 'POST') {
       res.status(405).json({ code: 405, message: 'Method not allowed', details: {}, next_step: 'Send POST with appUserId and destinationAddress.' });
