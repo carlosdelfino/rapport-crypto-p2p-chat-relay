@@ -1,6 +1,7 @@
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { authorizeRelayClient } from './client-guard.js';
+import { createProtectionService } from './protection.js';
 import type { VercelRequest, VercelResponse } from './vercel.js';
 
 function request(headers: Record<string, string>): VercelRequest {
@@ -63,6 +64,20 @@ test('RF-RELAY-13 invalid client key is rejected when keys are configured', asyn
   assert.equal(result.status, 401);
   assert.equal(result.body.code, 401);
   assert.doesNotMatch(JSON.stringify(result.body), /key-one/);
+});
+
+test('RF-RELAY-13 Redis quota failures cannot reject a valid credential or authorize an invalid one', async (t) => {
+  process.env.RELAY_CLIENT_KEYS = 'key-one,key-two';
+  const failures = t.mock.method(createProtectionService(), 'failures', async () => { throw new Error('simulated monthly command quota exceeded'); });
+  const valid = response();
+  assert.equal(await authorizeRelayClient(request({ 'x-rapport-client-key': 'key-two' }), valid.res), true);
+  assert.equal(valid.result.status, 0);
+  assert.equal(failures.mock.callCount(), 0);
+  const invalid = response();
+  assert.equal(await authorizeRelayClient(request({ 'x-rapport-client-key': 'incorrect' }), invalid.res), false);
+  assert.equal(invalid.result.status, 401);
+  assert.equal(failures.mock.callCount(), 1);
+  assert.doesNotMatch(JSON.stringify(invalid.result.body), /quota|monthly|key-one|key-two|stack/);
 });
 
 test('RF-RELAY-13 missing key is rejected when keys are configured', async () => {

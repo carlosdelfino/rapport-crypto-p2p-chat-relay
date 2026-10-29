@@ -81,6 +81,23 @@ identidade real continua sendo a assinatura da carteira. A chave viaja
 embutida no bundle do dApp (`EXPO_PUBLIC_RELAY_CLIENT_KEY`); sua função é
 barrar bots e scrapers genéricos, não substituir a assinatura.
 
+A comparação da credencial é local e não consulta Redis. A contabilização
+anti-abuso de credenciais recusadas é best-effort: falhas nesse backend não
+mudam o 401. Uma credencial válida pode passar pelo guard e receber depois
+503 com `details.reason=protection_unavailable` na proteção de tráfego ou
+`storage_unavailable` no armazenamento; não interpretar esses 503 como
+rejeição de autenticação. A falta de configuração de chaves em produção
+também resulta em 401, portanto esse status sozinho não comprova chave
+incorreta no dApp.
+
+No diagnóstico, compare o ambiente do `.env`, o bundle servido pelo Metro
+e a instância realmente aberta no dispositivo, sem imprimir a credencial.
+No SDK 57, o desenvolvimento usa `expo/virtual/env` e o preâmbulo de
+ambiente; inspecionar apenas um módulo com `modulesOnly=true` não basta
+para concluir que a chave está ausente. Um APK instalado pode conter outro
+ambiente. HTTP 200 em `/api/status` indica que a consulta foi aceita, não
+que polling, heartbeat ou armazenamento estejam operacionais.
+
 ## Proteção anti-flood e contrato da API
 
 - Cada cliente pode armazenar somente um sinal a cada 1000ms, somando todos os tópicos e tipos (`data`, ACK, handshake, ICE, offer, answer, chat_request). Carteiras com assinatura verificada têm cota própria; requisições sem assinatura usam cota por IP, nunca a identidade apenas declarada.
