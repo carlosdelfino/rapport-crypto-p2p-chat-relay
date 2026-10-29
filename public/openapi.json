@@ -188,7 +188,7 @@
           "details": {
             "type": "object",
             "properties": {
-              "reason": { "type": "string", "enum": ["interval", "cooldown"] },
+              "reason": { "type": "string", "enum": ["interval", "cooldown", "protection_unavailable", "storage_unavailable"], "description": "Safe failure category. interval/cooldown = client pacing or abuse suspension; protection_unavailable = abuse-protection backend down; storage_unavailable = signal/peer storage backend down. Backend names are never exposed." },
               "retry_after_ms": { "type": "integer", "minimum": 0 },
               "cooldown_until": { "type": "integer", "description": "Unix milliseconds; zero for the simple per-client interval." }
             }
@@ -207,7 +207,7 @@
         "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProtectionError" }, "example": { "code": 429, "message": "Please wait before sending again.", "details": { "reason": "cooldown", "retry_after_ms": 30000, "cooldown_until": 1792973457000 }, "next_step": "Wait for Retry-After before retrying." } } }
       },
       "Unavailable": {
-        "description": "Protection storage unavailable; no fail-open fallback to per-instance memory in Vercel production.",
+        "description": "Protection or data storage unavailable; no fail-open fallback to per-instance memory in Vercel production. details.reason distinguishes protection_unavailable (abuse checks) from storage_unavailable (signal/peer store).",
         "headers": { "Retry-After": { "schema": { "type": "integer", "example": 5 } } },
         "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProtectionError" } } }
       }

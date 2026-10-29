@@ -1,5 +1,5 @@
 import { authorizeRelayClient } from '../lib/client-guard.js';
-import { protectRequest, protectSignalClient, rejectInvalidSignal } from '../lib/protection.js';
+import { protectRequest, protectSignalClient, rejectInvalidSignal, rejectStorageUnavailable } from '../lib/protection.js';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import type { VercelRequest, VercelResponse } from '../lib/vercel.js';
 import { createStore } from '../lib/store.js';
@@ -137,7 +137,12 @@ async function postSignal(req: VercelRequest, res: VercelResponse): Promise<void
     signature: body.signature,
   };
 
-  await store().addSignal(topic, envelope);
+  try {
+    await store().addSignal(topic, envelope);
+  } catch {
+    rejectStorageUnavailable(res);
+    return;
+  }
 
   console.log(`[relay:signal] POST stored - topic:${topic} type:${type} from:${normalizedFrom} to:${envelope.to ?? 'any'} id:${id}`);
 
@@ -177,7 +182,11 @@ async function getSignals(req: VercelRequest, res: VercelResponse): Promise<void
     }
   }
 
-  const messages = await store().getSignals(topic, { since, to: normalizedTo });
+  const messages = await store().getSignals(topic, { since, to: normalizedTo }).catch(() => null);
+  if (messages === null) {
+    rejectStorageUnavailable(res);
+    return;
+  }
 
   console.log(`[relay:signal] GET retrieved - topic:${topic} since:${since ?? 'none'} to:${normalizedTo ?? 'any'} found:${messages.length}`);
 
@@ -203,7 +212,11 @@ async function deleteSignals(req: VercelRequest, res: VercelResponse): Promise<v
     return;
   }
 
-  const trimmed = await store().deleteSignalsBefore(topic, beforeId);
+  const trimmed = await store().deleteSignalsBefore(topic, beforeId).catch(() => null);
+  if (trimmed === null) {
+    rejectStorageUnavailable(res);
+    return;
+  }
 
   console.log(`[relay:signal] DELETE trimmed - topic:${topic} beforeId:${beforeId} trimmed:${trimmed}`);
 

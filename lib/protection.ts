@@ -177,7 +177,7 @@ export async function protectRequest(req: VercelRequest, res: VercelResponse, si
     return reject(res, await service.failures(key));
   } catch {
     res.setHeader('Retry-After', '5');
-    res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: { retry_after_ms: 5000 }, next_step: 'Wait five seconds before retrying.' });
+    res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: { reason: 'protection_unavailable', retry_after_ms: 5000 }, next_step: 'Wait five seconds before retrying.' });
     return false;
   }
 }
@@ -188,10 +188,15 @@ export async function rejectInvalidSignal(req: VercelRequest, res: VercelRespons
     if (!reject(res, decision)) return;
   } catch {
     res.setHeader('Retry-After', '5');
-    res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: { retry_after_ms: 5000 }, next_step: 'Wait five seconds before retrying.' });
+    res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: { reason: 'protection_unavailable', retry_after_ms: 5000 }, next_step: 'Wait five seconds before retrying.' });
     return;
   }
   res.status(code).json({ code, message: body.message, details: {}, next_step: 'Correct the envelope and signature before retrying.' });
+}
+
+export function rejectStorageUnavailable(res: VercelResponse): void {
+  res.setHeader('Retry-After', '5');
+  res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: { reason: 'storage_unavailable', retry_after_ms: 5000 }, next_step: 'Wait five seconds before retrying.' });
 }
 
 export async function protectSignalClient(req: VercelRequest, res: VercelResponse, verifiedWallet?: string): Promise<boolean> {
@@ -200,7 +205,7 @@ export async function protectSignalClient(req: VercelRequest, res: VercelRespons
     return reject(res, await createProtectionService().checkClient(digest(identity)));
   } catch {
     res.setHeader('Retry-After', '5');
-    res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: { retry_after_ms: 5000 }, next_step: 'Wait five seconds before retrying.' });
+    res.status(503).json({ code: 503, message: 'Relay temporarily unavailable.', details: { reason: 'protection_unavailable', retry_after_ms: 5000 }, next_step: 'Wait five seconds before retrying.' });
     return false;
   }
 }

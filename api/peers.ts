@@ -1,5 +1,5 @@
 import { authorizeRelayClient } from '../lib/client-guard.js';
-import { protectRequest } from '../lib/protection.js';
+import { protectRequest, rejectStorageUnavailable } from '../lib/protection.js';
 import { setCorsHeaders, handleOptions } from '../lib/cors.js';
 import { createStore } from '../lib/store.js';
 import { isSignatureRequired, isRecentTimestamp, verifyRequestSignature } from '../lib/auth.js';
@@ -96,7 +96,12 @@ async function registerPeer(req: VercelRequest, res: VercelResponse): Promise<vo
     signature: body.signature,
   };
 
-  await store().addPeer(peer);
+  try {
+    await store().addPeer(peer);
+  } catch {
+    rejectStorageUnavailable(res);
+    return;
+  }
 
   const response: ApiResponse<PeerRecord> = {
     code: 200,
@@ -117,7 +122,13 @@ async function getPeers(req: VercelRequest, res: VercelResponse): Promise<void> 
       return;
     }
     const walletAddr = getAddress(normalized);
-    const record = (await isBannedWallet(walletAddr)) ? null : await store().getPeer(walletAddr);
+    let record: PeerRecord | null;
+    try {
+      record = (await isBannedWallet(walletAddr)) ? null : await store().getPeer(walletAddr);
+    } catch {
+      rejectStorageUnavailable(res);
+      return;
+    }
     const response: ApiResponse<PeerRecord | null> = {
       code: 200,
       message: record ? 'Peer found' : 'Peer not found or offline',
@@ -129,7 +140,11 @@ async function getPeers(req: VercelRequest, res: VercelResponse): Promise<void> 
   }
 
   if (peerId) {
-    const all = await store().getPeers();
+    const all = await store().getPeers().catch(() => null);
+    if (all === null) {
+      rejectStorageUnavailable(res);
+      return;
+    }
     const record = all.find((p) => p.peerId === peerId);
     const response: ApiResponse<PeerRecord | null> = {
       code: 200,
@@ -141,7 +156,11 @@ async function getPeers(req: VercelRequest, res: VercelResponse): Promise<void> 
     return;
   }
 
-  const peers = await store().getPeers();
+  const peers = await store().getPeers().catch(() => null);
+  if (peers === null) {
+    rejectStorageUnavailable(res);
+    return;
+  }
   const visible: PeerRecord[] = [];
   for (const peer of peers) {
     if (await isBannedWallet(peer.wallet)) continue;
