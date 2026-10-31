@@ -1,0 +1,24 @@
+# Configuracao do Gitleaks para o relay Rapport Crypto Chat.
+# Estende as regras padrao e restringe o escopo aos artefatos versionados,
+# ignorando dependencias, builds e relatorios gerados (inclusive os de pentest).
+# Author: Carlos Delfino
+# Email: consultoria@carlosdelfino.eti.br
+# WhatsApp: +55 (85) 98520-5490
+
+title = "rapport-crypto-p2p-relay"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Artefatos gerados e dependencias fora do escopo de scan de segredos"
+paths = [
+  '''node_modules''',
+  '''target''',
+  '''\.vercel''',
+  '''test-results''',
+  '''playwright-report''',
+  '''reports''',
+  '''package-lock\.json''',
+  '''public/openapi\.json''',
+]
