@@ -1,0 +1,26 @@
+name = "rapport-p2p-relay"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Hot path (signaling + presence) lives entirely in the Durable Object —
+# no Upstash/Redis commands are consumed per request.
+[durable_objects]
+bindings = [
+  { name = "SIGNALING_HUB", class_name = "SignalingHub" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SignalingHub"]
+
+[vars]
+RELAY_REQUIRE_SIGNATURE = "true"
+
+# Secrets (set via `npx wrangler secret put <NAME>`):
+#   RELAY_CLIENT_KEYS   — comma-separated client credentials (X-Rapport-Client-Key)
+#   BAN_DAO_ADDRESS     — BanQuadraticDAO address on Polygon (optional; disables banlist when unset)
+#   POLYGON_RPC_URL     — Polygon JSON-RPC endpoint for isBanned reads
+# Non-secret vars:
+#   ALLOWED_ORIGINS     — comma-separated extra origins for CORS
+#   BANNED_WALLETS      — comma-separated static ban overrides
