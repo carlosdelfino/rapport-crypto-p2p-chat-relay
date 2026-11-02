@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { isIP } from 'node:net';
 import { Redis } from '@upstash/redis';
+import { postgresConfigured } from './store-postgres.js';
 import type { VercelRequest, VercelResponse } from './vercel.js';
 
 export interface ProtectionState {
@@ -136,10 +137,17 @@ class ProtectionService {
 let service: ProtectionService | undefined;
 export function createProtectionService(): ProtectionService {
   if (service) return service;
+  const backend = process.env.RELAY_PROTECTION_BACKEND?.trim();
   const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
-  if (process.env.VERCEL === '1' && process.env.VERCEL_ENV !== 'development' && (!url || !token)) throw new Error('Protection backend unavailable');
-  service = new ProtectionService(url && token ? new Redis({ url, token }) : undefined);
+  const hasRedis = Boolean(url && token);
+  const isVercelCloud = process.env.VERCEL === '1' && process.env.VERCEL_ENV !== 'development';
+  // Anti-abuse state is transient — Postgres deployments use the
+  // in-memory limiter by default; Redis stays opt-in via
+  // RELAY_PROTECTION_BACKEND=redis for shared multi-instance limits.
+  const useRedis = backend === 'redis' ? hasRedis : hasRedis && !postgresConfigured();
+  if (isVercelCloud && !useRedis && !postgresConfigured() && backend !== 'memory') throw new Error('Protection backend unavailable');
+  service = new ProtectionService(useRedis ? new Redis({ url: url!, token: token! }) : undefined);
   return service;
 }
 

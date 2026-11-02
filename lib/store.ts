@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis';
+import { PostgresStore, postgresConfigured } from './store-postgres.js';
 import type { SignalEnvelope, PeerRecord, EscrowRequestRecord, TxReportRecord, BanFlagRecord } from './types.js';
 
 const PEER_TTL_MS = 5 * 60 * 1000;
@@ -642,7 +643,8 @@ class MemoryStore implements Store {
   }
 }
 
-export function getStoreType(): 'redis' | 'memory' {
+export function getStoreType(): 'postgres' | 'redis' | 'memory' {
+  if (postgresConfigured()) return 'postgres';
   const hasRedis =
     (process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL) &&
     (process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN);
@@ -652,6 +654,9 @@ export function getStoreType(): 'redis' | 'memory' {
 
 export function createStore(): Store {
   const type = getStoreType();
+  if (type === 'postgres') {
+    return new PostgresStore();
+  }
   if (type === 'redis') {
     return new UpstashStore();
   }
@@ -659,7 +664,7 @@ export function createStore(): Store {
   const isVercelCloud = process.env.VERCEL === '1' && process.env.VERCEL_ENV !== 'development';
   if (isVercelCloud) {
     throw new Error(
-      'Redis is required for the Vercel relay. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables.'
+      'A persistent store is required for the Vercel relay. Set POSTGRES_URL (or UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN) environment variables.'
     );
   }
 

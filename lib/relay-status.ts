@@ -1,3 +1,6 @@
+import { createStore } from './store.js';
+import { postgresConfigured } from './store-postgres.js';
+
 export type RedisStatus = 'available' | 'quota_exceeded' | 'unavailable' | 'not_configured';
 
 export interface RelayStatus {
@@ -10,6 +13,19 @@ export interface RelayStatus {
     presence: 'available' | 'unavailable';
     protection: 'available' | 'unavailable';
   };
+}
+
+async function probeStorage(): Promise<RedisStatus> {
+  if (postgresConfigured()) {
+    try {
+      const store = createStore();
+      await store.getPeers();
+      return 'available';
+    } catch (error) {
+      throw new Error(`Postgres unavailable: ${(error as Error).message}`);
+    }
+  }
+  return probeRedis();
 }
 
 async function probeRedis(): Promise<RedisStatus> {
@@ -35,7 +51,7 @@ async function probeRedis(): Promise<RedisStatus> {
   }
 }
 
-export function createRelayStatusService(probe = probeRedis, now = Date.now) {
+export function createRelayStatusService(probe = probeStorage, now = Date.now) {
   let cached: RelayStatus | undefined;
   let expires = 0;
   let pending: Promise<RelayStatus> | undefined;
