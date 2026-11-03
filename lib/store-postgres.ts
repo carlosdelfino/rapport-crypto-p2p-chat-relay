@@ -93,22 +93,38 @@ export function postgresConfigured(): boolean {
  * or the POSTGRES_HOST+POSTGRES_DATABASE(+POSTGRES_USER/PASSWORD) pair;
  * SSL is required by default (Neon).
  */
+let sharedSql: postgres.Sql | undefined;
+
+/**
+ * Shared connection pool for the warm serverless instance. Every
+ * PostgresStore in the same instance must reuse this pool — the Neon
+ * session-mode pooler caps total clients (~15), and per-store pools
+ * multiplied by endpoints and cold starts exhaust it (EMAXCONNSESSION).
+ * `max: 1` keeps a single connection per instance; `idle_timeout`
+ * releases it quickly between invocations.
+ */
+function getSql(): postgres.Sql {
+  if (sharedSql) return sharedSql;
+  const url = process.env.POSTGRES_URL?.trim() || process.env.POSTGRES_PRISMA_URL?.trim();
+  const options = { ssl: 'require' as const, max: 1, idle_timeout: 20, connect_timeout: 10, prepare: false };
+  sharedSql = url
+    ? postgres(url, options)
+    : postgres({
+        host: process.env.POSTGRES_HOST,
+        database: process.env.POSTGRES_DATABASE,
+        user: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        ...options,
+      });
+  console.log(`[${new Date().toISOString()}] [store:constructor] info Postgres backend initialized (shared pool max:1)`);
+  return sharedSql;
+}
+
 export class PostgresStore implements Store {
   private readonly sql: postgres.Sql;
 
   constructor() {
-    const url = process.env.POSTGRES_URL?.trim() || process.env.POSTGRES_PRISMA_URL?.trim();
-    this.sql = url
-      ? postgres(url, { ssl: 'require', max: 4 })
-      : postgres({
-          host: process.env.POSTGRES_HOST,
-          database: process.env.POSTGRES_DATABASE,
-          user: process.env.POSTGRES_USER,
-          password: process.env.POSTGRES_PASSWORD,
-          ssl: 'require',
-          max: 4,
-        });
-    console.log(`[${new Date().toISOString()}] [store:constructor] info Postgres backend initialized`);
+    this.sql = getSql();
   }
 
   async addSignal(topic: string, envelope: SignalEnvelope): Promise<void> {
