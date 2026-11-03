@@ -1,54 +1,6 @@
 {
   "apks": [
     {
-      "filename": "rapport-crypto-p2p-chat-7.6.1-20261016-232840.apk",
-      "version": "7.6.1",
-      "uploadedAt": "2026-10-17T13:01:11.907Z",
-      "size": 289239046
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-7.7.3-20261017-171801.apk",
-      "version": "7.7.3",
-      "uploadedAt": "2026-10-17T21:19:41.829Z",
-      "size": 289266982
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-7.7.4-20261017-192442.apk",
-      "version": "7.7.4",
-      "uploadedAt": "2026-10-17T23:50:00.061Z",
-      "size": 289267234
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-9.1.2-20261025-230521.apk",
-      "version": "9.1.2",
-      "uploadedAt": "2026-10-26T14:25:42.603Z",
-      "size": 290215323
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-9.2.2-20261026-172620.apk",
-      "version": "9.2.2",
-      "uploadedAt": "2026-10-26T20:29:06.735Z",
-      "size": 290214863
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-9.4.2-20261026-192729.apk",
-      "version": "9.4.2",
-      "uploadedAt": "2026-10-26T22:36:29.211Z",
-      "size": 290225019
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-9.4.3-20261026-232159.apk",
-      "version": "9.4.3",
-      "uploadedAt": "2026-10-27T11:57:55.366Z",
-      "size": 290225023
-    },
-    {
-      "filename": "rapport-crypto-p2p-chat-9.4.15-20261030-124641.apk",
-      "version": "9.4.15",
-      "uploadedAt": "2026-10-30T20:20:56.872Z",
-      "size": 290244563
-    },
-    {
       "filename": "rapport-crypto-p2p-chat-9.6.15-20261101-191030.apk",
       "version": "9.6.15",
       "uploadedAt": "2026-11-01T23:45:35.458Z",
